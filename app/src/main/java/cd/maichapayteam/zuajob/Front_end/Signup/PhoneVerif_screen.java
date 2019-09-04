@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hbb20.CountryCodePicker;
 
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneVerif_screen extends AppCompatActivity {
@@ -24,6 +25,10 @@ public class PhoneVerif_screen extends AppCompatActivity {
     CountryCodePicker contryCode;
     EditText PhoneNumber;
     TextView btn_next;
+
+    String numero = "";
+    String codeCountry = "" ;
+    String countryName = "";
 
     private void Init_Components(){
         btn_back_arrow = findViewById(R.id.btn_back_arrow);
@@ -41,7 +46,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
@@ -73,13 +78,12 @@ public class PhoneVerif_screen extends AppCompatActivity {
                     return;
                 }
 
-                // Todo: saving in the preferences
-                Tool.setUserPreferences(context,"phone",PhoneNumber.getText().toString());
-                Tool.setUserPreferences(context,"CountryCode",contryCode.getSelectedCountryCodeWithPlus());
-                Tool.setUserPreferences(context,"CountryName",contryCode.getSelectedCountryName());
-                Intent i = new Intent(context, PhoneConfirm_screen.class);
-                startActivity(i);
-                finish();
+                numero = PhoneNumber.getText().toString();
+                codeCountry = contryCode.getSelectedCountryCodeWithPlus();
+                countryName = contryCode.getSelectedCountryName();
+
+                CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
+                checkingNumberAsync.execute();
 
             }
         });
@@ -96,17 +100,30 @@ public class PhoneVerif_screen extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            //TODO : show a load dialog here
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            
-            return true;
+            return RemoteDataSync.checkNumero(codeCountry+numero);
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            //TODO : dismiss a load dialog here
+            if(aBoolean) {
+                Tool.setUserPreferences(context,"phone",numero);
+                Tool.setUserPreferences(context,"CountryCode",codeCountry);
+                Tool.setUserPreferences(context,"CountryName",countryName);
+                Intent i = new Intent(context, PhoneConfirm_screen.class);
+                startActivity(i);
+                finish();
+            } else {
+                /*TODO : show a dialog "This phone number already exists. Do you want to connect?"
+                    If he wants to connect we open the connection activity, otherwise we leave the application */
+            }
+
             super.onPostExecute(aBoolean);
         }
     }
