@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/back2"
+    tools:context=".Front_end.Signup.Identity_screen">
+
+    <ImageView
+        android:id="@+id/btn_back_arrow"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_back_primery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/votre_identite"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <EditText
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:id="@+id/nom"
+                        android:paddingLeft="15dp"
+                        android:textSize="17dp"
+                        android:hint="Nom"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <EditText
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        android:id="@+id/prenom"
+                        android:paddingLeft="15dp"
+                        android:textSize="17dp"
+                        android:hint="Prénom"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Spinner
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/genre"
+                    android:entries="@array/User_sexe"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></Spinner>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/Datepicker"
+                        android:src="@mipmap/ic_datepic"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <EditText
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:textStyle="bold"
+                        android:enabled="false"
+                        android:id="@+id/birthday"
+                        android:paddingLeft="15dp"
+                        android:textSize="17dp"
+                        android:hint="Date de naissance"
+                        android:textColor="@color/black"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/Pickpicture"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="00dp"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/ic_camera" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/picture"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/avatar"
+                        android:elevation="1dp"
+                        app:civ_border_width="1dp"
+                        app:civ_border_overlay="true"
+                        app:civ_border_color="#FCD5A2"/>
+
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/ImageSrcPath"
+                    android:gravity="center"
+                    android:textSize="9dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="15dp"
+                android:background="@drawable/corner_primary_border_white"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:text="@string/suivant"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

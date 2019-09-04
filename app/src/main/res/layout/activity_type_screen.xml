@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/back2"
+    tools:context=".Front_end.Signup.Type_screen">
+
+
+    <ImageView
+        android:id="@+id/btn_back_arrow"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_back_primery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type_user_txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="35dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_jobeur"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@drawable/corner_primary_border_white"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:text="@string/prestateur_de_services"
+            android:textColor="@color/white"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/btn_simple_user"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@drawable/corner_blanc_border_primary"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:text="@string/utilisateur_simple"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17dp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
