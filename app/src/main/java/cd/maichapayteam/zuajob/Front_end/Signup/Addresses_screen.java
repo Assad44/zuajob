@@ -61,7 +61,7 @@ public class Addresses_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
@@ -82,10 +82,10 @@ public class Addresses_screen extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo : Checking empty zone
+                // Checking empty zone
                 if (CheckingZone() == false) return;
 
-                // Todo: saving in the preferences
+                // saving in the preferences
                 Tool.setUserPreferences(context,"avenue",street.getText().toString().replace("'","''"));
                 Tool.setUserPreferences(context,"quartier",quartier.getText().toString().replace("'","''"));
                 Tool.setUserPreferences(context,"commune",commune.getText().toString().replace("'","''"));
