@@ -40,7 +40,7 @@ public class Password_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
@@ -59,17 +59,17 @@ public class Password_screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Todo : Checking empty zone
+                // Checking empty zone
                 if (CheckingZone() == false) return;
 
-                // Todo: Verifying passwords
+                // Verifying passwords
                 if (!passe.getText().toString().equals(Cpasse.getText().toString())){
                     Snackbar.make(v, "Les mots de passe ne concordent pas", Snackbar.LENGTH_LONG)
                             .setAction("Fermer", null).show();
                     //Toast.makeText(context, "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Todo: saving in the preferences
+                // saving in the preferences
                 Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
 
                 Intent i;
