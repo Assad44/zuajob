@@ -19,13 +19,21 @@ public class PhoneConfirm_screen extends AppCompatActivity {
     Context context = this;
     ImageView btn_back_arrow;
     EditText PhoneCodeNumber;
-    TextView btn_next;
+    TextView btn_next,advice;
 
 
     private void Init_Components(){
         btn_back_arrow = findViewById(R.id.btn_back_arrow);
         btn_next = findViewById(R.id.btn_next);
         PhoneCodeNumber = findViewById(R.id.PhoneCodeNumber);
+        advice = findViewById(R.id.advice);
+
+        String num = Tool.getUserPreferences(context, "phone");
+        String code = Tool.getUserPreferences(context, "CountryCode");
+        String advices = "Nous avons envoyer un SMS à votre numéro : \n"+ code +" "+num + "\nContenant le code de confirmation\n" +
+                "Cela peu prendre un instant un petit instant";
+
+        advice.setText(advices);
     }
 
     @Override

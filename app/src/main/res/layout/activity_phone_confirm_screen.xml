@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -64,6 +64,38 @@
             android:text="@string/confirmer"
             android:textColor="@color/white"
             android:textSize="17dp" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/advice"
+                android:gravity="center"
+                android:padding="10dp"
+                android:fontFamily="@font/alegreya_sans_thin"
+                android:textSize="15dp"
+                android:text="@string/Lorem_short"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:max="100"
+                android:backgroundTint="@color/white"
+                android:indeterminateTint="@color/colorAccent"
+                android:layout_marginTop="-7dp"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>

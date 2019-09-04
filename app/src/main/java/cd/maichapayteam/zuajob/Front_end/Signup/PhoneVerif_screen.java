@@ -68,10 +68,15 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 if (TextUtils.isEmpty(PhoneNumber.getText().toString())){
                     PhoneNumber.setError("Veuillez entrer votre numéro de téléphone");
                     return;
+                }else if (PhoneNumber.getText().toString().length() < 9){
+                    PhoneNumber.setError("Veuillez entrer un numéro de téléphone correct");
+                    return;
                 }
 
                 // Todo: saving in the preferences
                 Tool.setUserPreferences(context,"phone",PhoneNumber.getText().toString());
+                Tool.setUserPreferences(context,"CountryCode",contryCode.getSelectedCountryCodeWithPlus());
+                Tool.setUserPreferences(context,"CountryName",contryCode.getSelectedCountryName());
                 Intent i = new Intent(context, PhoneConfirm_screen.class);
                 startActivity(i);
                 finish();
