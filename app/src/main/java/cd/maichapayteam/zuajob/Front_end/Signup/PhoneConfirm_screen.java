@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Front_end.Signup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,14 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.IncomingSms;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
-public class PhoneConfirm_screen extends AppCompatActivity {
+public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSms.ZuaJobMessageListener {
 
     Context context = this;
     ImageView btn_back_arrow;
     EditText PhoneCodeNumber;
     TextView btn_next,advice;
+
+    String code = "";
+    String numero = "";
 
 
     private void Init_Components(){
@@ -28,10 +34,14 @@ public class PhoneConfirm_screen extends AppCompatActivity {
         PhoneCodeNumber = findViewById(R.id.PhoneCodeNumber);
         advice = findViewById(R.id.advice);
 
-        String num = Tool.getUserPreferences(context, "phone");
-        String code = Tool.getUserPreferences(context, "CountryCode");
-        String advices = "Nous avons envoyer un SMS à votre numéro : \n"+ code +" "+num + "\nContenant le code de confirmation\n" +
-                "Cela peu prendre un instant un petit instant";
+        //TODO : Ajouter un lien si le message n'est pas envoyé que l'utilisateur puisse demander un autre message
+
+        numero = Tool.getUserPreferences(context, "phone") + Tool.getUserPreferences(context, "CountryCode");
+
+        IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
+
+        String advices = "Nous avons envoyé un SMS à votre numéro : \n"+ numero + "\nContenant le code de confirmation\n" +
+                "Si la détection automatique ne fonctionne pas, saisissez manuellement le code réçu";
 
         advice.setText(advices);
     }
@@ -44,7 +54,7 @@ public class PhoneConfirm_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
@@ -73,15 +83,11 @@ public class PhoneConfirm_screen extends AppCompatActivity {
                 }
 
                 // Todo : verify the code
-                String code = PhoneCodeNumber.getText().toString();
+                code = PhoneCodeNumber.getText().toString();
 
-                // Todo: saving in the preferences
-                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+                CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
+                checkingCodeAsync.execute();
 
-                // Todo : goto next activity
-                Intent i = new Intent(context, Identity_screen.class);
-                startActivity(i);
-                finish();
             }
         });
     }
@@ -94,5 +100,52 @@ public class PhoneConfirm_screen extends AppCompatActivity {
     }
 
 
+    @Override
+    public void OnCorrectConfirmationCode() {
+
+    }
+
+    @Override
+    public void OnIncorrectConfirmationCode() {
+
+    }
+
+    @Override
+    public void OnNewMessage(String message) {
+
+    }
+
+    class CheckingCodeAsync extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            //TODO : show a load dialog here
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return RemoteDataSync.confirmCode(numero, code);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            //TODO : dismiss a load dialog here
+            if(aBoolean) {
+                // saving in the preferences
+                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+
+                // goto next activity
+                Intent i = new Intent(context, Identity_screen.class);
+                startActivity(i);
+                finish();
+            } else {
+                /*TODO : show a dialog "This phone number already exists. Do you want to connect?"
+                    If he wants to connect we open the connection activity, otherwise we leave the application */
+            }
+
+            super.onPostExecute(aBoolean);
+        }
+    }
 
 }
