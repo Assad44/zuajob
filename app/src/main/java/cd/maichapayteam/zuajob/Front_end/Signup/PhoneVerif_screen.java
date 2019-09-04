@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Front_end.Signup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,7 +31,6 @@ public class PhoneVerif_screen extends AppCompatActivity {
         PhoneNumber = findViewById(R.id.PhoneNumber);
         contryCode = findViewById(R.id.contryCode);
         contryCode.setCountryForNameCode("CD");
-
     }
 
     @Override
@@ -90,6 +90,25 @@ public class PhoneVerif_screen extends AppCompatActivity {
         Intent i = new Intent(context, Type_screen.class);
         startActivity(i);
         finish();
+    }
+
+    class CheckingNumberAsync extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+        }
     }
 
 

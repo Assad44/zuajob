@@ -20,7 +20,7 @@ public class index_screen extends AppCompatActivity {
     Context context = this;
     private static final int PERM_CALL_ID = 1;
 
-    TextView btn_se_connecter,btn_sinscrire;
+    TextView btn_se_connecter, btn_sinscrire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class index_screen extends AppCompatActivity {
 
         // Todo ; Initialisation des composants
         Init_Components();
+
+        //TODO check if user exist, pass to home directly
     }
 
 
@@ -69,21 +71,20 @@ public class index_screen extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void Init_Components(){
+    private void Init_Components() {
         btn_sinscrire = findViewById(R.id.btn_sinscrire);
         btn_se_connecter = findViewById(R.id.btn_se_connecter);
     }
 
 
-
-    private void CheckPermission(){
+    private void CheckPermission() {
         if (
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this, Manifest.permission.MEDIA_CONTENT_CONTROL) != PackageManager.PERMISSION_GRANTED
-        ){
+        ) {
 
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.CALL_PHONE,
