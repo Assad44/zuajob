@@ -16,12 +16,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import cd.maishapay.zuajob.Models.List.ListPays;
-import cd.maishapay.zuajob.Models.List.ListProvince;
-import cd.maishapay.zuajob.Models.List.ListVille;
-import cd.maishapay.zuajob.Models.Object.Pays;
-import cd.maishapay.zuajob.Models.Object.User;
-import cd.maishapay.zuajob.Models.Object.Ville;
+import cd.maichapayteam.zuajob.Models.Object.Pays;
+import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Models.Object.Ville;
 import okhttp3.Response;
 
 public class RemoteDataSync {
