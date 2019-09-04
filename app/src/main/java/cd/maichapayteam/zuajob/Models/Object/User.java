@@ -47,7 +47,7 @@ public class User extends Model {
     public String email = "";
     public String password = "";
     public String sexe = "";
-    public int codePays = 243;
+    public String codePays = "+243";
     public String commune = "";
     public String about = "";
 
