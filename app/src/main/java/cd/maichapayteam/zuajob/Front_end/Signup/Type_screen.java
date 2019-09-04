@@ -32,7 +32,7 @@ public class Type_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
