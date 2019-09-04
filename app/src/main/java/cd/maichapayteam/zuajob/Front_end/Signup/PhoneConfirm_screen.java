@@ -76,13 +76,13 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
             @Override
             public void onClick(View v) {
 
-                // Todo : Checking Empty field
+                // Checking Empty field
                 if (TextUtils.isEmpty(PhoneCodeNumber.getText().toString())){
                     PhoneCodeNumber.setError("Veuillez entrer le code de confirmation");
                     return;
                 }
 
-                // Todo : verify the code
+                // verify the code
                 code = PhoneCodeNumber.getText().toString();
 
                 CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
@@ -102,12 +102,12 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     @Override
     public void OnCorrectConfirmationCode() {
-
+        passToNextActivity();
     }
 
     @Override
     public void OnIncorrectConfirmationCode() {
-
+        showIncorrectConfirmationCode();
     }
 
     @Override
@@ -132,20 +132,27 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         protected void onPostExecute(Boolean aBoolean) {
             //TODO : dismiss a load dialog here
             if(aBoolean) {
-                // saving in the preferences
-                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
-
-                // goto next activity
-                Intent i = new Intent(context, Identity_screen.class);
-                startActivity(i);
-                finish();
+                passToNextActivity();
             } else {
-                /*TODO : show a dialog "This phone number already exists. Do you want to connect?"
-                    If he wants to connect we open the connection activity, otherwise we leave the application */
+                showIncorrectConfirmationCode();
             }
 
             super.onPostExecute(aBoolean);
         }
+    }
+
+    void passToNextActivity() {
+        // saving in the preferences
+        Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+
+        // goto next activity
+        Intent i = new Intent(context, Identity_screen.class);
+        startActivity(i);
+        finish();
+    }
+
+    void showIncorrectConfirmationCode() {
+        /*TODO Confirmation code is incorrect, report to the user */
     }
 
 }
