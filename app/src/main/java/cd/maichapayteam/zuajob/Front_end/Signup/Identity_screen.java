@@ -54,7 +54,7 @@ public class Identity_screen extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        // Todo ; Initialisation des composants
+        // Initialisation des composants
         Init_Components();
     }
 
@@ -76,10 +76,10 @@ public class Identity_screen extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo : Checking empty zone
+                // Checking empty zone
                 if (CheckingZone() == false) return;
 
-                // Todo: saving in the preferences
+                // saving in the preferences
                 Tool.setUserPreferences(context,"nom",nom.getText().toString().replace("'","''"));
                 Tool.setUserPreferences(context,"prenom",prenom.getText().toString().replace("'","''"));
                 Tool.setUserPreferences(context,"birthday",birthday.getText().toString().replace("'","''"));
@@ -118,7 +118,7 @@ public class Identity_screen extends AppCompatActivity {
     }
 
 
-    // TODO : OWN METHODS
+    // OWN METHODS
 
     private boolean CheckingZone(){
         if (TextUtils.isEmpty(nom.getText().toString())){
@@ -155,7 +155,7 @@ public class Identity_screen extends AppCompatActivity {
                         byte[] imgbyte = new byte[fs.available()];
                         int i = fs.read(imgbyte);
 
-                        // TODO ; Vérification de la taille du fichier
+                        //  Vérification de la taille du fichier
                         /*if (String.valueOf(imgbyte.length).length() >5){
                             Toast.makeText(context, "L'image est trop volumineuse", Toast.LENGTH_LONG).show();
                             return;
@@ -163,7 +163,7 @@ public class Identity_screen extends AppCompatActivity {
                         picture.setImageURI(Uri.parse(fil));
                         ImageSrcPath.setText(fil);
 
-                        /*// TODO ; Conversion en base64
+                        /*// Conversion en base64
                         String encodedImage = Base64.encodeToString(imgbyte, Base64.DEFAULT);
                         Log.e("ENCODINGGGXXXXXX",encodedImage);
                         String avatar_64 = encodedImage;*/
