@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class Preferences_screen extends AppCompatActivity {
         finish();
     }
 
-    class CreationAccountAsync extends AsyncTask<String, String, User> {
+    class CreationAccountAsync extends AsyncTask<String, String, User> implements RemoteDataSync.LoadImageListener {
 
         @Override
         protected void onPreExecute() {
@@ -144,9 +145,9 @@ public class Preferences_screen extends AppCompatActivity {
             String urlPhoto = "";
             String picture = Tool.getUserPreferences(Preferences_screen.this, "picture");
             if(!picture.equals("default")) {
-                //TODO load image in server
-
-
+                File file = new File(picture);
+                String result = RemoteDataSync.uploadImage(file, null);
+                if(!result.contains("error")) urlPhoto = result;
             }
 
             User user = new User();
@@ -196,6 +197,21 @@ public class Preferences_screen extends AppCompatActivity {
             }
 
             super.onPostExecute(user);
+        }
+
+        @Override
+        public void OnResult(long id, String url) {
+
+        }
+
+        @Override
+        public void OnProgress(long bytesUploaded, long totalBytes) {
+            //TODO update onProgress in dialog
+        }
+
+        @Override
+        public void OnError(String message) {
+
         }
     }
 

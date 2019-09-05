@@ -1,6 +1,7 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
 import android.graphics.ColorSpace;
+import android.widget.ArrayAdapter;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -9,6 +10,7 @@ import com.activeandroid.query.Select;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -42,6 +44,8 @@ public class User extends Model {
 
     @JsonIgnoreProperties
     public boolean myProfil = false;
+
+    public List<Categorie> prefferences = new ArrayList<>();
 
     public int type = 0;
     public String email = "";
