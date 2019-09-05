@@ -126,17 +126,17 @@
                         android:layout_alignParentBottom="true"
                         android:src="@drawable/ic_camera" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <ImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/picture"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginTop="15dp"
                         android:src="@drawable/avatar"
-                        android:elevation="1dp"
-                        app:civ_border_width="1dp"
+                        android:elevation="1dp"/>
+                        <!--app:civ_border_width="1dp"
                         app:civ_border_overlay="true"
-                        app:civ_border_color="#FCD5A2"/>
+                        app:civ_border_color="#FCD5A2"/>-->
 
 
                 </RelativeLayout>

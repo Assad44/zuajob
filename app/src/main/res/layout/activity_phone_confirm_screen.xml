@@ -9,7 +9,6 @@
     android:background="@drawable/back2"
     tools:context=".Front_end.Signup.PhoneConfirm_screen">
 
-
     <ImageView
         android:id="@+id/btn_back_arrow"
         android:layout_marginLeft="10dp"

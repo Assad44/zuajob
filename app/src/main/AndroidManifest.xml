@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Front_end.Login"></activity>
+        <activity android:name=".Front_end.Jobeur_list"></activity>
+        <activity android:name=".Front_end.Publications_view" />
+        <activity android:name=".Front_end.Login" />
         <activity android:name=".Front_end.Categories" />
         <activity
             android:name=".Front_end.Details.Details_publication"

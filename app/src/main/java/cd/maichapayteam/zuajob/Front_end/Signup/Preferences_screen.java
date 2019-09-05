@@ -81,7 +81,7 @@ public class Preferences_screen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        list_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*list_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -106,7 +106,7 @@ public class Preferences_screen extends AppCompatActivity {
                 list_item_selected.setAdapter(a2);
 
             }
-        });
+        });*/
 
 
         btn_back_arrow.setOnClickListener(new View.OnClickListener() {

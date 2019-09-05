@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Front_end.Categories">
+    tools:context=".Front_end.Publications_view">
 
     <LinearLayout
-        android:visibility="gone"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         android:paddingTop="-10dp"
@@ -18,7 +18,7 @@
         <SearchView
             android:elevation="2dp"
             android:id="@+id/rechercher"
-            android:queryHint="Recherche article"
+            android:queryHint="Recherche publication"
             android:animateLayoutChanges="true"
             android:foregroundTint="@color/colorPrimaryDark"
             android:layout_width="match_parent"
@@ -28,10 +28,10 @@
 
     </LinearLayout>
 
-    <GridView
+    <ListView
         android:numColumns="auto_fit"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></GridView>
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

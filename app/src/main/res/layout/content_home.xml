@@ -6,16 +6,357 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Front_end.Home"
-    android:padding="1dp"
     android:background="#EDF1FC"
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_home">
 
-    <ListView
-        android:numColumns="auto_fit"
-        android:id="@+id/list"
-        android:divider="@color/white"
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="-10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <SearchView
+            android:elevation="2dp"
+            android:id="@+id/rechercher"
+            android:queryHint="Recherche services ou annonces"
+            android:animateLayoutChanges="true"
+            android:foregroundTint="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_white"
+            ></SearchView>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/search_bar"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:padding="10dp"
+                android:textSize="10dp"
+                android:text="Quel service cherchez-vous ?"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ListView
+                android:numColumns="auto_fit"
+                android:id="@+id/list"
+                android:divider="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <HorizontalScrollView
+                android:visibility="visible"
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        android:elevation="10dp">
+
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shoping Coursier "
+                                android:textSize="30dp"/>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/pub" />
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Lorem_short"
+                                android:textSize="15dp"/>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        android:elevation="10dp">
+
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Baby-sitting"
+                                android:textSize="30dp"/>
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/pub2" />
+
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Lorem_short"
+                                android:textSize="15dp"/>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        android:elevation="10dp">
+
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Un architectes !"
+                                android:textSize="30dp"/>
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/pub4" />
+
+                            <TextView
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Lorem_short"
+                                android:textSize="15dp"/>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:background="@color/colorPrimaryDark"
+                    android:padding="10dp"
+                    android:id="@+id/BTN_services"
+                    android:text="Services disponibles"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:drawableLeft="@drawable/ic_calendar_icon_white"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/BTN_annonces"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/dark5"
+                    android:padding="10dp"
+                    android:text="Annonces des services"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:drawableLeft="@drawable/ic_calendar_icon_white"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/BTN_jober"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/dark3"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:text="Nos jobeurs "
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/ic_calendar_icon_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/BTN_categorie"
+                    android:layout_marginTop="5dp"
+                    android:background="#c22c0e"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:text="Toutes les catégories"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/ic_calendar_icon_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/white"
+                android:elevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_weight="1"
+                            android:background="@color/dark8"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:drawableLeft="@drawable/ic_plus_white"
+                            android:textSize="15dp"/>
+                        <TextView
+                            android:layout_weight="1"
+                            android:background="@color/dark6"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:drawableLeft="@drawable/ic_share_white"
+                            android:textSize="15dp"/>
+                        <TextView
+                            android:layout_weight="1"
+                            android:background="@color/dark3"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:drawableLeft="@drawable/ic_comment_white"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textColor="@color/dark8"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A propos de Zua-job ?"
+                            android:textSize="30dp"/>
+                        <TextView
+                            android:textColor="@color/dark8"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Lorem_short"
+                            android:textSize="16dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 
 </LinearLayout>
