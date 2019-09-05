@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cd.maichapayteam.zuajob.Models.Object.Cote;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
@@ -43,10 +46,26 @@ public class Services_Base_Adapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_test,null);
+        TextView S_categorie = convertView.findViewById(R.id.S_categorie);
+        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
+        TextView S_prix = convertView.findViewById(R.id.S_prix);
+        TextView realisation = convertView.findViewById(R.id.realisation);
+        RatingBar Rating = convertView.findViewById(R.id.MyRating);
 
         Service S = DATA.get(position);
 
+        // todo : Affects values to the componants
+        S_categorie.setText(S.sousCategorie.designation);
+        S_descriptions.setText(S.description);
+        S_prix.setText(String.valueOf(S.montant));
+        realisation.setText(String.valueOf(S.nombreRealisation));
 
+        int cote = 0;
+        for (Cote c : S.cotes ) {
+            cote += c.cote;
+        }
+        float rating = cote * 5 / (S.cotes.size()*10);
+        Rating.setRating(rating);
 
         return convertView;
     }

@@ -12,6 +12,7 @@ public class Service {
     public SousCategorie sousCategorie = null;
     public String description = "";
     public Devise devise = null;
+    public SousCategorie cat= null;
     public float montant = 0;
     public User prestateur = null;
     public List<Cote> cotes = new ArrayList<>();
@@ -28,6 +29,7 @@ public class Service {
             service.nombreRealisation = new Random().nextInt();
             service.prestateur = GeneralClass.getAleatoire();
             service.devise = GeneralClass.getDAleatoire();
+            service.sousCategorie = GeneralClass.getDAleatoireSCat();
             list.add(service);
         }
         return list;

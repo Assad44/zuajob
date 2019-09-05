@@ -36,4 +36,19 @@ public class GeneralClass {
         return Devise.getListDevise().get(new Random().nextInt(1));
     }
 
+    public static Categorie getDAleatoireCat(){
+        Categorie cat = new Categorie();
+        cat.remoteId = new Random().nextInt();
+        cat.designation = getMot();
+        return cat;
+    }
+    public static SousCategorie getDAleatoireSCat(){
+        SousCategorie cat = new SousCategorie();
+        cat.remoteId = new Random().nextInt();
+        cat.designation = getMot();
+        cat.categorie = getDAleatoireCat();
+        return cat;
+    }
+
+
 }
