@@ -9,8 +9,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 
 public class Publications_view extends AppCompatActivity {
@@ -20,7 +24,18 @@ public class Publications_view extends AppCompatActivity {
 
     private void Init_Components(){
         list = findViewById(R.id.list);
-        list.setAdapter(new Test_Base_Adapter(context, R.layout.modele_list_test));
+    }
+
+    private void Load_Datas(){
+        if (!getIntent().hasExtra("type")) onBackPressed();
+
+        if (getIntent().getExtras().getString("type").equals("annonces")){
+            ArrayList<Service> DATA = Service.listService();
+            list.setAdapter(new Services_Base_Adapter(context, DATA));
+        }else{
+
+        }
+
     }
 
     @Override
@@ -33,6 +48,9 @@ public class Publications_view extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
         Init_Components();
+
+        // Todo ; launching methods
+        Load_Datas();
     }
 
     @Override

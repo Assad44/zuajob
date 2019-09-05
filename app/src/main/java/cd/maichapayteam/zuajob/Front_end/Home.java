@@ -167,14 +167,18 @@ public class Home extends AppCompatActivity
         BTN_annonces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, Publications_view.class));
+                Intent i = new Intent(context, Publications_view.class);
+                i.putExtra("type", "annonces");
+                startActivity(i);
                 finish();
             }
         });
         BTN_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, Publications_view.class));
+                Intent i = new Intent(context, Publications_view.class);
+                i.putExtra("type", "services");
+                startActivity(i);
                 finish();
             }
         });

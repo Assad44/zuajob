@@ -56,6 +56,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Tool {
 
+
     public static SharedPreferences User_Preferences(Context context){
         return context.getSharedPreferences("User_Identities", MODE_PRIVATE);
     }

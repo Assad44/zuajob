@@ -17,8 +17,8 @@ public class Service {
     public List<Cote> cotes = new ArrayList<>();
     public int nombreRealisation = 0;
 
-    public static List<Service> listService() {
-        List<Service> list = new ArrayList<>();
+    public static ArrayList<Service> listService() {
+        ArrayList<Service> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             Service service = new Service();
             service.id = i++;
