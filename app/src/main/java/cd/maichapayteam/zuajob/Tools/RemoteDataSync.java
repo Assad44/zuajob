@@ -9,6 +9,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.google.gson.JsonArray;
 
 import org.json.JSONObject;
 
@@ -82,7 +83,7 @@ public class RemoteDataSync {
         return false;
     }
 
-    public static void uploadImage(File image, final LoadImageListener loadImageListener) {
+    public static void uploadImageAsync(File image, final LoadImageListener loadImageListener) {
         String url = BASE_URL + "uploadimage?";
         String TAG = "uploadimage";
 
@@ -124,6 +125,39 @@ public class RemoteDataSync {
 
         } catch (Exception ex) {
 
+        }
+
+    }
+
+    public static String uploadImage(File image, final LoadImageListener loadImageListener) {
+        String url = BASE_URL + "uploadimage?";
+
+        try{
+            ANRequest request = AndroidNetworking.upload(url)
+                    .addMultipartFile("image",image)
+                    //.addMultipartParameter("key","value")
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .setUploadProgressListener(new UploadProgressListener() {
+                        @Override
+                        public void onProgress(long bytesUploaded, long totalBytes) {
+                            if(loadImageListener!=null) loadImageListener.OnProgress(bytesUploaded, totalBytes);
+                        }
+                    });
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                if(response.getResult().optBoolean("error")) {
+                    return "error:" + response.getResult().optString("errorMessage");
+                } else {
+                    return response.getResult().optString("url");
+                }
+            } else {
+                return "error:" + response.getError().getMessage();
+            }
+
+        } catch (Exception ex) {
+            return "error:" + ex.getMessage();
         }
 
     }
