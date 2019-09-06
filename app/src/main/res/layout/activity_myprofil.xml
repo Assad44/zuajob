@@ -5,58 +5,261 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/back2"
     tools:context=".Front_end.Profils.Myprofil">
 
-
-    <ImageView
-        android:id="@+id/btn_back_arrow"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_back_primery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_marginTop="100dp"
-        android:gravity="center"
         android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="-10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="-10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/type_user_txt"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="35dp"
-            android:layout_marginBottom="20dp"
-            android:textStyle="bold" />
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/btn_jobeur"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:padding="15dp"
-            android:background="@drawable/corner_primary_border_white"
-            android:layout_width="270dp"
+        </LinearLayout>
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            app:title="Mon profil"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prestateur_de_services"
-            android:textColor="@color/white"
-            android:textSize="17dp" />
-        <TextView
-            android:id="@+id/btn_simple_user"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:padding="15dp"
-            android:background="@drawable/corner_blanc_border_primary"
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:text="@string/utilisateur_simple"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="17dp" />
+            android:background="@color/colorPrimaryDark"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        </android.support.v7.widget.Toolbar>
+
+
+        <SearchView
+            android:visibility="gone"
+            android:elevation="2dp"
+            android:id="@+id/rechercher"
+            android:queryHint="Recherche services ou annonces"
+            android:animateLayoutChanges="true"
+            android:foregroundTint="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_white"
+            ></SearchView>
 
     </LinearLayout>
+
+    <ScrollView
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:elevation="1dp"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/avatar"/>
+
+                    <LinearLayout
+                        android:gravity="start"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/S_categorie"
+                            android:textColor="@color/black"
+                            android:textSize="22dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Massad Al-Assad"/>
+                        <TextView
+                            android:id="@+id/S_descriptions"
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Lorem_short"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/corner_blue_border_white"
+                        android:textColor="@color/white"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Mettre à jour"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#C9C9C9"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:elevation="1dp"
+                android:padding="5dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information de localisation"/>
+                <TextView
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Lorem_short"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/corner_blue_border_white"
+                    android:textColor="@color/white"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mettre à jour"/>
+                <LinearLayout
+                    android:background="#C9C9C9"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:elevation="1dp"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Votre croissances dans Zua-job"/>
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre de service publiés"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="10"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre d'annonces publiés"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="10"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#C9C9C9"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
 
 </LinearLayout>

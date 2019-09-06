@@ -36,7 +36,8 @@
         <activity android:name=".Front_end.Signup.Identity_screen" />
         <activity android:name=".Front_end.Signup.PhoneConfirm_screen" />
         <activity android:name=".Front_end.Signup.PhoneVerif_screen" />
-        <activity android:name=".Front_end.Profils.Myprofil" />
+        <activity android:name=".Front_end.Profils.Myprofil"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Front_end.Signup.index_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

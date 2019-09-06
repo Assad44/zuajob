@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fond"
     tools:context=".Front_end.Signup.index_screen">
 
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/KBimage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fond" />
     <RelativeLayout
         android:background="#a5000000"
         android:layout_width="match_parent"
