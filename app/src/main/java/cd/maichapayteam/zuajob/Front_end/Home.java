@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -40,10 +42,12 @@ public class Home extends AppCompatActivity
     int exit = 0;
     ListView list;
     Toolbar toolbar;
+    CardView catégorie_H;
     FloatingActionButton fab;
     DrawerLayout drawer;
     NavigationView navigationView;
     SearchView rechercher;
+    ImageView imageView;
     LinearLayout search_bar;
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
 
@@ -51,6 +55,7 @@ public class Home extends AppCompatActivity
 
     private void Init_Components(){
         fab = findViewById(R.id.fab);
+        imageView = findViewById(R.id.imageView);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -59,6 +64,7 @@ public class Home extends AppCompatActivity
 
         BTN_services = findViewById(R.id.BTN_services);
         BTN_categorie = findViewById(R.id.BTN_categorie);
+        catégorie_H = findViewById(R.id.catégorie_H);
         BTN_jober = findViewById(R.id.BTN_jober);
         BTN_annonces = findViewById(R.id.BTN_annonces);
         list = findViewById(R.id.list);
@@ -160,6 +166,20 @@ public class Home extends AppCompatActivity
             }
         });
         BTN_categorie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, Categories.class));
+                finish();
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, Myprofil.class));
+                finish();
+            }
+        });
+        catégorie_H.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, Categories.class));

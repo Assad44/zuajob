@@ -80,8 +80,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
-
                     <android.support.v7.widget.CardView
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
@@ -213,6 +211,7 @@
                     </android.support.v7.widget.CardView>
                     
                     <android.support.v7.widget.CardView
+                        android:id="@+id/catégorie_H"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
