@@ -47,7 +47,6 @@ public class Home extends AppCompatActivity
     DrawerLayout drawer;
     NavigationView navigationView;
     SearchView rechercher;
-    ImageView imageView;
     LinearLayout search_bar;
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
 
@@ -55,7 +54,6 @@ public class Home extends AppCompatActivity
 
     private void Init_Components(){
         fab = findViewById(R.id.fab);
-        imageView = findViewById(R.id.imageView);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -169,13 +167,6 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, Categories.class));
-                finish();
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, Myprofil.class));
                 finish();
             }
         });

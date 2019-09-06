@@ -28,7 +28,6 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:elevation="@dimen/google_1x"
                 android:id="@+id/type"
                 android:gravity="center"
                 android:entries="@array/Cat"
@@ -37,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <Spinner
-                android:elevation="@dimen/google_1x"
                 android:gravity="center"
                 android:entries="@array/SCat"
                 android:padding="10dp"
