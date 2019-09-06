@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@drawable/back2"
-    tools:context=".Front_end.Signup.Type_screen">
+    tools:context=".Front_end.Profils.Myprofil">
 
 
     <ImageView

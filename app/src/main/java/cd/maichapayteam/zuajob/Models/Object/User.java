@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "user")
@@ -45,7 +44,7 @@ public class User extends Model {
     @JsonIgnoreProperties
     public boolean myProfil = false;
 
-    public List<Categorie> prefferences = new ArrayList<>();
+    //public ArrayList<Categorie> prefferences = new ArrayList<>();
 
     public int type = 0;
     public String email = "";

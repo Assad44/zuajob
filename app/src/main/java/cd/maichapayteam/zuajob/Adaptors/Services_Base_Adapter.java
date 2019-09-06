@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,12 @@ public class Services_Base_Adapter extends BaseAdapter {
         TextView S_prix = convertView.findViewById(R.id.S_prix);
         TextView realisation = convertView.findViewById(R.id.realisation);
         RatingBar Rating = convertView.findViewById(R.id.MyRating);
+
+        if (DATA == null )
+            Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
+        else{
+            Toast.makeText(context, "Taile "+ DATA.size(), Toast.LENGTH_SHORT).show();
+        }
 
         Service S = DATA.get(position);
 

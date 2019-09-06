@@ -36,13 +36,12 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         //TODO : Ajouter un lien si le message n'est pas envoyé que l'utilisateur puisse demander un autre message
 
-        numero = Tool.getUserPreferences(context, "phone") + Tool.getUserPreferences(context, "CountryCode");
+        numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
 
-        IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
+        //IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
 
         String advices = "Nous avons envoyé un SMS à votre numéro : \n"+ numero + "\nContenant le code de confirmation\n" +
                 "Si la détection automatique ne fonctionne pas, saisissez manuellement le code réçu";
-
         advice.setText(advices);
     }
 
@@ -84,9 +83,14 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
                 // verify the code
                 code = PhoneCodeNumber.getText().toString();
-
-                CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
-                checkingCodeAsync.execute();
+                // saving in the preferences
+                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+                // goto next activity
+                Intent i = new Intent(context, Identity_screen.class);
+                startActivity(i);
+                finish();
+                /*CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
+                checkingCodeAsync.execute();*/
 
             }
         });
@@ -144,7 +148,6 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
     void passToNextActivity() {
         // saving in the preferences
         Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
-
         // goto next activity
         Intent i = new Intent(context, Identity_screen.class);
         startActivity(i);

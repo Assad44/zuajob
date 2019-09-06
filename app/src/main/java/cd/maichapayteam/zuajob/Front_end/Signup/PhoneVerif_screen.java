@@ -82,8 +82,14 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 codeCountry = contryCode.getSelectedCountryCodeWithPlus();
                 countryName = contryCode.getSelectedCountryName();
 
-                CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
-                checkingNumberAsync.execute();
+                Tool.setUserPreferences(context,"phone",numero);
+                Tool.setUserPreferences(context,"CountryCode",codeCountry);
+                Tool.setUserPreferences(context,"CountryName",countryName);
+                Intent i = new Intent(context, PhoneConfirm_screen.class);
+                startActivity(i);
+                finish();
+                /*CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
+                checkingNumberAsync.execute();*/
 
             }
         });
@@ -91,7 +97,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(context, Type_screen.class);
+        Intent i = new Intent(context, index_screen.class);
         startActivity(i);
         finish();
     }

@@ -46,10 +46,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nom du jobeur"
-                    android:textSize="20dp"/>
+                    android:textSize="18dp"/>
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Lorem_short"

@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob.Front_end.Signup;
+package cd.maichapayteam.zuajob.Front_end.Profils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import cd.maichapayteam.zuajob.Front_end.Signup.PhoneVerif_screen;
+import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
-public class Type_screen extends AppCompatActivity {
+public class Myprofil extends AppCompatActivity {
 
     Context context = this;
     TextView btn_jobeur,btn_simple_user;
@@ -27,7 +29,7 @@ public class Type_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type_screen);
+        setContentView(R.layout.activity_myprofil);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();

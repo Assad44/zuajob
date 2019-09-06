@@ -25,7 +25,7 @@ public class index_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index_screen);
+        setContentView(R.layout.activity_index_screen2);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -51,7 +51,7 @@ public class index_screen extends AppCompatActivity {
         btn_sinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, Type_screen.class);
+                Intent i = new Intent(context, PhoneVerif_screen.class);
                 startActivity(i);
                 finish();
             }

@@ -30,7 +30,7 @@
             ></SearchView>
 
         <LinearLayout
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/search_bar"
             android:padding="10dp"
             android:background="@color/white"
@@ -79,6 +79,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="horizontal">
+
+
 
                     <android.support.v7.widget.CardView
                         android:layout_width="350dp"
@@ -209,7 +211,49 @@
                         </LinearLayout>
 
                     </android.support.v7.widget.CardView>
+                    
+                    <android.support.v7.widget.CardView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/white"
+                        android:elevation="10dp">
 
+                        <LinearLayout
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:gravity="center"
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Toutes les catégories "
+                                android:textSize="30dp"/>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/ic_more_primary" />
+                            <TextView
+                                android:gravity="center"
+                                android:textColor="@color/dark8"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Lorem_short"
+                                android:textSize="15dp"/>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
 
@@ -327,6 +371,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:padding="10dp"
+                        android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -338,7 +383,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="A propos de Zua-job ?"
-                            android:textSize="30dp"/>
+                            android:textSize="25dp"/>
                         <TextView
                             android:textColor="@color/dark8"
                             android:layout_marginLeft="10dp"

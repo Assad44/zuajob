@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/profil"
+        android:id="@+id/publication"
         android:icon="@drawable/ic_menu_slideshow"
+        android:title="@string/menu_publication" />
+    <item
+        app:showAsAction="always"
+        android:id="@+id/profil"
+        android:icon="@drawable/ic_user_white"
         android:title="@string/menu_profil" />
     <item
         app:showAsAction="never"
-        android:id="@+id/search"
+        android:id="@+id/share"
         android:title="Partager le lien" />
     <item
         app:showAsAction="always"

@@ -29,6 +29,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
+import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.R;
 
@@ -253,7 +254,26 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.publication) {
+            Intent i = new Intent(context, Publication_blank.class);
+            startActivity(i);
+            finish();
+            return true;
+        }
+        if (id == R.id.profil) {
+            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.share) {
+            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         if (id == R.id.action_settings) {
+            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.nav_exit) {
+            onBackPressed();
             return true;
         }
 
