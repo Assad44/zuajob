@@ -81,7 +81,6 @@ public class index_screen extends AppCompatActivity {
         btn_sinscrire = findViewById(R.id.btn_sinscrire);
         btn_se_connecter = findViewById(R.id.btn_se_connecter);
 
-
         User myProfil = User.myProfile();
 
         if(myProfil!=null) {

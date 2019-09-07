@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Pays;
 import cd.maichapayteam.zuajob.Models.Object.RandomUser;
 import cd.maichapayteam.zuajob.Models.Object.User;
@@ -35,6 +36,7 @@ import okhttp3.Response;
 public class RemoteDataSync {
 
     private static String BASE_URL = "http://192.168.43.60/doxa_event_server/v1/";
+    private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
 
     public static boolean confirmCode(String numero, String code) {
         String url = BASE_URL + "confirmenumero?numero=" + numero + "&code=" + code;
@@ -210,6 +212,32 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             Log.e(TAG + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    public static List<Categorie> getListCategorie () {
+        String url = BASE_URL2 + "category/";
+
+        List<Categorie> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .build();
+
+        try{
+            ANResponse<List<Categorie>> response = request.executeForObjectList(Categorie.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                for (Categorie object : list) {
+                    Log.e("Category", "designation : " + object.designation);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Category" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Category" + ":errorLocal", ex.getMessage());
         }
 
         return list;

@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Front_end;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,7 @@ import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,6 +81,7 @@ public class Home extends AppCompatActivity
         search_bar.setVisibility(View.GONE);
 
         rechercher.setIconified(true);
+
     }
 
 
@@ -340,4 +343,15 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    class CheckAsync extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            RemoteDataSync.getListCategorie();
+            return null;
+        }
+
+    }
+
 }

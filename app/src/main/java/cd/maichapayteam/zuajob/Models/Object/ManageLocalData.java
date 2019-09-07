@@ -45,7 +45,7 @@ public class ManageLocalData {
 
     public static List<Categorie> listCategorie() {
         List<Categorie> list = Categorie.listCategorie();
-        if(list.size()==0) Categorie.createCategories();
+        if(list.size()==0) RemoteDataSync.getListCategorie();
         return list;
     }
 
