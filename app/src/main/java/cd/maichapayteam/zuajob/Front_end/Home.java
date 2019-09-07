@@ -1,6 +1,7 @@
 package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 
 public class Home extends AppCompatActivity
@@ -50,9 +52,15 @@ public class Home extends AppCompatActivity
     LinearLayout search_bar;
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
 
+    User myProfile;
+
     //HorizontalListView hlistview;
 
     private void Init_Components(){
+        myProfile = User.myProfile();
+
+        //TODO modifier le screen par rapport au profil de l'utilisateur
+
         fab = findViewById(R.id.fab);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -287,7 +295,18 @@ public class Home extends AppCompatActivity
             return true;
         }
         if (id == R.id.nav_exit) {
-            onBackPressed();
+            //onBackPressed();
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            adb.setTitle("Déconnexion");
+            adb.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
+            adb.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    User.deconnect();
+                    finish();
+                }
+            });
+            adb.setNegativeButton("Non", null);
             return true;
         }
 

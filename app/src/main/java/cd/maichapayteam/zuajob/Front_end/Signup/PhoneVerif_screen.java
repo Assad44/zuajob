@@ -1,8 +1,11 @@
 package cd.maichapayteam.zuajob.Front_end.Signup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,11 +17,15 @@ import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 
+import cd.maichapayteam.zuajob.Front_end.Login;
+import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneVerif_screen extends AppCompatActivity {
+
+    ProgressDialog progressDialog;
 
     Context context = this;
     ImageView btn_back_arrow;
@@ -82,14 +89,8 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 codeCountry = contryCode.getSelectedCountryCodeWithPlus();
                 countryName = contryCode.getSelectedCountryName();
 
-                Tool.setUserPreferences(context,"phone",numero);
-                Tool.setUserPreferences(context,"CountryCode",codeCountry);
-                Tool.setUserPreferences(context,"CountryName",countryName);
-                Intent i = new Intent(context, PhoneConfirm_screen.class);
-                startActivity(i);
-                finish();
-                /*CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
-                checkingNumberAsync.execute();*/
+                CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
+                checkingNumberAsync.execute();
 
             }
         });
@@ -107,27 +108,53 @@ public class PhoneVerif_screen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
+            progressDialog = new ProgressDialog(PhoneVerif_screen.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Vérification du numéro");
+            progressDialog.show();
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return RemoteDataSync.checkNumero(codeCountry+numero);
+            progressDialog.setMessage("Vérification de votre numéro de téléphone en cours...");
+            //return RemoteDataSync.checkNumero(codeCountry+numero);
+            return ManageLocalData.checkNumero(numero);
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //TODO : dismiss a load dialog here
-            if(aBoolean) {
+            progressDialog.dismiss();
+            if(!aBoolean) {
                 Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);
                 Tool.setUserPreferences(context,"CountryName",countryName);
                 Intent i = new Intent(context, PhoneConfirm_screen.class);
                 startActivity(i);
+                RemoteDataSync.sendSMS(codeCountry+numero);
                 finish();
             } else {
                 /*TODO : show a dialog "This phone number already exists. Do you want to connect?"
                     If he wants to connect we open the connection activity, otherwise we leave the application */
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(PhoneVerif_screen.this);
+                alertDialog.setTitle("Numéro existe");
+                alertDialog.setMessage("Ce numéro existe déjà dans notre base de donnée. Si ce numéro vous appartient, vous devez plutôt vous connecter. Voullez-vous vous connecter ?");
+                alertDialog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+                        Intent i = new Intent(context, Login.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+                alertDialog.show();
             }
 
             super.onPostExecute(aBoolean);

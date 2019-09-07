@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +19,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".Main">
+
+        <meta-data android:name="AA_DB_NAME" android:value="test" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="cd.maichapayteam.zuajob.Models.Object.User, cd.maichapayteam.zuajob.Models.Object.Categorie, cd.maichapayteam.zuajob.Models.Object.SousCategorie" />
+
         <activity android:name=".Front_end.Blanks.Publication_blank"></activity>
         <activity android:name=".Front_end.Jobeur_list" />
         <activity android:name=".Front_end.Publications_view" />

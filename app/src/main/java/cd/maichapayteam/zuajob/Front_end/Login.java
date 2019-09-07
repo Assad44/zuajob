@@ -1,8 +1,12 @@
 package cd.maichapayteam.zuajob.Front_end;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,9 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cd.maichapayteam.zuajob.Front_end.Signup.Identity_screen;
+import cd.maichapayteam.zuajob.Front_end.Signup.PhoneConfirm_screen;
+import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 
 public class Login extends AppCompatActivity {
+
+    ProgressDialog progressDialog;
 
     Context context = this;
     int exit = 0;
@@ -57,9 +67,12 @@ public class Login extends AppCompatActivity {
                 if (CheckingZone() == false) return;
 
 
-                Intent i = new Intent(context, Home.class);
-                startActivity(i);
-                finish();
+                LoginAsync loginAsync = new LoginAsync();
+                loginAsync.execute();
+                //Intent i = new Intent(context, Home.class);
+                //startActivity(i);
+                //finish();
+                //Toast.makeText(Login.this, User.findByPhoneNumer("897175763").password, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -87,6 +100,51 @@ public class Login extends AppCompatActivity {
             passe.setError("Champ obligatoire");
             return false;
         }else return true;
+    }
+
+    class LoginAsync extends AsyncTask<String, String, User> {
+
+        @Override
+        protected void onPreExecute() {
+            //TODO : show a load dialog here
+            progressDialog = new ProgressDialog(Login.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Connexion");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected User doInBackground(String... strings) {
+            progressDialog.setMessage("Connexion encours...");
+            //return RemoteDataSync.confirmCode(numero, code);
+            return ManageLocalData.login(phone.getText().toString(), passe.getText().toString());
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+            progressDialog.dismiss();
+            //TODO : dismiss a load dialog here
+            if(!result.error) {
+                Intent i = new Intent(context, Home.class);
+                startActivity(i);
+                finish();
+            } else {
+                /*TODO Incorrect password or phone number, report to the user */
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Login.this);
+                alertDialog.setTitle("Incription");
+                alertDialog.setMessage("Le numéro de téléphone et le mot de passe fourni ne correspondent pas. Veuillez vérifier et réessayer SVP.");
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+
+                    }
+                });
+                alertDialog.show();
+            }
+
+            super.onPostExecute(result);
+        }
     }
 
 }

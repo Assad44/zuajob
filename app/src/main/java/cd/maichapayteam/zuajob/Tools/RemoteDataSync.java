@@ -1,6 +1,8 @@
 package cd.maichapayteam.zuajob.Tools;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
@@ -8,17 +10,25 @@ import com.androidnetworking.common.ANResponse;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.Object.Pays;
+import cd.maichapayteam.zuajob.Models.Object.RandomUser;
 import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Models.Object.User2;
 import cd.maichapayteam.zuajob.Models.Object.Ville;
 import okhttp3.Response;
 
@@ -65,22 +75,30 @@ public class RemoteDataSync {
     }
 
     public static boolean sendSMS(String numero) {
-        String url = BASE_URL + "sendsms?numero=" + numero;
-        String TAG = "checknumero";
-
-        ANRequest request = AndroidNetworking.get(url)
-                .build();
+        String url = BASE_URL + "sendsms";
 
         try{
-            ANResponse<String> response = request.executeForString();
-            if (response.isSuccess()) {
-                if(response.getResult().equals("1")) return true;
-            }
+            AndroidNetworking.get(url)
+                    .addQueryParameter("numero", numero)
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            //if (response.isSuccess()) {
+                            //    if(response.getResult().equals("1")) return true;
+                            //}
+                        }
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                        }
+                    });
         } catch (Exception ex) {
 
         }
 
-        return false;
+        return true;
     }
 
     public static void uploadImageAsync(File image, final LoadImageListener loadImageListener) {
@@ -304,6 +322,77 @@ public class RemoteDataSync {
         void OnResult(long id, String url);
         void OnProgress(long bytesUploaded, long totalBytes);
         void OnError(String message);
+    }
+
+
+
+    /*
+
+        LOAD DATA TEST
+
+    * */
+
+    public static List<User> getRandomUser () {
+        String url = "https://randomuser.me/api/?results=100";
+
+        List<User> userList = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .build();
+
+        try{
+            ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
+            if (response.isSuccess()) {
+                Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
+                int i = 1;
+                for (User2 user2 : response.getResult().results) {
+                    User user = new User();
+                    user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+                    user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+                    user.remoteId = i;
+                    user.urlPhoto = user2.picture.thumbnail;
+                    user.type = new Random().nextInt(2);
+                    user.phone = 890000000 + new Random().nextInt(899999999 - 890000000);
+                    user.codePays = "+243";
+                    user.pays = "Congo DR";
+                    user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
+                    user.email = user2.email;
+                    user.sexe = "M";
+                    if(user2.gender.equals("female")) user.sexe = "F";
+                    user.save();
+                    userList.add(user);
+                    Log.e("RandomUser", user2.name.first + " " + user2.name.last);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("RandomUser", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("RandomUser", ex.getMessage());
+        }
+
+        return userList;
+    }
+
+    public static String getRandomParagraphe (int nombrePhrase) {
+        String url = "https://baconipsum.com/api/?type=all-meat&sentences=" + String.valueOf(nombrePhrase) +"&start-with-lorem=0";
+
+        ANRequest request = AndroidNetworking.get(url)
+                .build();
+
+        try{
+            ANResponse<String> response = request.executeForString();
+            long i = 0;
+            if (response.isSuccess()) {
+                String rep = response.getResult();
+                Log.e("RandomUser", rep);
+                return rep.substring(2, rep.length()-2);
+            } else {
+                return "Aucune phrase trouvée";
+            }
+        } catch (Exception ex) {
+            return "Aucune phrase trouvée";
+        }
     }
 
 }

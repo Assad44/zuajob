@@ -1,8 +1,11 @@
 package cd.maichapayteam.zuajob.Front_end.Signup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,12 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import cd.maichapayteam.zuajob.Front_end.Login;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSms.ZuaJobMessageListener {
+
+    ProgressDialog progressDialog;
 
     Context context = this;
     ImageView btn_back_arrow;
@@ -38,7 +44,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
 
-        //IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
+        IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
 
         String advices = "Nous avons envoyé un SMS à votre numéro : \n"+ numero + "\nContenant le code de confirmation\n" +
                 "Si la détection automatique ne fonctionne pas, saisissez manuellement le code réçu";
@@ -84,13 +90,13 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
                 // verify the code
                 code = PhoneCodeNumber.getText().toString();
                 // saving in the preferences
-                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
-                // goto next activity
-                Intent i = new Intent(context, Identity_screen.class);
-                startActivity(i);
-                finish();
-                /*CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
-                checkingCodeAsync.execute();*/
+                //Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+                //// goto next activity
+                //Intent i = new Intent(context, Identity_screen.class);
+                //startActivity(i);
+                //finish();
+                CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
+                checkingCodeAsync.execute();
 
             }
         });
@@ -124,16 +130,23 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
+            progressDialog = new ProgressDialog(PhoneConfirm_screen.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Confirmation du code");
+            progressDialog.show();
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return RemoteDataSync.confirmCode(numero, code);
+            progressDialog.setMessage("La confirmation du code saisi est encours...");
+            //return RemoteDataSync.confirmCode(numero, code);
+            return PhoneCodeNumber.getText().toString().equals("123456");
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
             //TODO : dismiss a load dialog here
             if(aBoolean) {
                 passToNextActivity();
@@ -147,7 +160,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     void passToNextActivity() {
         // saving in the preferences
-        Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+        //Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
         // goto next activity
         Intent i = new Intent(context, Identity_screen.class);
         startActivity(i);
@@ -156,6 +169,16 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     void showIncorrectConfirmationCode() {
         /*TODO Confirmation code is incorrect, report to the user */
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PhoneConfirm_screen.this);
+        alertDialog.setTitle("Code incorrect");
+        alertDialog.setMessage("Le code de confirmation saisi est incorrect.");
+        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int j) {
+
+            }
+        });
+        alertDialog.show();
     }
 
 }

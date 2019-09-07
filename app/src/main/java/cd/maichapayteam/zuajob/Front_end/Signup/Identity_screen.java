@@ -1,10 +1,14 @@
 package cd.maichapayteam.zuajob.Front_end.Signup;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,13 +23,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Identity_screen extends AppCompatActivity {
+
+    ProgressDialog progressDialog;
 
     Context context = this;
     private static final int PICK_FILE_REQUEST = 12;
@@ -88,15 +99,17 @@ public class Identity_screen extends AppCompatActivity {
                     return;
                 }
                 // saving in the preferences
-                Tool.setUserPreferences(context,"nom",nom.getText().toString().replace("'","''"));
-                Tool.setUserPreferences(context,"prenom",prenom.getText().toString().replace("'","''"));
-                Tool.setUserPreferences(context,"birthday",birthday.getText().toString().replace("'","''"));
-                Tool.setUserPreferences(context,"sexe",genre.getSelectedItem().toString());
-                // saving in the preferences
-                Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
-                Intent i = new Intent(context, Home.class);
-                startActivity(i);
-                finish();
+                //Tool.setUserPreferences(context,"nom",nom.getText().toString().replace("'","''"));
+                //Tool.setUserPreferences(context,"prenom",prenom.getText().toString().replace("'","''"));
+                //Tool.setUserPreferences(context,"birthday",birthday.getText().toString().replace("'","''"));
+                //Tool.setUserPreferences(context,"sexe",genre.getSelectedItem().toString());
+                //Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
+                //Intent i = new Intent(context, Home.class);
+                //startActivity(i);
+                //finish();
+
+                InscriptionAsync inscriptionAsync = new InscriptionAsync();
+                inscriptionAsync.execute();
             }
         });
         Datepicker.setOnClickListener(new View.OnClickListener() {
@@ -117,9 +130,75 @@ public class Identity_screen extends AppCompatActivity {
     }
 
 
+    class InscriptionAsync extends AsyncTask<String, String, User> {
+
+        @Override
+        protected void onPreExecute() {
+            //TODO : show a load dialog here
+            progressDialog = new ProgressDialog(Identity_screen.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Inscription");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected User doInBackground(String... strings) {
+            progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
+            User user = new User();
+            user.codePays = Tool.getUserPreferences(Identity_screen.this, "CountryCode");
+            user.pays = Tool.getUserPreferences(Identity_screen.this, "CountryName");
+            user.phone = Integer.parseInt(Tool.getUserPreferences(Identity_screen.this, "phone"));
+            user.nom = nom.getText().toString().replace("'","''");
+            user.prenom = prenom.getText().toString().replace("'","''");
+            String stringDate = birthday.getText().toString().replace("'","''");
+            long bday = 0;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("");
+                Date date = sdf.parse(stringDate);
+                bday = date.getTime();
+            } catch (ParseException e) {
+
+            }
+            user.birthday = bday;
+            user.sexe = genre.getSelectedItem().toString();
+            user.password = passe.getText().toString().replace("'","''");
+            user.type = type.getSelectedItemPosition()-1;
+
+            //return RemoteDataSync.confirmCode(numero, code);
+            return ManageLocalData.createUser(user);
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+            progressDialog.dismiss();
+            //TODO : dismiss a load dialog here
+            if(result!=null) {
+                Intent i = new Intent(context, Home.class);
+                startActivity(i);
+                finish();
+            } else {
+                /*TODO An orror are occured when signin, report to the user */
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Identity_screen.this);
+                alertDialog.setTitle("Incription");
+                alertDialog.setMessage(result.errorMessage);
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+
+                    }
+                });
+                alertDialog.show();
+            }
+
+            super.onPostExecute(result);
+        }
+    }
+
     // OWN METHODS
 
     private boolean CheckingZone(){
+        //TODO l'utilisateur doit séléctionner le type
         if (TextUtils.isEmpty(nom.getText().toString())){
             nom.setError("Champ obligatoire");
             return false;

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +13,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
+
+import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Login;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 public class index_screen extends AppCompatActivity {
 
@@ -74,6 +80,16 @@ public class index_screen extends AppCompatActivity {
     private void Init_Components() {
         btn_sinscrire = findViewById(R.id.btn_sinscrire);
         btn_se_connecter = findViewById(R.id.btn_se_connecter);
+
+
+        User myProfil = User.myProfile();
+
+        if(myProfil!=null) {
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }
+
     }
 
 
