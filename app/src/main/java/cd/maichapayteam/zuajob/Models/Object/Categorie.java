@@ -15,7 +15,6 @@ public class Categorie extends Model {
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
-
     public long id = -1;
     public String designation = "";
     public String urlImage = "";

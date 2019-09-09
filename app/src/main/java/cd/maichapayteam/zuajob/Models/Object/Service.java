@@ -13,7 +13,6 @@ import java.util.Random;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "user")
 public class Service extends Model {
 
     public boolean error = false;
