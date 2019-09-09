@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,13 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Sous_Categorie_Base_Adapter;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Categories;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Sous_Categories;
-import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;
 

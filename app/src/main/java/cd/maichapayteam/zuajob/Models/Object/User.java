@@ -15,114 +15,268 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "user")
-public class User extends Model {
+public class User {
 
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
-
-    @JsonProperty("id")
-    @Column(name = "remoteId")
-    public long remoteId = -1;
-
-    @Column(name = "authCode")
+    public long id = -1;
     public String authCode = "";
-
-    @Column(name = "prenom")
     public String prenom = "";
-
-    @Column(name = "nom")
     public String nom = "";
-
-    @Column(name = "phone")
-    public int phone = 0;
-
-    @Column(name = "adresse")
+    public String phone = "";
     public String adresse = "";
-
-    @Column(name = "pays")
     public String pays = "";
-
-    @Column(name = "ville")
     public String ville = "";
-
-    @Column(name = "quartier")
     public String quartier = "";
-
-    @Column(name = "urlPhoto")
     public String urlPhoto = "";
-
-    @Column(name = "identiteVerifie")
     public boolean identiteVerifie = false;
-
-    @Column(name = "birthday")
-    public long birthday = 0;
+    public String birthday = "";
 
     @JsonIgnoreProperties
-    @Column(name = "typeIdentite")
     public int typeIdentite = 0;
 
     @JsonIgnoreProperties
-    @Column(name = "numIdentite")
     public String numIdentite = "";
 
     @JsonIgnoreProperties
-    @Column(name = "myProfil")
     public boolean myProfil = false;
 
-    //public ArrayList<Categorie> prefferences = new ArrayList<>();
-
-    @Column(name = "type")
     public int type = 0;
-
-    @Column(name = "email")
     public String email = "";
-
-    @Column(name = "password")
     public String password = "";
-
-    @Column(name = "sexe")
     public String sexe = "";
-
-    @Column(name = "codePays")
     public String codePays = "+243";
-
-    @Column(name = "commune")
     public String commune = "";
-
-    @Column(name = "about")
     public String about = "";
 
-    public static User find(int id) {
-        return new Select().from(User.class).where("remoteId = ?", id).executeSingle();
+    public boolean isError() {
+        return error;
     }
 
-    public static User findByPhoneNumer(String phone) {
-        return new Select().from(User.class).where("phone = ?", Integer.parseInt(phone)).executeSingle();
+    public void setError(boolean error) {
+        this.error = error;
     }
 
-    public static User myProfile() {
-        return new Select().from(User.class).where("myProfil = ?", 1).executeSingle();
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public static boolean deconnect() {
-        /*User user = myProfile();
-        if(user!=null) {
-            user.delete();
-        }*/
-        return true;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public static List<User> listJobeurs(int next) {
-        next *= 20;
-        return new Select().from(User.class).where("type = ?", 1).limit(next + ", 20").execute();
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public static List<User> listJobeurs() {
-        return new Select().from(User.class).where("type = ?", 1).execute();
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getQuartier() {
+        return quartier;
+    }
+
+    public void setQuartier(String quartier) {
+        this.quartier = quartier;
+    }
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+
+    public boolean isIdentiteVerifie() {
+        return identiteVerifie;
+    }
+
+    public void setIdentiteVerifie(boolean identiteVerifie) {
+        this.identiteVerifie = identiteVerifie;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getTypeIdentite() {
+        return typeIdentite;
+    }
+
+    public void setTypeIdentite(int typeIdentite) {
+        this.typeIdentite = typeIdentite;
+    }
+
+    public String getNumIdentite() {
+        return numIdentite;
+    }
+
+    public void setNumIdentite(String numIdentite) {
+        this.numIdentite = numIdentite;
+    }
+
+    public boolean isMyProfil() {
+        return myProfil;
+    }
+
+    public void setMyProfil(boolean myProfil) {
+        this.myProfil = myProfil;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getCodePays() {
+        return codePays;
+    }
+
+    public void setCodePays(String codePays) {
+        this.codePays = codePays;
+    }
+
+    public String getCommune() {
+        return commune;
+    }
+
+    public void setCommune(String commune) {
+        this.commune = commune;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    //public static User find(int id) {
+    //    return new Select().from(User.class).where("remoteId = ?", id).executeSingle();
+    //}
+//
+    //public static User findByPhoneNumer(String phone) {
+    //    return new Select().from(User.class).where("phone = ?", Integer.parseInt(phone)).executeSingle();
+    //}
+//
+    //public static User myProfile() {
+    //    return new Select().from(User.class).where("myProfil = ?", 1).executeSingle();
+    //}
+//
+    //public static boolean deconnect() {
+    //    User user = myProfile();
+    //    if(user!=null) {
+    //        user.delete();
+    //    }
+    //    return true;
+    //}
+//
+    //public static List<User> listJobeurs(int next) {
+    //    next *= 20;
+    //    return new Select().from(User.class).where("type = ?", 1).limit(next + ", 20").execute();
+    //}
+//
+    //public static List<User> listJobeurs() {
+    //    return new Select().from(User.class).where("type = ?", 1).execute();
+    //}
 
 }

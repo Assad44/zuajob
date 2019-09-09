@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob.Models.Object;
+package cd.maichapayteam.zuajob.Tools.Object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

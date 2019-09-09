@@ -34,28 +34,24 @@ public class GeneralClass {
 
     public static User getAleatoire() {
         User user = new User();
-        user.remoteId = new Random().nextInt();
+        //user.remoteId = new Random().nextInt();
         user.prenom = GeneralClass.getMot();
         user.nom = GeneralClass.getMot();
         return user;
     }
 
-    public static Devise getDAleatoire() {
-        return Devise.getListDevise().get(new Random().nextInt(1));
-    }
-
     public static Categorie getDAleatoireCat(){
         Categorie cat = new Categorie();
-        cat.remoteId = new Random().nextInt();
+        cat.id = new Random().nextInt();
         cat.designation = getMot();
         return cat;
     }
 
     public static SousCategorie getDAleatoireSCat(){
         SousCategorie cat = new SousCategorie();
-        cat.remoteId = new Random().nextInt();
+        cat.id = new Random().nextInt();
         cat.designation = getMot();
-        cat.categorie = getDAleatoireCat();
+        //cat.categorie = getDAleatoireCat();
         return cat;
     }
 

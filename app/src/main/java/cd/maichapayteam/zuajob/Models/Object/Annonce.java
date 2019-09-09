@@ -1,19 +1,12 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Service {
+public class Annonce {
 
     public boolean error = false;
     public String errorMessage = "";
@@ -24,14 +17,13 @@ public class Service {
     public String description = "";
     public String devise = "";
     public float montant = 0;
-    public long idJobeur = -1;
-    public String nomsJobeur = "";
-    public String phoneJobeur = "";
-    public String urlImageJobeur = "";
+    public long idUser = -1;
+    public String nomsUser = "";
+    public String phoneUser = "";
+    public String urlImageUser = "";
     public long idCategorie = -1;
     public String categorie = "";
-    public int nombreRealisation = 0;
-    public int cote = 0;
+    public String date = "";
 
     public boolean isError() {
         return error;
@@ -73,6 +65,14 @@ public class Service {
         this.idSousCategorie = idSousCategorie;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getSousCategorie() {
         return sousCategorie;
     }
@@ -105,36 +105,36 @@ public class Service {
         this.montant = montant;
     }
 
-    public long getIdJobeur() {
-        return idJobeur;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setIdJobeur(long idJobeur) {
-        this.idJobeur = idJobeur;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
-    public String getNomsJobeur() {
-        return nomsJobeur;
+    public String getNomsUser() {
+        return nomsUser;
     }
 
-    public void setNomsJobeur(String nomsJobeur) {
-        this.nomsJobeur = nomsJobeur;
+    public void setNomsUser(String nomsUser) {
+        this.nomsUser = nomsUser;
     }
 
-    public String getPhoneJobeur() {
-        return phoneJobeur;
+    public String getPhoneUser() {
+        return phoneUser;
     }
 
-    public void setPhoneJobeur(String phoneJobeur) {
-        this.phoneJobeur = phoneJobeur;
+    public void setPhoneUser(String phoneUser) {
+        this.phoneUser = phoneUser;
     }
 
-    public String getUrlImageJobeur() {
-        return urlImageJobeur;
+    public String getUrlImageUser() {
+        return urlImageUser;
     }
 
-    public void setUrlImageJobeur(String urlImageJobeur) {
-        this.urlImageJobeur = urlImageJobeur;
+    public void setUrlImageUser(String urlImageUser) {
+        this.urlImageUser = urlImageUser;
     }
 
     public long getIdCategorie() {
@@ -151,41 +151,6 @@ public class Service {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
-    }
-
-    public int getNombreRealisation() {
-        return nombreRealisation;
-    }
-
-    public void setNombreRealisation(int nombreRealisation) {
-        this.nombreRealisation = nombreRealisation;
-    }
-
-    public int getCote() {
-        return cote;
-    }
-
-    public void setCote(int cote) {
-        this.cote = cote;
-    }
-
-    public static ArrayList<Service> listService() {
-        ArrayList<Service> list = new ArrayList<>();
-        //List<User> listPrestateur = User.listJobeurs();
-        List<User> listPrestateur = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            //Service service = new Service();
-            //service.remoteId = i++;
-            //service.description = RemoteDataSync.getRandomParagraphe(new Random().nextInt(9) + 1);
-            //service.montant = new Random().nextFloat();
-            ////service.cotes = Cote.getListCote();
-            //service.nombreRealisation = new Random().nextInt();
-            //service.prestateur = listPrestateur.get(new Random().nextInt(listPrestateur.size())); //
-            ////service.devise = GeneralClass.getDAleatoire();
-            //service.sousCategorie = GeneralClass.getDAleatoireSCat(); //
-            //list.add(service);
-        }
-        return list;
     }
 
 }

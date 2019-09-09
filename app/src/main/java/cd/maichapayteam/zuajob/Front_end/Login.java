@@ -118,7 +118,8 @@ public class Login extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Connexion encours...");
             //return RemoteDataSync.confirmCode(numero, code);
-            return ManageLocalData.login(phone.getText().toString(), passe.getText().toString());
+            //ManageLocalData.login(phone.getText().toString(), passe.getText().toString());
+            return null;
         }
 
         @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import cd.maichapayteam.zuajob.Models.Object.Users;
+import cd.maichapayteam.zuajob.Tools.Object.Users;
 
 /**
  * Created by Deon-Mass on 24/02/2018.

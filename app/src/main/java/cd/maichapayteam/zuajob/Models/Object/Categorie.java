@@ -10,34 +10,78 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "categorie")
-public class Categorie extends Model {
+public class Categorie {
 
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
-
-    @JsonProperty("id")
-    @Column(name = "remoteId")
-    public long remoteId = -1;
-
-    @Column(name = "designation")
+    public long id = -1;
     public String designation = "";
-
-    @Column(name = "urlImage")
+    public String description = "";
     public String urlImage = "";
 
-
-    public List<SousCategorie> items() {
-        return getMany(SousCategorie.class, "categorie");
+    public boolean isError() {
+        return error;
     }
 
-    public static Categorie find(int id) {
-        return new Select().from(Categorie.class).where("id = ?", id).executeSingle();
+    public void setError(boolean error) {
+        this.error = error;
     }
 
-    public static List<Categorie> listCategorie() {
-        return new Select().from(Categorie.class).execute();
+    public String getErrorMessage() {
+        return errorMessage;
     }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    //public static Categorie find(int id) {
+    //    return new Select().from(Categorie.class).where("id = ?", id).executeSingle();
+    //}
+//
+    //public static List<Categorie> listCategorie() {
+    //    return new Select().from(Categorie.class).execute();
+    //}
 
 }

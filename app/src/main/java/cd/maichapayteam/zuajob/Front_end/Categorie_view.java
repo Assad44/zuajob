@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Categories;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Sous_Categories;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 
 public class Categorie_view extends AppCompatActivity {
