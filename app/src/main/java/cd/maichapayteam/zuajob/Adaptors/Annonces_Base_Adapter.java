@@ -7,18 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 

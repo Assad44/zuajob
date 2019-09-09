@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.RandomUser;
+//import cd.maichapayteam.zuajob.Models.Object.RandomUser;
 import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.Models.Object.User2;
+//import cd.maichapayteam.zuajob.Models.Object.User2;
 //import cd.maichapayteam.zuajob.Models.Object.Ville;
 
 public class RemoteDataSync {

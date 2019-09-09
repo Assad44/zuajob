@@ -1,38 +1,26 @@
 package cd.maichapayteam.zuajob.Front_end.Signup;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.Models.Object.Users;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Identity_screen extends AppCompatActivity {

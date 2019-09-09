@@ -1,7 +1,5 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
-import android.widget.ArrayAdapter;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
