@@ -155,7 +155,7 @@ public class Publications_view extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.add) {
             Intent i = new Intent(context, Publication_blank.class);
-            i.putExtra("from", "servicesList");
+            i.putExtra("type", title);
             startActivity(i);
             finish();
             return true;

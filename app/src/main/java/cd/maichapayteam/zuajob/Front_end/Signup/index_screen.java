@@ -52,14 +52,6 @@ public class index_screen extends AppCompatActivity {
 
         //TODO check if user exist, pass to home directly
 
-
-        List<Categorie> D =  ManageLocalData.listCategorie();
-
-        for (Categorie c: D) {
-            Toast.makeText(context, c.designation, Toast.LENGTH_SHORT).show();
-            Log.e("FFFFFFFFFFF",c.designation );
-        }
-
     }
 
 

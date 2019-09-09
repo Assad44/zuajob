@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -23,10 +22,10 @@ import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.R;
 
-public class Mes_annonces extends AppCompatActivity {
+public class Mes_services extends AppCompatActivity {
 
     Context context = this;
-    GridView list;
+    ListView list;
     SearchView rechercher;
 
     ArrayList<Services> SERVICES = new ArrayList<>();
@@ -36,7 +35,6 @@ public class Mes_annonces extends AppCompatActivity {
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
     }
-
     void Load_SERVICE(){
         SERVICES.clear();
         for (int i = 0; i < 10; i++) {
@@ -61,9 +59,9 @@ public class Mes_annonces extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mes_annonces);
+        setContentView(R.layout.activity_mes_services);
 
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("Mes services");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
@@ -73,7 +71,6 @@ public class Mes_annonces extends AppCompatActivity {
         // Todo ; launching methods
         Load_SERVICE();
     }
-
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -158,5 +155,6 @@ public class Mes_annonces extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

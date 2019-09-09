@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Front_end.Mines.Mes_annonces">
+    tools:context=".Front_end.Mines.Mes_services">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,10 +28,11 @@
 
     </LinearLayout>
 
-    <GridView
+    <ListView
         android:numColumns="auto_fit"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></GridView>
+        android:layout_height="match_parent"></ListView>
+
 
 </LinearLayout>
