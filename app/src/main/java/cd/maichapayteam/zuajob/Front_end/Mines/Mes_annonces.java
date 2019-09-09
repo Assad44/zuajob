@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
@@ -49,10 +50,10 @@ public class Mes_annonces extends AppCompatActivity {
             SERVICES.add(s);
         }
 
-        if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        if (null == SERVICES)
+            ;
         else{
-            Toast.makeText(context, "" + SERVICES.size(), Toast.LENGTH_SHORT).show();
-            list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+            list.setAdapter(new Annonces_Base_Adapter(context, SERVICES));
         }
 
     }
