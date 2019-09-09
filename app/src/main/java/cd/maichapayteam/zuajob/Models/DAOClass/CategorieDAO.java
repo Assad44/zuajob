@@ -102,22 +102,6 @@ public class CategorieDAO extends DAOBase {
         }
     }
 
-    //public List<Dechet> findAll(){
-    //    List<Dechet> list = new ArrayList<>();
-    //    try{
-    //        open();
-    //        Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
-    //        while (c.moveToNext()) {
-    //            list.add(find(c.getLong(0)));
-    //        }
-    //        c.close();
-    //        close();
-    //    }catch (Exception e){
-//
-    //    }
-    //    return list;
-    //}
-
     public long supprimer(long id) {
         open();
         long rep = mDb.delete(TABLE_NOM, KEY + " = ?", new String[]{String.valueOf(id)});
