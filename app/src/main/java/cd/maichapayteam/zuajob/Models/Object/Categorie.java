@@ -17,6 +17,7 @@ public class Categorie extends Model {
     public int errorCode = 0;
     public long id = -1;
     public String designation = "";
+    public String description = "";
     public String urlImage = "";
 
     //public static Categorie find(int id) {
