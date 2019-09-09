@@ -89,8 +89,17 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 codeCountry = contryCode.getSelectedCountryCodeWithPlus();
                 countryName = contryCode.getSelectedCountryName();
 
+                Tool.setUserPreferences(context,"phone",numero);
+                Tool.setUserPreferences(context,"CountryCode",codeCountry);
+                Tool.setUserPreferences(context,"CountryName",countryName);
+                Intent i = new Intent(context, PhoneConfirm_screen.class);
+                startActivity(i);
+                RemoteDataSync.sendSMS(codeCountry+numero);
+                finish();
+
+/*
                 CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
-                checkingNumberAsync.execute();
+                checkingNumberAsync.execute();*/
 
             }
         });
@@ -149,6 +158,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int j) {
+
                         Intent i = new Intent(context, Login.class);
                         startActivity(i);
                         finish();

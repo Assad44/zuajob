@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
+import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Login;
 import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Models.Object.Users;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class index_screen extends AppCompatActivity {
 
@@ -81,16 +84,43 @@ public class index_screen extends AppCompatActivity {
         btn_sinscrire = findViewById(R.id.btn_sinscrire);
         btn_se_connecter = findViewById(R.id.btn_se_connecter);
 
+        if (!Tool.getUserPreferences(context, "FisrtUse").equals("")){
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }
+
+        if (null != Users.getall(context)){
+            Toast.makeText(context, "Profil determiné", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }else{
+            Toast.makeText(context, "Aucun Profil trouvé", Toast.LENGTH_SHORT).show();
+        }
+
+        /*if (Tool.getUserPreferences(context,"phone").equals("")){
+            Toast.makeText(context, "Profil determiné", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }else{
+            Toast.makeText(context, "Aucun Profil trouvé", Toast.LENGTH_SHORT).show();
+        }*/
+/*
         User myProfil = User.myProfile();
 
         if(myProfil!=null) {
             Intent i = new Intent(context, Home.class);
             startActivity(i);
             finish();
-        }
+        }else{
+            Intent i = new Intent(context, Details_publication.class);
+            startActivity(i);
+            finish();
+        }*/
 
     }
-
 
     private void CheckPermission() {
         if (

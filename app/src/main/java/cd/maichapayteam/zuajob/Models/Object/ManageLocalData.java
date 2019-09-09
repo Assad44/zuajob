@@ -12,7 +12,6 @@ public class ManageLocalData {
         user.authCode = generate(32);
         user.myProfil = true;
         user.save();
-
         RemoteDataSync.getRandomUser();
 
         return user;

@@ -72,7 +72,6 @@ public class User extends Model {
 
     //public ArrayList<Categorie> prefferences = new ArrayList<>();
 
-
     @Column(name = "type")
     public int type = 0;
 
@@ -107,10 +106,10 @@ public class User extends Model {
     }
 
     public static boolean deconnect() {
-        User user = myProfile();
+        /*User user = myProfile();
         if(user!=null) {
             user.delete();
-        }
+        }*/
         return true;
     }
 
@@ -122,5 +121,8 @@ public class User extends Model {
     public static List<User> listJobeurs() {
         return new Select().from(User.class).where("type = ?", 1).execute();
     }
+
+
+
 
 }

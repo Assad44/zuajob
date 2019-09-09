@@ -16,19 +16,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
-import cd.maichapayteam.zuajob.Models.Object.Cote;
-import cd.maichapayteam.zuajob.Models.Object.Service;
-import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Services_Base_Adapter extends BaseAdapter {
+public class Annonces_Base_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Services> DATA;
 
-    public Services_Base_Adapter(Context context, ArrayList<Services> DATA) {
+    public Annonces_Base_Adapter(Context context, ArrayList<Services> DATA) {
         this.context = context;
         this.DATA = DATA;
     }

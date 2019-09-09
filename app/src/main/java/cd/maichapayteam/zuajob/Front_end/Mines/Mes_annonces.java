@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob.Front_end;
+package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -17,19 +16,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
-import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.R;
 
-public class Publications_view extends AppCompatActivity {
+public class Mes_annonces extends AppCompatActivity {
 
     Context context = this;
     ListView list;
     SearchView rechercher;
-
 
     ArrayList<Services> SERVICES = new ArrayList<>();
     ArrayList<Services> Search = new ArrayList<>();
@@ -39,17 +36,6 @@ public class Publications_view extends AppCompatActivity {
         rechercher = findViewById(R.id.rechercher);
     }
 
-    private void Load_Datas(){
-        if (!getIntent().hasExtra("type")) onBackPressed();
-
-        /*if (getIntent().getExtras().getString("type").equals("annonces")){
-            ArrayList<Service> DATA = Service.listService();
-            list.setAdapter(new Services_Base_Adapter(context, DATA));
-        }else{
-            list.setAdapter(new Test_Base_Adapter(context, R.layout.modele_list_test));
-        }*/
-
-    }
     void Load_SERVICE(){
         SERVICES.clear();
         for (int i = 0; i < 10; i++) {
@@ -70,11 +56,13 @@ public class Publications_view extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publications_view);
-        getSupportActionBar().setTitle("Publications");
+        setContentView(R.layout.activity_mes_annonces);
+
+        getSupportActionBar().setTitle("Mes annonces");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
@@ -82,9 +70,9 @@ public class Publications_view extends AppCompatActivity {
         Init_Components();
 
         // Todo ; launching methods
-        Load_Datas();
         Load_SERVICE();
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -119,8 +107,8 @@ public class Publications_view extends AppCompatActivity {
                 for ( Services s : SERVICES ) {
                     if (
                             s.getNom_user().toUpperCase().equals(newText.toUpperCase()) ||
-                            s.getPrix().toUpperCase().equals(newText.toUpperCase())
-                        ){
+                                    s.getPrix().toUpperCase().equals(newText.toUpperCase())
+                    ){
                         Search.add(s);
                     }
                 }
@@ -169,6 +157,5 @@ public class Publications_view extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

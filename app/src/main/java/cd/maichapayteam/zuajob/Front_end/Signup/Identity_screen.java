@@ -30,6 +30,7 @@ import java.util.Date;
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Models.Object.Users;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -98,18 +99,26 @@ public class Identity_screen extends AppCompatActivity {
                     Toast.makeText(context, "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // saving in the preferences
-                //Tool.setUserPreferences(context,"nom",nom.getText().toString().replace("'","''"));
-                //Tool.setUserPreferences(context,"prenom",prenom.getText().toString().replace("'","''"));
-                //Tool.setUserPreferences(context,"birthday",birthday.getText().toString().replace("'","''"));
-                //Tool.setUserPreferences(context,"sexe",genre.getSelectedItem().toString());
-                //Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
-                //Intent i = new Intent(context, Home.class);
-                //startActivity(i);
-                //finish();
 
-                InscriptionAsync inscriptionAsync = new InscriptionAsync();
-                inscriptionAsync.execute();
+                int t = 0;
+                if (type.getSelectedItemPosition() == 1)
+                    t = 1;
+                else
+                    t = 0;
+
+                // saving in the preferences
+                Tool.setUserPreferences(context,"nom",nom.getText().toString().replace("'","''"));
+                Tool.setUserPreferences(context,"prenom",prenom.getText().toString().replace("'","''"));
+                Tool.setUserPreferences(context,"birthday",birthday.getText().toString().replace("'","''"));
+                Tool.setUserPreferences(context,"sexe",genre.getSelectedItem().toString());
+                Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
+                Tool.setUserPreferences(context,"type", String.valueOf(t));
+
+
+                Intent i = new Intent(context, Home.class);
+                startActivity(i);
+                finish();
+
             }
         });
         Datepicker.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +141,12 @@ public class Identity_screen extends AppCompatActivity {
 
     class InscriptionAsync extends AsyncTask<String, String, User> {
 
+        User user;
+
+        public InscriptionAsync(User user) {
+            this.user = user;
+        }
+
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
@@ -145,26 +160,6 @@ public class Identity_screen extends AppCompatActivity {
         @Override
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
-            User user = new User();
-            user.codePays = Tool.getUserPreferences(Identity_screen.this, "CountryCode");
-            user.pays = Tool.getUserPreferences(Identity_screen.this, "CountryName");
-            user.phone = Integer.parseInt(Tool.getUserPreferences(Identity_screen.this, "phone"));
-            user.nom = nom.getText().toString().replace("'","''");
-            user.prenom = prenom.getText().toString().replace("'","''");
-            String stringDate = birthday.getText().toString().replace("'","''");
-            long bday = 0;
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("");
-                Date date = sdf.parse(stringDate);
-                bday = date.getTime();
-            } catch (ParseException e) {
-
-            }
-            user.birthday = bday;
-            user.sexe = genre.getSelectedItem().toString();
-            user.password = passe.getText().toString().replace("'","''");
-            user.type = type.getSelectedItemPosition()-1;
-
             //return RemoteDataSync.confirmCode(numero, code);
             return ManageLocalData.createUser(user);
         }
@@ -174,6 +169,7 @@ public class Identity_screen extends AppCompatActivity {
             progressDialog.dismiss();
             //TODO : dismiss a load dialog here
             if(result!=null) {
+
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);
                 finish();

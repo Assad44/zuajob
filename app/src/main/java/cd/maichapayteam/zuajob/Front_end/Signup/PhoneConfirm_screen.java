@@ -89,14 +89,14 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
                 // verify the code
                 code = PhoneCodeNumber.getText().toString();
-                // saving in the preferences
-                //Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
-                //// goto next activity
-                //Intent i = new Intent(context, Identity_screen.class);
-                //startActivity(i);
-                //finish();
-                CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync();
-                checkingCodeAsync.execute();
+
+                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+                // goto next activity
+                Intent i = new Intent(context, Identity_screen.class);
+                startActivity(i);
+                finish();
+                /*CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync(PhoneCodeNumber.getText().toString());
+                checkingCodeAsync.execute();*/
 
             }
         });
@@ -127,6 +127,12 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     class CheckingCodeAsync extends AsyncTask<String, String, Boolean> {
 
+        String code;
+
+        public CheckingCodeAsync(String code) {
+            this.code = code;
+        }
+
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
@@ -141,7 +147,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         protected Boolean doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
             //return RemoteDataSync.confirmCode(numero, code);
-            return PhoneCodeNumber.getText().toString().equals("123456");
+            return code.equals("123456");
         }
 
         @Override
@@ -160,7 +166,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     void passToNextActivity() {
         // saving in the preferences
-        //Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+        Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
         // goto next activity
         Intent i = new Intent(context, Identity_screen.class);
         startActivity(i);

@@ -21,7 +21,8 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/avatar"
                 android:layout_width="100dp"
                 android:layout_height="120dp"
                 android:src="@drawable/avatar"/>

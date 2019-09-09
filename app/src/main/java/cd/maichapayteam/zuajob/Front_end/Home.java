@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -22,23 +20,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,7 +55,7 @@ public class Home extends AppCompatActivity
     //HorizontalListView hlistview;
 
     private void Init_Components(){
-        myProfile = User.myProfile();
+        //myProfile = User.myProfile();
 
         //TODO modifier le screen par rapport au profil de l'utilisateur
 
@@ -96,6 +92,7 @@ public class Home extends AppCompatActivity
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setTitle(Tool.getUserPreferences(context,"nom"));
             //getSupportActionBar().setIcon(R.drawable.ic_humburger);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -106,6 +103,8 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         //drawer.openDrawer(GravityCompat.START);
         toggle.syncState();
+
+        //navigationView.inflateMenu(R.menu.activity_home_drawer);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -177,14 +176,14 @@ public class Home extends AppCompatActivity
         BTN_categorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, Categories.class));
+                startActivity(new Intent(context, Categorie_view.class));
                 finish();
             }
         });
         catégorie_H.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, Categories.class));
+                startActivity(new Intent(context, Categorie_view.class));
                 finish();
             }
         });
@@ -321,23 +320,20 @@ public class Home extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        /*
-        if (id == R.id.nav_cat) {
-            Intent i = new Intent(context, Categories.class);
+        
+        if (id == R.id.nav_annonce) {
+            Intent i = new Intent(context, Mes_annonces.class);
             startActivity(i);
             finish();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_services) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_rdv) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_soliicioation) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_discuusion) {
 
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

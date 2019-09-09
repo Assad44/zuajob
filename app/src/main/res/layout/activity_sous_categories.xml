@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Front_end.Categorie_view">
+    tools:context=".Front_end.Sous_categories">
 
     <LinearLayout
-        android:visibility="gone"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         android:paddingTop="-10dp"
@@ -15,23 +15,20 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <SearchView
-            android:elevation="2dp"
-            android:id="@+id/rechercher"
-            android:queryHint="Recherche article"
-            android:animateLayoutChanges="true"
-            android:foregroundTint="@color/colorPrimaryDark"
+        <Spinner
+            android:id="@+id/list_sous_cat"
+            android:entries="@array/Select"
+            android:background="@color/white"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/corner_white"
-            ></SearchView>
+            android:layout_height="wrap_content"></Spinner>
 
     </LinearLayout>
 
-    <GridView
+    <ListView
         android:numColumns="auto_fit"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></GridView>
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

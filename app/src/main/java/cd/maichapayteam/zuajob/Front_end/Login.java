@@ -67,11 +67,11 @@ public class Login extends AppCompatActivity {
                 if (CheckingZone() == false) return;
 
 
-                LoginAsync loginAsync = new LoginAsync();
-                loginAsync.execute();
-                //Intent i = new Intent(context, Home.class);
-                //startActivity(i);
-                //finish();
+                /*LoginAsync loginAsync = new LoginAsync();
+                loginAsync.execute();*/
+                Intent i = new Intent(context, Home.class);
+                startActivity(i);
+                finish();
                 //Toast.makeText(Login.this, User.findByPhoneNumer("897175763").password, Toast.LENGTH_LONG).show();
             }
         });

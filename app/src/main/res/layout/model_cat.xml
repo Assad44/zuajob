@@ -14,10 +14,8 @@
       android:layout_height="wrap_content">
 
     <LinearLayout
-        android:padding="0dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="vertical">
 
       <RelativeLayout
@@ -34,46 +32,34 @@
             android:background="@color/white"/>
 
         <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bac"
+            android:paddingLeft="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="#B4000000"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-          <LinearLayout
-              android:id="@+id/bac"
-              android:layout_marginTop="0dp"
-              android:paddingLeft="10dp"
-              android:paddingTop="10dp"
-              android:background="#B4000000"
+          <TextView
+              android:textStyle="bold"
+              android:id="@+id/categorie"
+              android:textColor="@color/white"
+              android:gravity="center"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:text="Catégorie 1"
+              android:textSize="18dp"/>
+          <TextView
+              android:id="@+id/description"
+              android:textColor="@color/white"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Descriptions"
+              android:textSize="10dp"/>
 
-            <TextView
-                android:textStyle="bold"
-                android:id="@+id/cours"
-                android:textColor="@color/white"
-                android:layout_marginTop="-5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Catégorie 1"
-                android:textSize="18dp"/>
-
-            <LinearLayout
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#7affffff"
-                android:elevation="1dp"/>
-
-
-          </LinearLayout>
 
         </LinearLayout>
 

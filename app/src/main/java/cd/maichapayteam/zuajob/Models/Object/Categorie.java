@@ -27,6 +27,9 @@ public class Categorie extends Model {
     @Column(name = "urlImage")
     public String urlImage = "";
 
+
+
+
     public List<SousCategorie> items() {
         return getMany(SousCategorie.class, "categorie");
     }
