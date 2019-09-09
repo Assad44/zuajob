@@ -23,8 +23,7 @@ public class Annonce {
     public String urlImageUser = "";
     public long idCategorie = -1;
     public String categorie = "";
-    public int nombreRealisation = 0;
-    public int cote = 0;
+    public String date = "";
 
     public boolean isError() {
         return error;
@@ -64,6 +63,14 @@ public class Annonce {
 
     public void setIdSousCategorie(long idSousCategorie) {
         this.idSousCategorie = idSousCategorie;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getSousCategorie() {
@@ -144,22 +151,6 @@ public class Annonce {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
-    }
-
-    public int getNombreRealisation() {
-        return nombreRealisation;
-    }
-
-    public void setNombreRealisation(int nombreRealisation) {
-        this.nombreRealisation = nombreRealisation;
-    }
-
-    public int getCote() {
-        return cote;
-    }
-
-    public void setCote(int cote) {
-        this.cote = cote;
     }
 
 }
