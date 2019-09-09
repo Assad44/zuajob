@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -15,9 +16,13 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
+import java.util.List;
+
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Login;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Models.Object.Users;
 import cd.maichapayteam.zuajob.R;
@@ -46,6 +51,15 @@ public class index_screen extends AppCompatActivity {
         Init_Components();
 
         //TODO check if user exist, pass to home directly
+
+
+        List<Categorie> D =  ManageLocalData.listCategorie();
+
+        for (Categorie c: D) {
+            Toast.makeText(context, c.designation, Toast.LENGTH_SHORT).show();
+            Log.e("FFFFFFFFFFF",c.designation );
+        }
+
     }
 
 

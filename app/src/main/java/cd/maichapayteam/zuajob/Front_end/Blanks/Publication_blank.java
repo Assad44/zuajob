@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
@@ -16,22 +17,28 @@ import cd.maichapayteam.zuajob.R;
 public class Publication_blank extends AppCompatActivity {
 
     Context context = this;
+    String title = "";
 
     private void Init_Components(){
         //list = findViewById(R.id.list);
     }
 
+    private void Load_Header(){
+        if (!getIntent().hasExtra("type")) onBackPressed();
+        title = getIntent().getExtras().getString("type");
+        getSupportActionBar().setTitle("Publication "+title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setElevation(0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publication_blank);
-        getSupportActionBar().setTitle("Publication d'un service");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setElevation(0);
 
         Init_Components();
+        Load_Header();
 
     }
 
@@ -55,7 +62,15 @@ public class Publication_blank extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i;
-        i = new Intent(context, Publications_view.class);
+        if (!getIntent().hasExtra("type")) onBackPressed();
+        title = getIntent().getExtras().getString("type");
+        if (title.equals("Services")) {
+            i = new Intent(context, Publications_view.class);
+            i.putExtra("type", "Services");
+        }else{
+            i = new Intent(context, Publications_view.class);
+            i.putExtra("type", "Annonces");
+        }
         startActivity(i);
         finish();
     }

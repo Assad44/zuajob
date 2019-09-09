@@ -243,39 +243,6 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static List<Ville> getListVille () {
-        //String url = BASE_URL + "listville";
-        //String TAG = "getListVille";
-//
-        List<Ville> list = new ArrayList<>();
-//
-        //ANRequest request = AndroidNetworking.get(url)
-        //        .build();
-//
-        //try{
-        //    ANResponse<ListVille> response = request.executeForObject(ListVille.class);
-        //    if (response.isSuccess()) {
-        //        ListVille listPays = response.getResult();
-        //        list = listPays.listVille;
-        //        Log.e(TAG, "villeList size : " + list.size());
-        //        for (Ville object : list) {
-        //            //Log.e(TAG, "id : " + object.remoteId);
-        //            Log.e(TAG, "designation : " + object.designation);
-        //            //Log.e(TAG, "provinceId : " + object.idProvince);
-        //        }
-        //        Response okHttpResponse = response.getOkHttpResponse();
-        //        //Log.e(TAG, "headers : " + okHttpResponse.headers().toString());
-        //    } else {
-        //        ANError error = response.getError();
-        //        Log.e(TAG + ":error", error.getMessage());
-        //    }
-        //} catch (Exception ex) {
-        //    Log.e(TAG + ":error", ex.getMessage());
-        //}
-//
-        return list;
-    }
-
     public static User createUser (User user) {
         String url = BASE_URL + "createuser";
 
@@ -344,6 +311,39 @@ public class RemoteDataSync {
         }
 
         return user;
+    }
+
+    public static List<Ville> getListVille () {
+        //String url = BASE_URL + "listville";
+        //String TAG = "getListVille";
+//
+        List<Ville> list = new ArrayList<>();
+//
+        //ANRequest request = AndroidNetworking.get(url)
+        //        .build();
+//
+        //try{
+        //    ANResponse<ListVille> response = request.executeForObject(ListVille.class);
+        //    if (response.isSuccess()) {
+        //        ListVille listPays = response.getResult();
+        //        list = listPays.listVille;
+        //        Log.e(TAG, "villeList size : " + list.size());
+        //        for (Ville object : list) {
+        //            //Log.e(TAG, "id : " + object.remoteId);
+        //            Log.e(TAG, "designation : " + object.designation);
+        //            //Log.e(TAG, "provinceId : " + object.idProvince);
+        //        }
+        //        Response okHttpResponse = response.getOkHttpResponse();
+        //        //Log.e(TAG, "headers : " + okHttpResponse.headers().toString());
+        //    } else {
+        //        ANError error = response.getError();
+        //        Log.e(TAG + ":error", error.getMessage());
+        //    }
+        //} catch (Exception ex) {
+        //    Log.e(TAG + ":error", ex.getMessage());
+        //}
+//
+        return list;
     }
 
     public interface LoadImageListener {

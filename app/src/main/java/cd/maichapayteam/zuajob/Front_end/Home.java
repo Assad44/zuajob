@@ -191,7 +191,7 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, Publications_view.class);
-                i.putExtra("type", "annonces");
+                i.putExtra("type", "Annonces");
                 startActivity(i);
                 finish();
             }
@@ -200,7 +200,7 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, Publications_view.class);
-                i.putExtra("type", "services");
+                i.putExtra("type", "Services");
                 startActivity(i);
                 finish();
             }

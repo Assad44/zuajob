@@ -28,8 +28,6 @@ public class Categorie extends Model {
     public String urlImage = "";
 
 
-
-
     public List<SousCategorie> items() {
         return getMany(SousCategorie.class, "categorie");
     }

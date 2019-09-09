@@ -14,9 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -47,17 +51,13 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
-        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_test,null);
-        TextView S_categorie = convertView.findViewById(R.id.S_categorie);
-        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
-        TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView realisation = convertView.findViewById(R.id.realisation);
-        RatingBar Rating = convertView.findViewById(R.id.MyRating);
-        ImageView avatar = convertView.findViewById(R.id.avatar);
+        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces,null);
+        TextView description = convertView.findViewById(R.id.description);
+        TextView nom_user = convertView.findViewById(R.id.nom_user);
+        TextView number = convertView.findViewById(R.id.number);
+        TextView time = convertView.findViewById(R.id.time);
+        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
-
-
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
@@ -69,16 +69,8 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         final Services S = DATA.get(position);
 
         // todo : Affects values to the componants
-        S_categorie.setText(S.getNom_user());
-        S_descriptions.setText(S.getDescription_services());
-        S_prix.setText(S.getPrix().concat(" USD"));
-        realisation.setText(S.getNbr_services().concat(" Réalisation (s)"));
-
-        int cote = Integer.parseInt(S.getNbr_cote());
-        int real = (Integer.parseInt(S.getNbr_services())*10);
-        if (real == 0) real = 1;
-        float rating = cote * 5 / real;
-        Rating.setRating(rating);
+        nom_user.setText(S.getNom_user());
+        description.setText(S.getDescription_services());
 
         int profil = 0;
         if (position%3 == 0)
@@ -99,24 +91,21 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         return convertView;
     }
 
-
     private void details(Services S, int profil){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details,null);
-        TextView S_categorie = convertView.findViewById(R.id.nom);
-        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details,null);
+        TextView share = convertView.findViewById(R.id.share);
+        TextView comment = convertView.findViewById(R.id.comment);
+        TextView description = convertView.findViewById(R.id.description);
+        TextView nom_user = convertView.findViewById(R.id.nom_user);
+        TextView number = convertView.findViewById(R.id.number);
         TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView realisation = convertView.findViewById(R.id.realisation);
-        RatingBar Rating = convertView.findViewById(R.id.MyRating);
-        ImageView avatar = convertView.findViewById(R.id.avatar);
+        TextView time = convertView.findViewById(R.id.time);
+        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
-        S_categorie.setText(S.getNom_user());
-        S_descriptions.setText(S.getDescription_services());
+        nom_user.setText(S.getNom_user());
+        description.setText(S.getDescription_services());
         S_prix.setText(S.getPrix().concat(" USD"));
-        realisation.setText(S.getNbr_services().concat(" Réalisation (s)"));
         avatar.setImageResource(profil);
-        int cote = Integer.parseInt(S.getNbr_cote());
-        float rating = cote * 5 / (Integer.parseInt(S.getNbr_services())*10);
-        Rating.setRating(rating);
 
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
@@ -27,6 +28,7 @@ import cd.maichapayteam.zuajob.R;
 public class Publications_view extends AppCompatActivity {
 
     Context context = this;
+    String title = "";
     ListView list;
     SearchView rechercher;
 
@@ -39,16 +41,13 @@ public class Publications_view extends AppCompatActivity {
         rechercher = findViewById(R.id.rechercher);
     }
 
-    private void Load_Datas(){
+    private void Load_Header(){
         if (!getIntent().hasExtra("type")) onBackPressed();
-
-        /*if (getIntent().getExtras().getString("type").equals("annonces")){
-            ArrayList<Service> DATA = Service.listService();
-            list.setAdapter(new Services_Base_Adapter(context, DATA));
-        }else{
-            list.setAdapter(new Test_Base_Adapter(context, R.layout.modele_list_test));
-        }*/
-
+        title = getIntent().getExtras().getString("type");
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setElevation(0);
     }
     void Load_SERVICE(){
         SERVICES.clear();
@@ -64,25 +63,19 @@ public class Publications_view extends AppCompatActivity {
 
         if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            Toast.makeText(context, "" + SERVICES.size(), Toast.LENGTH_SHORT).show();
-            list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+            if (title.equals("Services")) list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+            else list.setAdapter(new Annonces_Base_Adapter(context, SERVICES));
         }
 
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publications_view);
-        getSupportActionBar().setTitle("Publications");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setElevation(0);
-
         Init_Components();
 
         // Todo ; launching methods
-        Load_Datas();
+        Load_Header();
         Load_SERVICE();
     }
 

@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Models.Object;
 
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
@@ -43,7 +44,13 @@ public class ManageLocalData {
     }
 
     public static List<Categorie> listCategorie() {
-        List<Categorie> list = Categorie.listCategorie();
+        //List<Categorie> list = Categorie.listCategorie();
+        List<Categorie> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Categorie c = new Categorie();
+            c.designation = "designation "+i;
+            list.add(c);
+        }
         if(list.size()==0) RemoteDataSync.getListCategorie();
         return list;
     }
