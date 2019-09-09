@@ -304,7 +304,7 @@ public class Home extends AppCompatActivity
             adb.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    User.deconnect();
+                    //User.deconnect();
                     finish();
                 }
             });

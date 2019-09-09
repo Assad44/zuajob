@@ -59,7 +59,8 @@ public class Service extends Model {
 
     public static ArrayList<Service> listService() {
         ArrayList<Service> list = new ArrayList<>();
-        List<User> listPrestateur = User.listJobeurs();
+        //List<User> listPrestateur = User.listJobeurs();
+        List<User> listPrestateur = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Service service = new Service();
             service.remoteId = i++;

@@ -19,29 +19,29 @@ public class ManageLocalData {
     }
 
     public static boolean checkNumero(String numero) {
-        User user = User.findByPhoneNumer(numero);
-        if(user!=null) return true;
+        //User user = User.findByPhoneNumer(numero);
+        //if(user!=null) return true;
         return false;
     }
 
-    public static User login(String phone, String mdp) {
-        User user = User.findByPhoneNumer(phone);
-        if(user!=null) {
-            if(user.password.equals(mdp)) {
-                RemoteDataSync.getRandomUser();
-                return user;
-            }
-        }
-        user = new User();
-        user.error = true;
-        user.errorCode = 36212;
-        user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
-        return user;
-    }
+    //public static User login(String phone, String mdp) {
+    //    //User user = User.findByPhoneNumer(phone);
+    //    //if(user!=null) {
+    //    //    if(user.password.equals(mdp)) {
+    //    //        RemoteDataSync.getRandomUser();
+    //    //        return user;
+    //    //    }
+    //    //}
+    //    //user = new User();
+    //    //user.error = true;
+    //    user.errorCode = 36212;
+    //    user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
+    //    return user;
+    //}
 
-    public static List<User> listJobeurs(int next) {
-        return User.listJobeurs(next);
-    }
+    //public static List<User> listJobeurs(int next) {
+    //    return User.listJobeurs(next);
+    //}
 
     public static List<Categorie> listCategorie() {
         //List<Categorie> list = Categorie.listCategorie();

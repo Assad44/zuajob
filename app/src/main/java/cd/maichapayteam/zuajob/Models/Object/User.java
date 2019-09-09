@@ -93,34 +93,34 @@ public class User extends Model {
     @Column(name = "about")
     public String about = "";
 
-    public static User find(int id) {
-        return new Select().from(User.class).where("remoteId = ?", id).executeSingle();
-    }
-
-    public static User findByPhoneNumer(String phone) {
-        return new Select().from(User.class).where("phone = ?", Integer.parseInt(phone)).executeSingle();
-    }
-
-    public static User myProfile() {
-        return new Select().from(User.class).where("myProfil = ?", 1).executeSingle();
-    }
-
-    public static boolean deconnect() {
-        /*User user = myProfile();
-        if(user!=null) {
-            user.delete();
-        }*/
-        return true;
-    }
-
-    public static List<User> listJobeurs(int next) {
-        next *= 20;
-        return new Select().from(User.class).where("type = ?", 1).limit(next + ", 20").execute();
-    }
-
-    public static List<User> listJobeurs() {
-        return new Select().from(User.class).where("type = ?", 1).execute();
-    }
+    //public static User find(int id) {
+    //    return new Select().from(User.class).where("remoteId = ?", id).executeSingle();
+    //}
+//
+    //public static User findByPhoneNumer(String phone) {
+    //    return new Select().from(User.class).where("phone = ?", Integer.parseInt(phone)).executeSingle();
+    //}
+//
+    //public static User myProfile() {
+    //    return new Select().from(User.class).where("myProfil = ?", 1).executeSingle();
+    //}
+//
+    //public static boolean deconnect() {
+    //    /*User user = myProfile();
+    //    if(user!=null) {
+    //        user.delete();
+    //    }*/
+    //    return true;
+    //}
+//
+    //public static List<User> listJobeurs(int next) {
+    //    next *= 20;
+    //    return new Select().from(User.class).where("type = ?", 1).limit(next + ", 20").execute();
+    //}
+//
+    //public static List<User> listJobeurs() {
+    //    return new Select().from(User.class).where("type = ?", 1).execute();
+    //}
 
 
 
