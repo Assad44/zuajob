@@ -10,34 +10,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(name = "categorie")
 public class Categorie extends Model {
 
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
 
-    @JsonProperty("id")
-    @Column(name = "remoteId")
-    public long remoteId = -1;
-
-    @Column(name = "designation")
+    public long id = -1;
     public String designation = "";
-
-    @Column(name = "urlImage")
     public String urlImage = "";
 
-
-    public List<SousCategorie> items() {
-        return getMany(SousCategorie.class, "categorie");
-    }
-
-    public static Categorie find(int id) {
-        return new Select().from(Categorie.class).where("id = ?", id).executeSingle();
-    }
-
-    public static List<Categorie> listCategorie() {
-        return new Select().from(Categorie.class).execute();
-    }
+    //public static Categorie find(int id) {
+    //    return new Select().from(Categorie.class).where("id = ?", id).executeSingle();
+    //}
+//
+    //public static List<Categorie> listCategorie() {
+    //    return new Select().from(Categorie.class).execute();
+    //}
 
 }

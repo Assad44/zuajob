@@ -42,7 +42,7 @@ public class GeneralClass {
 
     public static Categorie getDAleatoireCat(){
         Categorie cat = new Categorie();
-        cat.remoteId = new Random().nextInt();
+        cat.id = new Random().nextInt();
         cat.designation = getMot();
         return cat;
     }

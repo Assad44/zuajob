@@ -55,11 +55,11 @@ public class ManageLocalData {
         return list;
     }
 
-    public static List<SousCategorie> listSousCategorie(Categorie categorie) {
-        List<SousCategorie> list = SousCategorie.listSousCategorie(categorie);
-        if(list.size()==0) SousCategorie.createSousCategories();
-        return list;
-    }
+    //public static List<SousCategorie> listSousCategorie(Categorie categorie) {
+    //    List<SousCategorie> list = SousCategorie.listSousCategorie(categorie);
+    //    if(list.size()==0) SousCategorie.createSousCategories();
+    //    return list;
+    //}
 
     public static String generate(int length) {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // Tu supprimes les lettres dont tu ne veux pas

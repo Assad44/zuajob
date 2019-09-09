@@ -34,206 +34,206 @@ public class SousCategorie extends Model {
     @Column(name = "categorie")
     public Categorie categorie;
 
-    public static List<SousCategorie> listSousCategorie(Categorie categorie) {
-        return new Select().from(SousCategorie.class).where("categorie = ", categorie).execute();
-    }
-
-    public static void createSousCategories() {
-        int id = 1;
-        SousCategorie sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Aménagement";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Electricité";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Rénovation";
-        sousCategorie.categorie = Categorie.find(1);
-        sousCategorie.save();
-
-        id++;
-        sousCategorie = new SousCategorie();
-        sousCategorie.remoteId = id;
-        sousCategorie.designation = "Lessive";
-        sousCategorie.categorie = Categorie.find(2);
-        sousCategorie.save();
-    }
+    //public static List<SousCategorie> listSousCategorie(Categorie categorie) {
+    //    return new Select().from(SousCategorie.class).where("categorie = ", categorie).execute();
+    //}
+//
+    //public static void createSousCategories() {
+    //    int id = 1;
+    //    SousCategorie sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Aménagement";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Electricité";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Rénovation";
+    //    sousCategorie.categorie = Categorie.find(1);
+    //    sousCategorie.save();
+//
+    //    id++;
+    //    sousCategorie = new SousCategorie();
+    //    sousCategorie.remoteId = id;
+    //    sousCategorie.designation = "Lessive";
+    //    sousCategorie.categorie = Categorie.find(2);
+    //    sousCategorie.save();
+    //}
 
 }
