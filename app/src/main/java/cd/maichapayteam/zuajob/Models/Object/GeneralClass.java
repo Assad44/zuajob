@@ -49,9 +49,9 @@ public class GeneralClass {
 
     public static SousCategorie getDAleatoireSCat(){
         SousCategorie cat = new SousCategorie();
-        cat.remoteId = new Random().nextInt();
+        cat.id = new Random().nextInt();
         cat.designation = getMot();
-        cat.categorie = getDAleatoireCat();
+        //cat.categorie = getDAleatoireCat();
         return cat;
     }
 
