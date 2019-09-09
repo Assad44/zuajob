@@ -40,10 +40,6 @@ public class GeneralClass {
         return user;
     }
 
-    public static Devise getDAleatoire() {
-        return Devise.getListDevise().get(new Random().nextInt(1));
-    }
-
     public static Categorie getDAleatoireCat(){
         Categorie cat = new Categorie();
         cat.remoteId = new Random().nextInt();

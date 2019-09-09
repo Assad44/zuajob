@@ -16,9 +16,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
-import cd.maichapayteam.zuajob.Models.Object.Cote;
-import cd.maichapayteam.zuajob.Models.Object.Service;
-import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 
 /**

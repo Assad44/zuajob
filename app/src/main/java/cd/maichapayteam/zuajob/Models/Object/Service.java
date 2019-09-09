@@ -34,9 +34,9 @@ public class Service extends Model {
     @Column(name = "description")
     public String description = "";
 
-    @JsonIgnoreProperties
-    @Column(name = "devise")
-    public Devise devise = null;
+    //@JsonIgnoreProperties
+    //@Column(name = "devise")
+    //public Devise devise = null;
 
     @Column(name = "idDevise")
     public long idDevise = -1;
@@ -51,8 +51,8 @@ public class Service extends Model {
     @Column(name = "idPrestateur")
     public long idPrestateur = -1;
 
-    @JsonIgnoreProperties
-    public List<Cote> cotes = new ArrayList<>();
+    //@JsonIgnoreProperties
+    //public List<Cote> cotes = new ArrayList<>();
 
     @Column(name = "nombreRealisation")
     public int nombreRealisation = 0;
@@ -65,10 +65,10 @@ public class Service extends Model {
             service.remoteId = i++;
             service.description = RemoteDataSync.getRandomParagraphe(new Random().nextInt(9) + 1);
             service.montant = new Random().nextFloat();
-            service.cotes = Cote.getListCote();
+            //service.cotes = Cote.getListCote();
             service.nombreRealisation = new Random().nextInt();
             service.prestateur = listPrestateur.get(new Random().nextInt(listPrestateur.size())); //
-            service.devise = GeneralClass.getDAleatoire();
+            //service.devise = GeneralClass.getDAleatoire();
             service.sousCategorie = GeneralClass.getDAleatoireSCat(); //
             list.add(service);
         }
