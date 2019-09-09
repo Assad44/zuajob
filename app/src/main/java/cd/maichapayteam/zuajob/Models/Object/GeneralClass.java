@@ -34,7 +34,7 @@ public class GeneralClass {
 
     public static User getAleatoire() {
         User user = new User();
-        user.remoteId = new Random().nextInt();
+        //user.remoteId = new Random().nextInt();
         user.prenom = GeneralClass.getMot();
         user.nom = GeneralClass.getMot();
         return user;

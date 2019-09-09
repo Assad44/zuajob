@@ -142,44 +142,44 @@ public class Preferences_screen extends AppCompatActivity {
 
         @Override
         protected User doInBackground(String... strings) {
-            String urlPhoto = "";
-            String picture = Tool.getUserPreferences(Preferences_screen.this, "picture");
-            if(!picture.equals("default")) {
-                File file = new File(picture);
-                String result = RemoteDataSync.uploadImage(file, null);
-                if(!result.contains("error")) urlPhoto = result;
-            }
-
-            User user = new User();
-            user.urlPhoto = urlPhoto;
-            //TODO ajouter le champs ville sur la liste
-            user.ville = "";
-            user.adresse = Tool.getUserPreferences(Preferences_screen.this, "avenue");
-            user.quartier = Tool.getUserPreferences(Preferences_screen.this, "quartier");
-            user.commune = Tool.getUserPreferences(Preferences_screen.this, "commune");
-            user.about = Tool.getUserPreferences(Preferences_screen.this, "apropos");
-            user.email = Tool.getUserPreferences(Preferences_screen.this, "email");
-            user.nom = Tool.getUserPreferences(Preferences_screen.this, "nom");
-            user.prenom = Tool.getUserPreferences(Preferences_screen.this, "prenom");
-            long birthday = 0;
-            try {
-                Date date = new SimpleDateFormat("").parse(Tool.getUserPreferences(Preferences_screen.this, "birthday"));
-                birthday = date.getTime();
-            } catch (ParseException e) {
-
-            }
-            user.birthday = birthday;
-            user.sexe = Tool.getUserPreferences(Preferences_screen.this, "sexe");
-            user.password = Tool.getUserPreferences(Preferences_screen.this, "passe");
-            user.phone = Integer.parseInt(Tool.getUserPreferences(Preferences_screen.this, "phone"));
-            user.codePays = Tool.getUserPreferences(Preferences_screen.this, "CountryCode");
-            user.pays = Tool.getUserPreferences(Preferences_screen.this, "CountryName");
-            user.type = Integer.parseInt(Tool.getUserPreferences(Preferences_screen.this, "type_user"));
+            //String urlPhoto = "";
+            //String picture = Tool.getUserPreferences(Preferences_screen.this, "picture");
+            //if(!picture.equals("default")) {
+            //    File file = new File(picture);
+            //    String result = RemoteDataSync.uploadImage(file, null);
+            //    if(!result.contains("error")) urlPhoto = result;
+            //}
+//
+            //User user = new User();
+            //user.urlPhoto = urlPhoto;
+            ////TODO ajouter le champs ville sur la liste
+            //user.ville = "";
+            //user.adresse = Tool.getUserPreferences(Preferences_screen.this, "avenue");
+            //user.quartier = Tool.getUserPreferences(Preferences_screen.this, "quartier");
+            //user.commune = Tool.getUserPreferences(Preferences_screen.this, "commune");
+            //user.about = Tool.getUserPreferences(Preferences_screen.this, "apropos");
+            //user.email = Tool.getUserPreferences(Preferences_screen.this, "email");
+            //user.nom = Tool.getUserPreferences(Preferences_screen.this, "nom");
+            //user.prenom = Tool.getUserPreferences(Preferences_screen.this, "prenom");
+            //long birthday = 0;
+            //try {
+            //    Date date = new SimpleDateFormat("").parse(Tool.getUserPreferences(Preferences_screen.this, "birthday"));
+            //    birthday = date.getTime();
+            //} catch (ParseException e) {
+//
+            //}
+            //user.birthday = birthday;
+            //user.sexe = Tool.getUserPreferences(Preferences_screen.this, "sexe");
+            //user.password = Tool.getUserPreferences(Preferences_screen.this, "passe");
+            //user.phone = Integer.parseInt(Tool.getUserPreferences(Preferences_screen.this, "phone"));
+            //user.codePays = Tool.getUserPreferences(Preferences_screen.this, "CountryCode");
+            //user.pays = Tool.getUserPreferences(Preferences_screen.this, "CountryName");
+            //user.type = Integer.parseInt(Tool.getUserPreferences(Preferences_screen.this, "type_user"));
 
 
             //TODO see how to send preferrences in server
-
-            return RemoteDataSync.createUser(user);
+            //RemoteDataSync.createUser(user)
+            return new User();
         }
 
         @Override

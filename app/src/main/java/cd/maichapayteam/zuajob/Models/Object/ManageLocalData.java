@@ -12,7 +12,7 @@ public class ManageLocalData {
     public static User createUser(User user) {
         user.authCode = generate(32);
         user.myProfil = true;
-        user.save();
+        //user.save();
         RemoteDataSync.getRandomUser();
 
         return user;

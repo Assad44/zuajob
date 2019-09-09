@@ -235,73 +235,75 @@ public class RemoteDataSync {
     }
 
     public static User createUser (User user) {
-        String url = BASE_URL + "createuser";
-
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(user) // posting java object
-                .setTag("user" + user.prenom + user.nom)
-                .setPriority(Priority.MEDIUM)
-                .build();
-
-        try{
-            ANResponse<User> response = request.executeForObject(User.class);
-            if (response.isSuccess()) {
-                user = response.getResult();
-                if(user!=null) {
-                    if(!user.error) {
-                        user.myProfil = true;
-                        user.save();
-                    }
-                }
-            } else {
-                user = new User();
-                user.error = true;
-                user.errorCode = 319288;
-                user.errorMessage = response.getError().getMessage();
-            }
-        } catch (Exception ex) {
-            user = new User();
-            user.error = true;
-            user.errorCode = 319288;
-            user.errorMessage = ex.getMessage();
-        }
-
-        return user;
+        //String url = BASE_URL + "createuser";
+//
+        //ANRequest request = AndroidNetworking.post(url)
+        //        .addBodyParameter(user) // posting java object
+        //        .setTag("user" + user.prenom + user.nom)
+        //        .setPriority(Priority.MEDIUM)
+        //        .build();
+//
+        //try{
+        //    ANResponse<User> response = request.executeForObject(User.class);
+        //    if (response.isSuccess()) {
+        //        user = response.getResult();
+        //        if(user!=null) {
+        //            if(!user.error) {
+        //                user.myProfil = true;
+        //                user.save();
+        //            }
+        //        }
+        //    } else {
+        //        user = new User();
+        //        user.error = true;
+        //        user.errorCode = 319288;
+        //        user.errorMessage = response.getError().getMessage();
+        //    }
+        //} catch (Exception ex) {
+        //    user = new User();
+        //    user.error = true;
+        //    user.errorCode = 319288;
+        //    user.errorMessage = ex.getMessage();
+        //}
+//
+        //return user;
+        return new User();
     }
 
     public static User login(String auth_code, String password) {
-        String url = BASE_URL + "login?auth_code=" + auth_code + "&password=" + password;
-        String TAG = "login";
-
-        User user;
-
-        ANRequest request = AndroidNetworking.get(url)
-                .build();
-
-        try{
-            ANResponse<User> response = request.executeForObject(User.class);
-            if (response.isSuccess()) {
-                user = response.getResult();
-                if(user!=null) {
-                    if(!user.error) {
-                        user.myProfil = true;
-                        user.save();
-                    }
-                }
-            } else {
-                user = new User();
-                user.error = true;
-                user.errorCode = 3188;
-                user.errorMessage = response.getError().getMessage();
-            }
-        } catch (Exception ex) {
-            user = new User();
-            user.error = true;
-            user.errorCode = 3198;
-            user.errorMessage = ex.getMessage();
-        }
-
-        return user;
+        //String url = BASE_URL + "login?auth_code=" + auth_code + "&password=" + password;
+        //String TAG = "login";
+//
+        //User user;
+//
+        //ANRequest request = AndroidNetworking.get(url)
+        //        .build();
+//
+        //try{
+        //    ANResponse<User> response = request.executeForObject(User.class);
+        //    if (response.isSuccess()) {
+        //        user = response.getResult();
+        //        if(user!=null) {
+        //            if(!user.error) {
+        //                user.myProfil = true;
+        //                user.save();
+        //            }
+        //        }
+        //    } else {
+        //        user = new User();
+        //        user.error = true;
+        //        user.errorCode = 3188;
+        //        user.errorMessage = response.getError().getMessage();
+        //    }
+        //} catch (Exception ex) {
+        //    user = new User();
+        //    user.error = true;
+        //    user.errorCode = 3198;
+        //    user.errorMessage = ex.getMessage();
+        //}
+//
+        //return user;
+        return new User();
     }
 
     //public static List<Ville> getListVille () {
@@ -352,45 +354,46 @@ public class RemoteDataSync {
     * */
 
     public static List<User> getRandomUser () {
-        String url = "https://randomuser.me/api/?results=100";
-
-        List<User> userList = new ArrayList<>();
-
-        ANRequest request = AndroidNetworking.get(url)
-                .build();
-
-        try{
-            ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
-            if (response.isSuccess()) {
-                Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
-                int i = 1;
-                for (User2 user2 : response.getResult().results) {
-                    User user = new User();
-                    user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-                    user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-                    user.remoteId = i;
-                    user.urlPhoto = user2.picture.thumbnail;
-                    user.type = new Random().nextInt(2);
-                    user.phone = 890000000 + new Random().nextInt(899999999 - 890000000);
-                    user.codePays = "+243";
-                    user.pays = "Congo DR";
-                    user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
-                    user.email = user2.email;
-                    user.sexe = "M";
-                    if(user2.gender.equals("female")) user.sexe = "F";
-                    user.save();
-                    userList.add(user);
-                    Log.e("RandomUser", user2.name.first + " " + user2.name.last);
-                }
-            } else {
-                ANError error = response.getError();
-                Log.e("RandomUser", error.getMessage());
-            }
-        } catch (Exception ex) {
-            Log.e("RandomUser", ex.getMessage());
-        }
-
-        return userList;
+        //String url = "https://randomuser.me/api/?results=100";
+//
+        //List<User> userList = new ArrayList<>();
+//
+        //ANRequest request = AndroidNetworking.get(url)
+        //        .build();
+//
+        //try{
+        //    ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
+        //    if (response.isSuccess()) {
+        //        Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
+        //        int i = 1;
+        //        for (User2 user2 : response.getResult().results) {
+        //            User user = new User();
+        //            user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+        //            user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+        //            user.remoteId = i;
+        //            user.urlPhoto = user2.picture.thumbnail;
+        //            user.type = new Random().nextInt(2);
+        //            user.phone = 890000000 + new Random().nextInt(899999999 - 890000000);
+        //            user.codePays = "+243";
+        //            user.pays = "Congo DR";
+        //            user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
+        //            user.email = user2.email;
+        //            user.sexe = "M";
+        //            if(user2.gender.equals("female")) user.sexe = "F";
+        //            user.save();
+        //            userList.add(user);
+        //            Log.e("RandomUser", user2.name.first + " " + user2.name.last);
+        //        }
+        //    } else {
+        //        ANError error = response.getError();
+        //        Log.e("RandomUser", error.getMessage());
+        //    }
+        //} catch (Exception ex) {
+        //    Log.e("RandomUser", ex.getMessage());
+        //}
+//
+        //return userList;
+        return new ArrayList<>();
     }
 
     public static String getRandomParagraphe (int nombrePhrase) {
