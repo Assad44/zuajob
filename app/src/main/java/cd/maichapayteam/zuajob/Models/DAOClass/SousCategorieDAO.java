@@ -14,9 +14,9 @@ import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 public class SousCategorieDAO extends DAOBase {
 
     public static final String KEY = "_id";
-    public static final String DESIGNATION = "authCode";
-    public static final String DESCRIPTION = "prenom";
-    public static final String URL_IMAGE = "nom";
+    public static final String DESIGNATION = "designation";
+    public static final String DESCRIPTION = "description";
+    public static final String URL_IMAGE = "url";
     public static final String ID_CATEGORIE = "idcat";
     public static final String TABLE_NOM = "t_sous_cat";
     public static final String TABLE_CREATE =

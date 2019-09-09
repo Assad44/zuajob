@@ -32,7 +32,7 @@ public class ServiceDAO extends DAOBase {
             "CREATE TABLE " + TABLE_NOM + " (" +
                     KEY + " INTEGER PRIMARY KEY, " +
                     CATEGORIE + " TEXT, " +
-                    COTE + " TEXT, " +
+                    COTE + " INTEGER, " +
                     DESCRIPTION + " TEXT, " +
                     DEVISE + " TEXT, " +
                     ID_CATEGORIE + " INTEGER, " +

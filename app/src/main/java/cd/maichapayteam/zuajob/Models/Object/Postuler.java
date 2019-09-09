@@ -9,14 +9,14 @@ public class Postuler {
     public String errorMessage = "";
     public int errorCode = 0;
     public long id = -1;
-    public long idService = -1;
-    public String descriptionService = "";
+    public long idAnnonce = -1;
+    public String descriptionAnnonce = "";
     public float montant = 0;
     public String devise = "";
-    public long idJobeur = -1;
-    public String nomsJobeur= "";
-    public String phoneJobeur = "";
-    public String urlImageJobeur = "";
+    public long idUser = -1;
+    public String nomsUser = "";
+    public String phoneUser = "";
+    public String urlImageUser = "";
     public String date = "";
     public int statut = 0;
 
@@ -52,20 +52,20 @@ public class Postuler {
         this.id = id;
     }
 
-    public long getIdService() {
-        return idService;
+    public long getIdAnnonce() {
+        return idAnnonce;
     }
 
-    public void setIdService(long idService) {
-        this.idService = idService;
+    public void setIdAnnonce(long idAnnonce) {
+        this.idAnnonce = idAnnonce;
     }
 
-    public String getDescriptionService() {
-        return descriptionService;
+    public String getDescriptionAnnonce() {
+        return descriptionAnnonce;
     }
 
-    public void setDescriptionService(String descriptionService) {
-        this.descriptionService = descriptionService;
+    public void setDescriptionAnnonce(String descriptionAnnonce) {
+        this.descriptionAnnonce = descriptionAnnonce;
     }
 
     public float getMontant() {
@@ -84,36 +84,36 @@ public class Postuler {
         this.devise = devise;
     }
 
-    public long getIdJobeur() {
-        return idJobeur;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setIdJobeur(long idJobeur) {
-        this.idJobeur = idJobeur;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
-    public String getNomsJobeur() {
-        return nomsJobeur;
+    public String getNomsUser() {
+        return nomsUser;
     }
 
-    public void setNomsJobeur(String nomsJobeur) {
-        this.nomsJobeur = nomsJobeur;
+    public void setNomsUser(String nomsUser) {
+        this.nomsUser = nomsUser;
     }
 
-    public String getPhoneJobeur() {
-        return phoneJobeur;
+    public String getPhoneUser() {
+        return phoneUser;
     }
 
-    public void setPhoneJobeur(String phoneJobeur) {
-        this.phoneJobeur = phoneJobeur;
+    public void setPhoneUser(String phoneUser) {
+        this.phoneUser = phoneUser;
     }
 
-    public String getUrlImageJobeur() {
-        return urlImageJobeur;
+    public String getUrlImageUser() {
+        return urlImageUser;
     }
 
-    public void setUrlImageJobeur(String urlImageJobeur) {
-        this.urlImageJobeur = urlImageJobeur;
+    public void setUrlImageUser(String urlImageUser) {
+        this.urlImageUser = urlImageUser;
     }
 
     public String getDate() {

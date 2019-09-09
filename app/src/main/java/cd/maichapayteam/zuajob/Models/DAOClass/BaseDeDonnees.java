@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import cd.maichapayteam.zuajob.Models.Object.User;
-
 /**
  * Created by Didier LEMENDE on 31/01/2018.
  */
