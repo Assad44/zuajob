@@ -29,6 +29,33 @@
                 android:src="@drawable/avatar"/>
 
             <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="#66A8A8A8"/>
+
+            <TextView
+                android:id="@+id/nom_user"
+                android:textColor="@color/dark8"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nom du jobeur"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="+243 814511083 "
+                android:textColor="@color/black"
+                android:textSize="11dp"
+                android:textStyle="italic" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="0dp"
@@ -43,40 +70,21 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/categorie"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Catgorie"
+                    android:textSize="10dp"/>
+
+                <TextView
                     android:id="@+id/description"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Lorem_short"
                     android:textSize="12dp"/>
-
-                <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="1dp"
-                    android:background="#66A8A8A8"/>
-
-                <TextView
-                    android:id="@+id/nom_user"
-                    android:textColor="@color/dark8"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nom du jobeur"
-                    android:textSize="15dp"/>
-
-                <TextView
-                    android:id="@+id/number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="+243 814511083 "
-                    android:textColor="@color/black"
-                    android:textSize="11dp"
-                    android:textStyle="italic" />
                 <TextView
                     android:id="@+id/time"
                     android:textColor="@color/colorAccent"
@@ -85,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:text="A l'instant"
                     android:textSize="11dp"/>
-
             </LinearLayout>
 
         </LinearLayout>

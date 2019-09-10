@@ -56,6 +56,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         TextView nom_user = convertView.findViewById(R.id.nom_user);
         TextView number = convertView.findViewById(R.id.number);
         TextView time = convertView.findViewById(R.id.time);
+        TextView categorie = convertView.findViewById(R.id.categorie);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
 
@@ -69,6 +70,10 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         nom_user.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
         description.setText(S.getDescription());
+        categorie.setText(
+                S.getCategorie()+">"+S.getSousCategorie()
+        );
+
 
         int profil = 0;
         if (position%3 == 0)
