@@ -7,20 +7,13 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Login;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
-import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.Tools.Object.Users;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -42,10 +35,19 @@ public class index_screen extends AppCompatActivity {
         // Todo : According Permissions
         CheckPermission();
 
+        //TODO check if user exist, pass to home directly
+        if (!Tool.User_Preferences(context).getString("Firstuse", "null").equals("null")){
+            if (!Tool.User_Preferences(context).getString("statut", "null").equals("null")){
+                // Todo : Launche Home activity
+                Intent i = new Intent(context, Home.class);
+                startActivity(i);
+                finish();
+            }
+        }
+
         // Todo ; Initialisation des composants
         Init_Components();
 
-        //TODO check if user exist, pass to home directly
 
     }
 
@@ -89,15 +91,6 @@ public class index_screen extends AppCompatActivity {
             Intent i = new Intent(context, Home.class);
             startActivity(i);
             finish();
-        }
-
-        if (null != Users.getall(context)){
-            Toast.makeText(context, "Profil determiné", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(context, Home.class);
-            startActivity(i);
-            finish();
-        }else{
-            Toast.makeText(context, "Aucun Profil trouvé", Toast.LENGTH_SHORT).show();
         }
 
         /*if (Tool.getUserPreferences(context,"phone").equals("")){

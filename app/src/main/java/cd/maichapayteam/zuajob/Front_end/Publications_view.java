@@ -2,12 +2,14 @@ package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -17,24 +19,30 @@ import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Publications_view extends AppCompatActivity {
 
     Context context = this;
     String title = "";
-    ListView list;
+    GridView list;
     SearchView rechercher;
+    SwipeRefreshLayout swipper;
 
+    ArrayList<Service> SERVICES = new ArrayList<>();
+    ArrayList<Service> Search = new ArrayList<>();
 
-    ArrayList<Services> SERVICES = new ArrayList<>();
-    ArrayList<Services> Search = new ArrayList<>();
+    ArrayList<Annonce> ANNOCE = new ArrayList<>();
+    ArrayList<Annonce> SearchA = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
+        swipper = findViewById(R.id.swipper);
         rechercher = findViewById(R.id.rechercher);
     }
 
@@ -46,25 +54,55 @@ public class Publications_view extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
     }
+
+    void Load_Annonce(){
+        ANNOCE.clear();
+        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        for (int i = 0; i < 10; i++) {
+            Annonce s = new Annonce();
+            s.setNomsUser(Tool.Versions()[i]);
+            s.setDescription(description);
+            s.setMontant(new Random().nextInt(50));
+            s.setCategorie("Catégorie "+i);
+            s.setSousCategorie("Sous catégorie "+i);
+            s.setDate("2019-09-09 23:57:00");
+            s.setDevise("USD");
+            s.setPhoneUser("+243 81 451 10 83");
+            ANNOCE.add(s);
+        }
+
+        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        else{
+            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
+        }
+    }
+
     void Load_SERVICE(){
         SERVICES.clear();
+        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
         for (int i = 0; i < 10; i++) {
-            Services s = new Services();
-            s.setNom_user("Deon Mass 00"+i);
-            s.setDescription_services("Je fais bien le service mais j'aime qu'on respect mon travail");
-            s.setPrix(String.valueOf(new Random().nextInt(50)));
-            s.setNbr_cote(String.valueOf(new Random().nextInt(200)));
-            s.setNbr_services(String.valueOf(new Random().nextInt(20)));
+            Service s = new Service();
+            s.setNomsJobeur(Tool.Versions()[i]);
+            s.setDescription(description);
+            s.setMontant(new Random().nextInt(50));
+            s.setCategorie("Catégorie "+i);
+            s.setSousCategorie("Sous catégorie "+i);
+            s.setDevise("USD");
+            s.setPhoneJobeur("+243 81 451 10 83");
+            s.setCote(new Random().nextInt(200));
+            s.setNombreRealisation(new Random().nextInt(20));
             SERVICES.add(s);
         }
 
         if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            if (title.equals("Services")) list.setAdapter(new Services_Base_Adapter(context, SERVICES));
-            else list.setAdapter(new Annonces_Base_Adapter(context, SERVICES));
+            list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+            list.setNumColumns(1);
         }
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +111,8 @@ public class Publications_view extends AppCompatActivity {
 
         // Todo ; launching methods
         Load_Header();
-        Load_SERVICE();
+        if (title.equals("Services")) Load_SERVICE();
+        else Load_Annonce();
     }
 
     @Override
@@ -91,6 +130,15 @@ public class Publications_view extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (title.equals("Services")) Load_SERVICE();
+                else Load_Annonce();
+                swipper.setRefreshing(false);
+            }
+        });
+
         rechercher.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,21 +148,41 @@ public class Publications_view extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Search.clear();
+                SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+                    if (title.equals("Services")) {
+                        list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+                        list.setNumColumns(1);
+                    }
+                    else list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
                     return true;
                 }
 
-                for ( Services s : SERVICES ) {
-                    if (
-                            s.getNom_user().toUpperCase().equals(newText.toUpperCase()) ||
-                            s.getPrix().toUpperCase().equals(newText.toUpperCase())
+                if (title.equals("Services")){
+                    for ( Service s : SERVICES ) {
+                        if (
+                                s.getNomsJobeur().toUpperCase().contains(newText.toUpperCase()) ||
+                                String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
                         ){
-                        Search.add(s);
+                            Search.add(s);
+                        }
                     }
+                    list.setAdapter(new Services_Base_Adapter(context, Search));
+                    list.setNumColumns(1);
+                }else{
+                    for ( Annonce s : ANNOCE ) {
+                        if (
+                                s.getNomsUser().toUpperCase().contains(newText.toUpperCase()) ||
+                                String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
+                        ){
+                            SearchA.add(s);
+                        }
+                    }
+                    list.setAdapter(new Annonces_Base_Adapter(context, SearchA));
                 }
-                list.setAdapter(new Services_Base_Adapter(context, Search));
+
+
                 return true;
             }
         });

@@ -59,9 +59,43 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Tool {
 
+    public static String[] Versions(){
+        return new String[]{
+                "PETIT FOUR",
+                "CUPCAKE",
+                "DONUT",
+                "ECLAIR",
+                "FROYO",
+                "GINGERBREAD",
+                "HONEYCOMB",
+                "ICE CREAM SANDWICH",
+                "JELLY BEAN",
+                "KITKAT",
+                "LOLLIPOP",
+                "MARSHMALLOW",
+                "NOUGAT",
+                "OREO",
+        };
+    }
+
 
     public static SharedPreferences User_Preferences(Context context){
         return context.getSharedPreferences("User_Identities", MODE_PRIVATE);
+    }
+
+    public static void userPreferences_Init(Context context){
+        Tool.setUserPreferences(context,"Firstuse","null");
+        Tool.setUserPreferences(context,"phone","null");
+        Tool.setUserPreferences(context,"CountryCode","null");
+        Tool.setUserPreferences(context,"CountryName","null");
+        Tool.setUserPreferences(context,"phoneCode","null");
+        Tool.setUserPreferences(context,"nom","null");
+        Tool.setUserPreferences(context,"prenom","null");
+        Tool.setUserPreferences(context,"birthday","null");
+        Tool.setUserPreferences(context,"sexe","null");
+        Tool.setUserPreferences(context,"passe","null");
+        Tool.setUserPreferences(context,"type", "null");
+        Tool.setUserPreferences(context,"statut", "null");
     }
 
     public static void setUserPreferences(Context context, String key, String values){
@@ -286,6 +320,57 @@ public class Tool {
 
         return sdf1.format(d1);
     }
+
+    public static String formatingDate(String origin_date){
+
+        try {
+            long[] date = Tool.online_Time(origin_date);
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+            Date d1 = new Date(sdf1.parse(origin_date).getTime());
+
+            String dif= "";
+            long day2 = 0;
+            long hours = date[0];
+            long minutes = date[1];
+
+            if (hours >=24 ) {
+                day2 = hours / 24;
+                hours = hours % 24;
+
+                if (day2 >= 30 && day2 < 45) {
+                    dif = "Il y'a 1 mois";
+                }else if (day2 < 30 ) {
+                    dif = "Il y a "+ day2 +" Jours";
+                }else if (day2 == 1 ) {
+                    dif = "Hier à "+sdf2.format(d1);
+                }else{
+                    dif = "Depuis "+ origin_date;
+                }
+
+            }else{
+
+                if (hours < 1 ) {
+                    if (minutes < 3 ) {
+                        dif = "A l'instant";
+                    }else{
+                        dif = "Il y a "+ minutes +"min ";
+                    }
+                }else{
+                    dif = "Il y a "+ hours +"h "+ minutes+"min";
+                }
+
+            }
+            return dif;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.i("ERRRRRRRRR", e.getMessage());
+            return "";
+        }
+
+    }
+
 
     //TODO : MATH & RANDOM
     /**

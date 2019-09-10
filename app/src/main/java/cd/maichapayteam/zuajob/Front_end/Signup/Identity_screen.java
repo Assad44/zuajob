@@ -101,7 +101,8 @@ public class Identity_screen extends AppCompatActivity {
                 Tool.setUserPreferences(context,"sexe",genre.getSelectedItem().toString());
                 Tool.setUserPreferences(context,"passe",passe.getText().toString().replace("'","''"));
                 Tool.setUserPreferences(context,"type", String.valueOf(t));
-
+                Tool.setUserPreferences(context,"statut", "done");
+                Tool.setUserPreferences(context,"Firstuse","non");
 
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);

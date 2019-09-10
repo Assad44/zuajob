@@ -17,12 +17,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
-import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_annonces extends AppCompatActivity {
 
@@ -30,34 +29,35 @@ public class Mes_annonces extends AppCompatActivity {
     GridView list;
     SearchView rechercher;
 
-    ArrayList<Services> SERVICES = new ArrayList<>();
-    ArrayList<Services> Search = new ArrayList<>();
+    ArrayList<Annonce> ANNOCE = new ArrayList<>();
+    ArrayList<Annonce> SearchA = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
     }
 
-    void Load_SERVICE(){
-        SERVICES.clear();
+    void Load_Annonce(){
+        ANNOCE.clear();
+        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         for (int i = 0; i < 10; i++) {
-            Services s = new Services();
-            s.setNom_user("Deon Mass 00"+i);
-            s.setDescription_services("Je fais bien le service mais j'aime qu'on respect mon travail");
-            s.setPrix(String.valueOf(new Random().nextInt(50)));
-            s.setNbr_cote(String.valueOf(new Random().nextInt(200)));
-            s.setNbr_services(String.valueOf(new Random().nextInt(20)));
-            SERVICES.add(s);
+            Annonce s = new Annonce();
+            s.setNomsUser(Tool.Versions()[i]);
+            s.setDescription(description);
+            s.setMontant(new Random().nextInt(50));
+            s.setCategorie("Catégorie "+i);
+            s.setSousCategorie("Sous catégorie "+i);
+            s.setDate("2019-09-09 23:57:00");
+            s.setDevise("USD");
+            s.setPhoneUser("+243 81 451 10 83");
+            ANNOCE.add(s);
         }
 
-        if (null == SERVICES)
-            ;
+        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            list.setAdapter(new Annonces_Base_Adapter(context, SERVICES));
+            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
         }
-
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class Mes_annonces extends AppCompatActivity {
         Init_Components();
 
         // Todo ; launching methods
-        Load_SERVICE();
+        Load_Annonce();
     }
 
 
@@ -99,33 +99,26 @@ public class Mes_annonces extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Search.clear();
+                SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Services_Base_Adapter(context, SERVICES));
+                    list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
                     return true;
                 }
 
-                for ( Services s : SERVICES ) {
+                for ( Annonce s : ANNOCE ) {
                     if (
-                            s.getNom_user().toUpperCase().equals(newText.toUpperCase()) ||
-                                    s.getPrix().toUpperCase().equals(newText.toUpperCase())
+                            s.getNomsUser().toUpperCase().contains(newText.toUpperCase()) ||
+                                    String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
                     ){
-                        Search.add(s);
+                        SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Services_Base_Adapter(context, Search));
+                list.setAdapter(new Annonces_Base_Adapter(context, SearchA));
                 return true;
             }
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(context, Details_publication.class));
-                finish();
-            }
-        });
     }
 
     @Override

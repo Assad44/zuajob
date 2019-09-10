@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".Front_end.Publications_view">
 
     <LinearLayout
@@ -28,10 +29,18 @@
 
     </LinearLayout>
 
-    <ListView
-        android:numColumns="auto_fit"
-        android:id="@+id/list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="wrap_content">
+
+        <GridView
+            android:numColumns="auto_fit"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></GridView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

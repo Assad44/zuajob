@@ -12,8 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Categories;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Sous_Categories;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.R;
 
 public class Categorie_view extends AppCompatActivity {
@@ -21,8 +20,7 @@ public class Categorie_view extends AppCompatActivity {
     Context context = this;
     GridView list;
 
-    ArrayList<Categories> DATA = new ArrayList<>();
-    ArrayList<Sous_Categories> SDATA = new ArrayList<>();
+    ArrayList<Categorie> DATA = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
@@ -30,8 +28,8 @@ public class Categorie_view extends AppCompatActivity {
 
     void Load_CAtegorie(){
         for (int i = 0; i < 10; i++) {
-            Categories c = new Categories();
-            c.setTitle("Categorie "+i);
+            Categorie c = new Categorie();
+            c.setDesignation("Categorie "+i);
             c.setDescription("Description "+i);
             DATA.add(c);
         }
@@ -45,7 +43,7 @@ public class Categorie_view extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(context, Sous_categories.class);
-                i.putExtra("title",DATA.get(position).getTitle());
+                i.putExtra("title",DATA.get(position).getDesignation());
                 startActivity(i);
                 finish();
             }

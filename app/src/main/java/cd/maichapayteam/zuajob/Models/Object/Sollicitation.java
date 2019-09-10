@@ -8,6 +8,7 @@ public class Sollicitation {
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
+
     public long id = -1;
     public long idService = -1;
     public String descriptionService = "";

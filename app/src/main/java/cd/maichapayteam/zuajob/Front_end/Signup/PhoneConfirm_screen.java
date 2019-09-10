@@ -80,7 +80,6 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // Checking Empty field
                 if (TextUtils.isEmpty(PhoneCodeNumber.getText().toString())){
                     PhoneCodeNumber.setError("Veuillez entrer le code de confirmation");

@@ -20,6 +20,11 @@
         <item>Sous catégorie</item>
     </string-array>
 
+    <string-array name="Publication">
+        <item>Annonces</item>
+        <item>Services</item>
+    </string-array>
+
     <string-array name="user_type">
         <item>---Type de compte---</item>
         <item>Un prestateur de services</item>

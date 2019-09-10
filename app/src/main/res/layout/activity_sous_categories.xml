@@ -15,13 +15,30 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <Spinner
-            android:id="@+id/list_sous_cat"
-            android:entries="@array/Select"
+        <LinearLayout
+            android:weightSum="2"
             android:background="@color/white"
-            android:padding="10dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:layout_weight="1"
+                android:id="@+id/list_sous_cat"
+                android:entries="@array/Select"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+            <Spinner
+                android:layout_weight="1"
+                android:entries="@array/Publication"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

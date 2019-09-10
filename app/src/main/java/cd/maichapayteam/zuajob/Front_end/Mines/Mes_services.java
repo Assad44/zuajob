@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.BackEnd.Objects.Services;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_services extends AppCompatActivity {
 
@@ -28,28 +29,34 @@ public class Mes_services extends AppCompatActivity {
     ListView list;
     SearchView rechercher;
 
-    ArrayList<Services> SERVICES = new ArrayList<>();
-    ArrayList<Services> Search = new ArrayList<>();
+    ArrayList<Service> SERVICES = new ArrayList<>();
+    ArrayList<Service> Search = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
     }
+
     void Load_SERVICE(){
         SERVICES.clear();
+        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
         for (int i = 0; i < 10; i++) {
-            Services s = new Services();
-            s.setNom_user("Deon Mass 00"+i);
-            s.setDescription_services("Je fais bien le service mais j'aime qu'on respect mon travail");
-            s.setPrix(String.valueOf(new Random().nextInt(50)));
-            s.setNbr_cote(String.valueOf(new Random().nextInt(200)));
-            s.setNbr_services(String.valueOf(new Random().nextInt(20)));
+            Service s = new Service();
+            s.setNomsJobeur(Tool.Versions()[i]);
+            s.setDescription(description);
+            s.setMontant(new Random().nextInt(50));
+            s.setCategorie("Catégorie "+i);
+            s.setSousCategorie("Sous catégorie "+i);
+            s.setDevise("USD");
+            s.setPhoneJobeur("+243 81 451 10 83");
+            s.setCote(new Random().nextInt(200));
+            s.setNombreRealisation(new Random().nextInt(20));
             SERVICES.add(s);
         }
 
         if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            Toast.makeText(context, "" + SERVICES.size(), Toast.LENGTH_SHORT).show();
             list.setAdapter(new Services_Base_Adapter(context, SERVICES));
         }
 
@@ -102,10 +109,10 @@ public class Mes_services extends AppCompatActivity {
                     return true;
                 }
 
-                for ( Services s : SERVICES ) {
+                for ( Service s : SERVICES ) {
                     if (
-                            s.getNom_user().toUpperCase().equals(newText.toUpperCase()) ||
-                                    s.getPrix().toUpperCase().equals(newText.toUpperCase())
+                            s.getNomsJobeur().toUpperCase().contains(newText.toUpperCase()) ||
+                            String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
                     ){
                         Search.add(s);
                     }

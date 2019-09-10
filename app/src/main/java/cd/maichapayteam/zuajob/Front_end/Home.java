@@ -19,21 +19,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
+import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.IncomingSms;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -48,11 +56,10 @@ public class Home extends AppCompatActivity
     DrawerLayout drawer;
     NavigationView navigationView;
     SearchView rechercher;
-    LinearLayout search_bar;
+    LinearLayout search_bar,sous;
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
-
-    User myProfile;
-
+    TextView phone, nom;
+    ArrayList<Categorie> DATA = new ArrayList<>();
     //HorizontalListView hlistview;
 
     private void Init_Components(){
@@ -61,6 +68,9 @@ public class Home extends AppCompatActivity
         //TODO modifier le screen par rapport au profil de l'utilisateur
 
         fab = findViewById(R.id.fab);
+        /*phone = findViewById(R.id.phone);
+        nom = findViewById(R.id.nom);*/
+        sous = findViewById(R.id.sous);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -81,6 +91,63 @@ public class Home extends AppCompatActivity
 
     }
 
+    void Load_CAtegorie(){
+        for (int i = 0; i < 10; i++) {
+            Categorie c = new Categorie();
+            c.setDesignation("Categorie "+i);
+            c.setDescription(getResources().getString(R.string.Lorem_short));
+            DATA.add(c);
+        }
+        if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        else{
+            int i = 0;
+            for ( final Categorie c : DATA) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View responses = inflater.inflate(R.layout.view_categorie, null);
+                CardView element = responses.findViewById(R.id.element);
+                TextView title = responses.findViewById(R.id.title);
+                ImageView img = responses.findViewById(R.id.img);
+                TextView description   = responses.findViewById(R.id.description);
+
+                title.setText(c.getDesignation());
+                description.setText(c.getDescription());
+                if (i%2 == 0)img.setImageResource(R.drawable.pub);
+                else img.setImageResource(R.drawable.pub4);
+
+                sous.addView(responses, 0);
+
+                final int finalI = i;
+                element.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (finalI != 0){
+                            Intent i = new Intent(context, Sous_categories.class);
+                            i.putExtra("title",c.getDesignation());
+                            startActivity(i);
+                            finish();
+                        }else{
+                            startActivity(new Intent(context, Categorie_view.class));
+                            finish();
+                        }
+                    }
+                });
+
+                if (i == 0){
+                    title.setText("Toute les catégories");
+                    description.setText("");
+                    img.setImageResource(R.drawable.ic_more_primary);
+                    img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                }
+                if (i == 3){
+                    break;
+                }
+                i++;
+            }
+
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +161,14 @@ public class Home extends AppCompatActivity
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setTitle(Tool.getUserPreferences(context,"nom"));
+            /*nom.setText(Tool.getUserPreferences(context, "nom"));
+            String numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
+            phone.setText(numero);*/
             //getSupportActionBar().setIcon(R.drawable.ic_humburger);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        Load_CAtegorie();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -294,22 +365,14 @@ public class Home extends AppCompatActivity
             return true;
         }
         if (id == R.id.action_settings) {
-            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            Tool.SHARE(context,getResources().getString(R.string.Share_message));
             return true;
         }
         if (id == R.id.nav_exit) {
-            //onBackPressed();
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            adb.setTitle("Déconnexion");
-            adb.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
-            adb.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    //User.deconnect();
-                    finish();
-                }
-            });
-            adb.setNegativeButton("Non", null);
+            Tool.userPreferences_Init(context);
+            Intent i = new Intent(context, index_screen.class);
+            startActivity(i);
+            finish();
             return true;
         }
 

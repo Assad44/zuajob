@@ -67,15 +67,16 @@
                     android:layout_height="wrap_content"
                     android:text="Nom du jobeur"
                     android:textSize="15dp"/>
+
                 <TextView
-                    android:textStyle="italic"
                     android:id="@+id/number"
-                    android:textColor="#EEEEEE"
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="+243 814511083 "
-                    android:textSize="11dp"/>
+                    android:textColor="@color/black"
+                    android:textSize="11dp"
+                    android:textStyle="italic" />
                 <TextView
                     android:id="@+id/time"
                     android:textColor="@color/colorAccent"

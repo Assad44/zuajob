@@ -35,6 +35,8 @@ public class Myprofil extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST = 12;
     TextView update_Adresses;
     ImageView picture, Pickpicture;
+    TextView nom,number,Sexe;
+    TextView street,quartier,commune,pays,email;
 
     Toolbar toolbar;
 
@@ -42,19 +44,42 @@ public class Myprofil extends AppCompatActivity {
         update_Adresses = findViewById(R.id.update_Adresses);
         picture = findViewById(R.id.picture);
         Pickpicture = findViewById(R.id.Pickpicture);
-        /*btn_jobeur = findViewById(R.id.btn_jobeur);
-        btn_simple_user = findViewById(R.id.btn_simple_user);
-        btn_back_arrow = findViewById(R.id.btn_back_arrow);*/
+        nom = findViewById(R.id.nom);
+        number = findViewById(R.id.number);
+        Sexe = findViewById(R.id.Sexe);
         toolbar = findViewById(R.id.toolbar);
+        pays = findViewById(R.id.pays);
+        street = findViewById(R.id.street);
+        quartier = findViewById(R.id.quartier);
+        commune = findViewById(R.id.commune);
+        email = findViewById(R.id.email);
     }
 
+
+    private void Profil_initialize(){
+        nom.setText(
+                Tool.getUserPreferences(context,"nom") + " "+
+                Tool.getUserPreferences(context,"prenom")
+        );
+        number.setText(
+                Tool.getUserPreferences(context,"CountryCode") + " "+
+                Tool.getUserPreferences(context,"phone")
+        );
+        Sexe.setText(
+                Tool.getUserPreferences(context,"sexe") + " / "+
+                Tool.getUserPreferences(context,"birthday")
+        );
+
+
+
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +98,7 @@ public class Myprofil extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        Profil_initialize();
     }
 
     @Override
