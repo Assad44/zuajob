@@ -1,10 +1,14 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
+import android.content.Context;
+
 import java.util.Random;
 
 public class GeneralClass {
 
     private static char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+    public static Context applicationContext;
 
     public static String getMot() {
         String str = "";

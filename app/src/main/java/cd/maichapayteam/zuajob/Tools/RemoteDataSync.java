@@ -18,11 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
-//import cd.maichapayteam.zuajob.Models.Object.RandomUser;
+import cd.maichapayteam.zuajob.Models.Object.GeneralClass;
 import cd.maichapayteam.zuajob.Models.Object.User;
-//import cd.maichapayteam.zuajob.Models.Object.User2;
-//import cd.maichapayteam.zuajob.Models.Object.Ville;
 
 public class RemoteDataSync {
 
@@ -30,10 +29,11 @@ public class RemoteDataSync {
     private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
 
     public static boolean confirmCode(String numero, String code) {
-        String url = BASE_URL + "confirmenumero?numero=" + numero + "&code=" + code;
-        String TAG = "confirmenumero";
+        String url = BASE_URL + "confirmenumero";
 
         ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("numero", numero)
+                .addQueryParameter("code", code)
                 .build();
 
         try{
@@ -49,10 +49,10 @@ public class RemoteDataSync {
     }
 
     public static boolean checkNumero(String numero) {
-        String url = BASE_URL + "checknumero?phone=" + numero;
-        String TAG = "checknumero";
+        String url = BASE_URL + "checknumero";
 
         ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("phone", numero)
                 .build();
 
         try{
@@ -235,75 +235,90 @@ public class RemoteDataSync {
     }
 
     public static User createUser (User user) {
-        //String url = BASE_URL + "createuser";
-//
-        //ANRequest request = AndroidNetworking.post(url)
-        //        .addBodyParameter(user) // posting java object
-        //        .setTag("user" + user.prenom + user.nom)
-        //        .setPriority(Priority.MEDIUM)
-        //        .build();
-//
-        //try{
-        //    ANResponse<User> response = request.executeForObject(User.class);
-        //    if (response.isSuccess()) {
-        //        user = response.getResult();
-        //        if(user!=null) {
-        //            if(!user.error) {
-        //                user.myProfil = true;
-        //                user.save();
-        //            }
-        //        }
-        //    } else {
-        //        user = new User();
-        //        user.error = true;
-        //        user.errorCode = 319288;
-        //        user.errorMessage = response.getError().getMessage();
-        //    }
-        //} catch (Exception ex) {
-        //    user = new User();
-        //    user.error = true;
-        //    user.errorCode = 319288;
-        //    user.errorMessage = ex.getMessage();
-        //}
-//
-        //return user;
-        return new User();
+        String url = BASE_URL + "createuser";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addBodyParameter(user) // posting java object
+                .setTag("user" + user.prenom + user.nom)
+                .setPriority(Priority.MEDIUM)
+                .build();
+
+        try{
+            ANResponse<User> response = request.executeForObject(User.class);
+            if (response.isSuccess()) {
+                user = response.getResult();
+                if(user!=null) {
+                    if(!user.isError()) {
+                        user.myProfil = true;
+                        UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
+                        user = userDAO.ajouter(user);
+                        if(user==null) {
+                            user = new User();
+                            user.setError(true);
+                            user.setErrorCode(7127);
+                            user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
+                        }
+                    }
+                }
+            } else {
+                user = new User();
+                user.error = true;
+                user.errorCode = 319288;
+                user.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            user = new User();
+            user.error = true;
+            user.errorCode = 319288;
+            user.errorMessage = ex.getMessage();
+        }
+
+        return user;
+        //return new User();
     }
 
     public static User login(String auth_code, String password) {
-        //String url = BASE_URL + "login?auth_code=" + auth_code + "&password=" + password;
-        //String TAG = "login";
-//
-        //User user;
-//
-        //ANRequest request = AndroidNetworking.get(url)
-        //        .build();
-//
-        //try{
-        //    ANResponse<User> response = request.executeForObject(User.class);
-        //    if (response.isSuccess()) {
-        //        user = response.getResult();
-        //        if(user!=null) {
-        //            if(!user.error) {
-        //                user.myProfil = true;
-        //                user.save();
-        //            }
-        //        }
-        //    } else {
-        //        user = new User();
-        //        user.error = true;
-        //        user.errorCode = 3188;
-        //        user.errorMessage = response.getError().getMessage();
-        //    }
-        //} catch (Exception ex) {
-        //    user = new User();
-        //    user.error = true;
-        //    user.errorCode = 3198;
-        //    user.errorMessage = ex.getMessage();
-        //}
-//
-        //return user;
-        return new User();
+        String url = BASE_URL + "login";
+
+        User user;
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("auth_code", auth_code)
+                .addQueryParameter("password", password)
+                .build();
+
+        try{
+            ANResponse<User> response = request.executeForObject(User.class);
+            if (response.isSuccess()) {
+                user = response.getResult();
+                if(user!=null) {
+                    if(!user.error) {
+                        user.myProfil = true;
+                        UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
+                        user = userDAO.ajouter(user);
+                        if(user==null) {
+                            user = new User();
+                            user.setError(true);
+                            user.setErrorCode(7127);
+                            user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous reconnecter.");
+                        }
+                    }
+                }
+            } else {
+                user = new User();
+                user.error = true;
+                user.errorCode = 3188;
+                user.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            user = new User();
+            user.error = true;
+            user.errorCode = 3198;
+            user.errorMessage = ex.getMessage();
+        }
+
+        return user;
+        //return new User();
     }
 
     //public static List<Ville> getListVille () {
