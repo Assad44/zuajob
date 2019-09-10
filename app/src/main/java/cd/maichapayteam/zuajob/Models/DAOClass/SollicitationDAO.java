@@ -23,6 +23,7 @@ public class SollicitationDAO extends DAOBase {
     public static final String URL_IMAGE_USER = "url_img";
     public static final String DATE = "datesol";
     public static final String STATUT = "statut";
+    public static final String HAVE_SOLLICITED = "havesol";
     public static final String TABLE_NOM = "t_sollicitation";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -35,7 +36,8 @@ public class SollicitationDAO extends DAOBase {
                     ID_USER + " INTEGER, " +
                     URL_IMAGE_USER + " TEXT, " +
                     DATE + " TEXT, " +
-                    STATUT + " INTEGER);";
+                    STATUT + " INTEGER, " +
+                    HAVE_SOLLICITED + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -66,6 +68,7 @@ public class SollicitationDAO extends DAOBase {
                 value.put(URL_IMAGE_USER, object.getUrlImageUser());
                 value.put(DATE, object.getDate());
                 value.put(STATUT, object.getStatut());
+                value.put(HAVE_SOLLICITED, object.isHaveSollicited());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -111,6 +114,7 @@ public class SollicitationDAO extends DAOBase {
                 String urlimg=c.getString(7);
                 String date=c.getString(8);
                 int stat=c.getInt(9);
+                int have=c.getInt(10);
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -123,6 +127,8 @@ public class SollicitationDAO extends DAOBase {
                 object.setUrlImageUser(urlimg);
                 object.setDate(date);
                 object.setStatut(stat);
+                object.setHaveSollicited(false);
+                if(have==1) object.setHaveSollicited(true);
             }
             c.close();
             close();
@@ -157,6 +163,7 @@ public class SollicitationDAO extends DAOBase {
         value.put(URL_IMAGE_USER, object.getUrlImageUser());
         value.put(DATE, object.getDate());
         value.put(STATUT, object.getStatut());
+        value.put(HAVE_SOLLICITED, object.isHaveSollicited());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

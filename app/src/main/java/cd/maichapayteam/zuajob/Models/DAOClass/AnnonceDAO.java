@@ -25,6 +25,7 @@ public class AnnonceDAO extends DAOBase {
     public static final String SOUS_CATEGORIE = "souscat";
     public static final String URL_PHOTO_USER = "urluser";
     public static final String DATE = "datepub";
+    public static final String IS_MY = "ismy";
     public static final String TABLE_NOM = "t_annonce";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -40,7 +41,8 @@ public class AnnonceDAO extends DAOBase {
                     PHONE_USER + " TEXT, " +
                     SOUS_CATEGORIE + " TEXT, " +
                     URL_PHOTO_USER + " TEXT, " +
-                    DATE + " TEXT);";
+                    DATE + " TEXT, " +
+                    IS_MY + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -74,6 +76,7 @@ public class AnnonceDAO extends DAOBase {
                 value.put(SOUS_CATEGORIE, object.getSousCategorie());
                 value.put(URL_PHOTO_USER, object.getUrlImageUser());
                 value.put(DATE, object.getDate());
+                value.put(IS_MY, object.isMy());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -122,6 +125,7 @@ public class AnnonceDAO extends DAOBase {
                 String sousCat=c.getString(10);
                 String urlImage=c.getString(11);
                 String date=c.getString(12);
+                int ismy=c.getInt(13);
 
                 object = new Annonce();
                 object.setId(_id);
@@ -137,6 +141,7 @@ public class AnnonceDAO extends DAOBase {
                 object.setSousCategorie(sousCat);
                 object.setUrlImageUser(urlImage);
                 object.setDate(date);
+                if(ismy==1) object.setMy(true);
             }
             c.close();
             close();
@@ -174,6 +179,7 @@ public class AnnonceDAO extends DAOBase {
         value.put(SOUS_CATEGORIE, object.getSousCategorie());
         value.put(URL_PHOTO_USER, object.getUrlImageUser());
         value.put(DATE, object.getDate());
+        value.put(IS_MY, object.isMy());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

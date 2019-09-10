@@ -27,6 +27,7 @@ public class ServiceDAO extends DAOBase {
     public static final String PHONE_JOBEUR = "phonejob";
     public static final String SOUS_CATEGORIE = "souscat";
     public static final String URL_PHOTO_JOBEUR = "urlphoto";
+    public static final String IS_MY = "ismy";
     public static final String TABLE_NOM = "t_service";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -43,7 +44,8 @@ public class ServiceDAO extends DAOBase {
                     NOMS_JOBEUR + " TEXT, " +
                     PHONE_JOBEUR + " TEXT, " +
                     SOUS_CATEGORIE + " TEXT, " +
-                    URL_PHOTO_JOBEUR + " TEXT);";
+                    URL_PHOTO_JOBEUR + " TEXT, " +
+                    IS_MY + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -127,6 +129,7 @@ public class ServiceDAO extends DAOBase {
                 String phoneJob=c.getString(11);
                 String sousCat=c.getString(12);
                 String urlImage=c.getString(13);
+                int ismy=c.getInt(14);
 
                 object = new Service();
                 object.setId(_id);
@@ -143,6 +146,7 @@ public class ServiceDAO extends DAOBase {
                 object.setPhoneJobeur(phoneJob);
                 object.setSousCategorie(sousCat);
                 object.setUrlImageJobeur(urlImage);
+                if(ismy==1) object.setMy(true);
             }
             c.close();
             close();
@@ -181,6 +185,7 @@ public class ServiceDAO extends DAOBase {
         value.put(PHONE_JOBEUR, object.getPhoneJobeur());
         value.put(SOUS_CATEGORIE, object.getSousCategorie());
         value.put(URL_PHOTO_JOBEUR, object.getUrlImageJobeur());
+        value.put(IS_MY, object.isMy());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

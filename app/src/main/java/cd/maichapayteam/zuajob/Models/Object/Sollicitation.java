@@ -20,6 +20,7 @@ public class Sollicitation {
     public String urlImageUser = "";
     public String date = "";
     public int statut = 0;
+    public boolean haveSollicited = false;
 
     public boolean isError() {
         return error;
@@ -131,6 +132,14 @@ public class Sollicitation {
 
     public void setStatut(int statut) {
         this.statut = statut;
+    }
+
+    public boolean isHaveSollicited() {
+        return haveSollicited;
+    }
+
+    public void setHaveSollicited(boolean haveSollicited) {
+        this.haveSollicited = haveSollicited;
     }
 
 }

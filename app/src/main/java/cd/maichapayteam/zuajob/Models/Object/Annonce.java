@@ -25,6 +25,16 @@ public class Annonce {
     public String categorie = "";
     public String date = "";
 
+    public boolean isMy() {
+        return isMy;
+    }
+
+    public void setMy(boolean my) {
+        isMy = my;
+    }
+
+    public boolean isMy = false;
+
     public boolean isError() {
         return error;
     }

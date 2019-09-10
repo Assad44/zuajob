@@ -20,6 +20,8 @@ public class Postuler {
     public String date = "";
     public int statut = 0;
 
+    public boolean havePostuled = false;
+
     public boolean isError() {
         return error;
     }
@@ -130,6 +132,14 @@ public class Postuler {
 
     public void setStatut(int statut) {
         this.statut = statut;
+    }
+
+    public boolean isHavePostuled() {
+        return havePostuled;
+    }
+
+    public void setHavePostuled(boolean havePostuled) {
+        this.havePostuled = havePostuled;
     }
 
 }

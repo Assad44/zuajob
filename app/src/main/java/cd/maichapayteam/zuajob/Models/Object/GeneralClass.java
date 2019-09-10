@@ -10,6 +10,8 @@ public class GeneralClass {
 
     public static Context applicationContext;
 
+    public static String userToken;
+
     public static String getMot() {
         String str = "";
         for (int i = 0; i < new Random().nextInt(10) ; i++) {

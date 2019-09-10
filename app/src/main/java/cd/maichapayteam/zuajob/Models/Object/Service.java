@@ -33,6 +33,16 @@ public class Service {
     public int nombreRealisation = 0;
     public int cote = 0;
 
+    public boolean isMy() {
+        return isMy;
+    }
+
+    public void setMy(boolean my) {
+        isMy = my;
+    }
+
+    public boolean isMy = false;
+
     public boolean isError() {
         return error;
     }
