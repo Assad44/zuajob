@@ -23,6 +23,12 @@ public class PostulerDAO extends DAOBase {
     public static final String DATE = "datesol";
     public static final String STATUT = "statut";
     public static final String HAVE_POSTULED = "havepost";
+    public static final String IS_RDV = "isrdv";
+    public static final String IS_CONCLU = "isconclu";
+    public static final String MONTANT_CONCLU = "montantc";
+    public static final String DEVISE_CONCLU = "devc";
+    public static final String DATE_RDV = "daterdv";
+    public static final String HEURE_RDV = "heurerdv";
     public static final String TABLE_NOM = "t_postuler";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +

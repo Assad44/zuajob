@@ -34,6 +34,12 @@ public class Sollicitation {
     public String date = "";
     public int statut = 0;
     public boolean haveSollicited = false;
+    public boolean isRDV = false;
+    public boolean isRendu = false;
+    public float montantConclu = 0;
+    public String deviseConclu = "";
+    public String dateRDV = "";
+    public String heureRDV = "";
 
 
     public boolean isRecent() {
@@ -178,6 +184,54 @@ public class Sollicitation {
 
     public void setHaveSollicited(boolean haveSollicited) {
         this.haveSollicited = haveSollicited;
+    }
+
+    public boolean isRDV() {
+        return isRDV;
+    }
+
+    public void setRDV(boolean RDV) {
+        isRDV = RDV;
+    }
+
+    public boolean isRendu() {
+        return isRendu;
+    }
+
+    public void setRendu(boolean rendu) {
+        isRendu = rendu;
+    }
+
+    public float getMontantConclu() {
+        return montantConclu;
+    }
+
+    public void setMontantConclu(float montantConclu) {
+        this.montantConclu = montantConclu;
+    }
+
+    public String getDeviseConclu() {
+        return deviseConclu;
+    }
+
+    public void setDeviseConclu(String deviseConclu) {
+        this.deviseConclu = deviseConclu;
+    }
+
+    public String getDateRDV() {
+        return dateRDV;
+    }
+
+    public void setDateRDV(String dateRDV) {
+        this.dateRDV = dateRDV;
+    }
+
+    public String getHeureRDV() {
+        return heureRDV;
+    }
+
+    public void setHeureRDV(String heureRDV) {
+        this.heureRDV = heureRDV;
     }
 
 }
