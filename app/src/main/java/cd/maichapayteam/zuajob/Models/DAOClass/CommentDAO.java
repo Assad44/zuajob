@@ -59,9 +59,9 @@ public class CommentDAO extends DAOBase {
                 value.put(ID_USER, object.getIdUser());
                 value.put(NOMS_USER, object.getNomsUser());
                 value.put(URL_IMAGE_USER, object.getUrlImageUser());
-                value.put(ID_USER_CONCERNE, object.getIdUser());
-                value.put(NOMS_USER_CONCERNE, object.getNomsUser());
-                value.put(URL_IMAGE_USER_CONCERNE, object.getUrlImageUser());
+                value.put(ID_USER_CONCERNE, object.getIdUserConcerne());
+                value.put(NOMS_USER_CONCERNE, object.getNomsUserConcerne());
+                value.put(URL_IMAGE_USER_CONCERNE, object.getUrlImageUserConcerne());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -147,9 +147,9 @@ public class CommentDAO extends DAOBase {
         value.put(ID_USER, object.getIdUser());
         value.put(NOMS_USER, object.getNomsUser());
         value.put(URL_IMAGE_USER, object.getUrlImageUser());
-        value.put(ID_USER_CONCERNE, object.getIdUser());
-        value.put(NOMS_USER_CONCERNE, object.getNomsUser());
-        value.put(URL_IMAGE_USER_CONCERNE, object.getUrlImageUser());
+        value.put(ID_USER_CONCERNE, object.getIdUserConcerne());
+        value.put(NOMS_USER_CONCERNE, object.getNomsUserConcerne());
+        value.put(URL_IMAGE_USER_CONCERNE, object.getUrlImageUserConcerne());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

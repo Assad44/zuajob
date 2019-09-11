@@ -32,6 +32,8 @@ public class SollicitationDAO extends DAOBase {
     public static final String DEVISE_CONCLU = "devc";
     public static final String DATE_RDV = "daterdv";
     public static final String HEURE_RDV = "heurerdv";
+    public static final String COTE = "cote";
+    public static final String COMMENT = "comments";
     public static final String TABLE_NOM = "t_sollicitation";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -53,7 +55,9 @@ public class SollicitationDAO extends DAOBase {
                     MONTANT_CONCLU + " REAL, " +
                     DEVISE_CONCLU + " TEXT, " +
                     DATE_RDV + " TEXT, " +
-                    HEURE_RDV + " TEXT);";
+                    HEURE_RDV + " TEXT, " +
+                    COTE + " INTEGER, " +
+                    COMMENT + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -93,6 +97,8 @@ public class SollicitationDAO extends DAOBase {
                 value.put(DEVISE_CONCLU, object.getDeviseConclu());
                 value.put(DATE_RDV, object.getDateRDV());
                 value.put(HEURE_RDV, object.getHeureRDV());
+                value.put(COTE, object.getCote());
+                value.put(COMMENT, object.getComment());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -147,6 +153,8 @@ public class SollicitationDAO extends DAOBase {
                 String devc=c.getString(16);
                 String datec=c.getString(17);
                 String heure=c.getString(18);
+                int cote=c.getInt(19);
+                String com=c.getString(20);
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -169,6 +177,8 @@ public class SollicitationDAO extends DAOBase {
                 object.setDeviseConclu(devc);
                 object.setDateRDV(datec);
                 object.setHeureRDV(heure);
+                object.setCote(cote);
+                object.setComment(com);
             }
             c.close();
             close();
@@ -212,6 +222,8 @@ public class SollicitationDAO extends DAOBase {
         value.put(DEVISE_CONCLU, object.getDeviseConclu());
         value.put(DATE_RDV, object.getDateRDV());
         value.put(HEURE_RDV, object.getHeureRDV());
+        value.put(COTE, object.getCote());
+        value.put(COMMENT, object.getComment());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

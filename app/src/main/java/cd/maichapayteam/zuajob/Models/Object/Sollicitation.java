@@ -40,6 +40,8 @@ public class Sollicitation {
     public String deviseConclu = "";
     public String dateRDV = "";
     public String heureRDV = "";
+    public int cote = 0;
+    public String comment = "";
 
 
     public boolean isRecent() {
@@ -232,6 +234,22 @@ public class Sollicitation {
 
     public void setHeureRDV(String heureRDV) {
         this.heureRDV = heureRDV;
+    }
+
+    public int getCote() {
+        return cote;
+    }
+
+    public void setCote(int cote) {
+        this.cote = cote;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
 }

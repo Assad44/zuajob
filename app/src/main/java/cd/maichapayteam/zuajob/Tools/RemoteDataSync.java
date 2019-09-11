@@ -16,13 +16,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CommentDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.PostulerDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.ReactionDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
@@ -32,7 +30,6 @@ import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Comment;
 import cd.maichapayteam.zuajob.Models.Object.GeneralClass;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
-import cd.maichapayteam.zuajob.Models.Object.Reaction;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
@@ -912,48 +909,6 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             object = new Service();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
-        }
-
-        return object;
-    }
-
-    public static Reaction reagir (Reaction object) {
-        String url = BASE_URL + "reagir";
-
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(object) // posting java object
-                .setTag("reagir" + object.getIdService())
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
-        try{
-            ANResponse<Reaction> response = request.executeForObject(Reaction.class);
-            if (response.isSuccess()) {
-                object = response.getResult();
-                if(object!=null) {
-                    if(!object.isError()) {
-                        ReactionDAO reactionDAO = new ReactionDAO(GeneralClass.applicationContext);
-                        object = reactionDAO.ajouter(object);
-                        if(object==null) {
-                            object = new Reaction();
-                            object.setError(true);
-                            object.setErrorCode(2247);
-                            object.setErrorMessage("Une erreur est survenue lors de la publication de votre réaction.");
-                        }
-                    }
-                }
-            } else {
-                object = new Reaction();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
-            }
-        } catch (Exception ex) {
-            object = new Reaction();
             object.error = true;
             object.errorCode = 49288;
             object.errorMessage = ex.getMessage();

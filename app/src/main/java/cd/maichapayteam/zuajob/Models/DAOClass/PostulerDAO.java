@@ -29,6 +29,9 @@ public class PostulerDAO extends DAOBase {
     public static final String DEVISE_CONCLU = "devc";
     public static final String DATE_RDV = "daterdv";
     public static final String HEURE_RDV = "heurerdv";
+    public static final String DEVISE = "devise";
+    public static final String COTE = "cote";
+    public static final String COMMENT = "comments";
     public static final String TABLE_NOM = "t_postuler";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -48,7 +51,10 @@ public class PostulerDAO extends DAOBase {
                     MONTANT_CONCLU + " REAL, " +
                     DEVISE_CONCLU + " TEXT, " +
                     DATE_RDV + " TEXT, " +
-                    HEURE_RDV + " TEXT);";
+                    HEURE_RDV + " TEXT, " +
+                    DEVISE + " TEXT, " +
+                    COTE + " INTEGER, " +
+                    COMMENT + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -73,6 +79,7 @@ public class PostulerDAO extends DAOBase {
                 value.put(ID_ANNONCE, object.getIdAnnonce());
                 value.put(DESCRIPTION_ANNONCE, object.getDescriptionAnnonce());
                 value.put(MONTANT_ANNONCE, object.getMontant());
+                value.put(DEVISE, object.getDevise());
                 value.put(NOM_USER, object.getNomsUser());
                 value.put(PHONE_USER, object.getPhoneUser());
                 value.put(ID_USER, object.getIdUser());
@@ -86,6 +93,8 @@ public class PostulerDAO extends DAOBase {
                 value.put(DEVISE_CONCLU, object.getDeviseConclu());
                 value.put(DATE_RDV, object.getDateRDV());
                 value.put(HEURE_RDV, object.getHeureRDV());
+                value.put(COTE, object.getCote());
+                value.put(COMMENT, object.getComment());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -138,6 +147,9 @@ public class PostulerDAO extends DAOBase {
                 String devc=c.getString(14);
                 String datec=c.getString(15);
                 String heure=c.getString(16);
+                String dev=c.getString(17);
+                int cote=c.getInt(18);
+                String com=c.getString(19);
 
                 object = new Postuler();
                 object.setId(_id);
@@ -158,6 +170,9 @@ public class PostulerDAO extends DAOBase {
                 object.setDeviseConclu(devc);
                 object.setDateRDV(datec);
                 object.setHeureRDV(heure);
+                object.setDevise(dev);
+                object.setCote(cote);
+                object.setComment(com);
             }
             c.close();
             close();
@@ -186,6 +201,7 @@ public class PostulerDAO extends DAOBase {
         value.put(ID_ANNONCE, object.getIdAnnonce());
         value.put(DESCRIPTION_ANNONCE, object.getDescriptionAnnonce());
         value.put(MONTANT_ANNONCE, object.getMontant());
+        value.put(DEVISE, object.getDevise());
         value.put(NOM_USER, object.getNomsUser());
         value.put(PHONE_USER, object.getPhoneUser());
         value.put(ID_USER, object.getIdUser());
@@ -199,6 +215,8 @@ public class PostulerDAO extends DAOBase {
         value.put(DEVISE_CONCLU, object.getDeviseConclu());
         value.put(DATE_RDV, object.getDateRDV());
         value.put(HEURE_RDV, object.getHeureRDV());
+        value.put(COTE, object.getCote());
+        value.put(COMMENT, object.getComment());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

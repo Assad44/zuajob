@@ -28,8 +28,8 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
         try{
             db.execSQL(AnnonceDAO.TABLE_CREATE);
             db.execSQL(CategorieDAO.TABLE_CREATE);
+            db.execSQL(CommentDAO.TABLE_CREATE);
             db.execSQL(PostulerDAO.TABLE_CREATE);
-            db.execSQL(ReactionDAO.TABLE_CREATE);
             db.execSQL(ServiceDAO.TABLE_CREATE);
             db.execSQL(SollicitationDAO.TABLE_CREATE);
             db.execSQL(SousCategorieDAO.TABLE_CREATE);
@@ -44,8 +44,8 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
         try{
             db.execSQL(AnnonceDAO.TABLE_DROP);
             db.execSQL(CategorieDAO.TABLE_DROP);
+            db.execSQL(CommentDAO.TABLE_DROP);
             db.execSQL(PostulerDAO.TABLE_DROP);
-            db.execSQL(ReactionDAO.TABLE_DROP);
             db.execSQL(ServiceDAO.TABLE_DROP);
             db.execSQL(SollicitationDAO.TABLE_DROP);
             db.execSQL(SousCategorieDAO.TABLE_DROP);
