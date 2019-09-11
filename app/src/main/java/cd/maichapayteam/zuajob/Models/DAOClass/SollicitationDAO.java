@@ -16,6 +16,8 @@ public class SollicitationDAO extends DAOBase {
     public static final String KEY = "_id";
     public static final String ID_SERVICE = "ids";
     public static final String DESCRIPTION_SERVICE = "description";
+    public static final String CATEGORIE = "categorie";
+    public static final String SOUS_CATEGORIE = "sous_cat";
     public static final String MONTANT_SERVICE = "montant";
     public static final String NOM_USER = "noms";
     public static final String PHONE_USER = "phone";
@@ -37,7 +39,9 @@ public class SollicitationDAO extends DAOBase {
                     URL_IMAGE_USER + " TEXT, " +
                     DATE + " TEXT, " +
                     STATUT + " INTEGER, " +
-                    HAVE_SOLLICITED + " INTEGER);";
+                    HAVE_SOLLICITED + " INTEGER, " +
+                    CATEGORIE + " TEXT, " +
+                    SOUS_CATEGORIE + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -69,6 +73,8 @@ public class SollicitationDAO extends DAOBase {
                 value.put(DATE, object.getDate());
                 value.put(STATUT, object.getStatut());
                 value.put(HAVE_SOLLICITED, object.isHaveSollicited());
+                value.put(CATEGORIE, object.getCategorie());
+                value.put(SOUS_CATEGORIE, object.getSouscategorie());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -115,6 +121,8 @@ public class SollicitationDAO extends DAOBase {
                 String date=c.getString(8);
                 int stat=c.getInt(9);
                 int have=c.getInt(10);
+                String cat=c.getString(11);
+                String scat=c.getString(12);
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -129,6 +137,8 @@ public class SollicitationDAO extends DAOBase {
                 object.setStatut(stat);
                 object.setHaveSollicited(false);
                 if(have==1) object.setHaveSollicited(true);
+                object.setCategorie(cat);
+                object.setSouscategorie(scat);
             }
             c.close();
             close();
@@ -164,6 +174,8 @@ public class SollicitationDAO extends DAOBase {
         value.put(DATE, object.getDate());
         value.put(STATUT, object.getStatut());
         value.put(HAVE_SOLLICITED, object.isHaveSollicited());
+        value.put(CATEGORIE, object.getCategorie());
+        value.put(SOUS_CATEGORIE, object.getSouscategorie());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();
