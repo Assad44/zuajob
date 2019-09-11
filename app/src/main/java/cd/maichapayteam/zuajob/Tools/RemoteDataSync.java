@@ -20,15 +20,19 @@ import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.CommentDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.PostulerDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.ReactionDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.Comment;
 import cd.maichapayteam.zuajob.Models.Object.GeneralClass;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
+import cd.maichapayteam.zuajob.Models.Object.Reaction;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
@@ -39,7 +43,7 @@ public class RemoteDataSync {
     private static String BASE_URL = "http://192.168.43.60/doxa_event_server/v1/";
     private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
 
-    /*
+    /**
     *   GET METHODS
      */
 
@@ -565,9 +569,9 @@ public class RemoteDataSync {
         return list;
     }
 
-    /*
+    /**
     * Les annonces auxquels moi j'ai postulé
-     */
+    */
     public static List<Postuler> getMesPostulation () {
         String url = BASE_URL2 + "maspostulation/";
 
@@ -628,7 +632,7 @@ public class RemoteDataSync {
         return list;
     }
 
-    /*
+    /**
      * Les annonces auxquels moi j'ai sollicité
      */
     public static List<Sollicitation> getMesSollicitations () {
@@ -695,7 +699,7 @@ public class RemoteDataSync {
     //}
 
 
-    /*
+    /**
 
                POST METHODS
 
@@ -916,12 +920,95 @@ public class RemoteDataSync {
         return object;
     }
 
+    public static Reaction reagir (Reaction object) {
+        String url = BASE_URL + "reagir";
 
-    /*
+        ANRequest request = AndroidNetworking.post(url)
+                .addBodyParameter(object) // posting java object
+                .setTag("reagir" + object.getIdService())
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<Reaction> response = request.executeForObject(Reaction.class);
+            if (response.isSuccess()) {
+                object = response.getResult();
+                if(object!=null) {
+                    if(!object.isError()) {
+                        ReactionDAO reactionDAO = new ReactionDAO(GeneralClass.applicationContext);
+                        object = reactionDAO.ajouter(object);
+                        if(object==null) {
+                            object = new Reaction();
+                            object.setError(true);
+                            object.setErrorCode(2247);
+                            object.setErrorMessage("Une erreur est survenue lors de la publication de votre réaction.");
+                        }
+                    }
+                }
+            } else {
+                object = new Reaction();
+                object.error = true;
+                object.errorCode = 31921;
+                object.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            object = new Reaction();
+            object.error = true;
+            object.errorCode = 49288;
+            object.errorMessage = ex.getMessage();
+        }
+
+        return object;
+    }
+
+    public static Comment commenter (Comment object) {
+        String url = BASE_URL + "commenter";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addBodyParameter(object) // posting java object
+                .setTag("commenter" + object.getIdUserConcerne())
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<Comment> response = request.executeForObject(Comment.class);
+            if (response.isSuccess()) {
+                object = response.getResult();
+                if(object!=null) {
+                    if(!object.isError()) {
+                        CommentDAO objectDAO = new CommentDAO(GeneralClass.applicationContext);
+                        object = objectDAO.ajouter(object);
+                        if(object==null) {
+                            object = new Comment();
+                            object.setError(true);
+                            object.setErrorCode(2247);
+                            object.setErrorMessage("Une erreur est survenue lors de la publication de votre commentaire.");
+                        }
+                    }
+                }
+            } else {
+                object = new Comment();
+                object.error = true;
+                object.errorCode = 31921;
+                object.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            object = new Comment();
+            object.error = true;
+            object.errorCode = 49288;
+            object.errorMessage = ex.getMessage();
+        }
+
+        return object;
+    }
+
+    /**
 
         LOAD DATA TEST
 
-    * */
+    **/
 
     public static List<User> getRandomUser () {
         //String url = "https://randomuser.me/api/?results=100";

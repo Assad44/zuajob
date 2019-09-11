@@ -3,18 +3,19 @@ package cd.maichapayteam.zuajob.Models.Object;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Reaction {
+public class Comment {
 
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
     long id = -1;
     String comment = "";
-    int cote = 0;
-    long idService = -1;
     long idUser = -1;
     String nomsUser = "";
     String urlImageUser = "";
+    long idUserConcerne = -1;
+    String nomsUserConcerne = "";
+    String urlImageUserConcerne = "";
     String date = "";
 
     public long getIdUser() {
@@ -57,22 +58,6 @@ public class Reaction {
         this.comment = comment;
     }
 
-    public int getCote() {
-        return cote;
-    }
-
-    public void setCote(int cote) {
-        this.cote = cote;
-    }
-
-    public long getIdService() {
-        return idService;
-    }
-
-    public void setIdService(long idService) {
-        this.idService = idService;
-    }
-
     public long getId() {
         return id;
     }
@@ -103,6 +88,30 @@ public class Reaction {
 
     public void setUrlImageUser(String urlImageUser) {
         this.urlImageUser = urlImageUser;
+    }
+
+    public long getIdUserConcerne() {
+        return idUserConcerne;
+    }
+
+    public void setIdUserConcerne(long idUserConcerne) {
+        this.idUserConcerne = idUserConcerne;
+    }
+
+    public String getNomsUserConcerne() {
+        return nomsUserConcerne;
+    }
+
+    public void setNomsUserConcerne(String nomsUserConcerne) {
+        this.nomsUserConcerne = nomsUserConcerne;
+    }
+
+    public String getUrlImageUserConcerne() {
+        return urlImageUserConcerne;
+    }
+
+    public void setUrlImageUserConcerne(String urlImageUserConcerne) {
+        this.urlImageUserConcerne = urlImageUserConcerne;
     }
 
 }

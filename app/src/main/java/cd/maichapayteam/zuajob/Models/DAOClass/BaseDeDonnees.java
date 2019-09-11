@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 /**
- * Created by Didier LEMENDE on 31/01/2018.
+ * Created by Didier LEMENDE on 09/09/2019.
  */
 public class BaseDeDonnees  extends SQLiteOpenHelper {
 
@@ -26,6 +26,13 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try{
+            db.execSQL(AnnonceDAO.TABLE_CREATE);
+            db.execSQL(CategorieDAO.TABLE_CREATE);
+            db.execSQL(PostulerDAO.TABLE_CREATE);
+            db.execSQL(ReactionDAO.TABLE_CREATE);
+            db.execSQL(ServiceDAO.TABLE_CREATE);
+            db.execSQL(SollicitationDAO.TABLE_CREATE);
+            db.execSQL(SousCategorieDAO.TABLE_CREATE);
             db.execSQL(UserDAO.TABLE_CREATE);
         }catch (Exception ex){
             Toast.makeText(cnt, ex.toString(), Toast.LENGTH_LONG).show();
@@ -35,6 +42,13 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try{
+            db.execSQL(AnnonceDAO.TABLE_DROP);
+            db.execSQL(CategorieDAO.TABLE_DROP);
+            db.execSQL(PostulerDAO.TABLE_DROP);
+            db.execSQL(ReactionDAO.TABLE_DROP);
+            db.execSQL(ServiceDAO.TABLE_DROP);
+            db.execSQL(SollicitationDAO.TABLE_DROP);
+            db.execSQL(SousCategorieDAO.TABLE_DROP);
             db.execSQL(UserDAO.TABLE_DROP);
             onCreate(db);
         }catch (Exception ex){
