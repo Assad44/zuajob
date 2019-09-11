@@ -34,6 +34,7 @@ import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_Sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
@@ -396,7 +397,9 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_rdv) {
 
         } else if (id == R.id.nav_soliicioation) {
-
+            Intent i = new Intent(context, Mes_Sollicitations.class);
+            startActivity(i);
+            finish();
         } else if (id == R.id.nav_discuusion) {
 
         }
