@@ -84,7 +84,7 @@ public class PostulerDAO extends DAOBase {
                 value.put(IS_CONCLU, object.isConclu());
                 value.put(MONTANT_CONCLU, object.getMontantConclu());
                 value.put(DEVISE_CONCLU, object.getDeviseConclu());
-                value.put(DATE_RDV, object.getDate());
+                value.put(DATE_RDV, object.getDateRDV());
                 value.put(HEURE_RDV, object.getHeureRDV());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
@@ -197,7 +197,7 @@ public class PostulerDAO extends DAOBase {
         value.put(IS_CONCLU, object.isConclu());
         value.put(MONTANT_CONCLU, object.getMontantConclu());
         value.put(DEVISE_CONCLU, object.getDeviseConclu());
-        value.put(DATE_RDV, object.getDate());
+        value.put(DATE_RDV, object.getDateRDV());
         value.put(HEURE_RDV, object.getHeureRDV());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
