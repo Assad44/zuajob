@@ -959,6 +959,437 @@ public class RemoteDataSync {
         return object;
     }
 
+    public static Postuler creerRDVbyPostuler (long isPostuler, String date, String heure) {
+        String url = BASE_URL + "creerrdvbypostuler";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("id", String.valueOf(isPostuler))
+                .addQueryParameter("date", date)
+                .addQueryParameter("heure", heure)
+                .setTag("creerRDVByPostuler" + isPostuler)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Postuler postuler;
+
+        try{
+            ANResponse<Postuler> response = request.executeForObject(Postuler.class);
+            if (response.isSuccess()) {
+                postuler = response.getResult();
+                if(postuler!=null) {
+                    if(!postuler.isError()) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.ajouter(postuler);
+                        if(postuler==null) {
+                            postuler = new Postuler();
+                            postuler.setError(true);
+                            postuler.setErrorCode(1127);
+                            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.error = true;
+                postuler.errorCode = 31921;
+                postuler.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.error = true;
+            postuler.errorCode = 49288;
+            postuler.errorMessage = ex.getMessage();
+        }
+
+        return postuler;
+    }
+
+    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure) {
+        String url = BASE_URL + "creerrdvbysolliciter";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idsolliciter", String.valueOf(idSolliciter))
+                .addQueryParameter("date", date)
+                .addQueryParameter("heure", heure)
+                .setTag("creerRDVBySollicitation" + idSolliciter)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Sollicitation sollicitation;
+
+        try{
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                sollicitation = response.getResult();
+                if(sollicitation!=null) {
+                    if(!sollicitation.isError()) {
+                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        if(sollicitation==null) {
+                            sollicitation = new Sollicitation();
+                            sollicitation.setError(true);
+                            sollicitation.setErrorCode(1127);
+                            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.error = true;
+                sollicitation.errorCode = 31921;
+                sollicitation.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.error = true;
+            sollicitation.errorCode = 49288;
+            sollicitation.errorMessage = ex.getMessage();
+        }
+
+        return sollicitation;
+    }
+
+    public static Postuler confirmationRDVbyUser (long isPostuler, String phoneMaisha, String passwordMaisha) {
+        String url = BASE_URL + "confirmationrdvbyuser";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idPostuler", String.valueOf(isPostuler))
+                .addQueryParameter("phonemaisha", phoneMaisha)
+                .addQueryParameter("passwordmaisha", passwordMaisha)
+                .setTag("confirmationRDVbyUser" + isPostuler)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Postuler postuler;
+
+        try{
+            ANResponse<Postuler> response = request.executeForObject(Postuler.class);
+            if (response.isSuccess()) {
+                postuler = response.getResult();
+                if(postuler!=null) {
+                    if(!postuler.isError()) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.ajouter(postuler);
+                        if(postuler==null) {
+                            postuler = new Postuler();
+                            postuler.setError(true);
+                            postuler.setErrorCode(1127);
+                            postuler.setErrorMessage("Une erreur est survenue lors de la confirmation de votre rendez-vous.");
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.error = true;
+                postuler.errorCode = 31921;
+                postuler.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.error = true;
+            postuler.errorCode = 49288;
+            postuler.errorMessage = ex.getMessage();
+        }
+
+        return postuler;
+    }
+
+    public static Sollicitation confirmationRDVbyJobeur (long idSollicitation) {
+        String url = BASE_URL + "confirmationrdvbyjobeur";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                .setTag("confirmationRDVbyJobeur" + idSollicitation)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Sollicitation sollicitation;
+
+        try{
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                sollicitation = response.getResult();
+                if(sollicitation!=null) {
+                    if(!sollicitation.isError()) {
+                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = objectDAO.ajouter(sollicitation);
+                        if(sollicitation==null) {
+                            sollicitation = new Sollicitation();
+                            sollicitation.setError(true);
+                            sollicitation.setErrorCode(1127);
+                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre rendez-vous.");
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.error = true;
+                sollicitation.errorCode = 31921;
+                sollicitation.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.error = true;
+            sollicitation.errorCode = 49288;
+            sollicitation.errorMessage = ex.getMessage();
+        }
+
+        return sollicitation;
+    }
+
+    public static boolean confirmationDuServiceRendu (String code, int cote, String comment) {
+        String url = BASE_URL + "confirmationservice";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("code", code)
+                .addBodyParameter("cote", String.valueOf(cote))
+                .addBodyParameter("comment", comment)
+                .setTag("confirmationDuServiceRendu" + code)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<String> response = request.executeForString();
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
+        }
+
+        return false;
+    }
+
+    public static boolean signalerUtilisateur (long idUtilisateur, String comment, int niveauDanger) {
+        String url = BASE_URL + "signaler";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idUtilisateur", String.valueOf(idUtilisateur))
+                .addBodyParameter("comment", comment)
+                .addBodyParameter("niveau", String.valueOf(niveauDanger))
+                .setTag("signalerUtilisateur" + idUtilisateur)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
+        }
+
+        return false;
+    }
+
+
+
+    /**
+
+     POST METHODS
+
+     */
+
+    public static User updateUser (User user) {
+        String url = BASE_URL + "updateuser";
+
+        ANRequest request = AndroidNetworking.put(url)
+                .addBodyParameter(user)
+                .addHeaders("token", GeneralClass.userToken)
+                .setTag("user" + user.id)
+                .setPriority(Priority.MEDIUM)
+                .build();
+
+        try{
+            ANResponse<User> response = request.executeForObject(User.class);
+            if (response.isSuccess()) {
+                user = response.getResult();
+                if(user!=null) {
+                    if(!user.isError()) {
+                        UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
+                        user = userDAO.ajouter(user);
+                        if(user==null) {
+                            user = new User();
+                            user.setError(true);
+                            user.setErrorCode(7127);
+                            user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
+                        }
+                    }
+                }
+            } else {
+                user = new User();
+                user.error = true;
+                user.errorCode = 319288;
+                user.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            user = new User();
+            user.error = true;
+            user.errorCode = 319288;
+            user.errorMessage = ex.getMessage();
+        }
+
+        return user;
+        //return new User();
+    }
+
+    public static Annonce updateAnnonce (Annonce object) {
+        String url = BASE_URL + "annonce";
+
+        ANRequest request = AndroidNetworking.put(url)
+                .addBodyParameter(object)
+                .setTag("updateannonce" + object.phoneUser)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<Annonce> response = request.executeForObject(Annonce.class);
+            if (response.isSuccess()) {
+                object = response.getResult();
+                if(object!=null) {
+                    if(!object.isError()) {
+                        AnnonceDAO annonceDAO = new AnnonceDAO(GeneralClass.applicationContext);
+                        object = annonceDAO.ajouter(object);
+                        if(object==null) {
+                            object = new Annonce();
+                            object.setError(true);
+                            object.setErrorCode(14347);
+                            object.setErrorMessage("Une erreur est survenue lors de la modification de votre annonce.");
+                        }
+                    }
+                }
+            } else {
+                object = new Annonce();
+                object.error = true;
+                object.errorCode = 31921;
+                object.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            object = new Annonce();
+            object.error = true;
+            object.errorCode = 49288;
+            object.errorMessage = ex.getMessage();
+        }
+
+        return object;
+    }
+
+    public static Service updateService (Service object) {
+        String url = BASE_URL + "service";
+
+        ANRequest request = AndroidNetworking.put(url)
+                .addBodyParameter(object)
+                .setTag("updateservice" + object.getNomsJobeur())
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<Service> response = request.executeForObject(Service.class);
+            if (response.isSuccess()) {
+                object = response.getResult();
+                if(object!=null) {
+                    if(!object.isError()) {
+                        object.setMy(true);
+                        ServiceDAO annonceDAO = new ServiceDAO(GeneralClass.applicationContext);
+                        object = annonceDAO.ajouter(object);
+                        if(object==null) {
+                            object = new Service();
+                            object.setError(true);
+                            object.setErrorCode(14347);
+                            object.setErrorMessage("Une erreur est survenue lors de la modification de votre service.");
+                        }
+                    }
+                }
+            } else {
+                object = new Service();
+                object.error = true;
+                object.errorCode = 31921;
+                object.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            object = new Service();
+            object.error = true;
+            object.errorCode = 49288;
+            object.errorMessage = ex.getMessage();
+        }
+
+        return object;
+    }
+
+
+    /**
+
+     DELETE METHODS
+
+     */
+
+    public static boolean deleteUser () {
+        String url = BASE_URL + "user";
+
+        ANRequest request = AndroidNetworking.delete(url)
+                .addHeaders("token", GeneralClass.userToken)
+                .setTag("deleteuser" + GeneralClass.userToken)
+                .setPriority(Priority.MEDIUM)
+                .build();
+
+        try{
+            ANResponse<String> response = request.executeForString();
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
+        }
+
+        return false;
+    }
+
+    public static boolean deleteAnnonce (long idAnnonce) {
+        String url = BASE_URL + "annonce";
+
+        ANRequest request = AndroidNetworking.delete(url)
+                .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
+                .setTag("deleteannonce" + idAnnonce)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+
+            ANResponse<String> response = request.executeForString();
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
+        }
+
+        return false;
+    }
+
+    public static boolean deleteService (long idService) {
+        String url = BASE_URL + "service";
+
+        ANRequest request = AndroidNetworking.delete(url)
+                .addQueryParameter("IdService", String.valueOf(idService))
+                .setTag("deleteservice" + idService)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+
+            ANResponse<String> response = request.executeForString();
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
+        }
+
+        return false;
+    }
+
+
     /**
 
         LOAD DATA TEST
