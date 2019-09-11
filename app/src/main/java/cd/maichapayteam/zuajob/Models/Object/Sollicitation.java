@@ -5,6 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Sollicitation {
 
+    public boolean recent = false;
+
+    public boolean isAujourd() {
+        return aujourd;
+    }
+
+    public void setAujourd(boolean aujourd) {
+        this.aujourd = aujourd;
+    }
+
+    public boolean aujourd = false;
     public boolean error = false;
     public String errorMessage = "";
     public int errorCode = 0;
@@ -12,6 +23,8 @@ public class Sollicitation {
     public long id = -1;
     public long idService = -1;
     public String descriptionService = "";
+    public String categorie = "";
+    public String souscategorie = "";
     public float montant = 0;
     public String devise = "";
     public long idUser = -1;
@@ -21,6 +34,31 @@ public class Sollicitation {
     public String date = "";
     public int statut = 0;
     public boolean haveSollicited = false;
+
+
+    public boolean isRecent() {
+        return recent;
+    }
+
+    public void setRecent(boolean recent) {
+        this.recent = recent;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public String getSouscategorie() {
+        return souscategorie;
+    }
+
+    public void setSouscategorie(String souscategorie) {
+        this.souscategorie = souscategorie;
+    }
 
     public boolean isError() {
         return error;
