@@ -35,7 +35,7 @@ public class Sollicitation {
     public int statut = 0;
     public boolean haveSollicited = false;
     public boolean isRDV = false;
-    public boolean isRendu = false;
+    public boolean isConclu = false;
     public float montantConclu = 0;
     public String deviseConclu = "";
     public String dateRDV = "";
@@ -194,12 +194,12 @@ public class Sollicitation {
         isRDV = RDV;
     }
 
-    public boolean isRendu() {
-        return isRendu;
+    public boolean isConclu() {
+        return isConclu;
     }
 
-    public void setRendu(boolean rendu) {
-        isRendu = rendu;
+    public void setConclu(boolean conclu) {
+        isConclu = conclu;
     }
 
     public float getMontantConclu() {

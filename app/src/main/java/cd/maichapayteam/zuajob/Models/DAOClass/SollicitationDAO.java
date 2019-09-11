@@ -47,7 +47,13 @@ public class SollicitationDAO extends DAOBase {
                     STATUT + " INTEGER, " +
                     HAVE_SOLLICITED + " INTEGER, " +
                     CATEGORIE + " TEXT, " +
-                    SOUS_CATEGORIE + " TEXT);";
+                    SOUS_CATEGORIE + " TEXT, " +
+                    IS_RDV + " INTEGER, " +
+                    IS_CONCLU + " INTEGER, " +
+                    MONTANT_CONCLU + " REAL, " +
+                    DEVISE_CONCLU + " TEXT, " +
+                    DATE_RDV + " TEXT, " +
+                    HEURE_RDV + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -81,6 +87,12 @@ public class SollicitationDAO extends DAOBase {
                 value.put(HAVE_SOLLICITED, object.isHaveSollicited());
                 value.put(CATEGORIE, object.getCategorie());
                 value.put(SOUS_CATEGORIE, object.getSouscategorie());
+                value.put(IS_RDV, object.isRDV());
+                value.put(IS_CONCLU, object.isConclu());
+                value.put(MONTANT_CONCLU, object.getMontantConclu());
+                value.put(DEVISE_CONCLU, object.getDeviseConclu());
+                value.put(DATE_RDV, object.getDate());
+                value.put(HEURE_RDV, object.getHeureRDV());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -129,6 +141,12 @@ public class SollicitationDAO extends DAOBase {
                 int have=c.getInt(10);
                 String cat=c.getString(11);
                 String scat=c.getString(12);
+                int rdv=c.getInt(13);
+                int conclu=c.getInt(14);
+                float montc=c.getFloat(15);
+                String devc=c.getString(16);
+                String datec=c.getString(17);
+                String heure=c.getString(18);
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -145,6 +163,12 @@ public class SollicitationDAO extends DAOBase {
                 if(have==1) object.setHaveSollicited(true);
                 object.setCategorie(cat);
                 object.setSouscategorie(scat);
+                if(rdv==1) object.setRDV(true);
+                if(conclu==1) object.setConclu(true);
+                object.setMontantConclu(montc);
+                object.setDeviseConclu(devc);
+                object.setDateRDV(datec);
+                object.setHeureRDV(heure);
             }
             c.close();
             close();
@@ -182,6 +206,12 @@ public class SollicitationDAO extends DAOBase {
         value.put(HAVE_SOLLICITED, object.isHaveSollicited());
         value.put(CATEGORIE, object.getCategorie());
         value.put(SOUS_CATEGORIE, object.getSouscategorie());
+        value.put(IS_RDV, object.isRDV());
+        value.put(IS_CONCLU, object.isConclu());
+        value.put(MONTANT_CONCLU, object.getMontantConclu());
+        value.put(DEVISE_CONCLU, object.getDeviseConclu());
+        value.put(DATE_RDV, object.getDate());
+        value.put(HEURE_RDV, object.getHeureRDV());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

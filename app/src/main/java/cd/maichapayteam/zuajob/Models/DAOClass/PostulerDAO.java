@@ -42,7 +42,13 @@ public class PostulerDAO extends DAOBase {
                     URL_IMAGE_USER + " TEXT, " +
                     DATE + " TEXT, " +
                     STATUT + " INTEGER, " +
-                    HAVE_POSTULED + " INTEGER);";
+                    HAVE_POSTULED + " INTEGER, " +
+                    IS_RDV + " INTEGER, " +
+                    IS_CONCLU + " INTEGER, " +
+                    MONTANT_CONCLU + " REAL, " +
+                    DEVISE_CONCLU + " TEXT, " +
+                    DATE_RDV + " TEXT, " +
+                    HEURE_RDV + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -74,6 +80,12 @@ public class PostulerDAO extends DAOBase {
                 value.put(DATE, object.getDate());
                 value.put(STATUT, object.getStatut());
                 value.put(HAVE_POSTULED, object.isHavePostuled());
+                value.put(IS_RDV, object.isRDV());
+                value.put(IS_CONCLU, object.isConclu());
+                value.put(MONTANT_CONCLU, object.getMontantConclu());
+                value.put(DEVISE_CONCLU, object.getDeviseConclu());
+                value.put(DATE_RDV, object.getDate());
+                value.put(HEURE_RDV, object.getHeureRDV());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -120,6 +132,12 @@ public class PostulerDAO extends DAOBase {
                 String date=c.getString(8);
                 int stat=c.getInt(9);
                 int have=c.getInt(10);
+                int rdv=c.getInt(11);
+                int conclu=c.getInt(12);
+                float montc=c.getFloat(13);
+                String devc=c.getString(14);
+                String datec=c.getString(15);
+                String heure=c.getString(16);
 
                 object = new Postuler();
                 object.setId(_id);
@@ -134,6 +152,12 @@ public class PostulerDAO extends DAOBase {
                 object.setStatut(stat);
                 object.setHavePostuled(false);
                 if(have==1) object.setHavePostuled(true);
+                if(rdv==1) object.setRDV(true);
+                if(conclu==1) object.setConclu(true);
+                object.setMontantConclu(montc);
+                object.setDeviseConclu(devc);
+                object.setDateRDV(datec);
+                object.setHeureRDV(heure);
             }
             c.close();
             close();
@@ -169,6 +193,12 @@ public class PostulerDAO extends DAOBase {
         value.put(DATE, object.getDate());
         value.put(STATUT, object.getStatut());
         value.put(HAVE_POSTULED, object.isHavePostuled());
+        value.put(IS_RDV, object.isRDV());
+        value.put(IS_CONCLU, object.isConclu());
+        value.put(MONTANT_CONCLU, object.getMontantConclu());
+        value.put(DEVISE_CONCLU, object.getDeviseConclu());
+        value.put(DATE_RDV, object.getDate());
+        value.put(HEURE_RDV, object.getHeureRDV());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();
