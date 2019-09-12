@@ -257,13 +257,6 @@ public class UserDAO extends DAOBase {
         return rep;
     }
 
-    public long supprimer() {
-        open();
-        long rep = mDb.delete(TABLE_NOM, null, null);
-        close();
-        return rep;
-    }
-
     public long modifier(User object) {
         ContentValues value = new ContentValues();
         value.put(ABOUT, object.getAbout());
