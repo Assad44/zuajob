@@ -7,7 +7,6 @@ import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 public class ManageLocalData {
 
