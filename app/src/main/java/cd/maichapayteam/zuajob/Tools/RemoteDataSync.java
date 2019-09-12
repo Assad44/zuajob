@@ -569,7 +569,7 @@ public class RemoteDataSync {
     /**
     * Les annonces auxquels moi j'ai postulé
     */
-    public static List<Postuler> getMesPostulation () {
+    public static List<Postuler> getMesPostulations () {
         String url = BASE_URL2 + "maspostulation/";
 
         List<Postuler> list = new ArrayList<>();
@@ -599,6 +599,9 @@ public class RemoteDataSync {
         return list;
     }
 
+    /**
+     * Les annonces auxquels moi j'ai sollicité
+     */
     public static List<Sollicitation> getSollicitations (long idService) {
         String url = BASE_URL2 + "sollicitation/";
 
@@ -964,7 +967,7 @@ public class RemoteDataSync {
 
         ANRequest request = AndroidNetworking.post(url)
                 .addQueryParameter("id", String.valueOf(isPostuler))
-                .addQueryParameter("date", date)
+                .addQueryParameter("datePublication", date)
                 .addQueryParameter("heure", heure)
                 .setTag("creerRDVByPostuler" + isPostuler)
                 .setPriority(Priority.MEDIUM)
@@ -1010,7 +1013,7 @@ public class RemoteDataSync {
 
         ANRequest request = AndroidNetworking.post(url)
                 .addQueryParameter("idsolliciter", String.valueOf(idSolliciter))
-                .addQueryParameter("date", date)
+                .addQueryParameter("datePublication", date)
                 .addQueryParameter("heure", heure)
                 .setTag("creerRDVBySollicitation" + idSolliciter)
                 .setPriority(Priority.MEDIUM)
@@ -1388,7 +1391,6 @@ public class RemoteDataSync {
 
         return false;
     }
-
 
     /**
 

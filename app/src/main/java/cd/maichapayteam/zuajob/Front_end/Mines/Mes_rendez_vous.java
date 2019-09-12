@@ -49,7 +49,7 @@ public class Mes_rendez_vous extends AppCompatActivity {
             if (m.length()<= 1){
                 m = "0"+m;
             }
-            s.setDate("2019-09-"+m+" 02:42:00");
+            s.setDatePublication("2019-09-"+m+" 02:42:00");
             j = j-1;
             SERVICES.add(s);
         }

@@ -65,7 +65,7 @@ public class Publications_view extends AppCompatActivity {
             s.setMontant(new Random().nextInt(50));
             s.setCategorie("Catégorie "+i);
             s.setSousCategorie("Sous catégorie "+i);
-            s.setDate("2019-09-09 23:57:00");
+            s.setDatePublication("2019-09-09 23:57:00");
             s.setDevise("USD");
             s.setPhoneUser("+243 81 451 10 83");
             ANNOCE.add(s);

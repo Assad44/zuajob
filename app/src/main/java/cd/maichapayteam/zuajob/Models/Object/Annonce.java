@@ -2,9 +2,6 @@ package cd.maichapayteam.zuajob.Models.Object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Annonce {
 
@@ -23,7 +20,7 @@ public class Annonce {
     public String urlImageUser = "";
     public long idCategorie = -1;
     public String categorie = "";
-    public String date = "";
+    public String datePublication = "";
 
     public boolean isMy() {
         return isMy;
@@ -75,12 +72,12 @@ public class Annonce {
         this.idSousCategorie = idSousCategorie;
     }
 
-    public String getDate() {
-        return date;
+    public String getDatePublication() {
+        return datePublication;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDatePublication(String datePublication) {
+        this.datePublication = datePublication;
     }
 
     public String getSousCategorie() {

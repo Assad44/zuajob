@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,7 +82,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         }
         avatar.setImageResource(profil);
 
-        time.setText(Tool.formatingDate(S.getDate()));
+        time.setText(Tool.formatingDate(S.getDatePublication()));
 
         final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +133,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
         avatar.setImageResource(profil);
-        time.setText(Tool.formatingDate(S.getDate()));
+        time.setText(Tool.formatingDate(S.getDatePublication()));
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override

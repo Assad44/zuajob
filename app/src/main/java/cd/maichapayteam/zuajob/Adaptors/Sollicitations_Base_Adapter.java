@@ -86,7 +86,7 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         // todo : Affects values to the componants
         time.setText(Tool.formatingDate(S.getDate()));
 
-        // todo : Formatting date for headers
+        // todo : Formatting datePublication for headers
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

@@ -156,8 +156,8 @@ public class Preferences_screen extends AppCompatActivity {
             //user.prenom = Tool.getUserPreferences(Preferences_screen.this, "prenom");
             //long birthday = 0;
             //try {
-            //    Date date = new SimpleDateFormat("").parse(Tool.getUserPreferences(Preferences_screen.this, "birthday"));
-            //    birthday = date.getTime();
+            //    Date datePublication = new SimpleDateFormat("").parse(Tool.getUserPreferences(Preferences_screen.this, "birthday"));
+            //    birthday = datePublication.getTime();
             //} catch (ParseException e) {
 //
             //}

@@ -141,7 +141,7 @@ public class Tool {
     }
 
     /**
-     * Méthode pour afficher le Date picker pour selectionner une date
+     * Méthode pour afficher le Date picker pour selectionner une datePublication
      * @param context
      * @param start_date
      * @return

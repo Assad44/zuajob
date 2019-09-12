@@ -28,6 +28,7 @@ public class Service {
     public String nomsJobeur = "";
     public String phoneJobeur = "";
     public String urlImageJobeur = "";
+    public String datePublication = "";
     public long idCategorie = -1;
     public String categorie = "";
     public int nombreRealisation = 0;
@@ -177,6 +178,14 @@ public class Service {
 
     public void setCote(int cote) {
         this.cote = cote;
+    }
+
+    public String getDatePublication() {
+        return datePublication;
+    }
+
+    public void setDatePublication(String datePublication) {
+        this.datePublication = datePublication;
     }
 
     public static ArrayList<Service> listService() {

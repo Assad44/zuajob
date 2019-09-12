@@ -75,7 +75,7 @@ public class AnnonceDAO extends DAOBase {
                 value.put(PHONE_USER, object.getPhoneUser());
                 value.put(SOUS_CATEGORIE, object.getSousCategorie());
                 value.put(URL_PHOTO_USER, object.getUrlImageUser());
-                value.put(DATE, object.getDate());
+                value.put(DATE, object.getDatePublication());
                 value.put(IS_MY, object.isMy());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
@@ -140,7 +140,7 @@ public class AnnonceDAO extends DAOBase {
                 object.setPhoneUser(phoneus);
                 object.setSousCategorie(sousCat);
                 object.setUrlImageUser(urlImage);
-                object.setDate(date);
+                object.setDatePublication(date);
                 if(ismy==1) object.setMy(true);
             }
             c.close();
@@ -178,7 +178,7 @@ public class AnnonceDAO extends DAOBase {
         value.put(PHONE_USER, object.getPhoneUser());
         value.put(SOUS_CATEGORIE, object.getSousCategorie());
         value.put(URL_PHOTO_USER, object.getUrlImageUser());
-        value.put(DATE, object.getDate());
+        value.put(DATE, object.getDatePublication());
         value.put(IS_MY, object.isMy());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
