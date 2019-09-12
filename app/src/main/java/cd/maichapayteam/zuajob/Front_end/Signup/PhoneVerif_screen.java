@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 
-import cd.maichapayteam.zuajob.Front_end.Login;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;

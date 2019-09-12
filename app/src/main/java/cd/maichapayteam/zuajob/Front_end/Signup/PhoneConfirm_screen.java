@@ -15,10 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cd.maichapayteam.zuajob.Front_end.Login;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
-import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSms.ZuaJobMessageListener {

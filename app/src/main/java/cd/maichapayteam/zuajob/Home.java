@@ -169,6 +169,13 @@ public class Home extends AppCompatActivity
         Init_Components();
         setSupportActionBar(toolbar);
 
+        if (Tool.User_Preferences(context).getString("statut", "null").equals("null")){
+            // Todo : Launche Home activity
+            Intent i = new Intent(context, index_screen.class);
+            startActivity(i);
+            finish();
+        }
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));

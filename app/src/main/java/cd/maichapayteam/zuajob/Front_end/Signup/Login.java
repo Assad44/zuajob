@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob.Front_end;
+package cd.maichapayteam.zuajob.Front_end.Signup;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -77,7 +77,12 @@ public class Login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (exit == 0){
+
+        Intent i = new Intent(context, Home.class);
+        startActivity(i);
+        finish();
+
+        /*if (exit == 0){
             Toast.makeText(context, "Appuyer encore pour quitter", Toast.LENGTH_SHORT).show();
             exit = 1;
         }else finish();
@@ -87,7 +92,7 @@ public class Login extends AppCompatActivity {
             public void run() {
                 exit = 0;
             }
-        }, 2000);
+        }, 2000);*/
     }
 
     private boolean CheckingZone(){

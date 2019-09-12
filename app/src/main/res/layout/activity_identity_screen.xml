@@ -155,8 +155,7 @@
                         android:inputType="textPassword"
                         android:maxLength="25"
                         android:singleLine="true"
-                        android:textColor="#848586"
-                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
                         android:autofillHints="" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -182,8 +181,7 @@
                         android:inputType="textPassword"
                         android:maxLength="25"
                         android:singleLine="true"
-                        android:textColor="#848586"
-                        android:textColorHint="@color/colorAccent"
+                        android:textColor="@color/white"
                         android:autofillHints="" />
 
                 </android.support.design.widget.TextInputLayout>
