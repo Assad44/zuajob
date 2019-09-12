@@ -1,10 +1,12 @@
-package cd.maichapayteam.zuajob.Models.Object;
+package cd.maichapayteam.zuajob.Tools;
 
 import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 public class ManageLocalData {

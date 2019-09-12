@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.Home;
-import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;

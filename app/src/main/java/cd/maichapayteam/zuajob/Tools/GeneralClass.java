@@ -1,8 +1,12 @@
-package cd.maichapayteam.zuajob.Models.Object;
+package cd.maichapayteam.zuajob.Tools;
 
 import android.content.Context;
 
 import java.util.Random;
+
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 
 public class GeneralClass {
 
