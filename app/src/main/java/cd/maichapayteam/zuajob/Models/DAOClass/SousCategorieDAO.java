@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 
@@ -105,6 +108,38 @@ public class SousCategorieDAO extends DAOBase {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<SousCategorie> getAll() {
+        List<SousCategorie> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<SousCategorie> getAll(Categorie categorie) {
+        List<SousCategorie> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + ID_CATEGORIE + " = ?", new String[]{String.valueOf(categorie.getId())});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public long supprimer(long id) {

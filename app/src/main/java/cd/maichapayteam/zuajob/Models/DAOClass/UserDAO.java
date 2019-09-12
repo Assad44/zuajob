@@ -232,6 +232,24 @@ public class UserDAO extends DAOBase {
         return list;
     }
 
+    public List<User> listJobeurs(int min, String keyword) {
+        List<User> list = new ArrayList<>();
+        //long min = nextValue * 20;
+        //long max = 20;
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM+ " where " + PRENOM + " like '%" + keyword + "%' and " + NOM + " like '%" + keyword + "%' limit ?, 20", new String[]{String.valueOf(min)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
     public long supprimer(long id) {
         open();
         long rep = mDb.delete(TABLE_NOM, KEY + " = ?", new String[]{String.valueOf(id)});

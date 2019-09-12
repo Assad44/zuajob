@@ -5,8 +5,11 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 
 public class ManageLocalData {
@@ -53,37 +56,30 @@ public class ManageLocalData {
     public static List<User> listJobeurs(int min, String keyword) {
         RemoteDataSync.getListJobeur(keyword, (int)(min/20));
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        return userDAO.listJobeurs(min);
+        return userDAO.listJobeurs(min, keyword);
     }
 
     public static List<Categorie> listCategorie() {
-        //List<Categorie> list = Categorie.listCategorie();
-        //List<Categorie> list = new ArrayList<>();
-        //for (int i = 0; i < 10; i++) {
-        //    Categorie c = new Categorie();
-        //    c.designation = "designation "+i;
-        //    list.add(c);
-        //}
-        //if(list.size()==0) RemoteDataSync.getListCategorie();
-        //return list;
-        return new ArrayList<>();
+        CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
+        List<Categorie> list = categorieDAO.getAll();
+        if(list.size()==0) RemoteDataSync.getListCategorie();
+        return list;
     }
 
-    //public static List<SousCategorie> listSousCategorie(Categorie categorie) {
-    //    List<SousCategorie> list = SousCategorie.listSousCategorie(categorie);
-    //    if(list.size()==0) SousCategorie.createSousCategories();
-    //    return list;
-    //}
+    public static List<SousCategorie> listSousCategorie(Categorie categorie) {
+        SousCategorieDAO sousCategorieDAO = SousCategorieDAO.getInstance(GeneralClass.applicationContext);
+        List<SousCategorie> list = sousCategorieDAO.getAll(categorie);
+        if(list.size()==0) RemoteDataSync.getListSousCategorie();
+        return list;
+    }
 
     public static String generate(int length) {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // Tu supprimes les lettres dont tu ne veux pas
         String pass = "";
-        for(int x=0;x<length;x++)
-        {
+        for(int x=0;x<length;x++) {
             int i = (int)Math.floor(Math.random() * 62); // Si tu supprimes des lettres tu diminues ce nb
             pass += chars.charAt(i);
         }
-        System.out.println(pass);
         return pass;
     }
 
