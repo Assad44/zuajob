@@ -73,7 +73,7 @@ public class Publications_view extends AppCompatActivity {
 
         if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
+            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,""));
         }
     }
 
@@ -155,7 +155,7 @@ public class Publications_view extends AppCompatActivity {
                         list.setAdapter(new Services_Base_Adapter(context, SERVICES));
                         list.setNumColumns(1);
                     }
-                    else list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
+                    else list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,""));
                     return true;
                 }
 
@@ -179,7 +179,7 @@ public class Publications_view extends AppCompatActivity {
                             SearchA.add(s);
                         }
                     }
-                    list.setAdapter(new Annonces_Base_Adapter(context, SearchA));
+                    list.setAdapter(new Annonces_Base_Adapter(context, SearchA,""));
                 }
 
 

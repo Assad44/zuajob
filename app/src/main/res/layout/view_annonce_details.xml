@@ -96,7 +96,7 @@
                                 android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nom du Job"/>
+                                android:text="Aucun jobeur n'a été habilité pour cette annonce "/>
                             <TextView
                                 android:id="@+id/number"
                                 android:textSize="10dp"
@@ -110,8 +110,6 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
-
 
             </LinearLayout>
             <LinearLayout
@@ -172,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/S_prix"
                     android:layout_weight="1"
                     android:background="@color/dark8"
                     android:padding="10dp"
@@ -182,12 +181,12 @@
                     android:gravity="center"
                     android:textSize="13dp"/>
                 <TextView
-                    android:id="@+id/S_prix"
+                    android:id="@+id/postullants"
                     android:layout_weight="1"
                     android:background="@color/dark3"
                     android:padding="10dp"
                     android:textStyle="bold"
-                    android:text="50 USD"
+                    android:text="Les postulants"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

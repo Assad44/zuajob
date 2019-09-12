@@ -52,7 +52,7 @@ public class Mes_annonces extends AppCompatActivity {
 
         if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
+            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,"mine"));
         }
     }
 
@@ -99,7 +99,7 @@ public class Mes_annonces extends AppCompatActivity {
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE));
+                    list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,"mine"));
                     return true;
                 }
 
@@ -111,7 +111,7 @@ public class Mes_annonces extends AppCompatActivity {
                         SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Annonces_Base_Adapter(context, SearchA));
+                list.setAdapter(new Annonces_Base_Adapter(context, SearchA,"mine"));
                 return true;
             }
         });
