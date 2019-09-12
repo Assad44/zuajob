@@ -27,10 +27,12 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class Annonces_Base_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Annonce> DATA;
+    String mode;
 
-    public Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA) {
+    public Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA, String mode) {
         this.context = context;
         this.DATA = DATA;
+        this.mode = mode;
     }
 
     @Override
@@ -52,19 +54,29 @@ public class Annonces_Base_Adapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces,null);
         TextView description = convertView.findViewById(R.id.description);
+        TextView confier = convertView.findViewById(R.id.confier);
         TextView nom_user = convertView.findViewById(R.id.nom_user);
         TextView number = convertView.findViewById(R.id.number);
         TextView time = convertView.findViewById(R.id.time);
         TextView categorie = convertView.findViewById(R.id.categorie);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
+        LinearLayout header = convertView.findViewById(R.id.header);
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
-        final Annonce S = DATA.get(position);
+        // Todo : Cacher la photo
+        if (mode.equals("mine")){
+            header.setVisibility(View.GONE);
+            categorie.setTextSize(17);
+        }
 
+
+
+
+        final Annonce S = DATA.get(position);
         // todo : Affects values to the componants
         nom_user.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
@@ -73,12 +85,25 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                 S.getCategorie()+">"+S.getSousCategorie()
         );
 
-
         int profil = 0;
-        if (position%3 == 0)
+        if (position%3 == 0){
             profil = R.drawable.avatar3;
-        else{
+            if (mode.equals("mine")){
+                confier.setText("Tache déjà confiée");
+                confier.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                confier.setVisibility(View.VISIBLE);
+            }else{
+                confier.setVisibility(View.GONE);
+            }
+        }else{
             profil = R.drawable.avatar2;
+            if (mode.equals("mine")){
+                confier.setText("Tache non confiée");
+                confier.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                confier.setVisibility(View.VISIBLE);
+            }else{
+                confier.setVisibility(View.GONE);
+            }
         }
         avatar.setImageResource(profil);
 
@@ -129,10 +154,10 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
         nom_user.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
+        avatar.setImageResource(profil);
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
-        avatar.setImageResource(profil);
         time.setText(Tool.formatingDate(S.getDatePublication()));
 
         number.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +215,5 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
 
     }
-
-
 
 }
