@@ -4,8 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 
 /**
  * Created by ElikyaLK on 29/12/2018.
@@ -160,6 +165,71 @@ public class ServiceDAO extends DAOBase {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<Service> randomService(int next) {
+        List<Service> list = new ArrayList<>();
+        //TODO implements algorithme for return random list of service
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " limit ?, 20", new String[]{String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Service> getNewService(int next, SousCategorie sousCategorie) {
+        List<Service> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ? order by " + DATE_PUBLICATION + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Service> getServiceByCote(int next, SousCategorie sousCategorie) {
+        List<Service> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ? order by " + COTE + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Service> getMesServices() {
+        List<Service> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1", null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public long supprimer(long id) {

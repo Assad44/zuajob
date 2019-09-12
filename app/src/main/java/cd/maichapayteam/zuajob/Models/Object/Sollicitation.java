@@ -42,6 +42,33 @@ public class Sollicitation {
     public String heureRDV = "";
     public int cote = 0;
     public String comment = "";
+    public boolean isMy = false;
+    public boolean accepted = false;
+    public boolean refused = false;
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public boolean isRefused() {
+        return refused;
+    }
+
+    public void setRefused(boolean refused) {
+        this.refused = refused;
+    }
+
+    public boolean isMy() {
+        return isMy;
+    }
+
+    public void setMy(boolean my) {
+        isMy = my;
+    }
 
 
     public boolean isRecent() {

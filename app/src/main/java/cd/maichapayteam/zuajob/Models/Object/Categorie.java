@@ -20,6 +20,8 @@ public class Categorie {
     public String description = "";
     public String urlImage = "";
 
+    public boolean userPreference = false;
+
     public boolean isError() {
         return error;
     }
@@ -74,6 +76,14 @@ public class Categorie {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public boolean isUserPreference() {
+        return userPreference;
+    }
+
+    public void setUserPreference(boolean userPreference) {
+        this.userPreference = userPreference;
     }
 
     //public static Categorie find(int id) {

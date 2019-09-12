@@ -223,6 +223,36 @@ public class RemoteDataSync {
     //    return list;
     //}
 
+    public static List<Categorie> getUserPreference () {
+        String url = BASE_URL2 + "userpreference/";
+
+        List<Categorie> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<List<Categorie>> response = request.executeForObjectList(Categorie.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                CategorieDAO cdao = new CategorieDAO(GeneralClass.applicationContext);
+                for (Categorie object : list) {
+                    object.setUserPreference(true);
+                    cdao.ajouter(object);
+                    Log.e("Category", "designation : " + object.designation);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Category" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Category" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
     public static List<Categorie> getListCategorie () {
         String url = BASE_URL2 + "category/";
 
@@ -338,6 +368,35 @@ public class RemoteDataSync {
         return list;
     }
 
+    public static List<Comment> getListComment (int next) {
+        String url = BASE_URL2 + "comment/";
+
+        List<Comment> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("next", String.valueOf(next))
+                .build();
+
+        try{
+            ANResponse<List<Comment>> response = request.executeForObjectList(Comment.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                CommentDAO objectDAO = new CommentDAO(GeneralClass.applicationContext);
+                for (Comment object : list) {
+                    objectDAO.ajouter(object);
+                    Log.e("Comment", "id : " + object.getIdUserConcerne());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Comment" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Comment" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
     public static User login(String auth_code, String password) {
         String url = BASE_URL + "login";
 
@@ -382,8 +441,69 @@ public class RemoteDataSync {
         //return new User();
     }
 
-    public static List<Annonce> getAnnonces (int next, int souscategorie) {
+    public static List<Annonce> getRandomAnnonces (int next) {
+        String url = BASE_URL2 + "randomannonces/";
+
+        List<Annonce> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("next", String.valueOf(next))
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
+                for (Annonce object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Annonce", "designation : " + object.description);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Annonce" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Annonce" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    public static List<Annonce> getAnnonces (int next, long souscategorie) {
         String url = BASE_URL2 + "annonces/";
+
+        List<Annonce> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("next", String.valueOf(next))
+                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
+                for (Annonce object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Annonce", "designation : " + object.description);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Annonce" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Annonce" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
+        String url = BASE_URL2 + "newannonces/";
 
         List<Annonce> list = new ArrayList<>();
 
@@ -471,7 +591,7 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static List<Service> getNewServices (int next, int souscategorie) {
+    public static List<Service> getNewServices (int next, long souscategorie) {
         String url = BASE_URL2 + "newservices/";
 
         List<Service> list = new ArrayList<>();
@@ -532,7 +652,7 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static List<Service> getServicesByRealisationCount (int next, int souscategorie) {
+    public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
         String url = BASE_URL2 + "servicesbyrealisationcount/";
 
         List<Service> list = new ArrayList<>();
@@ -1244,6 +1364,94 @@ public class RemoteDataSync {
         }
 
         return false;
+    }
+
+    public static Sollicitation accepterSollicitation (long idSollicitation) {
+        String url = BASE_URL + "acceptersollicitation";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                .setTag("accepterSollicitation" + idSollicitation)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Sollicitation sollicitation;
+
+        try{
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                sollicitation = response.getResult();
+                if(sollicitation!=null) {
+                    if(!sollicitation.isError()) {
+                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = objectDAO.ajouter(sollicitation);
+                        if(sollicitation==null) {
+                            sollicitation = new Sollicitation();
+                            sollicitation.setError(true);
+                            sollicitation.setErrorCode(1127);
+                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre acceptation.");
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.error = true;
+                sollicitation.errorCode = 31921;
+                sollicitation.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.error = true;
+            sollicitation.errorCode = 49288;
+            sollicitation.errorMessage = ex.getMessage();
+        }
+
+        return sollicitation;
+    }
+
+    public static Sollicitation refuserSollicitation (long idSollicitation) {
+        String url = BASE_URL + "refusersollicitation";
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                .setTag("refuserSollicitation" + idSollicitation)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        Sollicitation sollicitation;
+
+        try{
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                sollicitation = response.getResult();
+                if(sollicitation!=null) {
+                    if(!sollicitation.isError()) {
+                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = objectDAO.ajouter(sollicitation);
+                        if(sollicitation==null) {
+                            sollicitation = new Sollicitation();
+                            sollicitation.setError(true);
+                            sollicitation.setErrorCode(1127);
+                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre acceptation.");
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.error = true;
+                sollicitation.errorCode = 31921;
+                sollicitation.errorMessage = response.getError().getMessage();
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.error = true;
+            sollicitation.errorCode = 49288;
+            sollicitation.errorMessage = ex.getMessage();
+        }
+
+        return sollicitation;
     }
 
 

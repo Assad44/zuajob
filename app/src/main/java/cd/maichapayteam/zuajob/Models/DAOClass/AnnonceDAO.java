@@ -4,7 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 
 /**
  * Created by ElikyaLK on 29/12/2018.
@@ -154,6 +158,71 @@ public class AnnonceDAO extends DAOBase {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<Annonce> randomAnnonce(int next) {
+        List<Annonce> list = new ArrayList<>();
+        //TODO implements algorithme for return random list of annonce
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " limit ?, 20", new String[]{String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Annonce> getNewAnnonce(int next, SousCategorie sousCategorie) {
+        List<Annonce> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ?  order by " + DATE + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Annonce> getAll(int next, SousCategorie sousCategorie) {
+        List<Annonce> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ? limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Annonce> getMesAnnonces() {
+        List<Annonce> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1", null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public long supprimer(long id) {

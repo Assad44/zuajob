@@ -28,6 +28,15 @@ public class Postuler {
     public int cote = 0;
     public String comment = "";
     public boolean havePostuled = false;
+    public boolean isMy = false;
+
+    public boolean isMy() {
+        return isMy;
+    }
+
+    public void setMy(boolean my) {
+        isMy = my;
+    }
 
     public boolean isError() {
         return error;

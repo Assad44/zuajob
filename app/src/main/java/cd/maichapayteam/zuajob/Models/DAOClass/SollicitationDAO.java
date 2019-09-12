@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import java.util.ArrayList;
+import java.util.List;
+
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 
 /**
@@ -34,6 +37,9 @@ public class SollicitationDAO extends DAOBase {
     public static final String HEURE_RDV = "heurerdv";
     public static final String COTE = "cote";
     public static final String COMMENT = "comments";
+    public static final String IS_MY = "is_my";
+    public static final String IS_ACCEPTED = "isacc";
+    public static final String IS_REFUSED = "isref";
     public static final String TABLE_NOM = "t_sollicitation";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -57,7 +63,10 @@ public class SollicitationDAO extends DAOBase {
                     DATE_RDV + " TEXT, " +
                     HEURE_RDV + " TEXT, " +
                     COTE + " INTEGER, " +
-                    COMMENT + " TEXT);";
+                    COMMENT + " TEXT, " +
+                    IS_MY + " INTEGER, " +
+                    IS_ACCEPTED + " INTEGER, " +
+                    IS_REFUSED + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -99,6 +108,9 @@ public class SollicitationDAO extends DAOBase {
                 value.put(HEURE_RDV, object.getHeureRDV());
                 value.put(COTE, object.getCote());
                 value.put(COMMENT, object.getComment());
+                value.put(IS_MY, object.isMy());
+                value.put(IS_ACCEPTED, object.isAccepted());
+                value.put(IS_REFUSED, object.isRefused());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -155,6 +167,9 @@ public class SollicitationDAO extends DAOBase {
                 String heure=c.getString(18);
                 int cote=c.getInt(19);
                 String com=c.getString(20);
+                int ismy=c.getInt(21);
+                int isacc=c.getInt(22);
+                int isref=c.getInt(23);
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -179,6 +194,9 @@ public class SollicitationDAO extends DAOBase {
                 object.setHeureRDV(heure);
                 object.setCote(cote);
                 object.setComment(com);
+                if(ismy==1) object.setMy(true);
+                if(isacc==1) object.setAccepted(true);
+                if(isref==1) object.setRefused(true);
             }
             c.close();
             close();
@@ -186,6 +204,38 @@ public class SollicitationDAO extends DAOBase {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<Sollicitation> getMesSollucitations() {
+        List<Sollicitation> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + HAVE_SOLLICITED + " = 1", null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Sollicitation> getSollicitants(Service service) {
+        List<Sollicitation> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1 and " + ID_SERVICE + " = ?", new String[]{String.valueOf(service.getId())});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public long supprimer(long id) {
@@ -224,6 +274,9 @@ public class SollicitationDAO extends DAOBase {
         value.put(HEURE_RDV, object.getHeureRDV());
         value.put(COTE, object.getCote());
         value.put(COMMENT, object.getComment());
+        value.put(IS_MY, object.isMy());
+        value.put(IS_ACCEPTED, object.isAccepted());
+        value.put(IS_REFUSED, object.isRefused());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

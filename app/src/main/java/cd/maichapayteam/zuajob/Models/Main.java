@@ -6,6 +6,8 @@ import android.support.design.widget.AppBarLayout;
 
 import com.activeandroid.ActiveAndroid;
 
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
+
 public class Main extends Application {
 
     public Main() {
@@ -15,7 +17,8 @@ public class Main extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(this);
+        GeneralClass.applicationContext = this;
+        //ActiveAndroid.initialize(this);
     }
 
 }

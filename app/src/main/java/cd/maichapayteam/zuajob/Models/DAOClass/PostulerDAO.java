@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 
 /**
@@ -32,6 +36,7 @@ public class PostulerDAO extends DAOBase {
     public static final String DEVISE = "devise";
     public static final String COTE = "cote";
     public static final String COMMENT = "comments";
+    public static final String IS_MY = "is_my";
     public static final String TABLE_NOM = "t_postuler";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -54,7 +59,8 @@ public class PostulerDAO extends DAOBase {
                     HEURE_RDV + " TEXT, " +
                     DEVISE + " TEXT, " +
                     COTE + " INTEGER, " +
-                    COMMENT + " TEXT);";
+                    COMMENT + " TEXT, " +
+                    IS_MY + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -95,6 +101,7 @@ public class PostulerDAO extends DAOBase {
                 value.put(HEURE_RDV, object.getHeureRDV());
                 value.put(COTE, object.getCote());
                 value.put(COMMENT, object.getComment());
+                value.put(IS_MY, object.isMy());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -150,6 +157,7 @@ public class PostulerDAO extends DAOBase {
                 String dev=c.getString(17);
                 int cote=c.getInt(18);
                 String com=c.getString(19);
+                int ismy=c.getInt(21);
 
                 object = new Postuler();
                 object.setId(_id);
@@ -173,6 +181,7 @@ public class PostulerDAO extends DAOBase {
                 object.setDevise(dev);
                 object.setCote(cote);
                 object.setComment(com);
+                if(ismy==1) object.setMy(true);
             }
             c.close();
             close();
@@ -180,6 +189,38 @@ public class PostulerDAO extends DAOBase {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public List<Postuler> getMesPostulances() {
+        List<Postuler> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + HAVE_POSTULED + " = 1", null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Postuler> getPostulants(Annonce annonce) {
+        List<Postuler> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1 and " + ID_ANNONCE + " = ?", new String[]{String.valueOf(annonce.getId())});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
     }
 
     public long supprimer(long id) {
@@ -217,6 +258,7 @@ public class PostulerDAO extends DAOBase {
         value.put(HEURE_RDV, object.getHeureRDV());
         value.put(COTE, object.getCote());
         value.put(COMMENT, object.getComment());
+        value.put(IS_MY, object.isMy());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

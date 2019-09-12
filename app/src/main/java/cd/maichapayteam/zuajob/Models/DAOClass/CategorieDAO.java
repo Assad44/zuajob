@@ -20,13 +20,15 @@ public class CategorieDAO extends DAOBase {
     public static final String DESIGNATION = "designation";
     public static final String DESCRIPTION = "description";
     public static final String URL_IMAGE = "url_image";
+    public static final String USER_PREFERENCE = "userpref";
     public static final String TABLE_NOM = "t_cat";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
                     KEY + " INTEGER PRIMARY KEY, " +
                     DESIGNATION + " TEXT, " +
                     DESCRIPTION + " TEXT, " +
-                    URL_IMAGE + " TEXT);";
+                    URL_IMAGE + " TEXT, " +
+                    USER_PREFERENCE + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -51,6 +53,7 @@ public class CategorieDAO extends DAOBase {
                 value.put(DESCRIPTION, object.getDescription());
                 value.put(DESIGNATION, object.getDesignation());
                 value.put(URL_IMAGE, object.getUrlImage());
+                value.put(USER_PREFERENCE, object.isUserPreference());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -90,12 +93,14 @@ public class CategorieDAO extends DAOBase {
                 String designation=c.getString(1);
                 String description=c.getString(2);
                 String url=c.getString(3);
+                int up=c.getInt(4);
 
                 object = new Categorie();
                 object.setId(_id);
                 object.setDescription(description);
                 object.setDesignation(designation);
                 object.setUrlImage(url);
+                if(up==1) object.setUserPreference(true);
             }
             c.close();
             close();
@@ -110,6 +115,22 @@ public class CategorieDAO extends DAOBase {
         try{
             open();
             Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Categorie> getAllUserPreference() {
+        List<Categorie> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + USER_PREFERENCE + " = 1", null);
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -140,6 +161,7 @@ public class CategorieDAO extends DAOBase {
         value.put(DESCRIPTION, object.getDescription());
         value.put(DESIGNATION, object.getDesignation());
         value.put(URL_IMAGE, object.getUrlImage());
+        value.put(USER_PREFERENCE, object.isUserPreference());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();
