@@ -197,21 +197,40 @@ public class UserDAO extends DAOBase {
         }
     }
 
-    //public List<Dechet> findAll(){
-    //    List<Dechet> list = new ArrayList<>();
-    //    try{
-    //        open();
-    //        Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
-    //        while (c.moveToNext()) {
-    //            list.add(find(c.getLong(0)));
-    //        }
-    //        c.close();
-    //        close();
-    //    }catch (Exception e){
-//
-    //    }
-    //    return list;
-    //}
+    public User findByPhoneNumer(String numero) {
+        User user = null;
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + PHONE + " = ?", new String[]{numero});
+            while (c.moveToNext()) {
+                long _id = c.getLong(0);
+                user = find(_id);
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return user;
+    }
+
+    public List<User> listJobeurs(int min) {
+        List<User> list = new ArrayList<>();
+        //long min = nextValue * 20;
+        //long max = 20;
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " limit ?, 20", new String[]{String.valueOf(min)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
 
     public long supprimer(long id) {
         open();

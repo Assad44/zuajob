@@ -21,6 +21,7 @@ public class Annonce {
     public long idCategorie = -1;
     public String categorie = "";
     public String datePublication = "";
+    public boolean isConfied = false;
 
     public boolean isMy() {
         return isMy;
@@ -158,6 +159,14 @@ public class Annonce {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
+    }
+
+    public boolean isConfied() {
+        return isConfied;
+    }
+
+    public void setConfied(boolean confied) {
+        isConfied = confied;
     }
 
 }

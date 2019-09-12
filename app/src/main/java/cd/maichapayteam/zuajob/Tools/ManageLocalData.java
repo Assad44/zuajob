@@ -5,6 +5,7 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 
@@ -13,47 +14,59 @@ public class ManageLocalData {
     public static User createUser(User user) {
         user.authCode = generate(32);
         user.myProfil = true;
-        //user.save();
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        userDAO.ajouter(user);
         RemoteDataSync.getRandomUser();
 
         return user;
     }
 
     public static boolean checkNumero(String numero) {
-        //User user = User.findByPhoneNumer(numero);
-        //if(user!=null) return true;
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        User user = userDAO.findByPhoneNumer(numero);
+        if(user!=null) return true;
         return false;
     }
 
-    //public static User login(String phone, String mdp) {
-    //    //User user = User.findByPhoneNumer(phone);
-    //    //if(user!=null) {
-    //    //    if(user.password.equals(mdp)) {
-    //    //        RemoteDataSync.getRandomUser();
-    //    //        return user;
-    //    //    }
-    //    //}
-    //    //user = new User();
-    //    //user.error = true;
-    //    user.errorCode = 36212;
-    //    user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
-    //    return user;
-    //}
+    public static User login(String phone, String mdp) {
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        User user = userDAO.findByPhoneNumer(phone);
+        if(user!=null) {
+            if(user.password.equals(mdp)) {
+                RemoteDataSync.getRandomUser();
+                return user;
+            }
+        }
+        user = new User();
+        user.error = true;
+        user.errorCode = 36212;
+        user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
+        return user;
+    }
 
-    //public static List<User> listJobeurs(int next) {
-    //    return User.listJobeurs(next);
-    //}
+    public static List<User> listJobeurs(int min) {
+        RemoteDataSync.getListJobeur((int)(min/20));
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        return userDAO.listJobeurs(min);
+    }
+
+    public static List<User> listJobeurs(int min, String keyword) {
+        RemoteDataSync.getListJobeur(keyword, (int)(min/20));
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        return userDAO.listJobeurs(min);
+    }
 
     public static List<Categorie> listCategorie() {
         //List<Categorie> list = Categorie.listCategorie();
-        List<Categorie> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Categorie c = new Categorie();
-            c.designation = "designation "+i;
-            list.add(c);
-        }
-        if(list.size()==0) RemoteDataSync.getListCategorie();
-        return list;
+        //List<Categorie> list = new ArrayList<>();
+        //for (int i = 0; i < 10; i++) {
+        //    Categorie c = new Categorie();
+        //    c.designation = "designation "+i;
+        //    list.add(c);
+        //}
+        //if(list.size()==0) RemoteDataSync.getListCategorie();
+        //return list;
+        return new ArrayList<>();
     }
 
     //public static List<SousCategorie> listSousCategorie(Categorie categorie) {

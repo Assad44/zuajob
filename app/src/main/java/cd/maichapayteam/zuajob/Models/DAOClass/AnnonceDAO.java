@@ -26,6 +26,7 @@ public class AnnonceDAO extends DAOBase {
     public static final String URL_PHOTO_USER = "urluser";
     public static final String DATE = "datepub";
     public static final String IS_MY = "ismy";
+    public static final String IS_CONFIED = "isconfied";
     public static final String TABLE_NOM = "t_annonce";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -42,7 +43,8 @@ public class AnnonceDAO extends DAOBase {
                     SOUS_CATEGORIE + " TEXT, " +
                     URL_PHOTO_USER + " TEXT, " +
                     DATE + " TEXT, " +
-                    IS_MY + " INTEGER);";
+                    IS_MY + " INTEGER, " +
+                    IS_CONFIED + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -77,6 +79,7 @@ public class AnnonceDAO extends DAOBase {
                 value.put(URL_PHOTO_USER, object.getUrlImageUser());
                 value.put(DATE, object.getDatePublication());
                 value.put(IS_MY, object.isMy());
+                value.put(IS_CONFIED, object.isConfied());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -126,6 +129,7 @@ public class AnnonceDAO extends DAOBase {
                 String urlImage=c.getString(11);
                 String date=c.getString(12);
                 int ismy=c.getInt(13);
+                int isc=c.getInt(14);
 
                 object = new Annonce();
                 object.setId(_id);
@@ -142,6 +146,7 @@ public class AnnonceDAO extends DAOBase {
                 object.setUrlImageUser(urlImage);
                 object.setDatePublication(date);
                 if(ismy==1) object.setMy(true);
+                if(isc==1) object.setConfied(true);
             }
             c.close();
             close();
@@ -180,6 +185,7 @@ public class AnnonceDAO extends DAOBase {
         value.put(URL_PHOTO_USER, object.getUrlImageUser());
         value.put(DATE, object.getDatePublication());
         value.put(IS_MY, object.isMy());
+        value.put(IS_CONFIED, object.isConfied());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

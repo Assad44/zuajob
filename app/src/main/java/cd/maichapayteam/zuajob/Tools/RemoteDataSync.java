@@ -279,6 +279,65 @@ public class RemoteDataSync {
         return list;
     }
 
+    public static List<User> getListJobeur (int next) {
+        String url = BASE_URL2 + "listjobeur/";
+
+        List<User> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("next", String.valueOf(next))
+                .build();
+
+        try{
+            ANResponse<List<User>> response = request.executeForObjectList(User.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
+                for (User object : list) {
+                    objectDAO.ajouter(object);
+                    Log.e("User", "id : " + object.id);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("User" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("User" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    public static List<User> getListJobeur (String keyword, int next) {
+        String url = BASE_URL2 + "listjobeur/";
+
+        List<User> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("keyword", keyword)
+                .addQueryParameter("next", String.valueOf(next))
+                .build();
+
+        try{
+            ANResponse<List<User>> response = request.executeForObjectList(User.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
+                for (User object : list) {
+                    objectDAO.ajouter(object);
+                    Log.e("User", "id : " + object.id);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("User" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("User" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
     public static User login(String auth_code, String password) {
         String url = BASE_URL + "login";
 
