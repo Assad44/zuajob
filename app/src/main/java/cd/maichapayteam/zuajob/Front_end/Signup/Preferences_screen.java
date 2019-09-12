@@ -8,25 +8,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.zip.DataFormatException;
 
-import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
-import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Preferences_screen extends AppCompatActivity {
 

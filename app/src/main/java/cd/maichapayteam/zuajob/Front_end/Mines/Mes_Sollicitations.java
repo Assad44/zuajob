@@ -4,26 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Sollicitations_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
-import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
-import cd.maichapayteam.zuajob.Front_end.Home;
-import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;

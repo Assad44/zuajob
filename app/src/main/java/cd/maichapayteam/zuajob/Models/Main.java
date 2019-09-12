@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob;
+package cd.maichapayteam.zuajob.Models;
 
 import android.app.Application;
 import android.content.Context;

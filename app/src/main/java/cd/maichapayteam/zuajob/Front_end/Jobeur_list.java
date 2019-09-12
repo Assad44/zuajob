@@ -10,12 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import cd.maichapayteam.zuajob.Adaptors.Jobeur_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
 
 public class Jobeur_list extends AppCompatActivity {

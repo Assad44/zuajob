@@ -4,13 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
-import cd.maichapayteam.zuajob.Front_end.Home;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.R;
 

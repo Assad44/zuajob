@@ -1,4 +1,4 @@
-package cd.maichapayteam.zuajob.Front_end;
+package cd.maichapayteam.zuajob;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,12 +33,17 @@ import java.util.ArrayList;
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
+import cd.maichapayteam.zuajob.Front_end.Categorie_view;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Front_end.Jobeur_list;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_Sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
+import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
+import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
@@ -89,6 +94,13 @@ public class Home extends AppCompatActivity
         search_bar.setVisibility(View.GONE);
 
         rechercher.setIconified(true);
+        if (Tool.getUserPreferences(context,"type").equals("0"))
+            BTN_annonces.setVisibility(View.GONE);
+
+        if (Tool.getUserPreferences(context,"type").equals("1"))
+            BTN_jober.setVisibility(View.GONE);
+
+
 
     }
 
@@ -177,7 +189,11 @@ public class Home extends AppCompatActivity
         //drawer.openDrawer(GravityCompat.START);
         toggle.syncState();
 
-        //navigationView.inflateMenu(R.menu.activity_home_drawer);
+        if (Tool.getUserPreferences(context,"type").equals("1"))
+            navigationView.inflateMenu(R.menu.activity_home_drawer);
+        else
+            navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
+
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -395,6 +411,10 @@ public class Home extends AppCompatActivity
             startActivity(i);
             finish();
         } else if (id == R.id.nav_rdv) {
+            Intent i = new Intent(context, Mes_rendez_vous.class);
+            startActivity(i);
+            finish();
+        }else if (id == R.id.nav_service_soliicioation) {
 
         } else if (id == R.id.nav_soliicioation) {
             Intent i = new Intent(context, Mes_Sollicitations.class);

@@ -8,22 +8,20 @@
         android:id="@+id/nav_annonce"
         android:icon="@drawable/ic_menu_slideshow"
         android:title="@string/menu_annonces" />
+
     <item
-        android:id="@+id/nav_services"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="@string/menu_services" />
+        android:id="@+id/nav_service_soliicioation"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Mes services sollicités" />
 
     <item
         android:id="@+id/nav_rdv"
         android:icon="@drawable/ic_menu_share"
         android:title="@string/menu_rdv" />
     <item
-        android:id="@+id/nav_soliicioation"
+        android:visible="false"
+        android:id="@+id/nav_discuusion"
         android:icon="@drawable/ic_menu_send"
-        android:title="@string/menu_sollicitations" />
-    <item
-        android:id="@+id/nav_postullance"
-        android:icon="@drawable/ic_menu_send"
-        android:title="Mes postulances" />
-
+        android:title="@string/menu_discussions" />
+    
 </menu>

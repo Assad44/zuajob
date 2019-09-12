@@ -15,6 +15,13 @@
     <color name="dark7">#f57c00</color>
     <color name="dark8">#ef6c00</color>
 
+    <color name="excellent">#F7EBE4</color>
+    <color name="bon">#F5C69E</color>
+    <color name="assezbon">#F7A07F</color>
+    <color name="Mauvais">#F07F31</color>
+    <color name="Mediocre">#FF6A00</color>
+
+
     <color name="blue">#002e59</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>

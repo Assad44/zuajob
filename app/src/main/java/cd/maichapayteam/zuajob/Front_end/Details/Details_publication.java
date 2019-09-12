@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
 
 public class Details_publication extends AppCompatActivity {

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/element"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_alarm_blue"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/nom_user"
+                    android:textColor="@color/dark8"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="14-09-2019 à 10h00"
+                    android:textSize="18dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorPrimaryDark"/>
+
+                <LinearLayout
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:id="@+id/categorie"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Catgorie > Sous categorie"
+                        android:textSize="13dp"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:id="@+id/description"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Lorem_short"
+                        android:textSize="12dp"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_margin="1dp"
+                            android:text="Edit"
+                            android:background="@drawable/corner_primary_border_white"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:textSize="13dp"
+                            />
+                        <TextView
+                            android:clickable="true"
+                            android:id="@+id/BTN_valider"
+                            android:layout_margin="1dp"
+                            android:text="Valider"
+                            android:background="@drawable/corner_blue_border_white"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:textSize="13dp"
+                            />
+                        <TextView
+                            android:layout_margin="1dp"
+                            android:text="Annuler"
+                            android:background="@drawable/corner_green_border_white"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:textSize="13dp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/details_option"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginRight="90dp"
+                    android:background="#B3B3B3"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Lorems2"
+                    android:layout_margin="10dp"
+                    android:textSize="12dp"/>
+
+                <TextView
+                    android:id="@+id/coter"
+                    android:layout_margin="1dp"
+                    android:text="Coter la préstation"
+                    android:background="@drawable/corner_blue_border_white"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="13dp"
+                    />
+                <TextView
+                    android:enabled="false"
+                    android:layout_marginTop="10dp"
+                    android:text="Payer le jobeur"
+                    android:background="@drawable/corner_blanc_border_primary"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="13dp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

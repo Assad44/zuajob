@@ -16,9 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cd.maichapayteam.zuajob.Front_end.Signup.Identity_screen;
-import cd.maichapayteam.zuajob.Front_end.Signup.PhoneConfirm_screen;
-import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 

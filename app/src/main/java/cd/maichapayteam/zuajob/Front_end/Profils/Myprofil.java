@@ -22,9 +22,7 @@ import android.widget.Toast;
 import java.io.FileInputStream;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
-import cd.maichapayteam.zuajob.Front_end.Home;
-import cd.maichapayteam.zuajob.Front_end.Signup.PhoneVerif_screen;
-import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -36,7 +34,7 @@ public class Myprofil extends AppCompatActivity {
     TextView update_Adresses;
     ImageView picture, Pickpicture;
     TextView nom,number,Sexe;
-    TextView street,quartier,commune,pays,email;
+    TextView street,quartier,commune,pays,email,typeswitcher;
 
     Toolbar toolbar;
 
@@ -53,6 +51,7 @@ public class Myprofil extends AppCompatActivity {
         quartier = findViewById(R.id.quartier);
         commune = findViewById(R.id.commune);
         email = findViewById(R.id.email);
+        typeswitcher = findViewById(R.id.typeswitcher);
     }
 
 
@@ -69,8 +68,6 @@ public class Myprofil extends AppCompatActivity {
                 Tool.getUserPreferences(context,"sexe") + " / "+
                 Tool.getUserPreferences(context,"birthday")
         );
-
-
 
 
     }
@@ -120,6 +117,15 @@ public class Myprofil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pickPicture();
+            }
+        });
+        typeswitcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Tool.getUserPreferences(context,"type").equals("1"))
+                    Tool.setUserPreferences(context,"type", "0");
+                else
+                    Tool.setUserPreferences(context,"type", "1");
             }
         });
     }

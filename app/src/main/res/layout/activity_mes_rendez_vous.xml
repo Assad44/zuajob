@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".Front_end.Mines.Mes_rendez_vous">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="-10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <SearchView
+            android:elevation="2dp"
+            android:id="@+id/rechercher"
+            android:queryHint="Recherche publication"
+            android:animateLayoutChanges="true"
+            android:foregroundTint="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_white"
+            ></SearchView>
+
+    </LinearLayout>
+
+    <ListView
+        android:divider="@color/zxing_transparent"
+        android:numColumns="auto_fit"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cd.maichapayteam.zuajob.Front_end.Home;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
@@ -91,7 +91,7 @@ public class Identity_screen extends AppCompatActivity {
                 int t = 0;
                 if (type.getSelectedItemPosition() == 1)
                     t = 1;
-                else
+                else if (type.getSelectedItemPosition() == 2)
                     t = 0;
 
                 // saving in the preferences
