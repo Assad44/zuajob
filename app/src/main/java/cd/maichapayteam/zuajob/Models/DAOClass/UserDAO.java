@@ -294,4 +294,15 @@ public class UserDAO extends DAOBase {
         return rep;
     }
 
+    public long deconnection() {
+        ContentValues value = new ContentValues();
+        value.put(AUTH_CODE, "");
+        value.put(PASSWORD, "");
+        value.put(MY_PROFIL, false);
+        open();
+        long rep = mDb.update(TABLE_NOM, value, null, null);
+        close();
+        return rep;
+    }
+
 }

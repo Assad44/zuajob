@@ -1,5 +1,6 @@
 package cd.maichapayteam.zuajob.Tools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
@@ -182,6 +183,18 @@ public class ManageLocalData {
             pass += chars.charAt(i);
         }
         return pass;
+    }
+
+    public static List<Object> historiqueBySollicitation() {
+        List<Object> objectList = new ArrayList<>();
+        objectList.add(RemoteDataSync.getHistoriqueRealisationBySollicitation());
+        objectList.add(RemoteDataSync.getHistoriqueRealisationByPostulance());
+        return objectList;
+    }
+
+    public boolean deconnection() {
+        if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) return true;
+        return false;
     }
 
 }

@@ -744,6 +744,64 @@ public class RemoteDataSync {
         return list;
     }
 
+    public static List<Postuler> getHistoriqueRealisationByPostulance () {
+        String url = BASE_URL2 + "histobypoatulance/";
+
+        List<Postuler> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
+                for (Postuler object : list) {
+                    cdao.ajouter(object);
+                    Log.e("histobypoatulance", "description : " + object.descriptionAnnonce);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("histobypoatulance" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("histobypoatu" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    public static List<Sollicitation> getHistoriqueRealisationBySollicitation () {
+        String url = BASE_URL2 + "histobysollicitation/";
+
+        List<Sollicitation> list = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addHeaders("token", GeneralClass.userToken)
+                .build();
+
+        try{
+            ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
+                for (Sollicitation object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.descriptionService);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
     /**
     * Les annonces auxquels moi j'ai postulé
     */
