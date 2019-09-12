@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -49,6 +50,12 @@ public class Identity_screen extends AppCompatActivity {
         birthday = findViewById(R.id.birthday);
         genre = findViewById(R.id.genre);
         Datepicker = findViewById(R.id.Datepicker);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.user_type, R.layout.z_view_spinner_text_style);
+        type.setAdapter(adapter);
+        ArrayAdapter adapterS = ArrayAdapter.createFromResource(this, R.array.User_sexe, R.layout.z_view_spinner_text_style);
+        genre.setAdapter(adapterS);
+
     }
 
     @Override

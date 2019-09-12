@@ -69,7 +69,7 @@ public class Home extends AppCompatActivity
     //HorizontalListView hlistview;
 
     private void Init_Components(){
-        //myProfile = User.myProfile();
+        //myProfile = User.myProfile();µµ*
 
         //TODO modifier le screen par rapport au profil de l'utilisateur
 

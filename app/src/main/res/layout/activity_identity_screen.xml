@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,202 +28,189 @@
             android:text="@string/votre_identite"
             android:textSize="30dp" />
 
-        <ScrollView
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
                 android:gravity="center"
-                android:paddingTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_marginBottom="0dp"
+                <Spinner
+                    android:background="@drawable/corner_black_corner_blanc"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/type"
                     android:gravity="center"
-                    android:orientation="vertical"
+                    android:entries="@array/user_type"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#8D8D8D"
+                    android:layout_width="match_parent">
+                    <EditText
+                        android:id="@+id/nom"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="15dp"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:textSize="20dp"
+                        android:hint="Nom"
+                        android:textColorHint="#8D8D8D"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#8D8D8D"
+                    android:layout_width="match_parent">
+                    <EditText
+                        android:id="@+id/prenom"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:paddingLeft="15dp"
+                        android:textSize="20dp"
+                        android:hint="Prénom"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Spinner
+                    android:background="@drawable/corner_black_corner_blanc"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/genre"
+                    android:entries="@array/User_sexe"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Spinner
-                        android:layout_marginBottom="10dp"
-                        android:id="@+id/type"
-                        android:gravity="center"
-                        android:entries="@array/user_type"
-                        android:padding="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_gravity="center"
-                        android:background="#C9C9C9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"/>
+                    <ImageView
+                        android:src="@mipmap/ic_datepic"
+                        android:id="@+id/Datepicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#8D8D8D"
-                        android:layout_width="match_parent">
-                        <EditText
-                            android:id="@+id/nom"
-                            android:layout_marginBottom="10dp"
-                            android:textStyle="bold"
-                            android:paddingLeft="15dp"
-                            app:fontFamily="@font/alegreya_sans_thin"
-                            android:textSize="20dp"
-                            android:hint="Nom"
-                            android:textColorHint="#8D8D8D"
-                            android:textColor="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#8D8D8D"
-                        android:layout_width="match_parent">
-                        <EditText
-                            android:id="@+id/prenom"
-                            android:layout_marginBottom="10dp"
-                            android:textStyle="bold"
-                            app:fontFamily="@font/alegreya_sans_thin"
-                            android:paddingLeft="15dp"
-                            android:textSize="20dp"
-                            android:hint="Prénom"
-                            android:textColor="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <Spinner
-                        android:layout_marginBottom="10dp"
-                        android:id="@+id/genre"
-                        android:entries="@array/User_sexe"
-                        android:padding="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <LinearLayout
-                        android:layout_gravity="center"
-                        android:background="#C9C9C9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"/>
-
-                    <LinearLayout
-                        android:layout_marginBottom="10dp"
+                    <EditText
+                        android:drawablePadding="10dp"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:textStyle="bold"
+                        android:enabled="false"
+                        android:id="@+id/birthday"
                         android:padding="5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:src="@mipmap/ic_datepic"
-                            android:id="@+id/Datepicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <EditText
-                            android:drawablePadding="10dp"
-                            app:fontFamily="@font/alegreya_sans_thin"
-                            android:textStyle="bold"
-                            android:enabled="false"
-                            android:id="@+id/birthday"
-                            android:padding="5dp"
-                            android:textSize="20dp"
-                            android:hint="Date de naissance"
-                            android:textColor="@color/white"
-                            android:textColorHint="#8D8D8D"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_gravity="center"
-                        android:background="#C9C9C9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"/>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
+                        android:textSize="20dp"
+                        android:hint="Date de naissance"
+                        android:textColor="@color/white"
                         android:textColorHint="#8D8D8D"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/alegreya_sans_thin"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:textStyle="bold"
-                            app:fontFamily="@font/alegreya_sans_thin"
-                            android:textSize="20dp"
-                            android:paddingLeft="15dp"
-                            android:id="@+id/passe"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="10dp"
-                            android:hint="Mot de passe"
-                            android:inputType="textPassword"
-                            android:maxLength="25"
-                            android:singleLine="true"
-                            android:textColor="#848586"
-                            android:textColorHint="@color/white"
-                            android:autofillHints="" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:textColorHint="#8D8D8D"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/alegreya_sans_thin"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:textStyle="bold"
-                            app:fontFamily="@font/alegreya_sans_thin"
-                            android:textSize="20dp"
-                            android:paddingLeft="15dp"
-                            android:id="@+id/Cpasse"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:hint="Confirmer le mot de passe"
-                            android:inputType="textPassword"
-                            android:maxLength="25"
-                            android:singleLine="true"
-                            android:textColor="#848586"
-                            android:textColorHint="@color/colorAccent"
-                            android:autofillHints="" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:background="#C9C9C9"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"/>
 
-                <TextView
-                    android:layout_marginTop="50dp"
-                    android:id="@+id/btn_next"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:textColorHint="#8D8D8D"
                     android:textStyle="bold"
-                    android:fontFamily="@font/alegreya_sans_thin"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:background="@drawable/corner_primary_border_white"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lancez_vous"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
+                    app:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:textStyle="bold"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:textSize="20dp"
+                        android:paddingLeft="15dp"
+                        android:id="@+id/passe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:hint="Mot de passe"
+                        android:inputType="textPassword"
+                        android:maxLength="25"
+                        android:singleLine="true"
+                        android:textColor="#848586"
+                        android:textColorHint="@color/white"
+                        android:autofillHints="" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="#8D8D8D"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/alegreya_sans_thin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:textStyle="bold"
+                        app:fontFamily="@font/alegreya_sans_thin"
+                        android:textSize="20dp"
+                        android:paddingLeft="15dp"
+                        android:id="@+id/Cpasse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:hint="Confirmer le mot de passe"
+                        android:inputType="textPassword"
+                        android:maxLength="25"
+                        android:singleLine="true"
+                        android:textColor="#848586"
+                        android:textColorHint="@color/colorAccent"
+                        android:autofillHints="" />
+
+                </android.support.design.widget.TextInputLayout>
+
 
 
             </LinearLayout>
 
-        </ScrollView>
+            <TextView
+                android:layout_marginTop="50dp"
+                android:id="@+id/btn_next"
+                android:textStyle="bold"
+                android:fontFamily="@font/alegreya_sans_thin"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/corner_primary_border_white"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lancez_vous"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>
