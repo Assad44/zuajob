@@ -110,4 +110,8 @@ public class IncomingSms extends BroadcastReceiver {
         void OnNewMessage(String message);
     }
 
+    public void destroy() {
+        activity.unregisterReceiver(this);
+    }
+
 }

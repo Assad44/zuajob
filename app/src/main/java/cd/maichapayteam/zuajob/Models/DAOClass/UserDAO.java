@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Models.DAOClass;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,8 @@ public class UserDAO extends DAOBase {
     public static final String CODE_PAYS = "codePays";
     public static final String COMMUNE = "commune";
     public static final String ABOUT = "about";
+    public static final String DESCRIPTION = "description";
+    public static final String COTE = "cote";
     public static final String TABLE_NOM = "t_user";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -61,7 +64,9 @@ public class UserDAO extends DAOBase {
                     SEXE + " TEXT, " +
                     CODE_PAYS + " TEXT, " +
                     COMMUNE + " TEXT, " +
-                    ABOUT + " TEXT);";
+                    ABOUT + " TEXT, " +
+                    DESCRIPTION + " TEXT, " +
+                    COTE + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -87,7 +92,6 @@ public class UserDAO extends DAOBase {
                 value.put(AUTH_CODE, object.getAuthCode());
                 value.put(CODE_PAYS, object.getCodePays());
                 value.put(COMMUNE, object.getCommune());
-                value.put(CODE_PAYS, object.getCodePays());
                 value.put(EMAIL, object.getEmail());
                 value.put(IDENTITE_VERIFIE, object.isIdentiteVerifie());
                 value.put(SEXE, object.getSexe());
@@ -105,6 +109,8 @@ public class UserDAO extends DAOBase {
                 value.put(PAYS, object.getPays());
                 value.put(VILLE, object.getVille());
                 value.put(QUARTIER, object.getQuartier());
+                value.put(DESCRIPTION, object.getDescription());
+                value.put(COTE, object.getCote());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -130,6 +136,23 @@ public class UserDAO extends DAOBase {
             close();
             return co;
         }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public long max(){
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select max(" + KEY + ") from " + TABLE_NOM, null);
+            long co = 0;
+            while (c.moveToNext()) {
+                co = c.getLong(0);
+            }
+            c.close();
+            close();
+            return co;
+        }catch (Exception e){
+            Log.e("UserDAO", e.getMessage());
             return 0;
         }
     }
@@ -164,6 +187,8 @@ public class UserDAO extends DAOBase {
                 String code_pays=c.getString(19);
                 String commune=c.getString(20);
                 String about=c.getString(21);
+                String description=c.getString(22);
+                int cote=c.getInt(23);
 
                 object = new User();
                 object.setId(_id);
@@ -188,6 +213,8 @@ public class UserDAO extends DAOBase {
                 object.setCodePays(code_pays);
                 object.setCommune(commune);
                 object.setAbout(about);
+                object.setDescription(description);
+                object.setCote(cote);
             }
             c.close();
             close();
@@ -237,7 +264,7 @@ public class UserDAO extends DAOBase {
         //long max = 20;
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " limit ?, 20", new String[]{String.valueOf(min)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + TYPE + " = 1 limit ?, 20", new String[]{String.valueOf(min)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -255,7 +282,7 @@ public class UserDAO extends DAOBase {
         //long max = 20;
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM+ " where " + PRENOM + " like '%" + keyword + "%' and " + NOM + " like '%" + keyword + "%' limit ?, 20", new String[]{String.valueOf(min)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM+ " where " + PRENOM + " like '%" + keyword + "%' and " + NOM + " like '%" + keyword + "%' and " + TYPE + " = 1 limit ?, 20", new String[]{String.valueOf(min)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -298,6 +325,8 @@ public class UserDAO extends DAOBase {
         value.put(PAYS, object.getPays());
         value.put(VILLE, object.getVille());
         value.put(QUARTIER, object.getQuartier());
+        value.put(DESCRIPTION, object.getDescription());
+        value.put(COTE, object.getCote());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

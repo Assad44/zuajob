@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -47,9 +48,11 @@ import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
+import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -97,14 +100,16 @@ public class Home extends AppCompatActivity
         search_bar.setVisibility(View.GONE);
 
         rechercher.setIconified(true);
-        if (Tool.getUserPreferences(context,"type").equals("0"))
-            BTN_annonces.setVisibility(View.GONE);
+        //if (Tool.getUserPreferences(context,"type").equals("0"))
+        //    BTN_annonces.setVisibility(View.GONE);
 
-        if (Tool.getUserPreferences(context,"type").equals("1"))
-            BTN_jober.setVisibility(View.GONE);
+        //if (Tool.getUserPreferences(context,"type").equals("1"))
+        //    BTN_jober.setVisibility(View.GONE);
 
 
+        Toast.makeText(Home.this, "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count(), Toast.LENGTH_LONG).show();
 
+        Log.e("Home", "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count());
     }
 
     void Load_CAtegorie(){

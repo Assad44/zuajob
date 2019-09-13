@@ -12,11 +12,12 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 public class GenerateData {
 
     public static User createUser(User user) {
+        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+        user.id = userDAO.max() + 1;
         user.authCode = generate(32);
         user.myProfil = true;
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         userDAO.ajouter(user);
-        RemoteDataSync.getRandomUser(20);
+        RemoteDataSync.getRandomUser(100);
         return userDAO.ajouter(user);
     }
 

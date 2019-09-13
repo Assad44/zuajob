@@ -1740,14 +1740,15 @@ public class RemoteDataSync {
             UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
             if (response.isSuccess()) {
                 Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
-                int i = 1;
+                long i = userDAO.max();
                 for (User2 user2 : response.getResult().results) {
+                    i++;
                     User user = new User();
                     user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-                    user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+                    user.nom = user2.name.last.substring(0, 1).toUpperCase() + user2.name.last.substring(1);
                     user.id = i;
                     user.urlPhoto = user2.picture.thumbnail;
-                    user.type = new Random().nextInt(2);
+                    user.type = 1;
                     user.phone = String.valueOf(890000000 + new Random().nextInt(899999999 - 890000000));
                     user.codePays = "+243";
                     user.pays = "Congo DR";
@@ -1757,7 +1758,15 @@ public class RemoteDataSync {
                     if(user2.gender.equals("female")) user.sexe = "F";
 
                     userList.add(user);
-                    Log.e("RandomUser", user2.name.first + " " + user2.name.last);
+
+                    User u = userDAO.ajouter(user);
+
+                    if(u!=null) {
+                        Log.e("RandomUser", u.getPrenom() + " " + u.getNom());
+                    } else {
+                        Log.e("RandomUser", "Erreur lors de l'ajout de l'item " + user.getId());
+                    }
+
                 }
             } else {
                 ANError error = response.getError();
@@ -1779,10 +1788,9 @@ public class RemoteDataSync {
 
         try{
             ANResponse<String> response = request.executeForString();
-            long i = 0;
             if (response.isSuccess()) {
                 String rep = response.getResult();
-                Log.e("RandomUser", rep);
+                //Log.e("RandomUser", rep);
                 return rep.substring(2, rep.length()-2);
             } else {
                 return "Aucune phrase trouvée";

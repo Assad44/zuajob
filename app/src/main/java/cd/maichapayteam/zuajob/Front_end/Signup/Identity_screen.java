@@ -115,24 +115,15 @@ public class Identity_screen extends AppCompatActivity {
 
                 User u = new User();
                 u.setNom(Tool.getUserPreferences(context,"nom"));
-                u.setNom(Tool.getUserPreferences(context,"prenom"));
-                u.setNom(Tool.getUserPreferences(context,"birthday"));
-                u.setNom(Tool.getUserPreferences(context,"sexe"));
-                u.setNom(Tool.getUserPreferences(context,"passe"));
-                u.setNom(Tool.getUserPreferences(context,"type"));
+                u.setPrenom(Tool.getUserPreferences(context,"prenom"));
+                u.setBirthday(Tool.getUserPreferences(context,"birthday"));
+                u.setSexe(Tool.getUserPreferences(context,"sexe"));
+                u.setPassword(Tool.getUserPreferences(context,"passe"));
+                u.setType(Integer.parseInt(Tool.getUserPreferences(context,"type")));
                 //u.setsNom(Tool.getUserPreferences(context,"statut"));
 
-                u = GenerateData.createUser(u);
-                if (null != u){
-                    GeneralClass.Currentuser = u;
-                    Toast.makeText(context, "Succefully done", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(context, index_screen.class);
-                    startActivity(i);
-                    finish();
-                }
-                else
-                    Toast.makeText(context, "Falled", Toast.LENGTH_SHORT).show();
-
+                InscriptionAsync inscriptionAsync = new InscriptionAsync(u);
+                inscriptionAsync.execute();
 
             }
         });
@@ -176,15 +167,16 @@ public class Identity_screen extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
             //return RemoteDataSync.confirmCode(numero, code);
-            return ManageLocalData.createUser(user);
+            //return ManageLocalData.createUser(user);
+            return  GenerateData.createUser(user);
         }
 
         @Override
         protected void onPostExecute(User result) {
             progressDialog.dismiss();
+
             //TODO : dismiss a load dialog here
             if(result!=null) {
-
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);
                 finish();

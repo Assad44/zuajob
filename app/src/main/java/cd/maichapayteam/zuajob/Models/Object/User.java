@@ -33,6 +33,25 @@ public class User {
     public boolean identiteVerifie = false;
     public String birthday = "";
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCote() {
+        return cote;
+    }
+
+    public void setCote(int cote) {
+        this.cote = cote;
+    }
+
+    public String description = "";
+    public int cote = 0;
+
     @JsonIgnoreProperties
     public int typeIdentite = 0;
 
