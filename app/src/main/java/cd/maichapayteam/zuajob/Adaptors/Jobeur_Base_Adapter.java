@@ -6,7 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import java.util.List;
+import java.util.Random;
+
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 
 /**
@@ -14,19 +20,21 @@ import cd.maichapayteam.zuajob.R;
  */
 public class Jobeur_Base_Adapter extends BaseAdapter {
     Context context;
+    List<User> DATA;
 
-    public Jobeur_Base_Adapter(Context context) {
+    public Jobeur_Base_Adapter(Context context, List<User> DATA) {
         this.context = context;
+        this.DATA = DATA;
     }
 
     @Override
     public int getCount() {
-        return 20;
+        return DATA.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return 0;
+        return DATA.get(position);
     }
 
     @Override
@@ -40,6 +48,22 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.model_jobeurs,null);
 
         ImageView avatar = convertView.findViewById(R.id.avatar);
+        TextView nom = convertView.findViewById(R.id.nom);
+        TextView desc = convertView.findViewById(R.id.desc);
+        TextView age = convertView.findViewById(R.id.age);
+        RatingBar MyRating = convertView.findViewById(R.id.MyRating);
+
+        User S = DATA.get(position);
+
+        nom.setText(S.getNom());
+        age.setText(S.getBirthday());
+        MyRating.setRating(new Random().nextInt(5));
+
+        /*int cote = S.getc;
+        int real = S.getNombreRealisation()*10;
+        if (real == 0) real = 1;
+        float rating = cote * 5 / real;
+        MyRating.setRating(rating);*/
 
         int profil = 0;
         if (position%3 == 0)
@@ -48,6 +72,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
             profil = R.drawable.avatar2;
         }
         avatar.setImageResource(profil);
+
         return convertView;
     }
 }

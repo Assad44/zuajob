@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class index_screen extends AppCompatActivity {
@@ -35,13 +36,19 @@ public class index_screen extends AppCompatActivity {
         CheckPermission();
 
         //TODO check if user exist, pass to home directly
-        if (!Tool.User_Preferences(context).getString("Firstuse", "null").equals("null")){
+        /*if (!Tool.User_Preferences(context).getString("Firstuse", "null").equals("null")){
             if (!Tool.User_Preferences(context).getString("statut", "null").equals("null")){
                 // Todo : Launche Home activity
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);
                 finish();
             }
+        }*/
+
+        if (null != GeneralClass.Currentuser){
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
         }
 
         // Todo ; Initialisation des composants

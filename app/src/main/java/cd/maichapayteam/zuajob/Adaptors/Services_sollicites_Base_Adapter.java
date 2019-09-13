@@ -9,26 +9,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.RoundedImageView;
-import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Annonces_Base_Adapter extends BaseAdapter {
+public class Services_sollicites_Base_Adapter extends BaseAdapter {
     Context context;
-    ArrayList<Annonce> DATA;
+    ArrayList<Service> DATA;
 
-    public Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA, String mode) {
+    public Services_sollicites_Base_Adapter(Context context, ArrayList<Service> DATA) {
         this.context = context;
         this.DATA = DATA;
     }
@@ -40,7 +40,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return 0;
+        return DATA.get(position);
     }
 
     @Override
@@ -50,44 +50,45 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces,null);
-        TextView description = convertView.findViewById(R.id.description);
-        TextView confier = convertView.findViewById(R.id.confier);
-        TextView nom_user = convertView.findViewById(R.id.nom_user);
+
+        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_service,null);
+        TextView S_categorie = convertView.findViewById(R.id.S_categorie);
+        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
+        TextView S_prix = convertView.findViewById(R.id.S_prix);
         TextView number = convertView.findViewById(R.id.number);
-        TextView time = convertView.findViewById(R.id.time);
-        TextView categorie = convertView.findViewById(R.id.categorie);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
+        TextView realisation = convertView.findViewById(R.id.realisation);
+        RatingBar Rating = convertView.findViewById(R.id.MyRating);
+        ImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
-        LinearLayout header = convertView.findViewById(R.id.header);
+
 
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
-        final Annonce S = DATA.get(position);
+        final Service S = DATA.get(position);
+
         // todo : Affects values to the componants
-        nom_user.setText(S.getNomsUser());
-        number.setText(S.getPhoneUser());
-        description.setText(S.getDescription());
-        categorie.setText(
-                S.getCategorie()+">"+S.getSousCategorie()
-        );
+        S_categorie.setText(S.getNomsJobeur());
+        number.setText(S.getPhoneJobeur());
+        S_descriptions.setText(S.getDescription());
+        S_prix.setText(S.getMontant()+ " "+ S.getDevise());
+        realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
+
+        int cote = S.getCote();
+        int real = S.getNombreRealisation()*10;
+        if (real == 0) real = 1;
+        float rating = cote * 5 / real;
+        Rating.setRating(rating);
 
         int profil = 0;
-        if (position%3 == 0){
+        if (position%3 == 0)
             profil = R.drawable.avatar3;
-            confier.setVisibility(View.GONE);
-            S.setConfied(false);
-        }else{
+        else{
             profil = R.drawable.avatar2;
-            S.setConfied(true);
-            confier.setVisibility(View.GONE);
         }
         avatar.setImageResource(profil);
-
-        time.setText(Tool.formatingDate(S.getDatePublication()));
 
         final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +97,11 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                 details(S, finalProfil);
             }
         });
-
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context, v);
-                popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                popupMenu.getMenu().add("Appeller "+S.getPhoneJobeur()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return false;
@@ -120,40 +120,37 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         return convertView;
     }
 
-    private void details(final Annonce S, int profil){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details,null);
+
+    private void details(final Service S, int profil){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details,null);
+        TextView S_categorie = convertView.findViewById(R.id.nom);
+        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
+        TextView S_prix = convertView.findViewById(R.id.S_prix);
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
-        TextView description = convertView.findViewById(R.id.description);
-        TextView nom_user = convertView.findViewById(R.id.nom_user);
+        TextView like = convertView.findViewById(R.id.like);
+        TextView realisation = convertView.findViewById(R.id.realisation);
         TextView number = convertView.findViewById(R.id.number);
-        TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView postullants = convertView.findViewById(R.id.postullants);
-        TextView time = convertView.findViewById(R.id.time);
-        TextView categore = convertView.findViewById(R.id.categore);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
+        RatingBar Rating = convertView.findViewById(R.id.MyRating);
+        ImageView avatar = convertView.findViewById(R.id.avatar);
 
-        postullants.setVisibility(View.GONE);
-
-        if (S.isConfied == true){
-            avatar.setImageResource(profil);
-            nom_user.setText(S.getNomsUser());
-            number.setText(S.getPhoneUser());
-        }else{
-            //avatar.setImageResource(profil);
-            nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
-            number.setText("");
-        }
-        description.setText(S.getDescription());
+        S_categorie.setText(S.getNomsJobeur());
+        number.setText(S.getPhoneJobeur());
+        S_descriptions.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
-        categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
-        time.setText(Tool.formatingDate(S.getDatePublication()));
+        realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
+        avatar.setImageResource(profil);
+        int cote = S.getCote();
+        int real = S.getNombreRealisation()*10;
+        if (real == 0) real = 1;
+        float rating = cote * 5 / real;
+        Rating.setRating(rating);
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context, v);
-                popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                popupMenu.getMenu().add("Appeller "+S.getPhoneJobeur()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return false;
@@ -169,10 +166,11 @@ public class Annonces_Base_Adapter extends BaseAdapter {
             }
         });
 
+
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
-                .setPositiveButton("Postuler", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Solliciter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -186,6 +184,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                 });
         final AlertDialog alert = a.create();
         alert.show();
+
 
         share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,9 +200,16 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                         .setAction("Action", null).show();
             }
         });
-
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "La fonctionnalité est prévue pour une versions ulterieure", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
     }
+
 
 
 }

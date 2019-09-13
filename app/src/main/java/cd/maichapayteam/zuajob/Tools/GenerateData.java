@@ -16,7 +16,7 @@ public class GenerateData {
         user.myProfil = true;
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         userDAO.ajouter(user);
-        RemoteDataSync.getRandomUser(100);
+        RemoteDataSync.getRandomUser(20);
         return userDAO.ajouter(user);
     }
 

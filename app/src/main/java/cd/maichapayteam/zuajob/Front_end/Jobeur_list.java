@@ -10,10 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import cd.maichapayteam.zuajob.Adaptors.Jobeur_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 
 public class Jobeur_list extends AppCompatActivity {
 
@@ -22,8 +28,19 @@ public class Jobeur_list extends AppCompatActivity {
 
     private void Init_Components(){
         list = findViewById(R.id.list);
-        list.setAdapter(new Jobeur_Base_Adapter(context));
+        Load_Jobeur();
     }
+
+    void Load_Jobeur(){
+        List<User> DATA = GenerateData.listJobeurs(0);
+        if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        else {
+            //Toast.makeText(context, "Succes", Toast.LENGTH_SHORT).show();
+            list.setAdapter(new Jobeur_Base_Adapter(context, DATA));
+        }
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

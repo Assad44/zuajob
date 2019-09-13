@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
@@ -111,9 +113,26 @@ public class Identity_screen extends AppCompatActivity {
                 Tool.setUserPreferences(context,"statut", "done");
                 Tool.setUserPreferences(context,"Firstuse","non");
 
-                Intent i = new Intent(context, Home.class);
-                startActivity(i);
-                finish();
+                User u = new User();
+                u.setNom(Tool.getUserPreferences(context,"nom"));
+                u.setNom(Tool.getUserPreferences(context,"prenom"));
+                u.setNom(Tool.getUserPreferences(context,"birthday"));
+                u.setNom(Tool.getUserPreferences(context,"sexe"));
+                u.setNom(Tool.getUserPreferences(context,"passe"));
+                u.setNom(Tool.getUserPreferences(context,"type"));
+                //u.setsNom(Tool.getUserPreferences(context,"statut"));
+
+                u = GenerateData.createUser(u);
+                if (null != u){
+                    GeneralClass.Currentuser = u;
+                    Toast.makeText(context, "Succefully done", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, index_screen.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                    Toast.makeText(context, "Falled", Toast.LENGTH_SHORT).show();
+
 
             }
         });

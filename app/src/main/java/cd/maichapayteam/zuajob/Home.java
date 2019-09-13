@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -38,8 +39,10 @@ import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Front_end.Jobeur_list;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_Sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_postulances;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
@@ -316,8 +319,8 @@ public class Home extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            exit_alert();
-            /*if (exit == 0){
+            //exit_alert();
+            if (exit == 0){
                 Toast.makeText(context, "Appuyer encore pour quitter", Toast.LENGTH_SHORT).show();
                 exit = 1;
             }else finish();
@@ -327,7 +330,7 @@ public class Home extends AppCompatActivity
                 public void run() {
                     exit = 0;
                 }
-            }, 2000);*/
+            }, 2000);
         }
     }
 
@@ -422,9 +425,15 @@ public class Home extends AppCompatActivity
             startActivity(i);
             finish();
         }else if (id == R.id.nav_service_soliicioation) {
-
+            Intent i = new Intent(context, Mes_services_sollicites.class);
+            startActivity(i);
+            finish();
         } else if (id == R.id.nav_soliicioation) {
             Intent i = new Intent(context, Mes_Sollicitations.class);
+            startActivity(i);
+            finish();
+        } else if (id == R.id.nav_postullance) {
+            Intent i = new Intent(context, Mes_postulances.class);
             startActivity(i);
             finish();
         } else if (id == R.id.nav_discuusion) {

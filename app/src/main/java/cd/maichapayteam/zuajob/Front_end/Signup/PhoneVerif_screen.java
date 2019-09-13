@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
@@ -24,7 +25,7 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneVerif_screen extends AppCompatActivity {
 
-    ProgressDialog progressDialog;
+    //ProgressDialog progressDialog;
 
     Context context = this;
     ImageView btn_back_arrow;
@@ -88,17 +89,16 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 codeCountry = contryCode.getSelectedCountryCodeWithPlus();
                 countryName = contryCode.getSelectedCountryName();
 
-                Tool.setUserPreferences(context,"phone",numero);
+                /*Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);
                 Tool.setUserPreferences(context,"CountryName",countryName);
                 Intent i = new Intent(context, PhoneConfirm_screen.class);
                 startActivity(i);
                 RemoteDataSync.sendSMS(codeCountry+numero);
-                finish();
+                finish();*/
 
-/*
                 CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
-                checkingNumberAsync.execute();*/
+                checkingNumberAsync.execute();
 
             }
         });
@@ -116,24 +116,24 @@ public class PhoneVerif_screen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
-            progressDialog = new ProgressDialog(PhoneVerif_screen.this);
+            /*progressDialog = new ProgressDialog(PhoneVerif_screen.this);
             progressDialog.setCancelable(false);
             progressDialog.setTitle("Vérification du numéro");
-            progressDialog.show();
+            progressDialog.show();*/
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            progressDialog.setMessage("Vérification de votre numéro de téléphone en cours...");
+            //progressDialog.setMessage("Vérification de votre numéro de téléphone en cours...");
             //return RemoteDataSync.checkNumero(codeCountry+numero);
-            return ManageLocalData.checkNumero(numero);
+            return GenerateData.checkNumero(numero);
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //TODO : dismiss a load dialog here
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
             if(!aBoolean) {
                 Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);

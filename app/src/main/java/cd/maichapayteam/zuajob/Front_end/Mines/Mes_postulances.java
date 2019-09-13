@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -13,14 +11,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Mes_Annonces_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Postullances_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
-public class Mes_annonces extends AppCompatActivity {
+public class Mes_postulances extends AppCompatActivity {
 
     Context context = this;
     GridView list;
@@ -52,16 +50,16 @@ public class Mes_annonces extends AppCompatActivity {
 
         if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
+            list.setAdapter(new Postullances_Base_Adapter(context, ANNOCE,"mine"));
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mes_annonces);
+        setContentView(R.layout.activity_mes_postulances);
 
-        getSupportActionBar().setTitle("Mes annonces");
+        getSupportActionBar().setTitle("Mes postullances");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
@@ -71,7 +69,6 @@ public class Mes_annonces extends AppCompatActivity {
         // Todo ; launching methods
         Load_Annonce();
     }
-
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -99,7 +96,7 @@ public class Mes_annonces extends AppCompatActivity {
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
+                    list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,"mine"));
                     return true;
                 }
 
@@ -111,7 +108,7 @@ public class Mes_annonces extends AppCompatActivity {
                         SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Mes_Annonces_Base_Adapter(context, SearchA,"mine"));
+                list.setAdapter(new Annonces_Base_Adapter(context, SearchA,"mine"));
                 return true;
             }
         });
@@ -123,31 +120,6 @@ public class Mes_annonces extends AppCompatActivity {
         Intent i = new Intent(context, Home.class);
         startActivity(i);
         finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add) {
-            Intent i = new Intent(context, Publication_blank.class);
-            i.putExtra("from", "servicesList");
-            startActivity(i);
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

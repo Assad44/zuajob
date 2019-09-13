@@ -6,6 +6,8 @@ import android.support.design.widget.AppBarLayout;
 
 import com.activeandroid.ActiveAndroid;
 
+import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 
 public class Main extends Application {
@@ -18,6 +20,8 @@ public class Main extends Application {
     public void onCreate() {
         super.onCreate();
         GeneralClass.applicationContext = this;
+        User u = new UserDAO(this).myProfil();
+        if (null != u) GeneralClass.Currentuser = u;
         //ActiveAndroid.initialize(this);
     }
 

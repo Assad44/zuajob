@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +25,11 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Annonces_Base_Adapter extends BaseAdapter {
+public class Mes_Annonces_Base_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Annonce> DATA;
 
-    public Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA, String mode) {
+    public Mes_Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA, String mode) {
         this.context = context;
         this.DATA = DATA;
     }
@@ -66,6 +67,9 @@ public class Annonces_Base_Adapter extends BaseAdapter {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
+        header.setVisibility(View.GONE);
+        categorie.setTextSize(17);
+
         final Annonce S = DATA.get(position);
         // todo : Affects values to the componants
         nom_user.setText(S.getNomsUser());
@@ -78,12 +82,16 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         int profil = 0;
         if (position%3 == 0){
             profil = R.drawable.avatar3;
-            confier.setVisibility(View.GONE);
-            S.setConfied(false);
+            confier.setText("Tache déjà confiée");
+            confier.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+            confier.setVisibility(View.VISIBLE);
+            S.setConfied(true);
         }else{
             profil = R.drawable.avatar2;
-            S.setConfied(true);
-            confier.setVisibility(View.GONE);
+            confier.setText("Tache non confiée");
+            confier.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            confier.setVisibility(View.VISIBLE);
+            S.setConfied(false);
         }
         avatar.setImageResource(profil);
 
@@ -128,12 +136,11 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         TextView nom_user = convertView.findViewById(R.id.nom_user);
         TextView number = convertView.findViewById(R.id.number);
         TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView postullants = convertView.findViewById(R.id.postullants);
         TextView time = convertView.findViewById(R.id.time);
+        TextView postullants = convertView.findViewById(R.id.postullants);
         TextView categore = convertView.findViewById(R.id.categore);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
-        postullants.setVisibility(View.GONE);
 
         if (S.isConfied == true){
             avatar.setImageResource(profil);
@@ -144,6 +151,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
             nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
             number.setText("");
         }
+
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
@@ -168,6 +176,14 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                 popupMenu.show();
             }
         });
+
+        postullants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Postulant_list();
+            }
+        });
+
 
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
@@ -203,6 +219,24 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         });
 
 
+    }
+
+
+    private void Postulant_list(){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.model_postulances,null);
+        ListView list = convertView.findViewById(R.id.list);
+        list.setAdapter(new Test_Base_Adapter(context, R.layout.view_postullants));
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView)
+                .setCancelable(true)
+                .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = a.create();
+        alert.show();
     }
 
 

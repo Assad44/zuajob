@@ -87,13 +87,13 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
                 // verify the code
                 code = PhoneCodeNumber.getText().toString();
 
-                Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
+                /*Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
                 // goto next activity
                 Intent i = new Intent(context, Identity_screen.class);
                 startActivity(i);
-                finish();
-                /*CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync(PhoneCodeNumber.getText().toString());
-                checkingCodeAsync.execute();*/
+                finish();*/
+                CheckingCodeAsync checkingCodeAsync = new CheckingCodeAsync(PhoneCodeNumber.getText().toString());
+                checkingCodeAsync.execute();
 
             }
         });
