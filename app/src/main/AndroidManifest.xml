@@ -18,7 +18,7 @@
         <activity android:name=".Front_end.Blanks.Publication_blank" />
         <activity android:name=".Front_end.Jobeur_list" />
         <activity android:name=".Front_end.Publications_view" />
-        <activity android:name=".Front_end.Login" />
+        <activity android:name=".Front_end.Signup.Login" />
         <activity android:name=".Front_end.Categorie_view" />
         <activity
             android:name=".Front_end.Details.Details_publication"

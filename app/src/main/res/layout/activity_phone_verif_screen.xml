@@ -49,9 +49,9 @@
 
                 <com.hbb20.CountryCodePicker
                     android:gravity="center"
-                    app:contentColor="@color/white"
+                    app:ccp_contentColor="@color/white"
                     android:id="@+id/contryCode"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:layout_margin="10dp"

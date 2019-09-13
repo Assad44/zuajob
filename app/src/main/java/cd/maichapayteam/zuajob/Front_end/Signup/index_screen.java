@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.Home;
-import cd.maichapayteam.zuajob.Front_end.Login;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;
 

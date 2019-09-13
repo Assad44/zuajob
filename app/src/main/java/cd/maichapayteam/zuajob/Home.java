@@ -69,7 +69,7 @@ public class Home extends AppCompatActivity
     //HorizontalListView hlistview;
 
     private void Init_Components(){
-        //myProfile = User.myProfile();
+        //myProfile = User.myProfile();µµ*
 
         //TODO modifier le screen par rapport au profil de l'utilisateur
 
@@ -168,6 +168,13 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Init_Components();
         setSupportActionBar(toolbar);
+
+        if (Tool.User_Preferences(context).getString("statut", "null").equals("null")){
+            // Todo : Launche Home activity
+            Intent i = new Intent(context, index_screen.class);
+            startActivity(i);
+            finish();
+        }
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
