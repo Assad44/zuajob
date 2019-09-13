@@ -197,6 +197,23 @@ public class UserDAO extends DAOBase {
         }
     }
 
+    public User myProfil(){
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + MY_PROFIL + " = 1", null);
+            User object = null;
+            while (c.moveToNext()) {
+                long _id = c.getLong(0);
+                return find(_id);
+            }
+            c.close();
+            close();
+            return object;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public User findByPhoneNumer(String numero) {
         User user = null;
         try{
