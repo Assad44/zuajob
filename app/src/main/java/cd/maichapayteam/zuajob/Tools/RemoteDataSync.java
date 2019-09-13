@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
@@ -29,10 +30,12 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Comment;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
+import cd.maichapayteam.zuajob.Models.Object.RandomUser;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Models.Object.User2;
 
 public class RemoteDataSync {
 
@@ -109,7 +112,7 @@ public class RemoteDataSync {
         return true;
     }
 
-    public static void uploadImageAsync(File image, final LoadImageListener loadImageListener) {
+    public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
         String url = BASE_URL + "uploadimage?";
         String TAG = "uploadimage";
 
@@ -123,7 +126,7 @@ public class RemoteDataSync {
                     .setUploadProgressListener(new UploadProgressListener() {
                         @Override
                         public void onProgress(long bytesUploaded, long totalBytes) {
-                            if(loadImageListener!=null) loadImageListener.OnProgress(bytesUploaded, totalBytes);
+                            if(uploadImageListener !=null) uploadImageListener.OnProgress(bytesUploaded, totalBytes);
                         }
                     })
                     .getAsJSONObject(new JSONObjectRequestListener() {
@@ -141,11 +144,11 @@ public class RemoteDataSync {
                             }catch (Exception ex) {
 
                             }
-                            if(loadImageListener!=null) loadImageListener.OnResult(id, url);
+                            if(uploadImageListener !=null) uploadImageListener.OnResult(id, url);
                         }
                         @Override
                         public void onError(ANError error) {
-                            if(loadImageListener!=null) loadImageListener.OnError(error.getMessage());
+                            if(uploadImageListener !=null) uploadImageListener.OnError(error.getMessage());
                         }
                     });
 
@@ -155,7 +158,7 @@ public class RemoteDataSync {
 
     }
 
-    public static String uploadImage(File image, final LoadImageListener loadImageListener) {
+    public static String uploadImage(File image, final UploadImageListener uploadImageListener) {
         String url = BASE_URL + "uploadimage?";
 
         try{
@@ -167,7 +170,7 @@ public class RemoteDataSync {
                     .setUploadProgressListener(new UploadProgressListener() {
                         @Override
                         public void onProgress(long bytesUploaded, long totalBytes) {
-                            if(loadImageListener!=null) loadImageListener.OnProgress(bytesUploaded, totalBytes);
+                            if(uploadImageListener !=null) uploadImageListener.OnProgress(bytesUploaded, totalBytes);
                         }
                     });
 
@@ -869,7 +872,7 @@ public class RemoteDataSync {
     }
 
     /**
-     * Les annonces auxquels moi j'ai sollicité
+     * Les sollicitaations auxquels moi j'ai sollicité
      */
     public static List<Sollicitation> getMesSollicitations () {
         String url = BASE_URL2 + "massollicitation/";
@@ -1722,47 +1725,50 @@ public class RemoteDataSync {
 
     **/
 
-    public static List<User> getRandomUser () {
+    public static List<User> getRandomUser (int nombre) {
         //String url = "https://randomuser.me/api/?results=100";
-//
-        //List<User> userList = new ArrayList<>();
-//
-        //ANRequest request = AndroidNetworking.get(url)
-        //        .build();
-//
-        //try{
-        //    ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
-        //    if (response.isSuccess()) {
-        //        Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
-        //        int i = 1;
-        //        for (User2 user2 : response.getResult().results) {
-        //            User user = new User();
-        //            user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-        //            user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-        //            user.remoteId = i;
-        //            user.urlPhoto = user2.picture.thumbnail;
-        //            user.type = new Random().nextInt(2);
-        //            user.phone = 890000000 + new Random().nextInt(899999999 - 890000000);
-        //            user.codePays = "+243";
-        //            user.pays = "Congo DR";
-        //            user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
-        //            user.email = user2.email;
-        //            user.sexe = "M";
-        //            if(user2.gender.equals("female")) user.sexe = "F";
-        //            user.save();
-        //            userList.add(user);
-        //            Log.e("RandomUser", user2.name.first + " " + user2.name.last);
-        //        }
-        //    } else {
-        //        ANError error = response.getError();
-        //        Log.e("RandomUser", error.getMessage());
-        //    }
-        //} catch (Exception ex) {
-        //    Log.e("RandomUser", ex.getMessage());
-        //}
-//
-        //return userList;
-        return new ArrayList<>();
+        String url = "https://randomuser.me/api/";
+
+        List<User> userList = new ArrayList<>();
+
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("results", String.valueOf(nombre))
+                .build();
+
+        try{
+            ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
+            UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
+            if (response.isSuccess()) {
+                Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
+                int i = 1;
+                for (User2 user2 : response.getResult().results) {
+                    User user = new User();
+                    user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+                    user.nom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+                    user.id = i;
+                    user.urlPhoto = user2.picture.thumbnail;
+                    user.type = new Random().nextInt(2);
+                    user.phone = String.valueOf(890000000 + new Random().nextInt(899999999 - 890000000));
+                    user.codePays = "+243";
+                    user.pays = "Congo DR";
+                    user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
+                    user.email = user2.email;
+                    user.sexe = "M";
+                    if(user2.gender.equals("female")) user.sexe = "F";
+
+                    userList.add(user);
+                    Log.e("RandomUser", user2.name.first + " " + user2.name.last);
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("RandomUser", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("RandomUser", ex.getMessage());
+        }
+
+        return userList;
+        //return new ArrayList<>();
     }
 
     public static String getRandomParagraphe (int nombrePhrase) {
@@ -1798,7 +1804,7 @@ public class RemoteDataSync {
 
      */
 
-    public interface LoadImageListener {
+    public interface UploadImageListener {
         void OnResult(long id, String url);
         void OnProgress(long bytesUploaded, long totalBytes);
         void OnError(String message);

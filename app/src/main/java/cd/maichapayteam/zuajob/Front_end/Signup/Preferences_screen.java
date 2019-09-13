@@ -125,7 +125,7 @@ public class Preferences_screen extends AppCompatActivity {
         finish();
     }
 
-    class CreationAccountAsync extends AsyncTask<String, String, User> implements RemoteDataSync.LoadImageListener {
+    class CreationAccountAsync extends AsyncTask<String, String, User> implements RemoteDataSync.UploadImageListener {
 
         @Override
         protected void onPreExecute() {
