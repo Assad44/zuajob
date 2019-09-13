@@ -4,18 +4,24 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.hbb20.CountryCodePicker;
+
+import java.util.concurrent.TimeUnit;
 
 import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
@@ -26,12 +32,12 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class PhoneVerif_screen extends AppCompatActivity {
 
     //ProgressDialog progressDialog;
-
     Context context = this;
     ImageView btn_back_arrow;
     CountryCodePicker contryCode;
     EditText PhoneNumber;
     TextView btn_next;
+    ProgressBar progressbar;
 
     String numero = "";
     String codeCountry = "" ;
@@ -42,6 +48,9 @@ public class PhoneVerif_screen extends AppCompatActivity {
         btn_next = findViewById(R.id.btn_next);
         PhoneNumber = findViewById(R.id.PhoneNumber);
         contryCode = findViewById(R.id.contryCode);
+        progressbar = findViewById(R.id.progressbar);
+
+        progressbar.setVisibility(View.GONE);
         contryCode.setCountryForNameCode("CD");
     }
 
@@ -56,7 +65,6 @@ public class PhoneVerif_screen extends AppCompatActivity {
         // Initialisation des composants
         Init_Components();
     }
-
 
     @Override
     protected void onStart() {
@@ -89,6 +97,9 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 codeCountry = contryCode.getSelectedCountryCodeWithPlus();
                 countryName = contryCode.getSelectedCountryName();
 
+                /*String phone  = codeCountry+numero;
+                Auth(phone);*/
+
                 /*Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);
                 Tool.setUserPreferences(context,"CountryName",countryName);
@@ -96,7 +107,6 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 startActivity(i);
                 RemoteDataSync.sendSMS(codeCountry+numero);
                 finish();*/
-
                 CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
                 checkingNumberAsync.execute();
 
@@ -120,6 +130,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
             progressDialog.setCancelable(false);
             progressDialog.setTitle("Vérification du numéro");
             progressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -133,7 +144,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //TODO : dismiss a load dialog here
-            //progressDialog.dismiss();
+            progressbar.setVisibility(View.GONE);
             if(!aBoolean) {
                 Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);

@@ -59,7 +59,6 @@ public class index_screen extends AppCompatActivity {
         // Todo ; Initialisation des composants
         Init_Components();
 
-
     }
 
 

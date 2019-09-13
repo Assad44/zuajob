@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -224,7 +226,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
 
     private void Postulant_list(){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.model_postulances,null);
-        ListView list = convertView.findViewById(R.id.list);
+        GridView list = convertView.findViewById(R.id.list);
         list.setAdapter(new Test_Base_Adapter(context, R.layout.view_postullants));
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
@@ -237,7 +239,32 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
                 });
         final AlertDialog alert = a.create();
         alert.show();
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                details_jobeur();
+
+            }
+        });
     }
+
+    private void details_jobeur(){
+        View view  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details2,null);
+
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(view)
+                .setCancelable(false)
+                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = a.create();
+        alert.show();
+    }
+
 
 
 }
