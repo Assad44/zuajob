@@ -86,12 +86,4 @@ public class Categorie {
         this.userPreference = userPreference;
     }
 
-    //public static Categorie find(int id) {
-    //    return new Select().from(Categorie.class).where("id = ?", id).executeSingle();
-    //}
-//
-    //public static List<Categorie> listCategorie() {
-    //    return new Select().from(Categorie.class).execute();
-    //}
-
 }

@@ -2,7 +2,11 @@ package cd.maichapayteam.zuajob.Tools;
 
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 
 public class GenerateData {
@@ -47,6 +51,28 @@ public class GenerateData {
     public static List<User> listJobeurs(int min, String keyword) {
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         return userDAO.listJobeurs(min, keyword);
+    }
+
+    public static List<Categorie> listCategorie() {
+        CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
+        List<Categorie> list = categorieDAO.getAll();
+        if(list.size()==0) CategorieDAO.createCategories();
+        list = categorieDAO.getAll();
+        return list;
+    }
+
+    public static List<SousCategorie> listSousCategorie(Categorie categorie) {
+        SousCategorieDAO sousCategorieDAO = SousCategorieDAO.getInstance(GeneralClass.applicationContext);
+        List<SousCategorie> list = sousCategorieDAO.getAll(categorie);
+        if(list.size()==0) SousCategorie.createSousCategories();
+        list = sousCategorieDAO.getAll();
+        return list;
+    }
+
+    public static List<Categorie> listUserPreferenceCategorie() {
+        CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
+        List<Categorie> list = categorieDAO.getAllUserPreference();
+        return list;
     }
 
 

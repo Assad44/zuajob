@@ -9,6 +9,7 @@ import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 
 /**
  * Created by ElikyaLK on 29/12/2018.
@@ -168,4 +169,95 @@ public class CategorieDAO extends DAOBase {
         return rep;
     }
 
+    public static void createCategories() {
+        CategorieDAO categorieDAO = new CategorieDAO(GeneralClass.applicationContext);
+
+        int id = 1;
+        Categorie categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Bricolage";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Jardinage";
+        categorie.description = "Description catégorie";
+        categorie.setUserPreference(true);
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Déménagement";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Ménage";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Garde enfant";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Annimaux";
+        categorie.description = "Description catégorie";
+        categorie.setUserPreference(true);
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Informatique";
+        categorie.description = "Description catégorie";
+        categorie.setUserPreference(true);
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Consciergérie";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Sport";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Rencontre";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Auto";
+        categorie.description = "Description catégorie";
+        categorieDAO.ajouter(categorie);
+
+        id++;
+        categorie = new Categorie();
+        categorie.id = id;
+        categorie.designation = "Coursieux";
+        categorie.description = "Description catégorie";
+        categorie.setUserPreference(true);
+        categorieDAO.ajouter(categorie);
+    }
 }

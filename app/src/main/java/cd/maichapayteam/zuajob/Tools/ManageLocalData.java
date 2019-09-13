@@ -148,14 +148,14 @@ public class ManageLocalData {
     public static List<Categorie> listCategorie() {
         CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
         List<Categorie> list = categorieDAO.getAll();
-        if(list.size()==0) RemoteDataSync.getListCategorie();
+        if(list.size()==0) list = RemoteDataSync.getListCategorie();
         return list;
     }
 
     public static List<SousCategorie> listSousCategorie(Categorie categorie) {
         SousCategorieDAO sousCategorieDAO = SousCategorieDAO.getInstance(GeneralClass.applicationContext);
         List<SousCategorie> list = sousCategorieDAO.getAll(categorie);
-        if(list.size()==0) RemoteDataSync.getListSousCategorie();
+        if(list.size()==0) list = RemoteDataSync.getListSousCategorie();
         return list;
     }
 
