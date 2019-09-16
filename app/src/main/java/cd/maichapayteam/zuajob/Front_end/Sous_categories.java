@@ -2,20 +2,28 @@ package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Sous_categories extends AppCompatActivity {
@@ -23,19 +31,54 @@ public class Sous_categories extends AppCompatActivity {
     Context context = this;
     ListView list;
     Spinner list_sous_cat;
+    SwipeRefreshLayout swiper;
     ArrayList<String> SCAT = new ArrayList<>();
 
     ArrayList<Service> SERVICES = new ArrayList<>();
+    List<SousCategorie> LSC = new ArrayList<>();
+    ArrayList<SousCategorie> SC = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         list_sous_cat = findViewById(R.id.list_sous_cat);
+        swiper = findViewById(R.id.swiper);
+
+
     }
 
     void Load_SCAT(){
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             SCAT.add("Sous Categorie "+i+1);
+        }*/
+
+        Categorie sc = new Categorie();
+        sc.setId(Long.parseLong(getIntent().getExtras().getString("id")));
+
+        // TODO la tache asynchronne
+        new AsyncTask<String, Void, String>(){
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                swiper.setRefreshing(true);
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                return null;
+            }
+            @Override
+            protected void onPostExecute(String o) {
+                swiper.setRefreshing(false);
+
+            }
+        }.execute();
+        LSC = GenerateData.listSousCategorie(sc);
+
+        for (SousCategorie s : LSC ) {
+            SCAT.add(s.getDesignation());
+            Log.e("DDDDDDDDDDDDD___", s.getDesignation());
         }
+
         Tool.setEntries(context,list_sous_cat, SCAT);
     }
     void Load_SERVICE(){

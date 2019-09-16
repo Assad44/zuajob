@@ -50,14 +50,15 @@
                 <EditText
                     android:textColor="@color/white"
                     android:textColorHint="#8D8D8D"
-                    android:hint="Entrer le code"
+                    android:hint="@string/entrer_le_code"
                     android:id="@+id/PhoneCodeNumber"
                     android:inputType="number"
                     android:maxLength="9"
                     android:textSize="20dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 

@@ -122,7 +122,6 @@ public class Tool {
         spinner.setAdapter(adapter1);
     }
 
-
     //TODO : DATE & TIME
 
     /**
@@ -139,7 +138,6 @@ public class Tool {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         return dateFormat.format(aujourdhui);
     }
-
     /**
      * Méthode pour afficher le Date picker pour selectionner une datePublication
      * @param context
@@ -156,7 +154,6 @@ public class Tool {
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
         final String[] Date = {""};
-
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override

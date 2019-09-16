@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,11 +47,19 @@ public class Categorie_Base_Adapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.model_cat,null);
         TextView categorie = convertView.findViewById(R.id.categorie);
         TextView description = convertView.findViewById(R.id.description);
+        ImageView backImage = convertView.findViewById(R.id.backImage);
 
         Categorie C = DATAS.get(position);
         categorie.setText(C.getDesignation());
         description.setText(C.getDescription());
 
+
         return convertView;
     }
+
+
+    private void LoadI(){
+
+    }
+
 }

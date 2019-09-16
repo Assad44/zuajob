@@ -42,4 +42,7 @@ dependencies {
         transitive = true
     }
 
+
+    implementation 'com.koushikdutta.ion:ion:2.2.1'
+
 }

@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:background="#BA000000"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:fontFamily="@font/alegreya_sans_thin"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/votre_identite"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -72,7 +72,8 @@
                         android:textColorHint="#8D8D8D"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
                     android:layout_height="wrap_content"
@@ -122,12 +123,14 @@
                         android:enabled="false"
                         android:id="@+id/birthday"
                         android:padding="5dp"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:hint="@string/birthday"
                         android:textColor="@color/white"
                         android:textColorHint="#8D8D8D"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:autofillHints="" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -146,7 +149,7 @@
                     <EditText
                         android:textStyle="bold"
                         app:fontFamily="@font/alegreya_sans_thin"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:paddingLeft="15dp"
                         android:id="@+id/passe"
                         android:layout_width="match_parent"
@@ -171,14 +174,14 @@
                     <EditText
                         android:textStyle="bold"
                         app:fontFamily="@font/alegreya_sans_thin"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:paddingLeft="15dp"
                         android:id="@+id/Cpasse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="10dp"
                         android:fontFamily="sans-serif-condensed"
-                        android:hint="Confirmer le mot de passe"
+                        android:hint="@string/confirme_code"
                         android:inputType="textPassword"
                         android:maxLength="25"
                         android:singleLine="true"
@@ -193,7 +196,7 @@
 
             <TextView
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/btn_next"
                 android:textStyle="bold"
                 android:fontFamily="@font/alegreya_sans_thin"
@@ -204,11 +207,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lancez_vous"
                 android:textColor="@color/white"
-                android:textSize="15dp" />
-
+                android:textSize="15sp" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

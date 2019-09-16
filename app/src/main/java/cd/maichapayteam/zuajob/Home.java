@@ -44,6 +44,7 @@ import cd.maichapayteam.zuajob.Front_end.Mines.Mes_postulances;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
+import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
@@ -393,18 +394,17 @@ public class Home extends AppCompatActivity
             return true;
         }
         if (id == R.id.share) {
-            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (id == R.id.action_settings) {
             Tool.SHARE(context,getResources().getString(R.string.Share_message));
             return true;
         }
-        if (id == R.id.nav_exit) {
-            Tool.userPreferences_Init(context);
-            Intent i = new Intent(context, index_screen.class);
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(context, Paramettres.class);
             startActivity(i);
             finish();
+            return true;
+        }
+        if (id == R.id.nav_exit) {
+            exit_alert();
             return true;
         }
 

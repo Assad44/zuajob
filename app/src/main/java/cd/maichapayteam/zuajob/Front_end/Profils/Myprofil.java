@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.io.FileInputStream;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
+import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
@@ -159,11 +160,13 @@ public class Myprofil extends AppCompatActivity {
             return true;
         }
         if (id == R.id.share) {
-            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            Tool.SHARE(context,getResources().getString(R.string.Share_message));
             return true;
         }
         if (id == R.id.action_settings) {
-            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(context, Paramettres.class);
+            startActivity(i);
+            finish();
             return true;
         }
         if (id == R.id.nav_exit) {
