@@ -32,6 +32,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
     String code = "";
     String numero = "";
 
+    long userId = -1;
+
     IncomingSms incomingSms;
 
 
@@ -148,7 +150,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         protected Boolean doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
             //return RemoteDataSync.confirmCode(numero, code);
-            return code.equals("123456");
+            return RemoteDataSync.confirmCode(userId, code);
         }
 
         @Override
@@ -174,11 +176,11 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         @Override
         protected void onPostExecute(long[] rep) {
-            progressDialog.dismiss();
-            //TODO : dismiss a load dialog here
-            if(rep[0]!=-1) {
+            userId = rep[0];
+
+            if(userId!=-1) {
                 incomingSms =
-                        new IncomingSms(PhoneConfirm_screen.this, PhoneConfirm_screen.this, rep[0]);
+                        new IncomingSms(PhoneConfirm_screen.this, PhoneConfirm_screen.this, userId);
                 /*
                 * TODO code à supprimer... (affichage de code)
                  */
@@ -194,7 +196,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
                 alertDialog.show();
             } else {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(PhoneConfirm_screen.this);
-                alertDialog.setTitle("Erreur de connexion");
+                alertDialog.setTitle("Erreur");
                 alertDialog.setMessage("Une erreur est survenue lors de l'envoi d'un message à votre numéro.\nVeuillez réessayer SVP.");
                 alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override

@@ -48,44 +48,31 @@ public class RemoteDataSync {
     /**
     *   GET METHODS
      */
-
-    public static boolean confirmCode(long id, String code) {
-        String url = BASE_URL + "code/" + id + "/" + code;
-
-        ANRequest request = AndroidNetworking.post(url)
-                .build();
-
-        try{
-            ANResponse<JSONObject> response = request.executeForJSONObject();
-            if (response.isSuccess()) {
-                if(response.getResult().getBoolean("success")) return true;
-            }
-        } catch (Exception ex) {
-
-        }
-
-        return false;
-    }
-    //
+//
     public static boolean checkNumero(String numero) {
         numero = numero.replace("+", "00");
         String url = BASE_URL + "checknumero/" + numero;
         ANRequest request = AndroidNetworking.put(url)
                 .build();
         try{
-            ANResponse<String> response = request.executeForString();
-            Log.e("Users", response.getResult());
-
+            ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                if(response.getResult().equals("1")) return true;
+                //if(response.getResult().equals("1")) return true;
+                Log.e("Users", "checkNumero:result:" + response.getResult());
+                boolean rep = response.getResult().getBoolean("false");
+                return rep;
             } else {
-                Log.e("Users", response.toString());
+                if(response.getError()!=null) {
+                    Log.e("Users", "checkNumero:AN err:" + response.getError().getErrorDetail());
+                } else {
+                    Log.e("Users", "checkNumero: AN err is null");
+                }
             }
         } catch (Exception ex) {
-            Log.e("Users", ex.getMessage());
+            Log.e("Users", "checkNumero:" + ex.getMessage());
         }
 
-        return false;
+        return true;
     }
 
     public static long[] sendSMS(String numero) {
@@ -99,29 +86,66 @@ public class RemoteDataSync {
         try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
         try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
 
-        ANRequest request = AndroidNetworking.put(url)
+        ANRequest request = AndroidNetworking.post(url)
                 .addJSONObjectBody(jsonObject)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
-            Log.e("Users", "count: " + response.getResult().length());
+            if(response.getResult()==null) {
+                Log.e("Users", "sendSMS: response.getResult is null");
+            } else {
+                Log.e("Users", "sendSMS: " + response.getResult().length());
+            }
 
             if (response.isSuccess()) {
                 long id = response.getResult().getLong("id");
                 long pw = response.getResult().getLong("code");
                 rep[0] = id;
                 rep[1] = pw;
-                Log.e("Users", "response: " + id + "/" + pw);
+                Log.e("Users", "sendSMS:response: " + id + "/" + pw);
             } else {
                 if(response.getError()!=null) {
-                    Log.e("Users", "error with AN: " + response.getError().getErrorDetail());
+                    Log.e("Users", "sendSMS:error with AN: " + response.getError().getErrorDetail() + " _________ " +
+                            response.getError().getErrorDetail() + " _________ " + response.getError().getMessage() +
+                            " _________ " + response.getError().getErrorBody() +
+                            " _________ " + response.getError().getLocalizedMessage() +
+                            " _________ " + response.getError().getErrorCode());
+                } else {
+                    Log.e("Users", "sendSMS:error with AN: error is null");
                 }
             }
         } catch (Exception ex) {
-            Log.e("Users", "error general: " + ex.getMessage());
+            Log.e("Users", "sendSMS:error general: " + ex.getMessage());
         }
 
         return rep;
+    }
+
+    public static boolean confirmCode(long id, String code) {
+        String url = BASE_URL + "code/" + id + "/" + code;
+        Log.e("Users", "confirmCode:url:" + url);
+
+        ANRequest request = AndroidNetworking.put(url)
+                .build();
+
+        try{
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                boolean rep = response.getResult().getBoolean("success");
+                Log.e("Users", "confirmCode:ok:" + rep);
+                return rep;
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("Users", "confirmCode:response.getError" + response.getError().getErrorDetail());
+                } else {
+                    Log.e("Users", "confirmCode:response.getError:error is null");
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Users", "confirmCode:" + ex.getMessage());
+        }
+
+        return false;
     }
 
     public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
