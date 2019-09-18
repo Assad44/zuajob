@@ -10,7 +10,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,28 +38,27 @@ import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Models.Object.User2;
+import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
-    private static String BASE_URL = "http://192.168.43.60/doxa_event_server/v1/";
+    private static String BASE_URL = "http://157.245.44.245:8000/api/";
     private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
 
     /**
     *   GET METHODS
      */
 
-    public static boolean confirmCode(String numero, String code) {
-        String url = BASE_URL + "confirmenumero";
+    public static boolean confirmCode(long id, String code) {
+        String url = BASE_URL + "code/" + id + "/" + code;
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("numero", numero)
-                .addQueryParameter("code", code)
+        ANRequest request = AndroidNetworking.post(url)
                 .build();
 
         try{
-            ANResponse<String> response = request.executeForString();
+            ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                if(response.getResult().equals("1")) return true;
+                if(response.getResult().getBoolean("success")) return true;
             }
         } catch (Exception ex) {
 
@@ -65,51 +66,62 @@ public class RemoteDataSync {
 
         return false;
     }
-
+    //
     public static boolean checkNumero(String numero) {
-        String url = BASE_URL + "checknumero";
-
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("phone", numero)
+        numero = numero.replace("+", "00");
+        String url = BASE_URL + "checknumero/" + numero;
+        ANRequest request = AndroidNetworking.put(url)
                 .build();
-
         try{
             ANResponse<String> response = request.executeForString();
+            Log.e("Users", response.getResult());
+
             if (response.isSuccess()) {
                 if(response.getResult().equals("1")) return true;
+            } else {
+                Log.e("Users", response.toString());
             }
         } catch (Exception ex) {
-
+            Log.e("Users", ex.getMessage());
         }
 
         return false;
     }
 
-    public static boolean sendSMS(String numero) {
-        String url = BASE_URL + "sendsms";
+    public static long[] sendSMS(String numero) {
+        long[] rep = new long[]{-1, -1};
+        String url = BASE_URL + "users/";
 
+        numero = numero.replace("+", "00");
+
+        JSONObject  jsonObject = new JSONObject ();
+        try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
+        try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
+        try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
+
+        ANRequest request = AndroidNetworking.put(url)
+                .addJSONObjectBody(jsonObject)
+                .build();
         try{
-            AndroidNetworking.get(url)
-                    .addQueryParameter("numero", numero)
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .getAsString(new StringRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            //if (response.isSuccess()) {
-                            //    if(response.getResult().equals("1")) return true;
-                            //}
-                        }
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                        }
-                    });
-        } catch (Exception ex) {
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            Log.e("Users", "count: " + response.getResult().length());
 
+            if (response.isSuccess()) {
+                long id = response.getResult().getLong("id");
+                long pw = response.getResult().getLong("code");
+                rep[0] = id;
+                rep[1] = pw;
+                Log.e("Users", "response: " + id + "/" + pw);
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("Users", "error with AN: " + response.getError().getErrorDetail());
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Users", "error general: " + ex.getMessage());
         }
 
-        return true;
+        return rep;
     }
 
     public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {

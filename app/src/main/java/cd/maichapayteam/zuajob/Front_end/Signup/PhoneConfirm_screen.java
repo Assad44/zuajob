@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSms.ZuaJobMessageListener {
@@ -31,6 +32,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
     String code = "";
     String numero = "";
 
+    IncomingSms incomingSms;
+
 
     private void Init_Components(){
         btn_back_arrow = findViewById(R.id.btn_back_arrow);
@@ -42,11 +45,12 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
 
-        IncomingSms incomingSms = new IncomingSms(this, this, code+numero);
-
         String advices = "Nous avons envoyé un SMS à votre numéro : \n"+ numero + "\nContenant le code de confirmation\n" +
                 "Si la détection automatique ne fonctionne pas, saisissez manuellement le code réçu";
         advice.setText(advices);
+
+        SendSMSAsync sendSMSAsync = new SendSMSAsync();
+        sendSMSAsync.execute();
     }
 
     @Override
@@ -161,7 +165,55 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         }
     }
 
+    class SendSMSAsync extends AsyncTask<String, String, long[]> {
+
+        @Override
+        protected long[] doInBackground(String... strings) {
+            return RemoteDataSync.sendSMS(numero.replace(" ", ""));
+        }
+
+        @Override
+        protected void onPostExecute(long[] rep) {
+            progressDialog.dismiss();
+            //TODO : dismiss a load dialog here
+            if(rep[0]!=-1) {
+                incomingSms =
+                        new IncomingSms(PhoneConfirm_screen.this, PhoneConfirm_screen.this, rep[0]);
+                /*
+                * TODO code à supprimer... (affichage de code)
+                 */
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(PhoneConfirm_screen.this);
+                alertDialog.setTitle("Code de confirmation");
+                alertDialog.setMessage("Saisissez le code : " + rep[1]);
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+
+                    }
+                });
+                alertDialog.show();
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(PhoneConfirm_screen.this);
+                alertDialog.setTitle("Erreur de connexion");
+                alertDialog.setMessage("Une erreur est survenue lors de l'envoi d'un message à votre numéro.\nVeuillez réessayer SVP.");
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+
+                    }
+                });
+                alertDialog.show();
+            }
+            super.onPostExecute(rep);
+        }
+    }
+
     void passToNextActivity() {
+        try{
+            incomingSms.destroy();
+        } catch (Exception ex) {
+
+        }
         // saving in the preferences
         Tool.setUserPreferences(context,"phoneCode",PhoneCodeNumber.getText().toString());
         // goto next activity

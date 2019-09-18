@@ -23,25 +23,16 @@ public class IncomingSms extends BroadcastReceiver {
     Activity activity;
 
     private static int MY_PERMISSIONS_REQUEST = 6362;
-    private String numero = "";
+    private long id = -1;
 
-    public IncomingSms(Activity activity, ZuaJobMessageListener zuaJobMessageListener, String numero) {
+    public IncomingSms(Activity activity, ZuaJobMessageListener zuaJobMessageListener, long id) {
         super();
         this.activity = activity;
         mZuaJobMessageListener = zuaJobMessageListener;
-        this.numero = numero;
-        permission(activity);
+        this.id = id;
         IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
         filter.setPriority(1912331391);
         activity.registerReceiver(this, filter);
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    private void permission(Activity activity) {
-        if (activity.checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            String[] permissions = {Manifest.permission.BROADCAST_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS};
-            activity.requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
-        }
     }
 
     @Override
@@ -61,7 +52,7 @@ public class IncomingSms extends BroadcastReceiver {
                             if(tab.length==2) {
                                 String code = tab[1].trim();
                                 if(code.length()==4) {
-                                    ConfirmCodeRunnable confirmCodeRunnable = new ConfirmCodeRunnable(this.numero, code);
+                                    ConfirmCodeRunnable confirmCodeRunnable = new ConfirmCodeRunnable(this.id, code);
                                     confirmCodeRunnable.execute();
                                 }
                             }
@@ -78,17 +69,17 @@ public class IncomingSms extends BroadcastReceiver {
 
     private class ConfirmCodeRunnable extends AsyncTask<String, String, Boolean> {
 
-        String numero = "";
+        long id = -1;
         String code = "";
 
-        ConfirmCodeRunnable(String num, String cod) {
-            this.numero = num;
-            this.code = cod;
+        ConfirmCodeRunnable(long id, String code) {
+            this.id = id;
+            this.code = code;
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return RemoteDataSync.confirmCode(numero, code);
+            return RemoteDataSync.confirmCode(id, code);
         }
 
         @Override
