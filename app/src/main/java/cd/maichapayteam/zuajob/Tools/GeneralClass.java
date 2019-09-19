@@ -14,10 +14,7 @@ public class GeneralClass {
 
     public static Context applicationContext;
 
-    public static String userToken = "null";
     public static User Currentuser = null;
-
-
 
     public static String getMot() {
         String str = "";

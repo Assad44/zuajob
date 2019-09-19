@@ -138,7 +138,8 @@ public class PhoneVerif_screen extends AppCompatActivity {
         protected Boolean doInBackground(String... strings) {
             //progressDialog.setMessage("Vérification de votre numéro de téléphone en cours...");
             //return RemoteDataSync.checkNumero(codeCountry+numero);
-            return GenerateData.checkNumero(numero);
+            //return GenerateData.checkNumero(numero);
+            return ManageLocalData.checkNumero(codeCountry+numero);
         }
 
         @Override
@@ -151,7 +152,6 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 Tool.setUserPreferences(context,"CountryName",countryName);
                 Intent i = new Intent(context, PhoneConfirm_screen.class);
                 startActivity(i);
-                RemoteDataSync.sendSMS(codeCountry+numero);
                 finish();
             } else {
                 /*TODO : show a dialog "This phone number already exists. Do you want to connect?"

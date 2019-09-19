@@ -10,7 +10,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,80 +38,114 @@ import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Models.Object.User2;
+import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
-    private static String BASE_URL = "http://192.168.43.60/doxa_event_server/v1/";
+    private static String BASE_URL = "http://157.245.44.245:8000/api/";
     private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
 
     /**
     *   GET METHODS
      */
-
-    public static boolean confirmCode(String numero, String code) {
-        String url = BASE_URL + "confirmenumero";
-
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("numero", numero)
-                .addQueryParameter("code", code)
-                .build();
-
-        try{
-            ANResponse<String> response = request.executeForString();
-            if (response.isSuccess()) {
-                if(response.getResult().equals("1")) return true;
-            }
-        } catch (Exception ex) {
-
-        }
-
-        return false;
-    }
-
+//
     public static boolean checkNumero(String numero) {
-        String url = BASE_URL + "checknumero";
-
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("phone", numero)
+        numero = numero.replace("+", "00");
+        String url = BASE_URL + "checknumero/" + numero;
+        ANRequest request = AndroidNetworking.put(url)
                 .build();
-
         try{
-            ANResponse<String> response = request.executeForString();
+            ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                if(response.getResult().equals("1")) return true;
+                //if(response.getResult().equals("1")) return true;
+                Log.e("Users", "checkNumero:result:" + response.getResult());
+                boolean rep = response.getResult().getBoolean("false");
+                return rep;
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("Users", "checkNumero:AN err:" + response.getError().getErrorDetail());
+                } else {
+                    Log.e("Users", "checkNumero: AN err is null");
+                }
             }
         } catch (Exception ex) {
-
-        }
-
-        return false;
-    }
-
-    public static boolean sendSMS(String numero) {
-        String url = BASE_URL + "sendsms";
-
-        try{
-            AndroidNetworking.get(url)
-                    .addQueryParameter("numero", numero)
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .getAsString(new StringRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            //if (response.isSuccess()) {
-                            //    if(response.getResult().equals("1")) return true;
-                            //}
-                        }
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                        }
-                    });
-        } catch (Exception ex) {
-
+            Log.e("Users", "checkNumero:" + ex.getMessage());
         }
 
         return true;
+    }
+
+    public static long[] sendSMS(String numero) {
+        long[] rep = new long[]{-1, -1};
+        String url = BASE_URL + "users/";
+
+        numero = numero.replace("+", "00");
+
+        JSONObject  jsonObject = new JSONObject ();
+        try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
+        try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
+        try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
+
+        ANRequest request = AndroidNetworking.post(url)
+                .addJSONObjectBody(jsonObject)
+                .build();
+        try{
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if(response.getResult()==null) {
+                Log.e("Users", "sendSMS: response.getResult is null");
+            } else {
+                Log.e("Users", "sendSMS: " + response.getResult().length());
+            }
+
+            if (response.isSuccess()) {
+                long id = response.getResult().getLong("id");
+                long pw = response.getResult().getLong("code");
+                rep[0] = id;
+                rep[1] = pw;
+                Log.e("Users", "sendSMS:response: " + id + "/" + pw);
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("Users", "sendSMS:error with AN: " + response.getError().getErrorDetail() + " _________ " +
+                            response.getError().getErrorDetail() + " _________ " + response.getError().getMessage() +
+                            " _________ " + response.getError().getErrorBody() +
+                            " _________ " + response.getError().getLocalizedMessage() +
+                            " _________ " + response.getError().getErrorCode());
+                } else {
+                    Log.e("Users", "sendSMS:error with AN: error is null");
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Users", "sendSMS:error general: " + ex.getMessage());
+        }
+
+        return rep;
+    }
+
+    public static boolean confirmCode(long id, String code) {
+        String url = BASE_URL + "code/" + id + "/" + code;
+        Log.e("Users", "confirmCode:url:" + url);
+
+        ANRequest request = AndroidNetworking.put(url)
+                .build();
+
+        try{
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                boolean rep = response.getResult().getBoolean("success");
+                Log.e("Users", "confirmCode:ok:" + rep);
+                return rep;
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("Users", "confirmCode:response.getError" + response.getError().getErrorDetail());
+                } else {
+                    Log.e("Users", "confirmCode:response.getError:error is null");
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("Users", "confirmCode:" + ex.getMessage());
+        }
+
+        return false;
     }
 
     public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
@@ -231,11 +267,11 @@ public class RemoteDataSync {
 
         List<Categorie> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Categorie>> response = request.executeForObjectList(Categorie.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -449,12 +485,12 @@ public class RemoteDataSync {
 
         List<Annonce> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -479,13 +515,13 @@ public class RemoteDataSync {
 
         List<Annonce> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -510,13 +546,13 @@ public class RemoteDataSync {
 
         List<Annonce> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -541,11 +577,11 @@ public class RemoteDataSync {
 
         List<Annonce> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -570,11 +606,11 @@ public class RemoteDataSync {
 
         List<Service> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -599,13 +635,13 @@ public class RemoteDataSync {
 
         List<Service> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -630,12 +666,12 @@ public class RemoteDataSync {
 
         List<Service> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -660,13 +696,13 @@ public class RemoteDataSync {
 
         List<Service> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -691,13 +727,13 @@ public class RemoteDataSync {
 
         List<Service> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
-                .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("next", String.valueOf(next))
+                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -722,12 +758,12 @@ public class RemoteDataSync {
 
         List<Postuler> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -752,11 +788,11 @@ public class RemoteDataSync {
 
         List<Postuler> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -781,11 +817,11 @@ public class RemoteDataSync {
 
         List<Sollicitation> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -813,11 +849,11 @@ public class RemoteDataSync {
 
         List<Postuler> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -846,12 +882,12 @@ public class RemoteDataSync {
 
         List<Sollicitation> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("isService", String.valueOf(idService))
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addQueryParameter("idService", String.valueOf(idService))
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -879,11 +915,11 @@ public class RemoteDataSync {
 
         List<Sollicitation> list = new ArrayList<>();
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
             if (response.isSuccess()) {
                 list = response.getResult();
@@ -990,14 +1026,13 @@ public class RemoteDataSync {
     public static Postuler postuler (Postuler postuler) {
         String url = BASE_URL + "postuler";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(postuler) // posting java object
-                .setTag("postuler" + postuler.phoneUser)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .setTag("postuler" + postuler.phoneUser)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Postuler> response = request.executeForObject(Postuler.class);
             if (response.isSuccess()) {
                 postuler = response.getResult();
@@ -1033,14 +1068,14 @@ public class RemoteDataSync {
     public static Sollicitation solliciter (Sollicitation sollicitation) {
         String url = BASE_URL + "solliciter";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(sollicitation) // posting java object
-                .setTag("sollicitation" + sollicitation.phoneUser)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addBodyParameter(sollicitation) // posting java object
+                    .setTag("sollicitation" + sollicitation.phoneUser)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 sollicitation = response.getResult();
@@ -1076,14 +1111,14 @@ public class RemoteDataSync {
     public static Annonce publierAnnonce (Annonce object) {
         String url = BASE_URL + "annonce";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(object) // posting java object
-                .setTag("publierannonce" + object.phoneUser)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addBodyParameter(object) // posting java object
+                    .setTag("publierannonce" + object.phoneUser)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Annonce> response = request.executeForObject(Annonce.class);
             if (response.isSuccess()) {
                 object = response.getResult();
@@ -1119,14 +1154,14 @@ public class RemoteDataSync {
     public static Service publierService (Service object) {
         String url = BASE_URL + "service";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(object) // posting java object
-                .setTag("publierservice" + object.getNomsJobeur())
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addBodyParameter(object) // posting java object
+                    .setTag("publierservice" + object.getNomsJobeur())
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Service> response = request.executeForObject(Service.class);
             if (response.isSuccess()) {
                 object = response.getResult();
@@ -1162,14 +1197,14 @@ public class RemoteDataSync {
     public static Comment commenter (Comment object) {
         String url = BASE_URL + "commenter";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(object) // posting java object
-                .setTag("commenter" + object.getIdUserConcerne())
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addBodyParameter(object) // posting java object
+                    .setTag("commenter" + object.getIdUserConcerne())
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Comment> response = request.executeForObject(Comment.class);
             if (response.isSuccess()) {
                 object = response.getResult();
@@ -1204,18 +1239,18 @@ public class RemoteDataSync {
     public static Postuler creerRDVbyPostuler (long isPostuler, String date, String heure) {
         String url = BASE_URL + "creerrdvbypostuler";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("id", String.valueOf(isPostuler))
-                .addQueryParameter("datePublication", date)
-                .addQueryParameter("heure", heure)
-                .setTag("creerRDVByPostuler" + isPostuler)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Postuler postuler;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("id", String.valueOf(isPostuler))
+                    .addQueryParameter("datePublication", date)
+                    .addQueryParameter("heure", heure)
+                    .setTag("creerRDVByPostuler" + isPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Postuler> response = request.executeForObject(Postuler.class);
             if (response.isSuccess()) {
                 postuler = response.getResult();
@@ -1250,18 +1285,18 @@ public class RemoteDataSync {
     public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure) {
         String url = BASE_URL + "creerrdvbysolliciter";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idsolliciter", String.valueOf(idSolliciter))
-                .addQueryParameter("datePublication", date)
-                .addQueryParameter("heure", heure)
-                .setTag("creerRDVBySollicitation" + idSolliciter)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Sollicitation sollicitation;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idsolliciter", String.valueOf(idSolliciter))
+                    .addQueryParameter("datePublication", date)
+                    .addQueryParameter("heure", heure)
+                    .setTag("creerRDVBySollicitation" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 sollicitation = response.getResult();
@@ -1296,18 +1331,18 @@ public class RemoteDataSync {
     public static Postuler confirmationRDVbyUser (long isPostuler, String phoneMaisha, String passwordMaisha) {
         String url = BASE_URL + "confirmationrdvbyuser";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idPostuler", String.valueOf(isPostuler))
-                .addQueryParameter("phonemaisha", phoneMaisha)
-                .addQueryParameter("passwordmaisha", passwordMaisha)
-                .setTag("confirmationRDVbyUser" + isPostuler)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Postuler postuler;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idPostuler", String.valueOf(isPostuler))
+                    .addQueryParameter("phonemaisha", phoneMaisha)
+                    .addQueryParameter("passwordmaisha", passwordMaisha)
+                    .setTag("confirmationRDVbyUser" + isPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Postuler> response = request.executeForObject(Postuler.class);
             if (response.isSuccess()) {
                 postuler = response.getResult();
@@ -1342,16 +1377,16 @@ public class RemoteDataSync {
     public static Sollicitation confirmationRDVbyJobeur (long idSollicitation) {
         String url = BASE_URL + "confirmationrdvbyjobeur";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                .setTag("confirmationRDVbyJobeur" + idSollicitation)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Sollicitation sollicitation;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                    .setTag("confirmationRDVbyJobeur" + idSollicitation)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 sollicitation = response.getResult();
@@ -1386,16 +1421,16 @@ public class RemoteDataSync {
     public static boolean confirmationDuServiceRendu (String code, int cote, String comment) {
         String url = BASE_URL + "confirmationservice";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("code", code)
-                .addBodyParameter("cote", String.valueOf(cote))
-                .addBodyParameter("comment", comment)
-                .setTag("confirmationDuServiceRendu" + code)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("code", code)
+                    .addBodyParameter("cote", String.valueOf(cote))
+                    .addBodyParameter("comment", comment)
+                    .setTag("confirmationDuServiceRendu" + code)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<String> response = request.executeForString();
             if (response.isSuccess()) if(response.getResult().equals("1")) return true;
         } catch (Exception ex) {
@@ -1408,16 +1443,16 @@ public class RemoteDataSync {
     public static boolean signalerUtilisateur (long idUtilisateur, String comment, int niveauDanger) {
         String url = BASE_URL + "signaler";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idUtilisateur", String.valueOf(idUtilisateur))
-                .addBodyParameter("comment", comment)
-                .addBodyParameter("niveau", String.valueOf(niveauDanger))
-                .setTag("signalerUtilisateur" + idUtilisateur)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idUtilisateur", String.valueOf(idUtilisateur))
+                    .addBodyParameter("comment", comment)
+                    .addBodyParameter("niveau", String.valueOf(niveauDanger))
+                    .setTag("signalerUtilisateur" + idUtilisateur)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) if(response.getResult().equals("1")) return true;
         } catch (Exception ex) {
@@ -1430,16 +1465,16 @@ public class RemoteDataSync {
     public static Sollicitation accepterSollicitation (long idSollicitation) {
         String url = BASE_URL + "acceptersollicitation";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                .setTag("accepterSollicitation" + idSollicitation)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Sollicitation sollicitation;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                    .setTag("accepterSollicitation" + idSollicitation)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 sollicitation = response.getResult();
@@ -1474,16 +1509,16 @@ public class RemoteDataSync {
     public static Sollicitation refuserSollicitation (long idSollicitation) {
         String url = BASE_URL + "refusersollicitation";
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                .setTag("refuserSollicitation" + idSollicitation)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         Sollicitation sollicitation;
 
         try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
+                    .setTag("refuserSollicitation" + idSollicitation)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 sollicitation = response.getResult();
@@ -1526,14 +1561,14 @@ public class RemoteDataSync {
     public static User updateUser (User user) {
         String url = BASE_URL + "updateuser";
 
-        ANRequest request = AndroidNetworking.put(url)
-                .addBodyParameter(user)
-                .addHeaders("token", GeneralClass.userToken)
-                .setTag("user" + user.id)
-                .setPriority(Priority.MEDIUM)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addBodyParameter(user)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .setTag("user" + user.id)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
             ANResponse<User> response = request.executeForObject(User.class);
             if (response.isSuccess()) {
                 user = response.getResult();
@@ -1569,14 +1604,14 @@ public class RemoteDataSync {
     public static Annonce updateAnnonce (Annonce object) {
         String url = BASE_URL + "annonce";
 
-        ANRequest request = AndroidNetworking.put(url)
-                .addBodyParameter(object)
-                .setTag("updateannonce" + object.phoneUser)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addBodyParameter(object)
+                    .setTag("updateannonce" + object.phoneUser)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Annonce> response = request.executeForObject(Annonce.class);
             if (response.isSuccess()) {
                 object = response.getResult();
@@ -1611,14 +1646,14 @@ public class RemoteDataSync {
     public static Service updateService (Service object) {
         String url = BASE_URL + "service";
 
-        ANRequest request = AndroidNetworking.put(url)
-                .addBodyParameter(object)
-                .setTag("updateservice" + object.getNomsJobeur())
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addBodyParameter(object)
+                    .setTag("updateservice" + object.getNomsJobeur())
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
             ANResponse<Service> response = request.executeForObject(Service.class);
             if (response.isSuccess()) {
                 object = response.getResult();
@@ -1661,13 +1696,13 @@ public class RemoteDataSync {
     public static boolean deleteUser () {
         String url = BASE_URL + "user";
 
-        ANRequest request = AndroidNetworking.delete(url)
-                .addHeaders("token", GeneralClass.userToken)
-                .setTag("deleteuser" + GeneralClass.userToken)
-                .setPriority(Priority.MEDIUM)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.delete(url)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .setTag("deleteuser" + GeneralClass.Currentuser.getAuthCode())
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
             ANResponse<String> response = request.executeForString();
             if (response.isSuccess()) if(response.getResult().equals("1")) return true;
         } catch (Exception ex) {
@@ -1680,14 +1715,13 @@ public class RemoteDataSync {
     public static boolean deleteAnnonce (long idAnnonce) {
         String url = BASE_URL + "annonce";
 
-        ANRequest request = AndroidNetworking.delete(url)
-                .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
-                .setTag("deleteannonce" + idAnnonce)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.delete(url)
+                    .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
+                    .setTag("deleteannonce" + idAnnonce)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
 
             ANResponse<String> response = request.executeForString();
             if (response.isSuccess()) if(response.getResult().equals("1")) return true;
@@ -1701,14 +1735,13 @@ public class RemoteDataSync {
     public static boolean deleteService (long idService) {
         String url = BASE_URL + "service";
 
-        ANRequest request = AndroidNetworking.delete(url)
-                .addQueryParameter("IdService", String.valueOf(idService))
-                .setTag("deleteservice" + idService)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("token", GeneralClass.userToken)
-                .build();
-
         try{
+            ANRequest request = AndroidNetworking.delete(url)
+                    .addQueryParameter("IdService", String.valueOf(idService))
+                    .setTag("deleteservice" + idService)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
 
             ANResponse<String> response = request.executeForString();
             if (response.isSuccess()) if(response.getResult().equals("1")) return true;

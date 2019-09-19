@@ -196,6 +196,7 @@ public class Identity_screen extends AppCompatActivity {
 
             super.onPostExecute(result);
         }
+
     }
 
     // OWN METHODS
