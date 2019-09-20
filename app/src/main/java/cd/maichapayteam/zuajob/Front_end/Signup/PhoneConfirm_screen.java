@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -149,8 +150,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         @Override
         protected Boolean doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
-            //return RemoteDataSync.confirmCode(numero, code);
-            return RemoteDataSync.confirmCode(userId, code);
+            return code.equals("123456");
+            //return ManageLocalData.confirmCode(userId, code);
         }
 
         @Override

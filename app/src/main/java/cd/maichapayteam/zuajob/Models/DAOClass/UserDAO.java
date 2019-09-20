@@ -276,6 +276,54 @@ public class UserDAO extends DAOBase {
         return list;
     }
 
+    public List<User> listAllJobeurs() {
+        List<User> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + TYPE + " = 1", new String[]{});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<User> listAllUsers() {
+        List<User> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + TYPE + " = 0", new String[]{});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<User> getAll() {
+        List<User> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, new String[]{});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
     public List<User> listJobeurs(int min, String keyword) {
         List<User> list = new ArrayList<>();
         //long min = nextValue * 20;

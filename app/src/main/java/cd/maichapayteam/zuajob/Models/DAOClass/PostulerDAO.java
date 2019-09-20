@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Models.DAOClass;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,7 @@ public class PostulerDAO extends DAOBase {
                 return find(object.getId());
             }
         }catch (Exception e){
+            Log.e("PostulerDAO", e.getMessage());
             return null;
         }
     }
@@ -127,6 +129,23 @@ public class PostulerDAO extends DAOBase {
             close();
             return co;
         }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public long max(){
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select max(" + KEY + ") from " + TABLE_NOM, null);
+            long co = 0;
+            while (c.moveToNext()) {
+                co = c.getLong(0);
+            }
+            c.close();
+            close();
+            return co;
+        }catch (Exception e){
+            Log.e("ServiceDAO", e.getMessage());
             return 0;
         }
     }
@@ -157,7 +176,7 @@ public class PostulerDAO extends DAOBase {
                 String dev=c.getString(17);
                 int cote=c.getInt(18);
                 String com=c.getString(19);
-                int ismy=c.getInt(21);
+                int ismy=c.getInt(20);
 
                 object = new Postuler();
                 object.setId(_id);

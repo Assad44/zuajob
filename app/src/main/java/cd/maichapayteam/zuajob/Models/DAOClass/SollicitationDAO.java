@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Models.DAOClass;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,23 @@ public class SollicitationDAO extends DAOBase {
             close();
             return co;
         }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public long max(){
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select max(" + KEY + ") from " + TABLE_NOM, null);
+            long co = 0;
+            while (c.moveToNext()) {
+                co = c.getLong(0);
+            }
+            c.close();
+            close();
+            return co;
+        }catch (Exception e){
+            Log.e("ServiceDAO", e.getMessage());
             return 0;
         }
     }
