@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Home"
-    android:background="#EDF1FC"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_home">
 
@@ -397,7 +397,7 @@
                             android:textColor="@color/dark8"
                             android:layout_marginLeft="10dp"
                             android:layout_marginBottom="10dp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="A propos de Zua-job ?"
                             android:textSize="25dp"/>

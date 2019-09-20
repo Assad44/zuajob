@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -56,7 +59,23 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         User S = DATA.get(position);
 
         nom.setText(S.getNom());
-        age.setText(S.getBirthday());
+
+        // Calcul de l'âge
+        String d = S.getBirthday();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy");
+
+        try {
+            Date d1 = new Date(sdf1.parse(d).getTime());
+            String b = sdf3.format(d1);
+            String td = sdf3.format(new Date());
+            int dif = Integer.parseInt(td) - Integer.parseInt(b);
+            age.setText(dif+" an(s)");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         MyRating.setRating(new Random().nextInt(5));
 
         /*int cote = S.getc;
@@ -74,5 +93,8 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         avatar.setImageResource(profil);
 
         return convertView;
+
     }
+
+
 }

@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
@@ -54,6 +55,7 @@ import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.IncomingSms;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -73,6 +75,8 @@ public class Home extends AppCompatActivity
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
     TextView phone, nom;
     ArrayList<Categorie> DATA = new ArrayList<>();
+
+    List<Categorie> DATA1 = new ArrayList<>();
     //HorizontalListView hlistview;
 
     private void Init_Components(){
@@ -114,12 +118,17 @@ public class Home extends AppCompatActivity
     }
 
     void Load_CAtegorie(){
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             Categorie c = new Categorie();
             c.setDesignation("Categorie "+i);
             c.setDescription(getResources().getString(R.string.Lorem_short));
             DATA.add(c);
-        }
+        }*/
+
+        // Todo loading datas
+        DATA1 = GenerateData.listCategorie();
+        DATA = (ArrayList<Categorie>) DATA1;
+
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
             int i = 0;
@@ -131,10 +140,14 @@ public class Home extends AppCompatActivity
                 ImageView img = responses.findViewById(R.id.img);
                 TextView description   = responses.findViewById(R.id.description);
 
-                title.setText(c.getDesignation());
+                title.setText( c.getDesignation());
                 description.setText(c.getDescription());
                 if (i%2 == 0)img.setImageResource(R.drawable.pub);
                 else img.setImageResource(R.drawable.pub4);
+
+                // Todo : Chargement des images par Ion librairy
+                Tool.Load_Image(context,img,"");
+                //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                 sous.addView(responses, 0);
 
@@ -145,6 +158,8 @@ public class Home extends AppCompatActivity
                         if (finalI != 0){
                             Intent i = new Intent(context, Sous_categories.class);
                             i.putExtra("title",c.getDesignation());
+                            String identifiant = String.valueOf(c.getId());
+                            i.putExtra("id",identifiant);
                             startActivity(i);
                             finish();
                         }else{
@@ -155,7 +170,7 @@ public class Home extends AppCompatActivity
                 });
 
                 if (i == 0){
-                    title.setText("Toute les catégories");
+                    title.setText("Autres catégories");
                     description.setText("");
                     img.setImageResource(R.drawable.ic_more_primary);
                     img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -355,6 +370,7 @@ public class Home extends AppCompatActivity
         sortie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(context, index_screen.class));
                 finish();
             }
         });
@@ -383,6 +399,7 @@ public class Home extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.publication) {
             Intent i = new Intent(context, Publication_blank.class);
+            i.putExtra("type", "other");
             startActivity(i);
             finish();
             return true;

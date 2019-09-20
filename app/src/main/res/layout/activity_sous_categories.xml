@@ -8,6 +8,7 @@
     tools:context=".Front_end.Sous_categories">
 
     <LinearLayout
+        android:id="@+id/option_bar"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         android:paddingTop="-10dp"
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"></Spinner>
 
             <Spinner
+                android:id="@+id/type"
                 android:layout_weight="1"
                 android:entries="@array/Publication"
                 android:padding="10dp"

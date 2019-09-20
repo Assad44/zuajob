@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
@@ -30,19 +34,25 @@ public class Sous_categories extends AppCompatActivity {
 
     Context context = this;
     ListView list;
-    Spinner list_sous_cat;
+    Spinner list_sous_cat,type;
+    LinearLayout option_bar;
     SwipeRefreshLayout swiper;
     ArrayList<String> SCAT = new ArrayList<>();
+    List<SousCategorie> LSC = new ArrayList<>();
 
     ArrayList<Service> SERVICES = new ArrayList<>();
-    List<SousCategorie> LSC = new ArrayList<>();
     ArrayList<SousCategorie> SC = new ArrayList<>();
+
+
+    ArrayList<Annonce> ANNOCE = new ArrayList<>();
+    ArrayList<Annonce> SearchA = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         list_sous_cat = findViewById(R.id.list_sous_cat);
+        type = findViewById(R.id.type);
+        option_bar = findViewById(R.id.option_bar);
         swiper = findViewById(R.id.swiper);
-
 
     }
 
@@ -83,6 +93,7 @@ public class Sous_categories extends AppCompatActivity {
     }
     void Load_SERVICE(){
         SERVICES.clear();
+        type.setSelection(1);
         String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
         for (int i = 0; i < 10; i++) {
@@ -104,6 +115,28 @@ public class Sous_categories extends AppCompatActivity {
             list.setAdapter(new Services_Base_Adapter(context, SERVICES));
         }
 
+    }
+    void Load_Annonce(){
+        ANNOCE.clear();
+        type.setSelection(0);
+        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        for (int i = 0; i < 10; i++) {
+            Annonce s = new Annonce();
+            s.setNomsUser(Tool.Versions()[i]);
+            s.setDescription(description);
+            s.setMontant(new Random().nextInt(50));
+            s.setCategorie("Catégorie "+i);
+            s.setSousCategorie("Sous catégorie "+i);
+            s.setDatePublication("2019-09-09 23:57:00");
+            s.setDevise("USD");
+            s.setPhoneUser("+243 81 451 10 83");
+            ANNOCE.add(s);
+        }
+
+        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        else{
+            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,""));
+        }
     }
 
     @Override
@@ -136,6 +169,20 @@ public class Sous_categories extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (type.getSelectedItem().toString().equals("Services")) Load_SERVICE();
+                else Load_Annonce();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         list_sous_cat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -156,5 +203,6 @@ public class Sous_categories extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
 
 }

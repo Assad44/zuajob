@@ -5,15 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".Front_end.Blanks.Publication_blank">
 
     <LinearLayout
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
-        android:paddingTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="0dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp">
+
+            <Spinner
+                android:id="@+id/Publication_type"
+                android:gravity="center"
+                android:entries="@array/Publication_type"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
@@ -27,80 +44,110 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/type"
-                android:gravity="center"
-                android:entries="@array/Cat"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <Spinner
-                android:gravity="center"
-                android:entries="@array/SCat"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:layout_margin="20dp"
-                android:layout_gravity="center"
-                android:background="#C9C9C9"
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"/>
-            <android.support.design.widget.TextInputLayout
                 android:layout_height="wrap_content"
-                android:textColorHint="#8D8D8D"
-                android:paddingLeft="15dp"
-                android:layout_width="match_parent">
-                <EditText
-                    android:layout_marginBottom="10dp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/alegreya_sans_thin"
-                    android:textSize="20dp"
-                    android:gravity="top"
-                    android:singleLine="false"
-                    android:hint="Description du services"
-                    android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
-            </android.support.design.widget.TextInputLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:padding="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
 
                 <Spinner
+                    android:id="@+id/categorie"
                     android:gravity="center"
-                    android:entries="@array/Devise"
-                    android:padding="10dp"
-                    android:layout_width="wrap_content"
+                    android:entries="@array/Cat"
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <EditText
-                    android:drawablePadding="10dp"
-                    app:fontFamily="@font/alegreya_sans_thin"
-                    android:textStyle="bold"
-                    android:padding="15dp"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:textSize="20dp"
-                    android:hint="Cout du service"
-                    android:textColor="@color/black"
-                    android:textColorHint="#8D8D8D"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
 
-            </LinearLayout>
+                <Spinner
+                    android:id="@+id/sous_categorie"
+                    android:gravity="center"
+                    android:entries="@array/SCat"
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
+
+                <EditText
+                    android:id="@+id/description"
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="94dp"
+                    android:background="@color/white"
+                    android:gravity="top"
+                    android:hint="Description de la tâche"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/alegreya_sans_thin" />
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:padding="0dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/devise"
+                        android:gravity="center"
+                        android:entries="@array/Devise"
+                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/montant"
+                        android:drawablePadding="10dp"
+                        android:textStyle="bold"
+                        android:padding="15dp"
+                        android:singleLine="true"
+                        android:background="@color/white"
+                        android:inputType="number"
+                        android:textSize="20dp"
+                        android:hint="Cout du service"
+                        android:textColor="@color/black"
+                        android:textColorHint="#8D8D8D"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
 
             <TextView
+                android:clickable="true"
                 android:layout_marginTop="50dp"
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_validate"
                 android:textStyle="bold"
                 android:fontFamily="@font/alegreya_sans_thin"
                 android:gravity="center"

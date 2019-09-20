@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -50,7 +51,6 @@ public class Services_Base_Adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_service,null);
         TextView S_categorie = convertView.findViewById(R.id.S_categorie);
         TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
@@ -60,8 +60,6 @@ public class Services_Base_Adapter extends BaseAdapter {
         RatingBar Rating = convertView.findViewById(R.id.MyRating);
         ImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
-
-
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();

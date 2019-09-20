@@ -4,26 +4,104 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import cd.maichapayteam.zuajob.Front_end.Publications_view;
+import java.util.ArrayList;
+import java.util.List;
+
+import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Publication_blank extends AppCompatActivity {
 
     Context context = this;
     String title = "";
 
+    Spinner Publication_type,devise,categorie,sous_categorie;
+    TextView description,montant,btn_validate;
+
+
+    ArrayList<Categorie> DATA = new ArrayList<>();
+    List<Categorie> DATA1 = new ArrayList<>();
+    ArrayList<String> DATA2 = new ArrayList<>();
+
+    ArrayList<String> SCAT = new ArrayList<>();
+    List<SousCategorie> LSC = new ArrayList<>();
+
     private void Init_Components(){
-        //list = findViewById(R.id.list);
+        Publication_type = findViewById(R.id.Publication_type);
+        devise = findViewById(R.id.devise);
+        categorie = findViewById(R.id.categorie);
+        sous_categorie = findViewById(R.id.sous_categorie);
+        description = findViewById(R.id.description);
+        montant = findViewById(R.id.montant);
+        btn_validate = findViewById(R.id.btn_validate);
+
+
+        sous_categorie.setVisibility(View.GONE);
+    }
+
+
+    void Load_CAtegorie(){
+        /*for (int i = 0; i < 10; i++) {
+            Categorie c = new Categorie();
+            c.setDesignation("Categorie "+i);
+            c.setDescription("Description "+i);
+            DATA.add(c);
+        }
+        */
+
+        Categorie c = new Categorie();
+        c.setDesignation("--Selectionner une catégorie-- ");
+        DATA1 = GenerateData.listCategorie();
+        DATA = (ArrayList<Categorie>) DATA1;
+
+
+        if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+        else{
+            for (Categorie s : DATA ) {
+                DATA2.add(s.getDesignation());
+                Log.e("DDDDDDDDDDDDD___", s.getDesignation());
+            }
+
+            Tool.setEntries(context,categorie, DATA2);
+        }
     }
 
     private void Load_Header(){
         if (!getIntent().hasExtra("type")) onBackPressed();
         title = getIntent().getExtras().getString("type");
-        getSupportActionBar().setTitle("Publication "+title);
+        getSupportActionBar().setTitle("Nouvelle publication ");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
+    }
+
+
+    private boolean CheckinZones(){
+        if (Publication_type.getSelectedItemPosition() == 0){
+            Toast.makeText(context, "Veuillez selectionner le type de la publication", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (sous_categorie.getSelectedItem().toString().equals("Sous catégorie")){
+            Toast.makeText(context, "Veuillez selectionner la catégorie de la publication", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (TextUtils.isEmpty(description.getText().toString())){
+            description.setError("Veuillez remplir ce champs");
+            return false;
+        }else if (TextUtils.isEmpty(montant.getText().toString())){
+            montant.setError("Veuillez remplir ce champs");
+            return false;
+        }else return true;
     }
 
     @Override
@@ -33,6 +111,7 @@ public class Publication_blank extends AppCompatActivity {
 
         Init_Components();
         Load_Header();
+        Load_CAtegorie();
 
     }
 
@@ -51,20 +130,64 @@ public class Publication_blank extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        categorie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0){
+                    sous_categorie.setVisibility(View.VISIBLE);
+                    String identifiant = String.valueOf(DATA.get(position).getId());
+                    String designation = String.valueOf(DATA.get(position).getDesignation());
+                    LSC = GenerateData.listSousCategorie(DATA.get(position));
+
+                    for (SousCategorie s : LSC ) {
+                        SCAT.add(s.getDesignation());
+                        //Log.e("DDDDDDDDDDDDD___", s.getDesignation());
+                    }
+
+                    Tool.setEntries(context,sous_categorie, SCAT);
+
+
+                }else sous_categorie.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btn_validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (CheckinZones() == false) return;
+                Toast.makeText(context, "Correct datas", Toast.LENGTH_SHORT).show();
+
+                // Todo : Checking publication type and create object
+                if (Publication_type.getSelectedItemPosition() == 1){
+                    // create Service object
+                }else {
+                    // create annonce object
+                }
+            }
+        });
+
     }
+
+
+    private void service_publication(){
+
+    }
+    private void Annonce_publication(){
+
+    }
+
+
 
     @Override
     public void onBackPressed() {
         Intent i;
-        if (!getIntent().hasExtra("type")) onBackPressed();
-        title = getIntent().getExtras().getString("type");
-        if (title.equals("Services")) {
-            i = new Intent(context, Publications_view.class);
-            i.putExtra("type", "Services");
-        }else{
-            i = new Intent(context, Publications_view.class);
-            i.putExtra("type", "Annonces");
-        }
+        i = new Intent(context, Home.class);
         startActivity(i);
         finish();
     }

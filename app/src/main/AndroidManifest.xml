@@ -22,6 +22,7 @@
         <activity android:name=".Front_end.Publications_view" />
         <activity android:name=".Front_end.Signup.Login" />
         <activity android:name=".Front_end.Categorie_view" />
+        <activity android:name=".Front_end.Paramettres" />
         <activity
             android:name=".Front_end.Details.Details_publication"
             android:label="@string/title_activity_details_publication"

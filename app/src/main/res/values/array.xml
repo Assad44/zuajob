@@ -14,15 +14,21 @@
     </string-array>
 
     <string-array name="Cat">
-        <item>Catégorie</item>
+        <item>-Selectionnez une Catégorie--</item>
     </string-array>
     <string-array name="SCat">
         <item>Sous catégorie</item>
     </string-array>
 
     <string-array name="Publication">
-        <item>Annonces</item>
         <item>Services</item>
+        <item>Annonces</item>
+    </string-array>
+
+    <string-array name="Publication_type">
+        <item>Selectionnez type publication</item>
+        <item>Services</item>
+        <item>Annonces</item>
     </string-array>
 
     <string-array name="user_type">
