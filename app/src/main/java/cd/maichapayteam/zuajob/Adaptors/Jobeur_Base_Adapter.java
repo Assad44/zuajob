@@ -1,6 +1,7 @@
 package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
 
         // Calcul de l'âge
         String d = S.getBirthday();
+        Log.e("XXXXXXXXX", d);
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy");
 

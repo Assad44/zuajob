@@ -36,7 +36,7 @@ public class Jobeur_list extends AppCompatActivity {
     }
 
     void Load_Jobeur(){
-        DATA = GenerateData.listJobeurs(0);
+        DATA = GenerateData.listJobeurs(list.getCount());
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else {
             //Toast.makeText(context, "Succes", Toast.LENGTH_SHORT).show();
