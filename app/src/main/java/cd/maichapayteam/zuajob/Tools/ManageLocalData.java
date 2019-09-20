@@ -38,6 +38,10 @@ public class ManageLocalData {
         return RemoteDataSync.checkNumero(numero);
     }
 
+    public static boolean confirmCode(long id, String code) {
+        return RemoteDataSync.confirmCode(id, code);
+    }
+
     public static User login(String phone, String mdp) {
         //UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         //User user = userDAO.findByPhoneNumer(phone);

@@ -3,12 +3,14 @@ package cd.maichapayteam.zuajob.Models.DAOClass;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 
 /**
  * Created by ElikyaLK on 29/12/2018.
@@ -113,6 +115,23 @@ public class AnnonceDAO extends DAOBase {
         }
     }
 
+    public long max(){
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select max(" + KEY + ") from " + TABLE_NOM, null);
+            long co = 0;
+            while (c.moveToNext()) {
+                co = c.getLong(0);
+            }
+            c.close();
+            close();
+            return co;
+        }catch (Exception e){
+            Log.e("AnnonceDAO", e.getMessage());
+            return 0;
+        }
+    }
+
     public Annonce find(long id){
         try{
             open();
@@ -182,6 +201,22 @@ public class AnnonceDAO extends DAOBase {
         try{
             open();
             Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ?  order by " + DATE + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            while (c.moveToNext()) {
+                list.add(find(c.getLong(0)));
+            }
+            c.close();
+            close();
+        }catch (Exception e){
+
+        }
+        return list;
+    }
+
+    public List<Annonce> getAll() {
+        List<Annonce> list = new ArrayList<>();
+        try{
+            open();
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }

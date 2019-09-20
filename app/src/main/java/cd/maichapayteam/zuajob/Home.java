@@ -52,6 +52,7 @@ import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
@@ -471,6 +472,12 @@ public class Home extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(String... strings) {
+            List<Categorie> listCategorie = GenerateData.listCategorie();
+            Log.e("LastCheck", "List categorie size: " + listCategorie.size());
+            if(listCategorie.size()>0) {
+                List<SousCategorie> listSousCategorie = GenerateData.listSousCategorie(listCategorie.get(0));
+                Log.e("LastCheck", "List sous categorie size: " + listSousCategorie.size());
+            }
             RemoteDataSync.getListCategorie();
             return null;
         }
