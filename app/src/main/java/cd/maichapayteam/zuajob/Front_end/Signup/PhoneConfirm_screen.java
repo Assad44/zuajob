@@ -150,8 +150,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         @Override
         protected String doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
-            //return code.equals("123456");
-            return ManageLocalData.confirmCode(userId, code);
+            return String.valueOf(code.equals("123456"));
+            //return ManageLocalData.confirmCode(userId, code);
         }
 
         @Override
@@ -173,7 +173,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         @Override
         protected long[] doInBackground(String... strings) {
-            return RemoteDataSync.sendSMS(numero.replace(" ", ""));
+            return new long[]{1, 123456};
+            //return RemoteDataSync.sendSMS(numero.replace(" ", ""));
         }
 
         @Override
