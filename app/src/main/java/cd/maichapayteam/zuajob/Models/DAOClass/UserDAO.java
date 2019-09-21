@@ -37,7 +37,6 @@ public class UserDAO extends DAOBase {
     public static final String SEXE = "sexe";
     public static final String CODE_PAYS = "codePays";
     public static final String COMMUNE = "commune";
-    public static final String ABOUT = "about";
     public static final String DESCRIPTION = "description";
     public static final String COTE = "cote";
     public static final String TABLE_NOM = "t_user";
@@ -54,7 +53,7 @@ public class UserDAO extends DAOBase {
                     QUARTIER + " TEXT, " +
                     URL_PHOTO + " TEXT, " +
                     IDENTITE_VERIFIE + " INTEGER, " +
-                    BIRTHDAY + " TEXT, " +
+                    BIRTHDAY + " INTEGER, " +
                     TYPE_IDENTITE + " INTEGER, " +
                     NUM_IDENTITE + " TEXT, " +
                     MY_PROFIL + " INTEGER, " +
@@ -64,7 +63,6 @@ public class UserDAO extends DAOBase {
                     SEXE + " TEXT, " +
                     CODE_PAYS + " TEXT, " +
                     COMMUNE + " TEXT, " +
-                    ABOUT + " TEXT, " +
                     DESCRIPTION + " TEXT, " +
                     COTE + " INTEGER);";
 
@@ -88,7 +86,6 @@ public class UserDAO extends DAOBase {
             if (find(object.getId())==null){
                 ContentValues value = new ContentValues();
                 value.put(KEY, object.getId());
-                value.put(ABOUT, object.getAbout());
                 value.put(AUTH_CODE, object.getAuthCode());
                 value.put(CODE_PAYS, object.getCodePays());
                 value.put(COMMUNE, object.getCommune());
@@ -175,7 +172,7 @@ public class UserDAO extends DAOBase {
                 String url=c.getString(9);
                 boolean ident= false;
                 if(c.getInt(10)==1) ident=true;
-                String birth=c.getString(11);
+                long birth=c.getLong(11);
                 int type_id=c.getInt(12);
                 String num_id=c.getString(13);
                 boolean myProf= false;
@@ -212,7 +209,6 @@ public class UserDAO extends DAOBase {
                 object.setSexe(sexe);
                 object.setCodePays(code_pays);
                 object.setCommune(commune);
-                object.setAbout(about);
                 object.setDescription(description);
                 object.setCote(cote);
             }
@@ -351,7 +347,6 @@ public class UserDAO extends DAOBase {
 
     public long modifier(User object) {
         ContentValues value = new ContentValues();
-        value.put(ABOUT, object.getAbout());
         value.put(AUTH_CODE, object.getAuthCode());
         value.put(CODE_PAYS, object.getCodePays());
         value.put(COMMUNE, object.getCommune());

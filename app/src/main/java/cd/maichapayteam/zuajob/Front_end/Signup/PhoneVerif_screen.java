@@ -100,13 +100,13 @@ public class PhoneVerif_screen extends AppCompatActivity {
                 /*String phone  = codeCountry+numero;
                 Auth(phone);*/
 
-                /*Tool.setUserPreferences(context,"phone",numero);
-                Tool.setUserPreferences(context,"CountryCode",codeCountry);
-                Tool.setUserPreferences(context,"CountryName",countryName);
-                Intent i = new Intent(context, PhoneConfirm_screen.class);
-                startActivity(i);
-                RemoteDataSync.sendSMS(codeCountry+numero);
-                finish();*/
+                //Tool.setUserPreferences(context,"phone",numero);
+                //Tool.setUserPreferences(context,"CountryCode",codeCountry);
+                //Tool.setUserPreferences(context,"CountryName",countryName);
+                //Intent i = new Intent(context, PhoneConfirm_screen.class);
+                //startActivity(i);
+                //RemoteDataSync.sendSMS(codeCountry+numero);
+                //finish();
                 CheckingNumberAsync checkingNumberAsync = new CheckingNumberAsync();
                 checkingNumberAsync.execute();
 
@@ -138,8 +138,8 @@ public class PhoneVerif_screen extends AppCompatActivity {
         protected Boolean doInBackground(String... strings) {
             //progressDialog.setMessage("Vérification de votre numéro de téléphone en cours...");
             //return RemoteDataSync.checkNumero(codeCountry+numero);
-            return GenerateData.checkNumero(numero);
-            //return ManageLocalData.checkNumero(codeCountry+numero);
+            //return GenerateData.checkNumero(numero);
+            return ManageLocalData.checkNumero(codeCountry+numero);
         }
 
         @Override

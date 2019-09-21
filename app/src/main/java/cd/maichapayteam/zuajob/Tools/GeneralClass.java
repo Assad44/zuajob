@@ -586,12 +586,11 @@ public class GeneralClass {
         user.nom = nom.get(new Random().nextInt(nom.size()));
         user.sexe = "F";
         if(new Random().nextInt(2)==0) user.sexe = "M";
-        user.birthday = randomDate().toString();
+        //user.birthday = randomDate().toString();
         user.phone = String.valueOf(randBetween(890000000, 899999999));
         user.pays = "DR Congo";
         user.codePays = "+243";
         user.email = user.prenom.toLowerCase() + "." + user.nom.toLowerCase() + "@gmail.com";
-        user.about = getRandomPhrase(new Random().nextInt(2) + 1);
         user.ville = "Kinshasa";
         user.commune = "Bandal";
         user.quartier ="Lumumba";

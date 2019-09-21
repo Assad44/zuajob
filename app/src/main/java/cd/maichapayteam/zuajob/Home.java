@@ -177,15 +177,16 @@ public class Home extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Init_Components();
         setSupportActionBar(toolbar);
 
-        if (Tool.User_Preferences(context).getString("statut", "null").equals("null")){
+        if (GeneralClass.Currentuser==null){
             // Todo : Launche Home activity
             Intent i = new Intent(context, index_screen.class);
             startActivity(i);
             finish();
         }
+
+        Init_Components();
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){

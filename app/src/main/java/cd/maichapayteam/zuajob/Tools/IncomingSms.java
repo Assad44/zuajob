@@ -67,7 +67,7 @@ public class IncomingSms extends BroadcastReceiver {
         }
     }
 
-    private class ConfirmCodeRunnable extends AsyncTask<String, String, Boolean> {
+    private class ConfirmCodeRunnable extends AsyncTask<String, String, String> {
 
         long id = -1;
         String code = "";
@@ -78,15 +78,16 @@ public class IncomingSms extends BroadcastReceiver {
         }
 
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             return RemoteDataSync.confirmCode(id, code);
         }
 
         @Override
-        protected void onPostExecute(Boolean s) {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(mZuaJobMessageListener!=null) {
-                if(s) {
+                if(!s.equals("")) {
+                    Tool.setUserPreferences(activity,"authCode",s);
                     mZuaJobMessageListener.OnCorrectConfirmationCode();
                 } else {
                     mZuaJobMessageListener.OnIncorrectConfirmationCode();

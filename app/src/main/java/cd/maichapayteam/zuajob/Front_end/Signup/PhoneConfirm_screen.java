@@ -129,7 +129,7 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
     }
 
-    class CheckingCodeAsync extends AsyncTask<String, String, Boolean> {
+    class CheckingCodeAsync extends AsyncTask<String, String, String> {
 
         String code;
 
@@ -148,23 +148,24 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         }
 
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
-            return code.equals("123456");
-            //return ManageLocalData.confirmCode(userId, code);
+            //return code.equals("123456");
+            return ManageLocalData.confirmCode(userId, code);
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        protected void onPostExecute(String result) {
             progressDialog.dismiss();
             //TODO : dismiss a load dialog here
-            if(aBoolean) {
+            if(!result.equals("")) {
+                Tool.setUserPreferences(PhoneConfirm_screen.this,"authCode",result);
                 passToNextActivity();
             } else {
                 showIncorrectConfirmationCode();
             }
 
-            super.onPostExecute(aBoolean);
+            super.onPostExecute(result);
         }
     }
 

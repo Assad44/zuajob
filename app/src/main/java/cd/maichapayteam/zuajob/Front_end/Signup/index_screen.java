@@ -20,6 +20,7 @@ import cd.maichapayteam.zuajob.Models.Main;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class index_screen extends AppCompatActivity {
@@ -125,7 +126,7 @@ public class index_screen extends AppCompatActivity {
         }*/
 
 
-        //TestAsync testAsync = new TestAsync();
+        //TestAsync2 testAsync = new TestAsync2();
         //testAsync.execute();
 
 
@@ -206,8 +207,6 @@ public class index_screen extends AppCompatActivity {
                 stringBuilder.append("Code pays: ");
                 stringBuilder.append(user.getCodePays());
                 stringBuilder.append("\n");
-                stringBuilder.append("About: ");
-                stringBuilder.append(user.getAbout());
                 stringBuilder.append("\n");
                 stringBuilder.append("Adresse: ");
                 stringBuilder.append(user.getAdresse());

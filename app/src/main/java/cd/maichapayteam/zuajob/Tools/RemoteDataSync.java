@@ -42,24 +42,25 @@ import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
-    private static String BASE_URL = "http://157.245.44.245:8000/api/";
+    private static String BASE_URL = "https://apizuajob.000webhostapp.com/v1/";
+    //private static String BASE_URL = "http://157.245.44.245:8000/api/";
     private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
+    //private static String BASE_URL = "http://192.168.43.60/zuajob/v1/";
 
     /**
     *   GET METHODS
      */
 //
     public static boolean checkNumero(String numero) {
-        numero = numero.replace("+", "00");
-        String url = BASE_URL + "checknumero/" + numero;
-        ANRequest request = AndroidNetworking.put(url)
+        numero = numero.replace("+", "");
+        String url = BASE_URL + "checknumero";
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("phone", numero)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                //if(response.getResult().equals("1")) return true;
-                Log.e("Users", "checkNumero:result:" + response.getResult());
-                boolean rep = response.getResult().getBoolean("false");
+                boolean rep = response.getResult().getBoolean("exist");
                 return rep;
             } else {
                 if(response.getError()!=null) {
@@ -77,17 +78,17 @@ public class RemoteDataSync {
 
     public static long[] sendSMS(String numero) {
         long[] rep = new long[]{-1, -1};
-        String url = BASE_URL + "users/";
+        String url = BASE_URL + "sendsms";
 
-        numero = numero.replace("+", "00");
+        numero = numero.replace("+", "");
 
-        JSONObject  jsonObject = new JSONObject ();
-        try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
-        try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
-        try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
+        //JSONObject  jsonObject = new JSONObject ();
+        //try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
+        //try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
+        //try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
 
-        ANRequest request = AndroidNetworking.post(url)
-                .addJSONObjectBody(jsonObject)
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("phone", numero)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
@@ -105,11 +106,7 @@ public class RemoteDataSync {
                 Log.e("Users", "sendSMS:response: " + id + "/" + pw);
             } else {
                 if(response.getError()!=null) {
-                    Log.e("Users", "sendSMS:error with AN: " + response.getError().getErrorDetail() + " _________ " +
-                            response.getError().getErrorDetail() + " _________ " + response.getError().getMessage() +
-                            " _________ " + response.getError().getErrorBody() +
-                            " _________ " + response.getError().getLocalizedMessage() +
-                            " _________ " + response.getError().getErrorCode());
+                    Log.e("Users", "sendSMS:error with AN: " + response.getError().getMessage());
                 } else {
                     Log.e("Users", "sendSMS:error with AN: error is null");
                 }
@@ -121,17 +118,17 @@ public class RemoteDataSync {
         return rep;
     }
 
-    public static boolean confirmCode(long id, String code) {
-        String url = BASE_URL + "code/" + id + "/" + code;
+    public static String confirmCode(long id, String code) {
+        String url = BASE_URL + "confirmcode/" + id + "/" + code;
         Log.e("Users", "confirmCode:url:" + url);
 
-        ANRequest request = AndroidNetworking.put(url)
+        ANRequest request = AndroidNetworking.get(url)
                 .build();
 
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                boolean rep = response.getResult().getBoolean("success");
+                String rep = response.getResult().getString("authCode");
                 Log.e("Users", "confirmCode:ok:" + rep);
                 return rep;
             } else {
@@ -145,7 +142,7 @@ public class RemoteDataSync {
             Log.e("Users", "confirmCode:" + ex.getMessage());
         }
 
-        return false;
+        return "";
     }
 
     public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
@@ -436,13 +433,13 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static User login(String auth_code, String password) {
+    public static User login(String phone, String password) {
         String url = BASE_URL + "login";
 
         User user;
 
         ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("auth_code", auth_code)
+                .addQueryParameter("phone", phone)
                 .addQueryParameter("password", password)
                 .build();
 
@@ -451,29 +448,41 @@ public class RemoteDataSync {
             if (response.isSuccess()) {
                 user = response.getResult();
                 if(user!=null) {
-                    if(!user.error) {
+                    Log.e("Users", "Login:\n" + user.toString());
+                    if(!user.isError()) {
                         user.myProfil = true;
+                        //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
                         if(user==null) {
                             user = new User();
                             user.setError(true);
                             user.setErrorCode(7127);
-                            user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous reconnecter.");
+                            user.setErrorMessage("Une erreur est survenue lors de la mise à jour de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
                         }
+                    } else {
+                        Log.e("Users", "Login:" + user.getErrorMessage());
                     }
+                } else {
+                    Log.e("Users", "Login:user is null");
                 }
             } else {
                 user = new User();
                 user.error = true;
-                user.errorCode = 3188;
+                user.errorCode = 319288;
                 user.errorMessage = response.getError().getMessage();
+                if(response.getError()!=null) {
+                    Log.e("Users", "Login:AN error:" + response.getError().getErrorCode());
+                } else {
+                    Log.e("Users", "Login:AN error:is null");
+                }
             }
         } catch (Exception ex) {
             user = new User();
             user.error = true;
-            user.errorCode = 3198;
+            user.errorCode = 319288;
             user.errorMessage = ex.getMessage();
+            Log.e("Users", "Login:ex:" + ex.getMessage());
         }
 
         return user;
@@ -984,11 +993,12 @@ public class RemoteDataSync {
         String url = BASE_URL + "createuser";
 
         ANRequest request = AndroidNetworking.post(url)
-                .addBodyParameter(user) // posting java object
+                .addJSONObjectBody(user.toJsonObject())
                 .setTag("user" + user.prenom + user.nom)
                 .setPriority(Priority.MEDIUM)
                 .build();
 
+        //Log.e("Users", "Inscription:avant net" + user.toString());
         try{
             ANResponse<User> response = request.executeForObject(User.class);
             if (response.isSuccess()) {
@@ -996,6 +1006,7 @@ public class RemoteDataSync {
                 if(user!=null) {
                     if(!user.isError()) {
                         user.myProfil = true;
+                        //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
                         if(user==null) {
@@ -1004,19 +1015,29 @@ public class RemoteDataSync {
                             user.setErrorCode(7127);
                             user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
                         }
+                    } else {
+                        Log.e("Users", "Inscription:" + user.getErrorMessage());
                     }
+                } else {
+                    Log.e("Users", "Inscription:user is null");
                 }
             } else {
                 user = new User();
                 user.error = true;
                 user.errorCode = 319288;
                 user.errorMessage = response.getError().getMessage();
+                if(response.getError()!=null) {
+                    Log.e("Users", "Inscription:AN error:" + response.getError().getErrorCode());
+                } else {
+                    Log.e("Users", "Inscription:AN error:is null");
+                }
             }
         } catch (Exception ex) {
             user = new User();
             user.error = true;
             user.errorCode = 319288;
             user.errorMessage = ex.getMessage();
+            Log.e("Users", "Inscription:ex:" + ex.getMessage());
         }
 
         return user;
@@ -1559,42 +1580,52 @@ public class RemoteDataSync {
      */
 
     public static User updateUser (User user) {
-        String url = BASE_URL + "updateuser";
+        String url = BASE_URL + "user/" + user.getId();
 
+        ANRequest request = AndroidNetworking.put(url)
+                .addJSONObjectBody(user.toJsonObject())
+                .setTag("user" + user.id)
+                .setPriority(Priority.MEDIUM)
+                .build();
         try{
-            ANRequest request = AndroidNetworking.put(url)
-                    .addBodyParameter(user)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .setTag("user" + user.id)
-                    .setPriority(Priority.MEDIUM)
-                    .build();
-
             ANResponse<User> response = request.executeForObject(User.class);
             if (response.isSuccess()) {
                 user = response.getResult();
                 if(user!=null) {
                     if(!user.isError()) {
+                        user.myProfil = true;
+                        //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
                         if(user==null) {
                             user = new User();
                             user.setError(true);
                             user.setErrorCode(7127);
-                            user.setErrorMessage("Une erreur est survenue lors de l'enregistrement de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
+                            user.setErrorMessage("Une erreur est survenue lors de la mise à jour de vos informations. Veuillez SVP vous connecter avec vos nouveax identifiants");
                         }
+                    } else {
+                        Log.e("Users", "Update:" + user.getErrorMessage());
                     }
+                } else {
+                    Log.e("Users", "Update:user is null");
                 }
             } else {
                 user = new User();
                 user.error = true;
                 user.errorCode = 319288;
                 user.errorMessage = response.getError().getMessage();
+                if(response.getError()!=null) {
+                    Log.e("Users", "Update:AN error:" + response.getError().getErrorCode());
+                } else {
+                    Log.e("Users", "Update:AN error:is null");
+                }
             }
         } catch (Exception ex) {
             user = new User();
             user.error = true;
             user.errorCode = 319288;
             user.errorMessage = ex.getMessage();
+            Log.e("Users", "Update:ex:" + ex.getMessage());
         }
 
         return user;
@@ -1684,6 +1715,37 @@ public class RemoteDataSync {
         }
 
         return object;
+    }
+
+    public static boolean updatePassword (String lastpassword, String newPassword) {
+        //String url = BASE_URL + "updatepassword/" + GeneralClass.Currentuser.getAuthCode();
+        String url = BASE_URL + "updatepassword/18a4257308f2a901d949d20a68bb7ed8";
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addQueryParameter("ancienpassword", lastpassword)
+                    .addQueryParameter("nouveaupassword", newPassword)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            Log.e("updatePassword", "result:start");
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                Log.e("updatePassword", "result:" + response.getResult().toString());
+                if(response.getResult()!=null) {
+                    return response.getResult().getBoolean("updated");
+                }
+            } else {
+                if(response.getError()!=null)
+                    Log.e("updatePassword", "AN error:" + response.getError().getErrorCode());
+                else
+                    Log.e("updatePassword", "AN error: is null");
+            }
+        } catch (Exception ex) {
+            Log.e("updatePassword", "general error:" + ex.getMessage());
+        }
+
+        return false;
     }
 
 
@@ -1785,7 +1847,6 @@ public class RemoteDataSync {
                     user.phone = String.valueOf(890000000 + new Random().nextInt(899999999 - 890000000));
                     user.codePays = "+243";
                     user.pays = "Congo DR";
-                    user.about = getRandomParagraphe(new Random().nextInt(3) + 1);
                     user.email = user2.email;
                     user.sexe = "M";
                     if(user2.gender.equals("female")) user.sexe = "F";

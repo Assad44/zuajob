@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
+import java.util.Locale;
 
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
@@ -116,10 +120,21 @@ public class Identity_screen extends AppCompatActivity {
                 User u = new User();
                 u.setNom(Tool.getUserPreferences(context,"nom"));
                 u.setPrenom(Tool.getUserPreferences(context,"prenom"));
-                u.setBirthday(Tool.getUserPreferences(context,"birthday"));
+                String[] birth = Tool.getUserPreferences(context,"birthday").split("-");
+
+                Date date = new Date(Integer.parseInt(birth[2])-1900, Integer.parseInt(birth[1])-1, Integer.parseInt(birth[0]));
+                u.setBirthday(date.getSeconds());
+                //Log.e("Users", birth[2] + birth[1] + birth[0]);
+                //Log.e("Users", String.valueOf(date.toLocaleString()));
+                //Log.e("Users", String.valueOf(date.getTime()));
                 u.setSexe(Tool.getUserPreferences(context,"sexe"));
                 u.setPassword(Tool.getUserPreferences(context,"passe"));
                 u.setType(Integer.parseInt(Tool.getUserPreferences(context,"type")));
+                u.setAuthCode(Tool.getUserPreferences(context,"authCode"));
+                u.setPays(Tool.getUserPreferences(context,"CountryName"));
+                u.setCodePays(Tool.getUserPreferences(context,"CountryCode"));
+                String phone = Tool.getUserPreferences(context,"CountryCode") + Tool.getUserPreferences(context,"phone");
+                u.setPhone(phone.replace("+", ""));
                 //u.setsNom(Tool.getUserPreferences(context,"statut"));
 
                 InscriptionAsync inscriptionAsync = new InscriptionAsync(u);
@@ -167,8 +182,8 @@ public class Identity_screen extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
             //return RemoteDataSync.confirmCode(numero, code);
-            //return ManageLocalData.createUser(user);
-            return  GenerateData.createUser(user);
+            return ManageLocalData.createUser(user);
+            //return  GenerateData.createUser(user);
         }
 
         @Override
@@ -177,6 +192,7 @@ public class Identity_screen extends AppCompatActivity {
 
             //TODO : dismiss a load dialog here
             if(result!=null) {
+                GeneralClass.Currentuser = result;
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);
                 finish();

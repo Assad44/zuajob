@@ -10,6 +10,9 @@ import com.activeandroid.query.Select;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +34,7 @@ public class User {
     public String quartier = "";
     public String urlPhoto = "";
     public boolean identiteVerifie = false;
-    public String birthday = "";
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getCote() {
-        return cote;
-    }
-
-    public void setCote(int cote) {
-        this.cote = cote;
-    }
-
+    public long birthday = 0;
     public String description = "";
     public int cote = 0;
 
@@ -67,7 +53,23 @@ public class User {
     public String sexe = "";
     public String codePays = "+243";
     public String commune = "";
-    public String about = "";
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCote() {
+        return cote;
+    }
+
+    public void setCote(int cote) {
+        this.cote = cote;
+    }
 
     public boolean isError() {
         return error;
@@ -181,11 +183,11 @@ public class User {
         this.identiteVerifie = identiteVerifie;
     }
 
-    public String getBirthday() {
+    public long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
 
@@ -261,41 +263,94 @@ public class User {
         this.commune = commune;
     }
 
-    public String getAbout() {
-        return about;
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        try { jsonObject.put("authCode", authCode); } catch (JSONException e) { }
+        try { jsonObject.put("prenom", prenom); } catch (JSONException e) { }
+        try { jsonObject.put("nom", nom); } catch (JSONException e) { }
+        try { jsonObject.put("phone", phone); } catch (JSONException e) { }
+        try { jsonObject.put("adresse", adresse); } catch (JSONException e) { }
+        try { jsonObject.put("pays", pays); } catch (JSONException e) { }
+        try { jsonObject.put("ville", ville); } catch (JSONException e) { }
+        try { jsonObject.put("quartier", quartier); } catch (JSONException e) { }
+        try { jsonObject.put("urlPhoto", urlPhoto); } catch (JSONException e) { }
+        try { jsonObject.put("identiteVerifie", identiteVerifie); } catch (JSONException e) { }
+        try { jsonObject.put("birthday", birthday); } catch (JSONException e) { }
+        try { jsonObject.put("description", description); } catch (JSONException e) { }
+        try { jsonObject.put("cote", cote); } catch (JSONException e) { }
+        try { jsonObject.put("numIdentite", numIdentite); } catch (JSONException e) { }
+        try { jsonObject.put("type", type); } catch (JSONException e) { }
+        try { jsonObject.put("email", email); } catch (JSONException e) { }
+        try { jsonObject.put("password", password); } catch (JSONException e) { }
+        try { jsonObject.put("sexe", sexe); } catch (JSONException e) { }
+        try { jsonObject.put("codePays", codePays); } catch (JSONException e) { }
+        try { jsonObject.put("commune", commune); } catch (JSONException e) { }
+        try { jsonObject.put("description", description); } catch (JSONException e) { }
+
+        return jsonObject;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Id: ");
+        stringBuilder.append(id);
+        stringBuilder.append("\n");
+        stringBuilder.append("Prenom: ");
+        stringBuilder.append(prenom);
+        stringBuilder.append("\n");
+        stringBuilder.append("Nom: ");
+        stringBuilder.append(this.getNom());
+        stringBuilder.append("\n");
+        stringBuilder.append("Password: ");
+        stringBuilder.append(this.getPassword());
+        stringBuilder.append("\n");
+        stringBuilder.append("Code pays: ");
+        stringBuilder.append(this.getCodePays());
+        stringBuilder.append("\n");
+        stringBuilder.append("Description: ");
+        stringBuilder.append(this.getDescription());
+        stringBuilder.append("\n");
+        stringBuilder.append("Adresse: ");
+        stringBuilder.append(this.getAdresse());
+        stringBuilder.append("\n");
+        stringBuilder.append("Auth code: ");
+        stringBuilder.append(this.getAuthCode());
+        stringBuilder.append("\n");
+        stringBuilder.append("Birthday: ");
+        stringBuilder.append(this.getBirthday());
+        stringBuilder.append("\n");
+        stringBuilder.append("Commune: ");
+        stringBuilder.append(this.getCommune());
+        stringBuilder.append("\n");
+        stringBuilder.append("Email: ");
+        stringBuilder.append(this.getEmail());
+        stringBuilder.append("\n");
+        stringBuilder.append("Num identité: ");
+        stringBuilder.append(this.getNumIdentite());
+        stringBuilder.append("\n");
+        stringBuilder.append("Phone: ");
+        stringBuilder.append(this.getPhone());
+        stringBuilder.append("\n");
+        stringBuilder.append("Quartier: ");
+        stringBuilder.append(this.getQuartier());
+        stringBuilder.append("\n");
+        stringBuilder.append("Sexe: ");
+        stringBuilder.append(this.getSexe());
+        stringBuilder.append("\n");
+        stringBuilder.append("Type: ");
+        stringBuilder.append(this.getType());
+        stringBuilder.append("\n");
+        stringBuilder.append("Type identité: ");
+        stringBuilder.append(this.getTypeIdentite());
+        stringBuilder.append("\n");
+        stringBuilder.append("Url: ");
+        stringBuilder.append(this.getUrlPhoto());
+        stringBuilder.append("\n");
+        stringBuilder.append("Ville: ");
+        stringBuilder.append(this.getVille());
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
-
-    //public static User find(int id) {
-    //    return new Select().from(User.class).where("remoteId = ?", id).executeSingle();
-    //}
-//
-    //public static User findByPhoneNumer(String phone) {
-    //    return new Select().from(User.class).where("phone = ?", Integer.parseInt(phone)).executeSingle();
-    //}
-//
-    //public static User myProfile() {
-    //    return new Select().from(User.class).where("myProfil = ?", 1).executeSingle();
-    //}
-//
-    //public static boolean deconnect() {
-    //    User user = myProfile();
-    //    if(user!=null) {
-    //        user.delete();
-    //    }
-    //    return true;
-    //}
-//
-    //public static List<User> listJobeurs(int next) {
-    //    next *= 20;
-    //    return new Select().from(User.class).where("type = ?", 1).limit(next + ", 20").execute();
-    //}
-//
-    //public static List<User> listJobeurs() {
-    //    return new Select().from(User.class).where("type = ?", 1).execute();
-    //}
 
 }

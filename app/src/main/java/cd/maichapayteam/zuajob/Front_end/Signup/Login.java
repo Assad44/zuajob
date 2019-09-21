@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Login extends AppCompatActivity {
 
@@ -28,6 +31,9 @@ public class Login extends AppCompatActivity {
     int exit = 0;
     TextView se_connecter;
     EditText passe,phone;
+
+    String number = "";
+    String password = "";
 
     private void Init_Components(){
         se_connecter = findViewById(R.id.se_connecter);
@@ -65,11 +71,18 @@ public class Login extends AppCompatActivity {
                 if (CheckingZone() == false) return;
 
 
-                /*LoginAsync loginAsync = new LoginAsync();
-                loginAsync.execute();*/
-                Intent i = new Intent(context, Home.class);
-                startActivity(i);
-                finish();
+                number = "243" + phone.getText().toString();
+                password = passe.getText().toString();
+
+                //LoginAsync loginAsync = new LoginAsync();
+                //loginAsync.execute();
+
+                TestAsync testAsync = new TestAsync();
+                testAsync.execute();
+
+                //Intent i = new Intent(context, Home.class);
+                //startActivity(i);
+                //finish();
                 //Toast.makeText(Login.this, User.findByPhoneNumer("897175763").password, Toast.LENGTH_LONG).show();
             }
         });
@@ -121,8 +134,8 @@ public class Login extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Connexion encours...");
             //return RemoteDataSync.confirmCode(numero, code);
-            //ManageLocalData.login(phone.getText().toString(), passe.getText().toString());
-            return null;
+            return ManageLocalData.login(number, password);
+            //return null;
         }
 
         @Override
@@ -130,6 +143,7 @@ public class Login extends AppCompatActivity {
             progressDialog.dismiss();
             //TODO : dismiss a load dialog here
             if(!result.error) {
+                GeneralClass.Currentuser = result;
                 Intent i = new Intent(context, Home.class);
                 startActivity(i);
                 finish();
@@ -145,6 +159,38 @@ public class Login extends AppCompatActivity {
                     }
                 });
                 alertDialog.show();
+            }
+
+            super.onPostExecute(result);
+        }
+    }
+
+    class TestAsync extends AsyncTask<String, String, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(Login.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Connexion");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            progressDialog.setMessage("Connexion encours...");
+            //return RemoteDataSync.confirmCode(numero, code);
+            return ManageLocalData.changePassword("0000", password);
+            //return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            progressDialog.dismiss();
+            if(result) {
+                Log.e("updatePassword", "update successfuly");
+            } else {
+                Log.e("updatePassword", "update failed");
             }
 
             super.onPostExecute(result);

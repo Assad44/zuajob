@@ -38,8 +38,12 @@ public class ManageLocalData {
         return RemoteDataSync.checkNumero(numero);
     }
 
-    public static boolean confirmCode(long id, String code) {
+    public static String confirmCode(long id, String code) {
         return RemoteDataSync.confirmCode(id, code);
+    }
+
+    public static User updateUser(User user) {
+        return RemoteDataSync.updateUser(user);
     }
 
     public static User login(String phone, String mdp) {
@@ -56,6 +60,10 @@ public class ManageLocalData {
         //user.errorCode = 36212;
         //user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
         return RemoteDataSync.login(phone, mdp);
+    }
+
+    public static boolean changePassword(String acienMDP, String nouveauMDP) {
+        return RemoteDataSync.updatePassword(acienMDP, nouveauMDP);
     }
 
     public static List<Categorie> listUserPreferenceCategorie() {
