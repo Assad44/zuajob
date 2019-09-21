@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
@@ -24,6 +26,7 @@ import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Publications_view extends AppCompatActivity {
@@ -35,9 +38,11 @@ public class Publications_view extends AppCompatActivity {
     SwipeRefreshLayout swipper;
 
     ArrayList<Service> SERVICES = new ArrayList<>();
+    List<Service> SERVICE_L = new ArrayList<>();
     ArrayList<Service> Search = new ArrayList<>();
 
     ArrayList<Annonce> ANNOCE = new ArrayList<>();
+    List<Annonce> ANNOCE_L = new ArrayList<>();
     ArrayList<Annonce> SearchA = new ArrayList<>();
 
     private void Init_Components(){
@@ -57,7 +62,7 @@ public class Publications_view extends AppCompatActivity {
 
     void Load_Annonce(){
         ANNOCE.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        /*String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         for (int i = 0; i < 10; i++) {
             Annonce s = new Annonce();
             s.setNomsUser(Tool.Versions()[i]);
@@ -69,7 +74,11 @@ public class Publications_view extends AppCompatActivity {
             s.setDevise("USD");
             s.setPhoneUser("+243 81 451 10 83");
             ANNOCE.add(s);
-        }
+        }*/
+
+
+        ANNOCE_L = GenerateData.listRandomAnnonce(list.getCount());
+        ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
 
         if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
@@ -79,7 +88,7 @@ public class Publications_view extends AppCompatActivity {
 
     void Load_SERVICE(){
         SERVICES.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        /*String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
         for (int i = 0; i < 10; i++) {
             Service s = new Service();
@@ -93,8 +102,12 @@ public class Publications_view extends AppCompatActivity {
             s.setCote(new Random().nextInt(200));
             s.setNombreRealisation(new Random().nextInt(20));
             SERVICES.add(s);
-        }
+        }*/
 
+        SERVICE_L = GenerateData.listRandomService(list.getCount());
+        Log.e("FFFFFFFF", String.valueOf(SERVICE_L.size()));
+        Toast.makeText(context, String.valueOf(SERVICE_L.size()), Toast.LENGTH_SHORT).show();
+        SERVICES = (ArrayList<Service>) SERVICE_L;
         if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
             list.setAdapter(new Services_Base_Adapter(context, SERVICES));

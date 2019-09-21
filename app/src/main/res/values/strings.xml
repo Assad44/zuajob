@@ -149,6 +149,17 @@
     <string name="Share_message">
         Téléchargez l\'application Zua-Job sur Google play
     </string>
+    <string name="subtitre">se rendre service entre nous devint plus facile</string>
+    <string name="connecter_vous">Connectez-vous dès maintenant avec</string>
+    <string name="Se_connecter">Se connecter</string>
+    <string name="entrer_le_code">Entrer le code</string>
+    <string name="Nom">Nom</string>
+    <string name="Prénom">Prénom</string>
+    <string name="birthday">Date de naissance</string>
+    <string name="passeword">Mot de passe</string>
+    <string name="confirme_code">Confirmer le mot de passe</string>
+    <string name="Activer_les_notifications">Activer les notifications</string>
+    <string name="Devenir_prestateur">Passer en mode prestataire</string>
 
 
 </resources>

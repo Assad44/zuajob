@@ -33,6 +33,9 @@ import android.widget.Toast;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;*/
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +56,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import cd.maichapayteam.zuajob.R;
+import pl.droidsonroids.gif.GifDrawable;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
@@ -78,6 +82,19 @@ public class Tool {
         };
     }
 
+    // TODO LOAD IMAGES
+    public static void Load_Image(Context context, ImageView imageView, String url){
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(imageView)
+                    //.placeholder(R.drawable.avatar)
+                    .error(gifFromResource)
+                    .animateGif(AnimateGifMode.ANIMATE)
+                    .load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static SharedPreferences User_Preferences(Context context){
         return context.getSharedPreferences("User_Identities", MODE_PRIVATE);
@@ -122,7 +139,6 @@ public class Tool {
         spinner.setAdapter(adapter1);
     }
 
-
     //TODO : DATE & TIME
 
     /**
@@ -139,7 +155,6 @@ public class Tool {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         return dateFormat.format(aujourdhui);
     }
-
     /**
      * Méthode pour afficher le Date picker pour selectionner une datePublication
      * @param context
@@ -156,7 +171,6 @@ public class Tool {
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
         final String[] Date = {""};
-
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override

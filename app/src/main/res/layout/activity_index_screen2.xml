@@ -31,13 +31,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="209dp"
-                android:layout_height="54dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/Lorem_short"
+                android:text="@string/subtitre"
                 android:textColor="#56FFFFFF"
                 android:textSize="11dp"
                 android:textStyle="bold"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="-10dp"/>
 
             <TextView
@@ -63,7 +64,7 @@
                 android:background="@drawable/corner_primary_border_white"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="Se connecter"
+                android:text="@string/Se_connecter"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
 
@@ -82,9 +83,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Connectez_vous dès maintenant avec"
+                android:text="@string/connecter_vous"
                 android:textColor="@color/white"
-                android:textSize="15dp"/>
+                android:textSize="15dp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_marginLeft="5dp"

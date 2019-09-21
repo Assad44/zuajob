@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -57,7 +56,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         User S = DATA.get(position);
 
         nom.setText(S.getNom());
-        age.setText(new Date(S.getBirthday()).toString());
+        age.setText(S.getBirthday());
         MyRating.setRating(new Random().nextInt(5));
 
         /*int cote = S.getc;

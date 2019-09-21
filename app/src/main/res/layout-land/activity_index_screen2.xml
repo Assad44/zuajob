@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Front_end.Signup.index_screen">
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/KBimage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fond" />
+    <RelativeLayout
+        android:background="#a5000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zua-Job"
+                android:textColor="@color/white"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/subtitre"
+                android:textColor="#56FFFFFF"
+                android:textSize="11dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-10dp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:fontFamily="@font/alegreya_sans_thin"
+                android:id="@+id/btn_sinscrire"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/corner_blue_border_white"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sinscrire"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+            <TextView
+                android:textStyle="bold"
+                android:fontFamily="@font/alegreya_sans_thin"
+                android:id="@+id/btn_se_connecter"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/corner_primary_border_white"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Se_connecter"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connecter_vous"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zua-Job"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -45,6 +45,7 @@ import cd.maichapayteam.zuajob.Front_end.Mines.Mes_postulances;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
+import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
@@ -75,6 +76,8 @@ public class Home extends AppCompatActivity
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
     TextView phone, nom;
     ArrayList<Categorie> DATA = new ArrayList<>();
+
+    List<Categorie> DATA1 = new ArrayList<>();
     //HorizontalListView hlistview;
 
     private void Init_Components(){
@@ -116,12 +119,17 @@ public class Home extends AppCompatActivity
     }
 
     void Load_CAtegorie(){
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             Categorie c = new Categorie();
             c.setDesignation("Categorie "+i);
             c.setDescription(getResources().getString(R.string.Lorem_short));
             DATA.add(c);
-        }
+        }*/
+
+        // Todo loading datas
+        DATA1 = GenerateData.listCategorie();
+        DATA = (ArrayList<Categorie>) DATA1;
+
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
             int i = 0;
@@ -133,10 +141,14 @@ public class Home extends AppCompatActivity
                 ImageView img = responses.findViewById(R.id.img);
                 TextView description   = responses.findViewById(R.id.description);
 
-                title.setText(c.getDesignation());
+                title.setText( c.getDesignation());
                 description.setText(c.getDescription());
                 if (i%2 == 0)img.setImageResource(R.drawable.pub);
                 else img.setImageResource(R.drawable.pub4);
+
+                // Todo : Chargement des images par Ion librairy
+                Tool.Load_Image(context,img,"");
+                //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                 sous.addView(responses, 0);
 
@@ -147,6 +159,8 @@ public class Home extends AppCompatActivity
                         if (finalI != 0){
                             Intent i = new Intent(context, Sous_categories.class);
                             i.putExtra("title",c.getDesignation());
+                            String identifiant = String.valueOf(c.getId());
+                            i.putExtra("id",identifiant);
                             startActivity(i);
                             finish();
                         }else{
@@ -157,7 +171,7 @@ public class Home extends AppCompatActivity
                 });
 
                 if (i == 0){
-                    title.setText("Toute les catégories");
+                    title.setText("Autres catégories");
                     description.setText("");
                     img.setImageResource(R.drawable.ic_more_primary);
                     img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -358,6 +372,7 @@ public class Home extends AppCompatActivity
         sortie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(context, index_screen.class));
                 finish();
             }
         });
@@ -386,6 +401,7 @@ public class Home extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.publication) {
             Intent i = new Intent(context, Publication_blank.class);
+            i.putExtra("type", "other");
             startActivity(i);
             finish();
             return true;
@@ -397,18 +413,17 @@ public class Home extends AppCompatActivity
             return true;
         }
         if (id == R.id.share) {
-            Toast.makeText(context, "Not yet done", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (id == R.id.action_settings) {
             Tool.SHARE(context,getResources().getString(R.string.Share_message));
             return true;
         }
-        if (id == R.id.nav_exit) {
-            Tool.userPreferences_Init(context);
-            Intent i = new Intent(context, index_screen.class);
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(context, Paramettres.class);
             startActivity(i);
             finish();
+            return true;
+        }
+        if (id == R.id.nav_exit) {
+            exit_alert();
             return true;
         }
 
