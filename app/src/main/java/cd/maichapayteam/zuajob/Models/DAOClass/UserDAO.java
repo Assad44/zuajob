@@ -84,6 +84,8 @@ public class UserDAO extends DAOBase {
     public User ajouter(User object){
         try{
             if (find(object.getId())==null){
+
+                Log.e("User_AJOUTER", "posible");
                 ContentValues value = new ContentValues();
                 value.put(KEY, object.getId());
                 value.put(AUTH_CODE, object.getAuthCode());
@@ -113,6 +115,7 @@ public class UserDAO extends DAOBase {
                 close();
                 return find(retour);
             }else{
+                Log.e("User_AJOUTER", "posible");
                 modifier(object);
                 return find(object.getId());
             }
@@ -183,9 +186,9 @@ public class UserDAO extends DAOBase {
                 String sexe=c.getString(18);
                 String code_pays=c.getString(19);
                 String commune=c.getString(20);
-                String about=c.getString(21);
-                String description=c.getString(22);
-                int cote=c.getInt(23);
+                //String about=c.getString(21);
+                String description=c.getString(21);
+                int cote=c.getInt(22);
 
                 object = new User();
                 object.setId(_id);
@@ -212,11 +215,14 @@ public class UserDAO extends DAOBase {
                 object.setDescription(description);
                 object.setCote(cote);
             }
+            Log.e("User_FIND", object.toString());
             c.close();
             close();
             return object;
         }catch (Exception e){
+            Log.e("User_FIND_ER", e.getMessage());
             return null;
+
         }
     }
 
