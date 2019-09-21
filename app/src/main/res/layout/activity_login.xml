@@ -8,16 +8,6 @@
     android:background="@drawable/fond"
     tools:context=".Front_end.Signup.Login">
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:max="100"
-        android:backgroundTint="@color/white"
-        android:indeterminateTint="@color/colorAccent"
-        android:layout_marginTop="-7dp"/>
 
     <LinearLayout
         android:background="#BA000000"
@@ -44,12 +34,12 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="#9EFFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/Lorem_short"
-                android:textSize="15dp"/>
+                android:textSize="12dp"/>
 
 
         </LinearLayout>
@@ -72,7 +62,6 @@
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="9"
                     android:inputType="number"
                     android:hint="Téléphone"
                     android:singleLine="true"
@@ -116,6 +105,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/white"/>
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/BTNsignin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

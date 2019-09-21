@@ -24,8 +24,10 @@ import java.io.FileInputStream;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Myprofil extends AppCompatActivity {
@@ -57,19 +59,16 @@ public class Myprofil extends AppCompatActivity {
 
 
     private void Profil_initialize(){
-        nom.setText(
-                Tool.getUserPreferences(context,"nom") + " "+
-                Tool.getUserPreferences(context,"prenom")
-        );
-        number.setText(
-                Tool.getUserPreferences(context,"CountryCode") + " "+
-                Tool.getUserPreferences(context,"phone")
-        );
-        Sexe.setText(
-                Tool.getUserPreferences(context,"sexe") + " / "+
-                Tool.getUserPreferences(context,"birthday")
-        );
 
+        User u = GeneralClass.Currentuser;
+
+        nom.setText(
+                u.getNom() + " "+u.getPrenom()
+        );
+        number.setText(u.getPhone());
+        Sexe.setText(
+                u.getSexe()+ " / "+ u.getBirthday()
+        );
 
     }
 

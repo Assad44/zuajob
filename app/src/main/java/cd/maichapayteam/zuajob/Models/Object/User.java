@@ -293,6 +293,9 @@ public class User {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("error: ");
+        stringBuilder.append(error);
+        stringBuilder.append("\n");
         stringBuilder.append("Id: ");
         stringBuilder.append(id);
         stringBuilder.append("\n");
