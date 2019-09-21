@@ -56,7 +56,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         User S = DATA.get(position);
 
         nom.setText(S.getNom());
-        age.setText(S.getBirthday());
+        age.setText(String.valueOf(S.getBirthday()));
         MyRating.setRating(new Random().nextInt(5));
 
         /*int cote = S.getc;
