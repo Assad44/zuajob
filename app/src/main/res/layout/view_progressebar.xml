@@ -9,7 +9,6 @@
     android:background="@color/colorPrimary">
 
     <LinearLayout
-
         android:padding="30dp"
         android:id="@+id/write_zone"
         android:orientation="vertical"
