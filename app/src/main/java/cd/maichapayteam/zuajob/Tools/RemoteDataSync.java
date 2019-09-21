@@ -42,25 +42,24 @@ import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
-    private static String BASE_URL = "https://apizuajob.000webhostapp.com/v1/";
+    //private static String BASE_URL = "https://apizuajob.000webhostapp.com/v1/";
     //private static String BASE_URL = "http://157.245.44.245:8000/api/";
-    private static String BASE_URL2 = "http://192.168.43.230:8000/api/v1/";
+    private static String BASE_URL = "http://192.168.43.230:8000/api/v1/";
     //private static String BASE_URL = "http://192.168.43.60/zuajob/v1/";
 
     /**
     *   GET METHODS
      */
-//
+
     public static boolean checkNumero(String numero) {
-        numero = numero.replace("+", "");
-        String url = BASE_URL + "checknumero";
+        numero = numero.replace("+", "00");
+        String url = BASE_URL + "checknumero/" + numero;
         ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("phone", numero)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                boolean rep = response.getResult().getBoolean("exist");
+                boolean rep = response.getResult().getBoolean("existe");
                 return rep;
             } else {
                 if(response.getError()!=null) {
@@ -78,17 +77,17 @@ public class RemoteDataSync {
 
     public static long[] sendSMS(String numero) {
         long[] rep = new long[]{-1, -1};
-        String url = BASE_URL + "sendsms";
+        String url = BASE_URL + "users/";
 
-        numero = numero.replace("+", "");
+        numero = numero.replace("+", "00");
 
-        //JSONObject  jsonObject = new JSONObject ();
-        //try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
-        //try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
-        //try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
+        JSONObject  jsonObject = new JSONObject ();
+        try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
+        try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
+        try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
 
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("phone", numero)
+        ANRequest request = AndroidNetworking.post(url)
+                .addJSONObjectBody(jsonObject)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
@@ -260,7 +259,7 @@ public class RemoteDataSync {
     //}
 
     public static List<Categorie> getUserPreference () {
-        String url = BASE_URL2 + "userpreference/";
+        String url = BASE_URL + "userpreference/";
 
         List<Categorie> list = new ArrayList<>();
 
@@ -290,7 +289,7 @@ public class RemoteDataSync {
     }
 
     public static List<Categorie> getListCategorie () {
-        String url = BASE_URL2 + "category/";
+        String url = BASE_URL + "category/";
 
         List<Categorie> list = new ArrayList<>();
 
@@ -318,7 +317,7 @@ public class RemoteDataSync {
     }
 
     public static List<SousCategorie> getListSousCategorie () {
-        String url = BASE_URL2 + "undercat/";
+        String url = BASE_URL + "undercat/";
 
         List<SousCategorie> list = new ArrayList<>();
 
@@ -346,7 +345,7 @@ public class RemoteDataSync {
     }
 
     public static List<User> getListJobeur (int next) {
-        String url = BASE_URL2 + "listjobeur/";
+        String url = BASE_URL + "listjobeur/";
 
         List<User> list = new ArrayList<>();
 
@@ -375,7 +374,7 @@ public class RemoteDataSync {
     }
 
     public static List<User> getListJobeur (String keyword, int next) {
-        String url = BASE_URL2 + "listjobeur/";
+        String url = BASE_URL + "listjobeur/";
 
         List<User> list = new ArrayList<>();
 
@@ -405,7 +404,7 @@ public class RemoteDataSync {
     }
 
     public static List<Comment> getListComment (int next) {
-        String url = BASE_URL2 + "comment/";
+        String url = BASE_URL + "comment/";
 
         List<Comment> list = new ArrayList<>();
 
@@ -490,7 +489,7 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getRandomAnnonces (int next) {
-        String url = BASE_URL2 + "randomannonces/";
+        String url = BASE_URL + "randomannonces/";
 
         List<Annonce> list = new ArrayList<>();
 
@@ -520,7 +519,7 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getAnnonces (int next, long souscategorie) {
-        String url = BASE_URL2 + "annonces/";
+        String url = BASE_URL + "annonces/";
 
         List<Annonce> list = new ArrayList<>();
 
@@ -551,7 +550,7 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
-        String url = BASE_URL2 + "newannonces/";
+        String url = BASE_URL + "newannonces/";
 
         List<Annonce> list = new ArrayList<>();
 
@@ -582,7 +581,7 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getMesAnnonces () {
-        String url = BASE_URL2 + "mesannonces/";
+        String url = BASE_URL + "mesannonces/";
 
         List<Annonce> list = new ArrayList<>();
 
@@ -611,7 +610,7 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getMesServices () {
-        String url = BASE_URL2 + "messervices/";
+        String url = BASE_URL + "messervices/";
 
         List<Service> list = new ArrayList<>();
 
@@ -640,7 +639,7 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getNewServices (int next, long souscategorie) {
-        String url = BASE_URL2 + "newservices/";
+        String url = BASE_URL + "newservices/";
 
         List<Service> list = new ArrayList<>();
 
@@ -671,7 +670,7 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getRandomServices (int next) {
-        String url = BASE_URL2 + "randomservices/";
+        String url = BASE_URL + "randomservices/";
 
         List<Service> list = new ArrayList<>();
 
@@ -701,7 +700,7 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
-        String url = BASE_URL2 + "servicesbyrealisationcount/";
+        String url = BASE_URL + "servicesbyrealisationcount/";
 
         List<Service> list = new ArrayList<>();
 
@@ -732,7 +731,7 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getServicesByLevel (int next, int souscategorie) {
-        String url = BASE_URL2 + "servicesbylevel/";
+        String url = BASE_URL + "servicesbylevel/";
 
         List<Service> list = new ArrayList<>();
 
@@ -763,7 +762,7 @@ public class RemoteDataSync {
     }
 
     public static List<Postuler> getPostulants (long idAnnonce) {
-        String url = BASE_URL2 + "postulant/";
+        String url = BASE_URL + "postulant/";
 
         List<Postuler> list = new ArrayList<>();
 
@@ -793,7 +792,7 @@ public class RemoteDataSync {
     }
 
     public static List<Postuler> getHistoriqueRealisationByPostulance () {
-        String url = BASE_URL2 + "histobypoatulance/";
+        String url = BASE_URL + "histobypoatulance/";
 
         List<Postuler> list = new ArrayList<>();
 
@@ -822,7 +821,7 @@ public class RemoteDataSync {
     }
 
     public static List<Sollicitation> getHistoriqueRealisationBySollicitation () {
-        String url = BASE_URL2 + "histobysollicitation/";
+        String url = BASE_URL + "histobysollicitation/";
 
         List<Sollicitation> list = new ArrayList<>();
 
@@ -854,7 +853,7 @@ public class RemoteDataSync {
     * Les annonces auxquels moi j'ai postulé
     */
     public static List<Postuler> getMesPostulations () {
-        String url = BASE_URL2 + "maspostulation/";
+        String url = BASE_URL + "maspostulation/";
 
         List<Postuler> list = new ArrayList<>();
 
@@ -887,7 +886,7 @@ public class RemoteDataSync {
      * Les annonces auxquels moi j'ai sollicité
      */
     public static List<Sollicitation> getSollicitations (long idService) {
-        String url = BASE_URL2 + "sollicitation/";
+        String url = BASE_URL + "sollicitation/";
 
         List<Sollicitation> list = new ArrayList<>();
 
@@ -920,7 +919,7 @@ public class RemoteDataSync {
      * Les sollicitaations auxquels moi j'ai sollicité
      */
     public static List<Sollicitation> getMesSollicitations () {
-        String url = BASE_URL2 + "massollicitation/";
+        String url = BASE_URL + "massollicitation/";
 
         List<Sollicitation> list = new ArrayList<>();
 

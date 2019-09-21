@@ -26,20 +26,24 @@ public class GenerateData {
     private static List<User> listJobeurs() {
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         List<User> list = new ArrayList<>();
+        long max = userDAO.max();
         for (int i = 0; i < 1000; i++) {
             User user = GeneralClass.getRandomUser();
-            user.setId(userDAO.max()+1);
+            max++;
+            user.setId(max+1);
             user.setType(1);
-            user = userDAO.ajouter(GeneralClass.getRandomUser());
+            user = userDAO.ajouter(user);
             if(user!=null) list.add(user);
         }
         for (int i = 0; i < 1000; i++) {
             User user = GeneralClass.getRandomUser();
-            user.setId(userDAO.max()+1);
+            max++;
+            user.setId(max+1);
             user.setType(0);
-            user = userDAO.ajouter(GeneralClass.getRandomUser());
+            user = userDAO.ajouter(user);
             if(user!=null) list.add(user);
         }
+        Log.e("GenerateData", "all users:" + userDAO.count());
         return list;
     }
 
@@ -52,8 +56,11 @@ public class GenerateData {
     private static List<Service> listService() {
         List<Service> list = new ArrayList<>();
         List<Categorie> categorieList = CategorieDAO.getInstance(GeneralClass.applicationContext).getAll();
+        Log.e("GenerateData", "all users" + UserDAO.getInstance(GeneralClass.applicationContext).count());
         List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllJobeurs();
+        Log.e("GenerateData", String.valueOf(userList.size()));
         ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+        long max = serviceDAO.max();
         for (int i = 0; i < 1000; i++) {
             Categorie categorie = categorieList.get(GeneralClass.randBetween(0, categorieList.size()-1));
             List<SousCategorie> sousCategorieList = SousCategorieDAO.getInstance(GeneralClass.applicationContext).getAll(categorie);
@@ -69,7 +76,8 @@ public class GenerateData {
             service.setSousCategorie(sousCategorie.designation);
             service.setPhoneJobeur(prestateur.getCodePays() + prestateur.getPhone());
             service.setNomsJobeur(prestateur.getPrenom() + prestateur.getNom());
-            service.setId(serviceDAO.max()+1);
+            max = max + 1;
+            service.setId(max);
             service.setNombreRealisation(GeneralClass.randBetween(0, 100));
             service.setMontant(new Random().nextInt());
             String dev = "CDF";
@@ -248,7 +256,7 @@ public class GenerateData {
         return list;
     }
 
-    private static void generateAll() {
+    public static void generateAll() {
         CategorieDAO.createCategories();
         SousCategorie.createSousCategories();
         List<User> userList = listJobeurs();

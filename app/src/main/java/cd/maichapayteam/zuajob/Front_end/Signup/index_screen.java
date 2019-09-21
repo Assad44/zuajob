@@ -20,6 +20,8 @@ import cd.maichapayteam.zuajob.Models.Main;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -126,8 +128,8 @@ public class index_screen extends AppCompatActivity {
         }*/
 
 
-        //TestAsync2 testAsync = new TestAsync2();
-        //testAsync.execute();
+        TestAsync2 testAsync = new TestAsync2();
+        testAsync.execute();
 
 
     }
@@ -182,6 +184,94 @@ public class index_screen extends AppCompatActivity {
             return UserDAO.getInstance(GeneralClass.applicationContext).find(53);
 
             //return null;
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
+
+            AlertDialog.Builder adb = new AlertDialog.Builder(index_screen.this);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            if(user!=null) {
+                stringBuilder.append("Id: ");
+                stringBuilder.append(user.getId());
+                stringBuilder.append("\n");
+                stringBuilder.append("Prenom: ");
+                stringBuilder.append(user.getPrenom());
+                stringBuilder.append("\n");
+                stringBuilder.append("Nom: ");
+                stringBuilder.append(user.getNom());
+                stringBuilder.append("\n");
+                stringBuilder.append("Password: ");
+                stringBuilder.append(user.getPassword());
+                stringBuilder.append("\n");
+                stringBuilder.append("Code pays: ");
+                stringBuilder.append(user.getCodePays());
+                stringBuilder.append("\n");
+                stringBuilder.append("\n");
+                stringBuilder.append("Adresse: ");
+                stringBuilder.append(user.getAdresse());
+                stringBuilder.append("\n");
+                stringBuilder.append("Auth code: ");
+                stringBuilder.append(user.getAuthCode());
+                stringBuilder.append("\n");
+                stringBuilder.append("Birthday: ");
+                stringBuilder.append(user.getBirthday());
+                stringBuilder.append("\n");
+                stringBuilder.append("Commune: ");
+                stringBuilder.append(user.getCommune());
+                stringBuilder.append("\n");
+                stringBuilder.append("Email: ");
+                stringBuilder.append(user.getEmail());
+                stringBuilder.append("\n");
+                stringBuilder.append("Num identité: ");
+                stringBuilder.append(user.getNumIdentite());
+                stringBuilder.append("\n");
+                stringBuilder.append("Phone: ");
+                stringBuilder.append(user.getPhone());
+                stringBuilder.append("\n");
+                stringBuilder.append("Quartier: ");
+                stringBuilder.append(user.getQuartier());
+                stringBuilder.append("\n");
+                stringBuilder.append("Sexe: ");
+                stringBuilder.append(user.getSexe());
+                stringBuilder.append("\n");
+                stringBuilder.append("Type: ");
+                stringBuilder.append(user.getType());
+                stringBuilder.append("\n");
+                stringBuilder.append("Type identité: ");
+                stringBuilder.append(user.getTypeIdentite());
+                stringBuilder.append("\n");
+                stringBuilder.append("Url: ");
+                stringBuilder.append(user.getUrlPhoto());
+                stringBuilder.append("\n");
+                stringBuilder.append("Ville: ");
+                stringBuilder.append(user.getVille());
+                stringBuilder.append("\n");
+            } else {
+                stringBuilder.append("Le user est null");
+            }
+
+            adb.setMessage(stringBuilder);
+
+            adb.show();
+
+            Toast.makeText(index_screen.this, "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count(), Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private class TestAsync2 extends AsyncTask<String, String, User> {
+
+        @Override
+        protected User doInBackground(String... strings) {
+            //RemoteDataSync.getRandomUser(100);
+
+            GenerateData.generateAll();
+            //return UserDAO.getInstance(GeneralClass.applicationContext).find(53);
+
+            return null;
         }
 
         @Override

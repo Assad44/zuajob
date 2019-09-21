@@ -183,9 +183,8 @@ public class UserDAO extends DAOBase {
                 String sexe=c.getString(18);
                 String code_pays=c.getString(19);
                 String commune=c.getString(20);
-                String about=c.getString(21);
-                String description=c.getString(22);
-                int cote=c.getInt(23);
+                String description=c.getString(21);
+                int cote=c.getInt(22);
 
                 object = new User();
                 object.setId(_id);
@@ -278,12 +277,13 @@ public class UserDAO extends DAOBase {
             open();
             Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + TYPE + " = 1", new String[]{});
             while (c.moveToNext()) {
+                Log.e("GenerateData", "Jobeur " + c.getLong(0));
                 list.add(find(c.getLong(0)));
             }
             c.close();
             close();
         }catch (Exception e){
-
+            Log.e("GenerateData", "error " + e.getMessage());
         }
         return list;
     }
