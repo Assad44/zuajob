@@ -183,9 +183,8 @@ public class UserDAO extends DAOBase {
                 String sexe=c.getString(18);
                 String code_pays=c.getString(19);
                 String commune=c.getString(20);
-                String about=c.getString(21);
-                String description=c.getString(22);
-                int cote=c.getInt(23);
+                String description=c.getString(21);
+                int cote=c.getInt(22);
 
                 object = new User();
                 object.setId(_id);

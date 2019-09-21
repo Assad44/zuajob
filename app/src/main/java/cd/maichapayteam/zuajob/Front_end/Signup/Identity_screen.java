@@ -182,8 +182,10 @@ public class Identity_screen extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
             //return RemoteDataSync.confirmCode(numero, code);
-            //return ManageLocalData.createUser(user);
-            return  GenerateData.createUser(user);
+            User us = ManageLocalData.createUser(user);
+            if(!us.isError()) GenerateData.generateAll();
+            return us;
+            //return  GenerateData.createUser(user);
         }
 
         @Override

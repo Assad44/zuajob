@@ -173,8 +173,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
 
         @Override
         protected long[] doInBackground(String... strings) {
-            return new long[]{1, 123456};
-            //return RemoteDataSync.sendSMS(numero.replace(" ", ""));
+            //return new long[]{1, 123456};
+            return RemoteDataSync.sendSMS(numero.replace(" ", ""));
         }
 
         @Override

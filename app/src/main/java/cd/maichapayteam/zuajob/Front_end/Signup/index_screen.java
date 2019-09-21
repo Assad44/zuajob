@@ -128,8 +128,8 @@ public class index_screen extends AppCompatActivity {
         }*/
 
 
-        TestAsync2 testAsync = new TestAsync2();
-        testAsync.execute();
+        //TestAsync2 testAsync = new TestAsync2();
+        //testAsync.execute();
 
 
     }
@@ -268,7 +268,7 @@ public class index_screen extends AppCompatActivity {
         protected User doInBackground(String... strings) {
             //RemoteDataSync.getRandomUser(100);
 
-            GenerateData.generateAll();
+            //GenerateData.generateAll();
             //return UserDAO.getInstance(GeneralClass.applicationContext).find(53);
 
             return null;
