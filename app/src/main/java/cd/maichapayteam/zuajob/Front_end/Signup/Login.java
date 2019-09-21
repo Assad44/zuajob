@@ -192,13 +192,18 @@ public class Login extends AppCompatActivity {
             //TODO : dismiss a load dialog here
             if(result.error == false) {
                 GeneralClass.Currentuser = result;
-                Snack_log("Authentification erronées", R.color.colorAccent);
-                Intent i = new Intent(context, Home.class);
-                startActivity(i);
-                finish();
+                Snack_log("Authentification reussi", context.getResources().getColor(R.color.colorAccent));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(context, Home.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }, 1000);
             } else {
                 /*TODO Incorrect password or phone number, report to the user */
-                Snack_log("Authentification erronées", R.color.dark8);
+                Snack_log("Authentification erronées", context.getResources().getColor(R.color.red));
                 //Toast_log(context, "Error","Authentification erronées", R.color.red);
             }
 

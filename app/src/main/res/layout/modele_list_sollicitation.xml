@@ -75,7 +75,7 @@
 
             </LinearLayout>
 
-            <ImageView
+            <cd.maichapayteam.zuajob.Tools.RoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/avatar"
                 android:layout_width="85dp"
