@@ -56,9 +56,7 @@ public class GenerateData {
     private static List<Service> listService() {
         List<Service> list = new ArrayList<>();
         List<Categorie> categorieList = CategorieDAO.getInstance(GeneralClass.applicationContext).getAll();
-        Log.e("GenerateData", "all users" + UserDAO.getInstance(GeneralClass.applicationContext).count());
         List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllJobeurs();
-        Log.e("GenerateData", String.valueOf(userList.size()));
         ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
         long max = serviceDAO.max();
         for (int i = 0; i < 1000; i++) {
