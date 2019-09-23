@@ -190,7 +190,7 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(User result) {
             alert.cancel();
             //TODO : dismiss a load dialog here
-            if(result.error == false) {
+            if(result.isError() == false) {
                 GeneralClass.Currentuser = result;
                 Snack_log("Authentification reussi", context.getResources().getColor(R.color.colorAccent));
                 new Handler().postDelayed(new Runnable() {

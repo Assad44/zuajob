@@ -362,7 +362,7 @@ public class RemoteDataSync {
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
                     objectDAO.ajouter(object);
-                    Log.e("User", "id : " + object.id);
+                    Log.e("User", "id : " + object.getId());
                 }
             } else {
                 ANError error = response.getError();
@@ -392,7 +392,7 @@ public class RemoteDataSync {
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
                     objectDAO.ajouter(object);
-                    Log.e("User", "id : " + object.id);
+                    Log.e("User", "id : " + object.getId());
                 }
             } else {
                 ANError error = response.getError();
@@ -451,7 +451,7 @@ public class RemoteDataSync {
                 if(user!=null) {
                     Log.e("Users", "Login:\n" + user.toString());
                     if(!user.isError()) {
-                        user.myProfil = true;
+                        user.setMyProfil(true);
                         //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -469,9 +469,9 @@ public class RemoteDataSync {
                 }
             } else {
                 user = new User();
-                user.error = true;
-                user.errorCode = 319288;
-                user.errorMessage = response.getError().getMessage();
+                user.setError(true);
+                user.setErrorCode(319288);
+                user.setErrorMessage(response.getError().getMessage());
                 if(response.getError()!=null) {
                     Log.e("Users", "Login:AN error:" + response.getError().getErrorCode());
                 } else {
@@ -480,9 +480,9 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             user = new User();
-            user.error = true;
-            user.errorCode = 319288;
-            user.errorMessage = ex.getMessage();
+            user.setError(true);
+            user.setErrorCode(319288);
+            user.setErrorMessage(ex.getMessage());
             Log.e("Users", "Login:ex:" + ex.getMessage());
         }
 
@@ -995,7 +995,7 @@ public class RemoteDataSync {
 
         ANRequest request = AndroidNetworking.post(url)
                 .addJSONObjectBody(user.toJsonObject())
-                .setTag("user" + user.prenom + user.nom)
+                .setTag("user" + user.getPrenom() + user.getNom())
                 .setPriority(Priority.MEDIUM)
                 .build();
 
@@ -1006,7 +1006,7 @@ public class RemoteDataSync {
                 user = response.getResult();
                 if(user!=null) {
                     if(!user.isError()) {
-                        user.myProfil = true;
+                        user.setMyProfil(true);
                         //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -1024,9 +1024,9 @@ public class RemoteDataSync {
                 }
             } else {
                 user = new User();
-                user.error = true;
-                user.errorCode = 319288;
-                user.errorMessage = response.getError().getMessage();
+                user.setError(true);
+                user.setErrorCode(319288);
+                user.setErrorMessage(response.getError().getMessage());
                 if(response.getError()!=null) {
                     Log.e("Users", "Inscription:AN error:" + response.getError().getErrorCode());
                 } else {
@@ -1035,9 +1035,9 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             user = new User();
-            user.error = true;
-            user.errorCode = 319288;
-            user.errorMessage = ex.getMessage();
+            user.setError(true);
+            user.setErrorCode(319288);
+            user.setErrorMessage(ex.getMessage());
             Log.e("Users", "Inscription:ex:" + ex.getMessage());
         }
 
@@ -1585,7 +1585,7 @@ public class RemoteDataSync {
 
         ANRequest request = AndroidNetworking.put(url)
                 .addJSONObjectBody(user.toJsonObject())
-                .setTag("user" + user.id)
+                .setTag("user" + user.getId())
                 .setPriority(Priority.MEDIUM)
                 .build();
         try{
@@ -1594,7 +1594,7 @@ public class RemoteDataSync {
                 user = response.getResult();
                 if(user!=null) {
                     if(!user.isError()) {
-                        user.myProfil = true;
+                        user.setMyProfil(true);
                         //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -1612,9 +1612,9 @@ public class RemoteDataSync {
                 }
             } else {
                 user = new User();
-                user.error = true;
-                user.errorCode = 319288;
-                user.errorMessage = response.getError().getMessage();
+                user.setError(true);
+                user.setErrorCode(319288);
+                user.setErrorMessage(response.getError().getMessage());
                 if(response.getError()!=null) {
                     Log.e("Users", "Update:AN error:" + response.getError().getErrorCode());
                 } else {
@@ -1623,9 +1623,9 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             user = new User();
-            user.error = true;
-            user.errorCode = 319288;
-            user.errorMessage = ex.getMessage();
+            user.setError(true);
+            user.setErrorCode(319288);
+            user.setErrorMessage(ex.getMessage());
             Log.e("Users", "Update:ex:" + ex.getMessage());
         }
 
@@ -1821,59 +1821,59 @@ public class RemoteDataSync {
 
      **/
 
-    public static List<User> getRandomUser (int nombre) {
-        //String url = "https://randomuser.me/api/?results=100";
-        String url = "https://randomuser.me/api/";
-
-        List<User> userList = new ArrayList<>();
-
-        ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("results", String.valueOf(nombre))
-                .build();
-
-        try{
-            ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
-            UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
-            if (response.isSuccess()) {
-                Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
-                long i = userDAO.max();
-                for (User2 user2 : response.getResult().results) {
-                    i++;
-                    User user = new User();
-                    user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
-                    user.nom = user2.name.last.substring(0, 1).toUpperCase() + user2.name.last.substring(1);
-                    user.id = i;
-                    user.urlPhoto = user2.picture.thumbnail;
-                    user.type = 1;
-                    user.phone = String.valueOf(890000000 + new Random().nextInt(899999999 - 890000000));
-                    user.codePays = "+243";
-                    user.pays = "Congo DR";
-                    user.email = user2.email;
-                    user.sexe = "M";
-                    if(user2.gender.equals("female")) user.sexe = "F";
-
-                    userList.add(user);
-
-                    User u = userDAO.ajouter(user);
-
-                    if(u!=null) {
-                        Log.e("RandomUser", u.getPrenom() + " " + u.getNom());
-                    } else {
-                        Log.e("RandomUser", "Erreur lors de l'ajout de l'item " + user.getId());
-                    }
-
-                }
-            } else {
-                ANError error = response.getError();
-                Log.e("RandomUser", error.getMessage());
-            }
-        } catch (Exception ex) {
-            Log.e("RandomUser", ex.getMessage());
-        }
-
-        return userList;
-        //return new ArrayList<>();
-    }
+    //public static List<User> getRandomUser (int nombre) {
+    //    //String url = "https://randomuser.me/api/?results=100";
+    //    String url = "https://randomuser.me/api/";
+//
+    //    List<User> userList = new ArrayList<>();
+//
+    //    ANRequest request = AndroidNetworking.get(url)
+    //            .addQueryParameter("results", String.valueOf(nombre))
+    //            .build();
+//
+    //    try{
+    //        ANResponse<RandomUser> response = request.executeForObject(RandomUser.class);
+    //        UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
+    //        if (response.isSuccess()) {
+    //            Log.e("RandomUser", String.valueOf(response.getResult().results.size()));
+    //            long i = userDAO.max();
+    //            for (User2 user2 : response.getResult().results) {
+    //                i++;
+    //                User user = new User();
+    //                user.prenom = user2.name.first.substring(0, 1).toUpperCase() + user2.name.first.substring(1);
+    //                user.nom = user2.name.last.substring(0, 1).toUpperCase() + user2.name.last.substring(1);
+    //                user.id = i;
+    //                user.urlPhoto = user2.picture.thumbnail;
+    //                user.type = 1;
+    //                user.phone = String.valueOf(890000000 + new Random().nextInt(899999999 - 890000000));
+    //                user.codePays = "+243";
+    //                user.pays = "Congo DR";
+    //                user.email = user2.email;
+    //                user.sexe = "M";
+    //                if(user2.gender.equals("female")) user.sexe = "F";
+//
+    //                userList.add(user);
+//
+    //                User u = userDAO.ajouter(user);
+//
+    //                if(u!=null) {
+    //                    Log.e("RandomUser", u.getPrenom() + " " + u.getNom());
+    //                } else {
+    //                    Log.e("RandomUser", "Erreur lors de l'ajout de l'item " + user.getId());
+    //                }
+//
+    //            }
+    //        } else {
+    //            ANError error = response.getError();
+    //            Log.e("RandomUser", error.getMessage());
+    //        }
+    //    } catch (Exception ex) {
+    //        Log.e("RandomUser", ex.getMessage());
+    //    }
+//
+    //    return userList;
+    //    //return new ArrayList<>();
+    //}
 
     public static String getRandomParagraphe (int nombrePhrase) {
         String url = "https://baconipsum.com/api/?type=all-meat&sentences=" + String.valueOf(nombrePhrase) +"&start-with-lorem=0";

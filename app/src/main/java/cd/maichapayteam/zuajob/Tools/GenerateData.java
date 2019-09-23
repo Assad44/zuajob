@@ -87,7 +87,7 @@ public class GenerateData {
             }
             service.setDevise(dev);
             service.setIdSousCategorie(sousCategorie.id);
-            service.setIdJobeur(prestateur.id);
+            service.setIdJobeur(prestateur.getId());
             service.setCategorie(categorie.getDesignation());
             service.setIdCategorie(categorie.getId());
             service.setDescription(GeneralClass.getRandomPhrase(new Random().nextInt(4) + 1));
@@ -129,7 +129,7 @@ public class GenerateData {
             }
             annonce.setDevise(dev);
             annonce.setIdSousCategorie(sousCategorie.id);
-            annonce.setIdUser(user.id);
+            annonce.setIdUser(user.getId());
             annonce.setCategorie(categorie.getDesignation());
             annonce.setIdCategorie(categorie.getId());
             annonce.setDescription(GeneralClass.getRandomPhrase(new Random().nextInt(4) + 1));
@@ -158,7 +158,7 @@ public class GenerateData {
                 postuler.setNomsUser(prestateur.getPrenom() + " " + prestateur.getNom());
                 postuler.setIdUser(prestateur.getId());
             } else {
-                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.type==1) {
+                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.getType()==1) {
                     if(new Random().nextInt(20)==0) {
                         postuler.setHavePostuled(true);
                         postuler.setPhoneUser(annonce.getPhoneUser());
@@ -215,7 +215,7 @@ public class GenerateData {
                 sollicitation.setNomsUser(user.getPrenom() + " " + user.getNom());
                 sollicitation.setIdUser(user.getId());
             } else {
-                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.type==1) {
+                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.getType()==1) {
                     if(new Random().nextInt(20)==0) {
                         sollicitation.setHaveSollicited(true);
                         sollicitation.setPhoneUser(service.getPhoneJobeur());
@@ -285,11 +285,10 @@ public class GenerateData {
 
     public static User createUser(User user) {
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        user.id = userDAO.max() + 1;
-        user.authCode = generate(32);
-        user.myProfil = true;
+        user.setId(userDAO.max() + 1);
+        user.setAuthCode(generate(32));
+        user.setMyProfil(true);
         userDAO.ajouter(user);
-        //RemoteDataSync.getRandomUser(100);
         generateAll();
         return userDAO.ajouter(user);
     }
@@ -305,15 +304,16 @@ public class GenerateData {
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         User user = userDAO.findByPhoneNumer(phone);
         if(user!=null) {
-            if(user.password.equals(mdp)) {
-                RemoteDataSync.getRandomUser(100);
+            if(user.getPassword().equals(mdp)) {
+                generateAll();
+                //RemoteDataSync.getRandomUser(100);
                 return user;
             }
         }
         user = new User();
-        user.error = true;
-        user.errorCode = 36212;
-        user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
+        user.setError(true);
+        user.setErrorCode(36212);
+        user.setErrorMessage("Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.");
         return user;
     }
 

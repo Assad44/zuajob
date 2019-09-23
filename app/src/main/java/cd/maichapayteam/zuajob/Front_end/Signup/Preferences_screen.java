@@ -178,10 +178,10 @@ public class Preferences_screen extends AppCompatActivity {
         @Override
         protected void onPostExecute(User user) {
             //TODO : dismiss a load dialog here
-            if(user.error) {
+            if(user.isError()) {
                 //TODO il y a erreur d'ajout, le signaler à l'utilisateur
-                Log.e("CreateUser", user.errorMessage);
-                Toast.makeText(Preferences_screen.this, user.errorMessage, Toast.LENGTH_LONG).show();
+                Log.e("CreateUser", user.getErrorMessage());
+                Toast.makeText(Preferences_screen.this, user.getErrorMessage(), Toast.LENGTH_LONG).show();
             } else {
                 //Le user s'est incrit avec succès et ses informations sont enregistrées dans la base de données
                 Intent i = new Intent(context, Home.class);

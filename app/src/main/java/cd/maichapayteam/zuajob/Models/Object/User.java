@@ -20,35 +20,35 @@ import java.util.List;
 @Table(name = "user")
 public class User {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public String authCode = "";
-    public String prenom = "";
-    public String nom = "";
-    public String phone = "";
-    public String adresse = "";
-    public String pays = "";
-    public String ville = "";
-    public String quartier = "";
-    public String urlPhoto = "";
-    public String urlThumbnail = "";
-    public boolean identiteVerifie = false;
-    public String birthday = "";
-    public String description = "";
-    public int cote = 0;
-    public int typeIdentite = 0;
-    public String numIdentite = "";
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private String authCode = "";
+    private String prenom = "";
+    private String nom = "";
+    private String phone = "";
+    private String adresse = "";
+    private String pays = "";
+    private String ville = "";
+    private String quartier = "";
+    private String urlPhoto = "";
+    private String urlThumbnail = "";
+    private boolean identiteVerifie = false;
+    private String birthday = "";
+    private String description = "";
+    private int cote = 0;
+    private int typeIdentite = 0;
+    private String numIdentite = "";
 
     @JsonIgnoreProperties
-    public boolean myProfil = false;
-    public int type = 0;
-    public String email = "";
-    public String password = "";
-    public String sexe = "";
-    public String codePays = "+243";
-    public String commune = "";
+    private boolean myProfil = false;
+    private int type = 0;
+    private String email = "";
+    private String password = "";
+    private String sexe = "";
+    private String codePays = "+243";
+    private String commune = "";
 
     public String getDescription() {
         return description;
@@ -290,6 +290,7 @@ public class User {
         try { jsonObject.put("codePays", codePays); } catch (JSONException e) { }
         try { jsonObject.put("commune", commune); } catch (JSONException e) { }
         try { jsonObject.put("description", description); } catch (JSONException e) { }
+        try { jsonObject.put("urlThumbnail", urlThumbnail); } catch (JSONException e) { }
 
         return jsonObject;
     }

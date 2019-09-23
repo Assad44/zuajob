@@ -582,21 +582,21 @@ public class GeneralClass {
 
         User user = new User();
         //user.remoteId = new Random().nextInt();
-        user.prenom = prenom.get(new Random().nextInt(prenom.size()));
-        user.nom = nom.get(new Random().nextInt(nom.size()));
-        user.sexe = "F";
-        if(new Random().nextInt(2)==0) user.sexe = "M";
+        user.setPrenom(prenom.get(new Random().nextInt(prenom.size())));
+        user.setNom(nom.get(new Random().nextInt(nom.size())));
+        user.setSexe("F");
+        if(new Random().nextInt(2)==0) user.setSexe("M");
         //user.birthday = randomDate().toString();
-        user.phone = String.valueOf(randBetween(890000000, 899999999));
-        user.pays = "DR Congo";
-        user.codePays = "+243";
-        user.email = user.prenom.toLowerCase() + "." + user.nom.toLowerCase() + "@gmail.com";
-        user.ville = "Kinshasa";
-        user.commune = "Bandal";
-        user.quartier ="Lumumba";
-        user.adresse = "22, M'siri";
-        user.identiteVerifie = false;
-        if(new Random().nextInt(3) == 0) user.identiteVerifie = true;
+        user.setPhone(String.valueOf(randBetween(890000000, 899999999)));
+        user.setPays("DR Congo");
+        user.setCodePays("+243");
+        user.setEmail(user.getPrenom().toLowerCase() + "." + user.getNom().toLowerCase() + "@gmail.com");
+        user.setVille("Kinshasa");
+        user.setCommune("Bandal");
+        user.setQuartier("Lumumba");
+        user.setAdresse("22, M'siri");
+        user.setIdentiteVerifie(false);
+        if(new Random().nextInt(3) == 0) user.setIdentiteVerifie(true);
         return user;
     }
 

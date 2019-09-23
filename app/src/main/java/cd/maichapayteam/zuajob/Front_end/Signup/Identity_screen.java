@@ -195,7 +195,7 @@ public class Identity_screen extends AppCompatActivity {
                 /*TODO An orror are occured when signin, report to the user */
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(Identity_screen.this);
                 alertDialog.setTitle("Incription");
-                alertDialog.setMessage(result.errorMessage);
+                alertDialog.setMessage(result.getErrorMessage());
                 alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int j) {
