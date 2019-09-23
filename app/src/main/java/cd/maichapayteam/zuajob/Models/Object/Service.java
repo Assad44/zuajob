@@ -6,6 +6,9 @@ import com.activeandroid.annotation.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,24 +18,24 @@ import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Service {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public long idSousCategorie = -1;
-    public String sousCategorie = "";
-    public String description = "";
-    public String devise = "";
-    public float montant = 0;
-    public long idJobeur = -1;
-    public String nomsJobeur = "";
-    public String phoneJobeur = "";
-    public String urlImageJobeur = "";
-    public String datePublication = "";
-    public long idCategorie = -1;
-    public String categorie = "";
-    public int nombreRealisation = 0;
-    public int cote = 0;
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private long idSousCategorie = -1;
+    private String sousCategorie = "";
+    private String description = "";
+    private String devise = "";
+    private float montant = 0;
+    private long idJobeur = -1;
+    private String nomsJobeur = "";
+    private String phoneJobeur = "";
+    private String urlImageJobeur = "";
+    private String datePublication = "";
+    private long idCategorie = -1;
+    private String categorie = "";
+    private int nombreRealisation = 0;
+    private int cote = 0;
 
     public boolean isMy() {
         return isMy;
@@ -188,23 +191,16 @@ public class Service {
         this.datePublication = datePublication;
     }
 
-    public static ArrayList<Service> listService() {
-        ArrayList<Service> list = new ArrayList<>();
-        //List<User> listPrestateur = User.listJobeurs();
-        List<User> listPrestateur = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            //Service service = new Service();
-            //service.remoteId = i++;
-            //service.description = RemoteDataSync.getRandomParagraphe(new Random().nextInt(9) + 1);
-            //service.montant = new Random().nextFloat();
-            ////service.cotes = Cote.getListCote();
-            //service.nombreRealisation = new Random().nextInt();
-            //service.prestateur = listPrestateur.get(new Random().nextInt(listPrestateur.size())); //
-            ////service.devise = GeneralClass.getDAleatoire();
-            //service.sousCategorie = GeneralClass.getDAleatoireSCat(); //
-            //list.add(service);
-        }
-        return list;
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        try { jsonObject.put("id", id); } catch (JSONException e) { }
+        try { jsonObject.put("idSousCategorie", idSousCategorie); } catch (JSONException e) { }
+        try { jsonObject.put("description", description); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+
+        return jsonObject;
     }
 
 }

@@ -241,7 +241,7 @@ public class GenerateData {
                 }
             }
             sollicitation.setId(sollicitationDAO.max()+1);
-            sollicitation.setIdService(service.id);
+            sollicitation.setIdService(service.getId());
             sollicitation.setDescriptionService(service.getDescription());
             sollicitation.setMontant(service.getMontant());
             sollicitation.setDevise(service.getDevise());

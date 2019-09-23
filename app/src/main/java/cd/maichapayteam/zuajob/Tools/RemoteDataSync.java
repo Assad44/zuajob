@@ -627,7 +627,7 @@ public class RemoteDataSync {
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
-                    Log.e("MesService", "description : " + object.description);
+                    Log.e("MesService", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -658,7 +658,7 @@ public class RemoteDataSync {
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
-                    Log.e("NewService", "description : " + object.description);
+                    Log.e("NewService", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -688,7 +688,7 @@ public class RemoteDataSync {
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
-                    Log.e("RandomService", "description : " + object.description);
+                    Log.e("RandomService", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -719,7 +719,7 @@ public class RemoteDataSync {
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
-                    Log.e("NewService", "description : " + object.description);
+                    Log.e("NewService", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -750,7 +750,7 @@ public class RemoteDataSync {
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
-                    Log.e("NewService", "description : " + object.description);
+                    Log.e("NewService", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -1202,15 +1202,15 @@ public class RemoteDataSync {
                 }
             } else {
                 object = new Service();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
+                object.setError(true);
+                object.setErrorCode(31921);
+                object.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             object = new Service();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
+            object.setError(true);
+            object.setErrorCode(49288);
+            object.setErrorMessage(ex.getMessage());
         }
 
         return object;
@@ -1704,15 +1704,15 @@ public class RemoteDataSync {
                 }
             } else {
                 object = new Service();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
+                object.setError(true);
+                object.setErrorCode(31921);
+                object.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             object = new Service();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
+            object.setError(true);
+            object.setErrorCode(49288);
+            object.setErrorMessage(ex.getMessage());
         }
 
         return object;

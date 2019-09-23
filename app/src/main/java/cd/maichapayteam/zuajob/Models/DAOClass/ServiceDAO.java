@@ -24,7 +24,7 @@ public class ServiceDAO extends DAOBase {
     public static final String KEY = "_id";
     public static final String CATEGORIE = "cat";
     public static final String COTE = "cote";
-    public static final String DESCRIPTION = "desc";
+    public static final String DESCRIPTION = "descr";
     public static final String DEVISE = "dev";
     public static final String ID_CATEGORIE = "idcat";
     public static final String ID_JOBEUR = "idjob";
@@ -86,7 +86,7 @@ public class ServiceDAO extends DAOBase {
                 value.put(ID_SOUS_CATEGORIE, object.getIdSousCategorie());
                 value.put(MONTANT, object.getMontant());
                 value.put(NOMBRE_REALISATION, object.getNombreRealisation());
-                value.put(NOMBRE_REALISATION, object.getNomsJobeur());
+                value.put(NOMS_JOBEUR, object.getNomsJobeur());
                 value.put(PHONE_JOBEUR, object.getPhoneJobeur());
                 value.put(SOUS_CATEGORIE, object.getSousCategorie());
                 value.put(URL_PHOTO_JOBEUR, object.getUrlImageJobeur());
@@ -144,22 +144,22 @@ public class ServiceDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Service object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String cat=c.getString(1);
-                int cote=c.getInt(2);
-                String des=c.getString(3);
-                String dev=c.getString(4);
-                long idcat=c.getLong(5);
-                long idjob=c.getLong(6);
-                long idscat=c.getLong(7);
-                float mont=c.getFloat(8);
-                int nbrRel=c.getInt(9);
-                String nomsJob=c.getString(10);
-                String phoneJob=c.getString(11);
-                String sousCat=c.getString(12);
-                String urlImage=c.getString(13);
-                int ismy=c.getInt(14);
-                String date=c.getString(15);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String cat=c.getString(c.getColumnIndex(CATEGORIE));
+                int cote=c.getInt(c.getColumnIndex(COTE));
+                String des=c.getString(c.getColumnIndex(DESCRIPTION));
+                String dev=c.getString(c.getColumnIndex(DEVISE));
+                long idcat=c.getLong(c.getColumnIndex(ID_CATEGORIE));
+                long idjob=c.getLong(c.getColumnIndex(ID_JOBEUR));
+                long idscat=c.getLong(c.getColumnIndex(ID_SOUS_CATEGORIE));
+                float mont=c.getFloat(c.getColumnIndex(MONTANT));
+                int nbrRel=c.getInt(c.getColumnIndex(NOMBRE_REALISATION));
+                String nomsJob=c.getString(c.getColumnIndex(NOMS_JOBEUR));
+                String phoneJob=c.getString(c.getColumnIndex(PHONE_JOBEUR));
+                String sousCat=c.getString(c.getColumnIndex(SOUS_CATEGORIE));
+                String urlImage=c.getString(c.getColumnIndex(URL_PHOTO_JOBEUR));
+                int ismy=c.getInt(c.getColumnIndex(IS_MY));
+                String date=c.getString(c.getColumnIndex(DATE_PUBLICATION));
 
                 object = new Service();
                 object.setId(_id);
@@ -293,7 +293,7 @@ public class ServiceDAO extends DAOBase {
         value.put(ID_SOUS_CATEGORIE, object.getIdSousCategorie());
         value.put(MONTANT, object.getMontant());
         value.put(NOMBRE_REALISATION, object.getNombreRealisation());
-        value.put(NOMBRE_REALISATION, object.getNomsJobeur());
+        value.put(NOMS_JOBEUR, object.getNomsJobeur());
         value.put(PHONE_JOBEUR, object.getPhoneJobeur());
         value.put(SOUS_CATEGORIE, object.getSousCategorie());
         value.put(URL_PHOTO_JOBEUR, object.getUrlImageJobeur());
