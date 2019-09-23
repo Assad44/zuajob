@@ -1244,15 +1244,15 @@ public class RemoteDataSync {
                 }
             } else {
                 object = new Comment();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
+                object.setError(true);
+                object.setErrorCode(31921);
+                object.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             object = new Comment();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
+            object.setError(true);
+            object.setErrorCode(49288);
+            object.setErrorMessage(ex.getMessage());
         }
 
         return object;

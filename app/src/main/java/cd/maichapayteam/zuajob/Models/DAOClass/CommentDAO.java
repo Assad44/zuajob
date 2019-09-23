@@ -13,7 +13,7 @@ import cd.maichapayteam.zuajob.Models.Object.Comment;
 public class CommentDAO extends DAOBase {
 
     public static final String KEY = "_id";
-    public static final String COMMENT = "Comment";
+    public static final String COMMENT = "comment";
     public static final String DATE = "datee";
     public static final String ID_USER = "id_user";
     public static final String NOMS_USER = "noms_user";
@@ -97,15 +97,15 @@ public class CommentDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Comment object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String com=c.getString(1);
-                String date=c.getString(2);
-                long idu=c.getLong(3);
-                String noms=c.getString(4);
-                String url=c.getString(5);
-                long iduc=c.getLong(6);
-                String nomsc=c.getString(7);
-                String urlc=c.getString(8);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String com=c.getString(c.getColumnIndex(COMMENT));
+                String date=c.getString(c.getColumnIndex(DATE));
+                long idu=c.getLong(c.getColumnIndex(ID_USER));
+                String noms=c.getString(c.getColumnIndex(NOMS_USER));
+                String url=c.getString(c.getColumnIndex(URL_IMAGE_USER));
+                long iduc=c.getLong(c.getColumnIndex(ID_USER_CONCERNE));
+                String nomsc=c.getString(c.getColumnIndex(NOMS_USER_CONCERNE));
+                String urlc=c.getString(c.getColumnIndex(URL_IMAGE_USER_CONCERNE));
 
                 object = new Comment();
                 object.setId(_id);

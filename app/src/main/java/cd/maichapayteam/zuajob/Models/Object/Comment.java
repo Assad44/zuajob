@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    long id = -1;
-    String comment = "";
-    long idUser = -1;
-    String nomsUser = "";
-    String urlImageUser = "";
-    long idUserConcerne = -1;
-    String nomsUserConcerne = "";
-    String urlImageUserConcerne = "";
-    String date = "";
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private String comment = "";
+    private long idUser = -1;
+    private String nomsUser = "";
+    private String urlImageUser = "";
+    private long idUserConcerne = -1;
+    private String nomsUserConcerne = "";
+    private String urlImageUserConcerne = "";
+    private String date = "";
 
     public long getIdUser() {
         return idUser;
