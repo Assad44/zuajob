@@ -150,8 +150,8 @@ public class PhoneConfirm_screen extends AppCompatActivity implements IncomingSm
         @Override
         protected String doInBackground(String... strings) {
             progressDialog.setMessage("La confirmation du code saisi est encours...");
-            return String.valueOf(code.equals("123456"));
-            //return ManageLocalData.confirmCode(userId, code);
+            //return String.valueOf(code.equals("123456"));
+            return ManageLocalData.confirmCode(userId, code);
         }
 
         @Override

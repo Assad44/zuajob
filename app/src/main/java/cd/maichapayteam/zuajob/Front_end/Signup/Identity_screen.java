@@ -128,7 +128,7 @@ public class Identity_screen extends AppCompatActivity {
                 u.setPays(Tool.getUserPreferences(context,"CountryName"));
                 u.setCodePays(Tool.getUserPreferences(context,"CountryCode"));
                 String phone = Tool.getUserPreferences(context,"CountryCode") + Tool.getUserPreferences(context,"phone");
-                u.setPhone(phone.replace("+", "00"));
+                u.setPhone(phone.replace("+", ""));
 
                 InscriptionAsync inscriptionAsync = new InscriptionAsync(u);
                 inscriptionAsync.execute();

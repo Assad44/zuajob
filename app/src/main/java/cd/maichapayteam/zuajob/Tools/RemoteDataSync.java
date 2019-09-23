@@ -42,8 +42,8 @@ import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
-    //private static String BASE_URL = "https://apizuajob.000webhostapp.com/v1/";
-    private static String BASE_URL = "http://157.245.44.245:8000/api/";
+    private static String BASE_URL = "http://apizuajob.000webhostapp.com/v1/";
+    //private static String BASE_URL = "http://157.245.44.245:8000/api/";
     //private static String BASE_URL = "http://192.168.43.230:8000/api/v1/";
     //private static String BASE_URL = "http://192.168.43.60/zuajob/v1/";
 
@@ -52,14 +52,16 @@ public class RemoteDataSync {
      */
 //
     public static boolean checkNumero(String numero) {
-        numero = numero.replace("+", "00");
-        String url = BASE_URL + "checknumero/" + numero;
-        ANRequest request = AndroidNetworking.put(url)
+        numero = numero.replace("+", "");
+        String url = BASE_URL + "checknumero";
+        ANRequest request = AndroidNetworking.get(url)
+                .addQueryParameter("phone", numero)
                 .build();
+        //Log.e("Users", "Url:" + url);
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                boolean rep = response.getResult().getBoolean("existe");
+                boolean rep = response.getResult().getBoolean("exist");
                 return rep;
             } else {
                 if(response.getError()!=null) {
@@ -77,16 +79,11 @@ public class RemoteDataSync {
 
     public static long[] sendSMS(String numero) {
         long[] rep = new long[]{-1, -1};
-        String url = BASE_URL + "users/";
+        String url = BASE_URL + "sendsms";
 
-        numero = numero.replace("+", "00");
+        numero = numero.replace("+", "");
 
-        JSONObject  jsonObject = new JSONObject ();
-        try {jsonObject.put("telephone", numero); } catch (JSONException e) { }
-        try {jsonObject.put("username", "anonyme"); } catch (JSONException e) { }
-        try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
-
-        ANRequest request = AndroidNetworking.post(url)
+        ANRequest request = AndroidNetworking.get(url)
                 .addQueryParameter("phone", numero)
                 .build();
         try{
@@ -118,7 +115,7 @@ public class RemoteDataSync {
     }
 
     public static String confirmCode(long id, String code) {
-        String url = BASE_URL + "code/" + id + "/" + code;
+        String url = BASE_URL + "confirmcode/" + id + "/" + code;
         Log.e("Users", "confirmCode:url:" + url);
 
         ANRequest request = AndroidNetworking.get(url)
@@ -127,10 +124,8 @@ public class RemoteDataSync {
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                boolean r = response.getResult().getBoolean("success");
-                String rep = "hdjshdhhdsd";
-                if(!r) rep = "";
-                Log.e("Users", "confirmCode:ok:hdjshdhhdsd");
+                String rep = response.getResult().getString("authCode");
+                Log.e("Users", "confirmCode:ok:" + rep);
                 return rep;
             } else {
                 if(response.getError()!=null) {
@@ -999,7 +994,7 @@ public class RemoteDataSync {
                 .setPriority(Priority.MEDIUM)
                 .build();
 
-        //Log.e("Users", "Inscription:avant net" + user.toString());
+        Log.e("Users", "Inscription:avant net" + user.toString());
         try{
             ANResponse<User> response = request.executeForObject(User.class);
             if (response.isSuccess()) {
@@ -1007,7 +1002,7 @@ public class RemoteDataSync {
                 if(user!=null) {
                     if(!user.isError()) {
                         user.setMyProfil(true);
-                        //Log.e("Users", "Inscription:after net" + user.toString());
+                        Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
                         if(user==null) {
