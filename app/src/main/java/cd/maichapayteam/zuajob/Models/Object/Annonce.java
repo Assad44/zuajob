@@ -2,6 +2,9 @@ package cd.maichapayteam.zuajob.Models.Object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Annonce {
 
@@ -166,6 +169,28 @@ public class Annonce {
 
     public void setConfied(boolean confied) {
         isConfied = confied;
+    }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        try { jsonObject.put("id", id); } catch (JSONException e) { }
+        try { jsonObject.put("idSousCategorie", idSousCategorie); } catch (JSONException e) { }
+        try { jsonObject.put("sousCategorie", sousCategorie); } catch (JSONException e) { }
+        try { jsonObject.put("description", description); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("idUser", idUser); } catch (JSONException e) { }
+        try { jsonObject.put("nomsUser", nomsUser); } catch (JSONException e) { }
+        try { jsonObject.put("phoneUser", phoneUser); } catch (JSONException e) { }
+        try { jsonObject.put("urlImageUser", urlImageUser); } catch (JSONException e) { }
+        try { jsonObject.put("idCategorie", idCategorie); } catch (JSONException e) { }
+        try { jsonObject.put("categorie", categorie); } catch (JSONException e) { }
+        try { jsonObject.put("datePublication", datePublication); } catch (JSONException e) { }
+        try { jsonObject.put("isConfied", isConfied); } catch (JSONException e) { }
+        try { jsonObject.put("isMy", isMy); } catch (JSONException e) { }
+
+        return jsonObject;
     }
 
 }

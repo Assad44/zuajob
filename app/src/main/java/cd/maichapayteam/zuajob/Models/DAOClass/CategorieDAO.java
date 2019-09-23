@@ -90,11 +90,11 @@ public class CategorieDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Categorie object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String designation=c.getString(1);
-                String description=c.getString(2);
-                String url=c.getString(3);
-                int up=c.getInt(4);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String designation=c.getString(c.getColumnIndex(DESIGNATION));
+                String description=c.getString(c.getColumnIndex(DESCRIPTION));
+                String url=c.getString(c.getColumnIndex(URL_IMAGE));
+                int up=c.getInt(c.getColumnIndex(USER_PREFERENCE));
 
                 object = new Categorie();
                 object.setId(_id);
@@ -172,92 +172,16 @@ public class CategorieDAO extends DAOBase {
     public static void createCategories() {
         CategorieDAO categorieDAO = new CategorieDAO(GeneralClass.applicationContext);
 
-        int id = 1;
-        Categorie categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Bricolage";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
+        String elments[] = new String[]{"Bricolage", "Jardinage", "Déménagement", "Ménage", "Garde enfant", "Annimaux", "Informatique", "Consciergérie", "Sport", "Rencontre", "Auto", "Coursieux"};
 
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Jardinage";
-        categorie.description = "Description catégorie";
-        categorie.setUserPreference(true);
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Déménagement";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Ménage";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Garde enfant";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Annimaux";
-        categorie.description = "Description catégorie";
-        categorie.setUserPreference(true);
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Informatique";
-        categorie.description = "Description catégorie";
-        categorie.setUserPreference(true);
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Consciergérie";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Sport";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Rencontre";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Auto";
-        categorie.description = "Description catégorie";
-        categorieDAO.ajouter(categorie);
-
-        id++;
-        categorie = new Categorie();
-        categorie.id = id;
-        categorie.designation = "Coursieux";
-        categorie.description = "Description catégorie";
-        categorie.setUserPreference(true);
-        categorieDAO.ajouter(categorie);
+        for (int i = 0; i < elments.length; i++) {
+            Categorie categorie = new Categorie();
+            categorie.setId(i+1);
+            categorie.setDesignation(elments[i]);
+            categorie.setDescription("Description catégorie");
+            categorie.setUserPreference(true);
+            categorieDAO.ajouter(categorie);
+        }
     }
+
 }

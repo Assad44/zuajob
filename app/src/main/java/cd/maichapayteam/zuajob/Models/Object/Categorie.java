@@ -12,15 +12,14 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Categorie {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public String designation = "";
-    public String description = "";
-    public String urlImage = "";
-
-    public boolean userPreference = false;
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private String designation = "";
+    private String description = "";
+    private String urlImage = "";
+    private boolean userPreference = false;
 
     public boolean isError() {
         return error;

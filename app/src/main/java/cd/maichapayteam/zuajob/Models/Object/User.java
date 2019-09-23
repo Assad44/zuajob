@@ -269,6 +269,7 @@ public class User {
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
 
+        try { jsonObject.put("id", id); } catch (JSONException e) { }
         try { jsonObject.put("authCode", authCode); } catch (JSONException e) { }
         try { jsonObject.put("prenom", prenom); } catch (JSONException e) { }
         try { jsonObject.put("nom", nom); } catch (JSONException e) { }

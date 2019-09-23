@@ -277,7 +277,7 @@ public class RemoteDataSync {
                 for (Categorie object : list) {
                     object.setUserPreference(true);
                     cdao.ajouter(object);
-                    Log.e("Category", "designation : " + object.designation);
+                    Log.e("Category", "designation : " + object.getDesignation());
                 }
             } else {
                 ANError error = response.getError();
@@ -305,7 +305,7 @@ public class RemoteDataSync {
                 CategorieDAO cdao = new CategorieDAO(GeneralClass.applicationContext);
                 for (Categorie object : list) {
                     cdao.ajouter(object);
-                    Log.e("Category", "designation : " + object.designation);
+                    Log.e("Category", "designation : " + object.getDesignation());
                 }
             } else {
                 ANError error = response.getError();
