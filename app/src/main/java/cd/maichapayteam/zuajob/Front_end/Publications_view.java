@@ -67,11 +67,11 @@ public class Publications_view extends AppCompatActivity {
             Annonce s = new Annonce();
             s.setNomsUser(Tool.Versions()[i]);
             s.setDescription(description);
-            s.setMontant(new Random().nextInt(50));
+            s.setMontantAnnonce(new Random().nextInt(50));
             s.setCategorie("Catégorie "+i);
             s.setSousCategorie("Sous catégorie "+i);
             s.setDatePublication("2019-09-09 23:57:00");
-            s.setDevise("USD");
+            s.setDeviseAnnonce("USD");
             s.setPhoneUser("+243 81 451 10 83");
             ANNOCE.add(s);
         }*/
@@ -94,10 +94,10 @@ public class Publications_view extends AppCompatActivity {
             Service s = new Service();
             s.setNomsJobeur(Tool.Versions()[i]);
             s.setDescription(description);
-            s.setMontant(new Random().nextInt(50));
+            s.setMontantAnnonce(new Random().nextInt(50));
             s.setCategorie("Catégorie "+i);
             s.setSousCategorie("Sous catégorie "+i);
-            s.setDevise("USD");
+            s.setDeviseAnnonce("USD");
             s.setPhoneJobeur("+243 81 451 10 83");
             s.setCote(new Random().nextInt(200));
             s.setNombreRealisation(new Random().nextInt(20));

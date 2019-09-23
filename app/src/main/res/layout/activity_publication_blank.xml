@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content">
 
                     <Spinner
-                        android:id="@+id/devise"
+                        android:id="@+id/deviseAnnonce"
                         android:gravity="center"
                         android:entries="@array/Devise"
                         android:padding="10dp"
@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"/>
 
                     <EditText
-                        android:id="@+id/montant"
+                        android:id="@+id/montantAnnonce"
                         android:drawablePadding="10dp"
                         android:textStyle="bold"
                         android:padding="15dp"

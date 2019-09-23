@@ -85,8 +85,8 @@ public class PostulerDAO extends DAOBase {
                 value.put(KEY, object.getId());
                 value.put(ID_ANNONCE, object.getIdAnnonce());
                 value.put(DESCRIPTION_ANNONCE, object.getDescriptionAnnonce());
-                value.put(MONTANT_ANNONCE, object.getMontant());
-                value.put(DEVISE, object.getDevise());
+                value.put(MONTANT_ANNONCE, object.getMontantAnnonce());
+                value.put(DEVISE, object.getDeviseAnnonce());
                 value.put(NOM_USER, object.getNomsUser());
                 value.put(PHONE_USER, object.getPhoneUser());
                 value.put(ID_USER, object.getIdUser());
@@ -182,7 +182,7 @@ public class PostulerDAO extends DAOBase {
                 object.setId(_id);
                 object.setIdAnnonce(ids);
                 object.setDescriptionAnnonce(des);
-                object.setMontant(mont);
+                object.setMontantAnnonce(mont);
                 object.setNomsUser(nomu);
                 object.setPhoneUser(phnu);
                 object.setIdUser(idu);
@@ -197,7 +197,7 @@ public class PostulerDAO extends DAOBase {
                 object.setDeviseConclu(devc);
                 object.setDateRDV(datec);
                 object.setHeureRDV(heure);
-                object.setDevise(dev);
+                object.setDeviseAnnonce(dev);
                 object.setCote(cote);
                 object.setComment(com);
                 if(ismy==1) object.setMy(true);
@@ -260,8 +260,8 @@ public class PostulerDAO extends DAOBase {
         ContentValues value = new ContentValues();
         value.put(ID_ANNONCE, object.getIdAnnonce());
         value.put(DESCRIPTION_ANNONCE, object.getDescriptionAnnonce());
-        value.put(MONTANT_ANNONCE, object.getMontant());
-        value.put(DEVISE, object.getDevise());
+        value.put(MONTANT_ANNONCE, object.getMontantAnnonce());
+        value.put(DEVISE, object.getDeviseAnnonce());
         value.put(NOM_USER, object.getNomsUser());
         value.put(PHONE_USER, object.getPhoneUser());
         value.put(ID_USER, object.getIdUser());

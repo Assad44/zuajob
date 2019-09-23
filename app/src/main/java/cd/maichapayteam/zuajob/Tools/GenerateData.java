@@ -185,9 +185,9 @@ public class GenerateData {
             }
             postuler.setId(postulerDAO.max()+1);
             postuler.setIdAnnonce(annonce.getId());
-            postuler.descriptionAnnonce = annonce.getDescription();
-            postuler.setMontant(annonce.getMontant());
-            postuler.setDevise(annonce.getDevise());
+            postuler.setDescriptionAnnonce(annonce.getDescription());
+            postuler.setMontantAnnonce(annonce.getMontant());
+            postuler.setDeviseAnnonce(annonce.getDevise());
             postuler.setDate(GeneralClass.randomDate().toString());
             postuler.setComment(GeneralClass.getRandomPhrase(1));
             postuler.setCote(new Random().nextInt(6));

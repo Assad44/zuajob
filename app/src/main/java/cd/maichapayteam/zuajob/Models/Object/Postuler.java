@@ -2,33 +2,36 @@ package cd.maichapayteam.zuajob.Models.Object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Postuler {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public long idAnnonce = -1;
-    public String descriptionAnnonce = "";
-    public float montant = 0;
-    public String devise = "";
-    public long idUser = -1;
-    public String nomsUser = "";
-    public String phoneUser = "";
-    public String urlImageUser = "";
-    public String date = "";
-    public int statut = 0;
-    public boolean isRDV = false;
-    public boolean isConclu = false;
-    public float montantConclu = 0;
-    public String deviseConclu = "";
-    public String dateRDV = "";
-    public String heureRDV = "";
-    public int cote = 0;
-    public String comment = "";
-    public boolean havePostuled = false;
-    public boolean isMy = false;
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private long idAnnonce = -1;
+    private String descriptionAnnonce = "";
+    private float montantAnnonce = 0;
+    private String deviseAnnonce = "";
+    private long idUser = -1;
+    private String nomsUser = "";
+    private String phoneUser = "";
+    private String urlImageUser = "";
+    private String date = "";
+    private int statut = 0;
+    private boolean isRDV = false;
+    private boolean isConclu = false;
+    private float montantConclu = 0;
+    private String deviseConclu = "";
+    private String dateRDV = "";
+    private String heureRDV = "";
+    private int cote = 0;
+    private String comment = "";
+    private boolean havePostuled = false;
+    private boolean isMy = false;
 
     public boolean isMy() {
         return isMy;
@@ -86,20 +89,20 @@ public class Postuler {
         this.descriptionAnnonce = descriptionAnnonce;
     }
 
-    public float getMontant() {
-        return montant;
+    public float getMontantAnnonce() {
+        return montantAnnonce;
     }
 
-    public void setMontant(float montant) {
-        this.montant = montant;
+    public void setMontantAnnonce(float montantAnnonce) {
+        this.montantAnnonce = montantAnnonce;
     }
 
-    public String getDevise() {
-        return devise;
+    public String getDeviseAnnonce() {
+        return deviseAnnonce;
     }
 
-    public void setDevise(String devise) {
-        this.devise = devise;
+    public void setDeviseAnnonce(String deviseAnnonce) {
+        this.deviseAnnonce = deviseAnnonce;
     }
 
     public long getIdUser() {
@@ -220,6 +223,15 @@ public class Postuler {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        try { jsonObject.put("id", id); } catch (JSONException e) { }
+        try { jsonObject.put("idAnnonce", idAnnonce); } catch (JSONException e) { }
+
+        return jsonObject;
     }
 
 }

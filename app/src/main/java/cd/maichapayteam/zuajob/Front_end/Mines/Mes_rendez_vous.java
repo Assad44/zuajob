@@ -40,10 +40,10 @@ public class Mes_rendez_vous extends AppCompatActivity {
             Sollicitation s = new Sollicitation();
             s.setNomsUser(Tool.Versions()[i]);
             s.setDescriptionService(description);
-            s.setMontant(new Random().nextInt(50));
+            s.setMontantAnnonce(new Random().nextInt(50));
             s.setCategorie("Catégorie "+i);
             s.setSouscategorie("Sous catégorie "+i);
-            s.setDevise("USD");
+            s.setDeviseAnnonce("USD");
             s.setPhoneUser("+243 81 451 10 83");
             String m = String.valueOf(j);
             if (m.length()<= 1){

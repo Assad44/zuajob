@@ -40,11 +40,11 @@ public class Publication_blank extends AppCompatActivity {
 
     private void Init_Components(){
         Publication_type = findViewById(R.id.Publication_type);
-        devise = findViewById(R.id.devise);
+        devise = findViewById(R.id.deviseAnnonce);
         categorie = findViewById(R.id.categorie);
         sous_categorie = findViewById(R.id.sous_categorie);
         description = findViewById(R.id.description);
-        montant = findViewById(R.id.montant);
+        montant = findViewById(R.id.montantAnnonce);
         btn_validate = findViewById(R.id.btn_validate);
 
 

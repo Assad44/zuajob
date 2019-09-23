@@ -780,7 +780,7 @@ public class RemoteDataSync {
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
                     cdao.ajouter(object);
-                    Log.e("Postuler", "description : " + object.descriptionAnnonce);
+                    Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
                 }
             } else {
                 ANError error = response.getError();
@@ -809,7 +809,7 @@ public class RemoteDataSync {
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
                     cdao.ajouter(object);
-                    Log.e("histobypoatulance", "description : " + object.descriptionAnnonce);
+                    Log.e("histobypoatulance", "description : " + object.getDescriptionAnnonce());
                 }
             } else {
                 ANError error = response.getError();
@@ -871,7 +871,7 @@ public class RemoteDataSync {
                 for (Postuler object : list) {
                     object.setHavePostuled(true);
                     cdao.ajouter(object);
-                    Log.e("Postuler", "description : " + object.descriptionAnnonce);
+                    Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
                 }
             } else {
                 ANError error = response.getError();
@@ -1050,7 +1050,7 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .setTag("postuler" + postuler.phoneUser)
+                    .setTag("postuler" + postuler.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
@@ -1073,15 +1073,15 @@ public class RemoteDataSync {
                 }
             } else {
                 postuler = new Postuler();
-                postuler.error = true;
-                postuler.errorCode = 31921;
-                postuler.errorMessage = response.getError().getMessage();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             postuler = new Postuler();
-            postuler.error = true;
-            postuler.errorCode = 49288;
-            postuler.errorMessage = ex.getMessage();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
         }
 
         return postuler;
@@ -1290,15 +1290,15 @@ public class RemoteDataSync {
                 }
             } else {
                 postuler = new Postuler();
-                postuler.error = true;
-                postuler.errorCode = 31921;
-                postuler.errorMessage = response.getError().getMessage();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             postuler = new Postuler();
-            postuler.error = true;
-            postuler.errorCode = 49288;
-            postuler.errorMessage = ex.getMessage();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
         }
 
         return postuler;
@@ -1382,15 +1382,15 @@ public class RemoteDataSync {
                 }
             } else {
                 postuler = new Postuler();
-                postuler.error = true;
-                postuler.errorCode = 31921;
-                postuler.errorMessage = response.getError().getMessage();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             postuler = new Postuler();
-            postuler.error = true;
-            postuler.errorCode = 49288;
-            postuler.errorMessage = ex.getMessage();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
         }
 
         return postuler;
