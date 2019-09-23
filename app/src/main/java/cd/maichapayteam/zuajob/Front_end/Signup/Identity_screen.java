@@ -120,13 +120,7 @@ public class Identity_screen extends AppCompatActivity {
                 User u = new User();
                 u.setNom(Tool.getUserPreferences(context,"nom"));
                 u.setPrenom(Tool.getUserPreferences(context,"prenom"));
-                String[] birth = Tool.getUserPreferences(context,"birthday").split("-");
-
-                Date date = new Date(Integer.parseInt(birth[2])-1900, Integer.parseInt(birth[1])-1, Integer.parseInt(birth[0]));
-                u.setBirthday(date.getSeconds());
-                //Log.e("Users", birth[2] + birth[1] + birth[0]);
-                //Log.e("Users", String.valueOf(date.toLocaleString()));
-                //Log.e("Users", String.valueOf(date.getTime()));
+                u.setBirthday(Tool.getUserPreferences(context,"birthday"));
                 u.setSexe(Tool.getUserPreferences(context,"sexe"));
                 u.setPassword(Tool.getUserPreferences(context,"passe"));
                 u.setType(Integer.parseInt(Tool.getUserPreferences(context,"type")));
@@ -134,8 +128,7 @@ public class Identity_screen extends AppCompatActivity {
                 u.setPays(Tool.getUserPreferences(context,"CountryName"));
                 u.setCodePays(Tool.getUserPreferences(context,"CountryCode"));
                 String phone = Tool.getUserPreferences(context,"CountryCode") + Tool.getUserPreferences(context,"phone");
-                u.setPhone(phone.replace("+", ""));
-                //u.setsNom(Tool.getUserPreferences(context,"statut"));
+                u.setPhone(phone.replace("+", "00"));
 
                 InscriptionAsync inscriptionAsync = new InscriptionAsync(u);
                 inscriptionAsync.execute();

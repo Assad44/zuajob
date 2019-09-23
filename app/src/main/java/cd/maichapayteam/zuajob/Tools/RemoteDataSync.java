@@ -43,18 +43,18 @@ import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 public class RemoteDataSync {
 
     //private static String BASE_URL = "https://apizuajob.000webhostapp.com/v1/";
-    //private static String BASE_URL = "http://157.245.44.245:8000/api/";
-    private static String BASE_URL = "http://192.168.43.230:8000/api/v1/";
+    private static String BASE_URL = "http://157.245.44.245:8000/api/";
+    //private static String BASE_URL = "http://192.168.43.230:8000/api/v1/";
     //private static String BASE_URL = "http://192.168.43.60/zuajob/v1/";
 
     /**
-    *   GET METHODS
+     *   GET METHODS
      */
-
+//
     public static boolean checkNumero(String numero) {
         numero = numero.replace("+", "00");
         String url = BASE_URL + "checknumero/" + numero;
-        ANRequest request = AndroidNetworking.get(url)
+        ANRequest request = AndroidNetworking.put(url)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
@@ -87,7 +87,7 @@ public class RemoteDataSync {
         try {jsonObject.put("password", "anonyme"); } catch (JSONException e) { }
 
         ANRequest request = AndroidNetworking.post(url)
-                .addJSONObjectBody(jsonObject)
+                .addQueryParameter("phone", numero)
                 .build();
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
@@ -118,7 +118,7 @@ public class RemoteDataSync {
     }
 
     public static String confirmCode(long id, String code) {
-        String url = BASE_URL + "confirmcode/" + id + "/" + code;
+        String url = BASE_URL + "code/" + id + "/" + code;
         Log.e("Users", "confirmCode:url:" + url);
 
         ANRequest request = AndroidNetworking.get(url)
@@ -127,8 +127,10 @@ public class RemoteDataSync {
         try{
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                String rep = response.getResult().getString("authCode");
-                Log.e("Users", "confirmCode:ok:" + rep);
+                boolean r = response.getResult().getBoolean("success");
+                String rep = "hdjshdhhdsd";
+                if(!r) rep = "";
+                Log.e("Users", "confirmCode:ok:hdjshdhhdsd");
                 return rep;
             } else {
                 if(response.getError()!=null) {
@@ -850,8 +852,8 @@ public class RemoteDataSync {
     }
 
     /**
-    * Les annonces auxquels moi j'ai postulé
-    */
+     * Les annonces auxquels moi j'ai postulé
+     */
     public static List<Postuler> getMesPostulations () {
         String url = BASE_URL + "maspostulation/";
 
@@ -949,42 +951,42 @@ public class RemoteDataSync {
     }
 
     //public static List<Ville> getListVille () {
-        //String url = BASE_URL + "listville";
-        //String TAG = "getListVille";
+    //String url = BASE_URL + "listville";
+    //String TAG = "getListVille";
 //
-        //List<Ville> list = new ArrayList<>();
+    //List<Ville> list = new ArrayList<>();
 //
-        //ANRequest request = AndroidNetworking.get(url)
-        //        .build();
+    //ANRequest request = AndroidNetworking.get(url)
+    //        .build();
 //
-        //try{
-        //    ANResponse<ListVille> response = request.executeForObject(ListVille.class);
-        //    if (response.isSuccess()) {
-        //        ListVille listPays = response.getResult();
-        //        list = listPays.listVille;
-        //        Log.e(TAG, "villeList size : " + list.size());
-        //        for (Ville object : list) {
-        //            //Log.e(TAG, "id : " + object.remoteId);
-        //            Log.e(TAG, "designation : " + object.designation);
-        //            //Log.e(TAG, "provinceId : " + object.idProvince);
-        //        }
-        //        Response okHttpResponse = response.getOkHttpResponse();
-        //        //Log.e(TAG, "headers : " + okHttpResponse.headers().toString());
-        //    } else {
-        //        ANError error = response.getError();
-        //        Log.e(TAG + ":error", error.getMessage());
-        //    }
-        //} catch (Exception ex) {
-        //    Log.e(TAG + ":error", ex.getMessage());
-        //}
+    //try{
+    //    ANResponse<ListVille> response = request.executeForObject(ListVille.class);
+    //    if (response.isSuccess()) {
+    //        ListVille listPays = response.getResult();
+    //        list = listPays.listVille;
+    //        Log.e(TAG, "villeList size : " + list.size());
+    //        for (Ville object : list) {
+    //            //Log.e(TAG, "id : " + object.remoteId);
+    //            Log.e(TAG, "designation : " + object.designation);
+    //            //Log.e(TAG, "provinceId : " + object.idProvince);
+    //        }
+    //        Response okHttpResponse = response.getOkHttpResponse();
+    //        //Log.e(TAG, "headers : " + okHttpResponse.headers().toString());
+    //    } else {
+    //        ANError error = response.getError();
+    //        Log.e(TAG + ":error", error.getMessage());
+    //    }
+    //} catch (Exception ex) {
+    //    Log.e(TAG + ":error", ex.getMessage());
+    //}
 //
-        //return list;
+    //return list;
     //}
 
 
     /**
 
-               POST METHODS
+     POST METHODS
 
      */
 
@@ -1815,9 +1817,9 @@ public class RemoteDataSync {
 
     /**
 
-        LOAD DATA TEST
+     LOAD DATA TEST
 
-    **/
+     **/
 
     public static List<User> getRandomUser (int nombre) {
         //String url = "https://randomuser.me/api/?results=100";

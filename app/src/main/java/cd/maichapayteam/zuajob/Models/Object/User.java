@@ -33,27 +33,22 @@ public class User {
     public String ville = "";
     public String quartier = "";
     public String urlPhoto = "";
+    public String urlThumbnail = "";
     public boolean identiteVerifie = false;
-    public long birthday = 0;
+    public String birthday = "";
     public String description = "";
     public int cote = 0;
-
-    @JsonIgnoreProperties
     public int typeIdentite = 0;
-
-    @JsonIgnoreProperties
     public String numIdentite = "";
 
     @JsonIgnoreProperties
     public boolean myProfil = false;
-
     public int type = 0;
     public String email = "";
     public String password = "";
     public String sexe = "";
     public String codePays = "+243";
     public String commune = "";
-
 
     public String getDescription() {
         return description;
@@ -175,6 +170,14 @@ public class User {
         this.urlPhoto = urlPhoto;
     }
 
+    public String getUrlThumbnail() {
+        return urlThumbnail;
+    }
+
+    public void setUrlThumbnail(String urlThumbnail) {
+        this.urlThumbnail = urlThumbnail;
+    }
+
     public boolean isIdentiteVerifie() {
         return identiteVerifie;
     }
@@ -183,11 +186,11 @@ public class User {
         this.identiteVerifie = identiteVerifie;
     }
 
-    public long getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(long birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

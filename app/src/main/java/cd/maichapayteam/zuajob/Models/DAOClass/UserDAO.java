@@ -26,6 +26,7 @@ public class UserDAO extends DAOBase {
     public static final String VILLE = "ville";
     public static final String QUARTIER = "quartier";
     public static final String URL_PHOTO = "urlPhoto";
+    public static final String URL_THUMBNAIL = "urlThumbnail";
     public static final String IDENTITE_VERIFIE = "identiteVerifie";
     public static final String BIRTHDAY = "birthday";
     public static final String TYPE_IDENTITE = "typeIdentite";
@@ -53,7 +54,7 @@ public class UserDAO extends DAOBase {
                     QUARTIER + " TEXT, " +
                     URL_PHOTO + " TEXT, " +
                     IDENTITE_VERIFIE + " INTEGER, " +
-                    BIRTHDAY + " INTEGER, " +
+                    BIRTHDAY + " TEXT, " +
                     TYPE_IDENTITE + " INTEGER, " +
                     NUM_IDENTITE + " TEXT, " +
                     MY_PROFIL + " INTEGER, " +
@@ -64,7 +65,8 @@ public class UserDAO extends DAOBase {
                     CODE_PAYS + " TEXT, " +
                     COMMUNE + " TEXT, " +
                     DESCRIPTION + " TEXT, " +
-                    COTE + " INTEGER);";
+                    COTE + " INTEGER, " +
+                    URL_THUMBNAIL + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -108,6 +110,7 @@ public class UserDAO extends DAOBase {
                 value.put(QUARTIER, object.getQuartier());
                 value.put(DESCRIPTION, object.getDescription());
                 value.put(COTE, object.getCote());
+                value.put(URL_THUMBNAIL, object.getUrlThumbnail());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -160,31 +163,32 @@ public class UserDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             User object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String authcode=c.getString(1);
-                String prenom=c.getString(2);
-                String nom=c.getString(3);
-                String phone=c.getString(4);
-                String adresse=c.getString(5);
-                String pays=c.getString(6);
-                String ville=c.getString(7);
-                String quartier=c.getString(8);
-                String url=c.getString(9);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String authcode=c.getString(c.getColumnIndex(AUTH_CODE));
+                String prenom=c.getString(c.getColumnIndex(PRENOM));
+                String nom=c.getString(c.getColumnIndex(NOM));
+                String phone=c.getString(c.getColumnIndex(PHONE));
+                String adresse=c.getString(c.getColumnIndex(ADRESSE));
+                String pays=c.getString(c.getColumnIndex(PAYS));
+                String ville=c.getString(c.getColumnIndex(VILLE));
+                String quartier=c.getString(c.getColumnIndex(QUARTIER));
+                String url=c.getString(c.getColumnIndex(URL_PHOTO));
                 boolean ident= false;
-                if(c.getInt(10)==1) ident=true;
-                long birth=c.getLong(11);
-                int type_id=c.getInt(12);
-                String num_id=c.getString(13);
+                if(c.getInt(c.getColumnIndex(IDENTITE_VERIFIE))==1) ident=true;
+                String birth=c.getString(c.getColumnIndex(BIRTHDAY));
+                int type_id=c.getInt(c.getColumnIndex(TYPE_IDENTITE));
+                String num_id=c.getString(c.getColumnIndex(NUM_IDENTITE));
                 boolean myProf= false;
-                if(c.getInt(14)==1) myProf=true;
-                int type=c.getInt(15);
-                String email=c.getString(16);
-                String pass=c.getString(17);
-                String sexe=c.getString(18);
-                String code_pays=c.getString(19);
-                String commune=c.getString(20);
-                String description=c.getString(21);
-                int cote=c.getInt(22);
+                if(c.getInt(c.getColumnIndex(MY_PROFIL))==1) myProf=true;
+                int type=c.getInt(c.getColumnIndex(TYPE));
+                String email=c.getString(c.getColumnIndex(EMAIL));
+                String pass=c.getString(c.getColumnIndex(PASSWORD));
+                String sexe=c.getString(c.getColumnIndex(SEXE));
+                String code_pays=c.getString(c.getColumnIndex(CODE_PAYS));
+                String commune=c.getString(c.getColumnIndex(COMMUNE));
+                String description=c.getString(c.getColumnIndex(DESCRIPTION));
+                int cote=c.getInt(c.getColumnIndex(COTE));
+                String urlt=c.getString(c.getColumnIndex(URL_THUMBNAIL));
 
                 object = new User();
                 object.setId(_id);
@@ -210,6 +214,7 @@ public class UserDAO extends DAOBase {
                 object.setCommune(commune);
                 object.setDescription(description);
                 object.setCote(cote);
+                object.setUrlThumbnail(urlt);
             }
             c.close();
             close();
@@ -222,7 +227,7 @@ public class UserDAO extends DAOBase {
     public User myProfil(){
         try{
             open();
-            Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + MY_PROFIL + " = 1", null);
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + MY_PROFIL + " = 1", null);
             User object = null;
             while (c.moveToNext()) {
                 long _id = c.getLong(0);
@@ -307,7 +312,7 @@ public class UserDAO extends DAOBase {
         List<User> list = new ArrayList<>();
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, new String[]{});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM, null);
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -325,7 +330,7 @@ public class UserDAO extends DAOBase {
         //long max = 20;
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM+ " where " + PRENOM + " like '%" + keyword + "%' and " + NOM + " like '%" + keyword + "%' and " + TYPE + " = 1 limit ?, 20", new String[]{String.valueOf(min)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + PRENOM + " like '%" + keyword + "%' and " + NOM + " like '%" + keyword + "%' and " + TYPE + " = 1 limit ?, 20", new String[]{String.valueOf(min)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -349,7 +354,6 @@ public class UserDAO extends DAOBase {
         value.put(AUTH_CODE, object.getAuthCode());
         value.put(CODE_PAYS, object.getCodePays());
         value.put(COMMUNE, object.getCommune());
-        value.put(CODE_PAYS, object.getCodePays());
         value.put(EMAIL, object.getEmail());
         value.put(IDENTITE_VERIFIE, object.isIdentiteVerifie());
         value.put(SEXE, object.getSexe());
@@ -369,6 +373,7 @@ public class UserDAO extends DAOBase {
         value.put(QUARTIER, object.getQuartier());
         value.put(DESCRIPTION, object.getDescription());
         value.put(COTE, object.getCote());
+        value.put(URL_THUMBNAIL, object.getUrlThumbnail());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();
@@ -380,6 +385,8 @@ public class UserDAO extends DAOBase {
         value.put(AUTH_CODE, "");
         value.put(PASSWORD, "");
         value.put(MY_PROFIL, false);
+        value.put(TYPE_IDENTITE, 0);
+        value.put(NUM_IDENTITE, "");
         open();
         long rep = mDb.update(TABLE_NOM, value, null, null);
         close();
