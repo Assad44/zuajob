@@ -23,6 +23,7 @@ public class SollicitationDAO extends DAOBase {
     public static final String CATEGORIE = "categorie";
     public static final String SOUS_CATEGORIE = "sous_cat";
     public static final String MONTANT_SERVICE = "montant";
+    public static final String DEVISE_SERVICE = "devserv";
     public static final String NOM_USER = "noms";
     public static final String PHONE_USER = "phone";
     public static final String ID_USER = "iduser";
@@ -67,7 +68,8 @@ public class SollicitationDAO extends DAOBase {
                     COMMENT + " TEXT, " +
                     IS_MY + " INTEGER, " +
                     IS_ACCEPTED + " INTEGER, " +
-                    IS_REFUSED + " INTEGER);";
+                    IS_REFUSED + " INTEGER, " +
+                    DEVISE_SERVICE + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -92,6 +94,7 @@ public class SollicitationDAO extends DAOBase {
                 value.put(ID_SERVICE, object.getIdService());
                 value.put(DESCRIPTION_SERVICE, object.getDescriptionService());
                 value.put(MONTANT_SERVICE, object.getMontant());
+                value.put(DEVISE_SERVICE, object.getDevise());
                 value.put(NOM_USER, object.getNomsUser());
                 value.put(PHONE_USER, object.getPhoneUser());
                 value.put(ID_USER, object.getIdUser());
@@ -164,30 +167,31 @@ public class SollicitationDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Sollicitation object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                long ids=c.getLong(1);
-                String des=c.getString(2);
-                float mont=c.getFloat(3);
-                String nomu=c.getString(4);
-                String phnu=c.getString(5);
-                long idu=c.getLong(6);
-                String urlimg=c.getString(7);
-                String date=c.getString(8);
-                int stat=c.getInt(9);
-                int have=c.getInt(10);
-                String cat=c.getString(11);
-                String scat=c.getString(12);
-                int rdv=c.getInt(13);
-                int conclu=c.getInt(14);
-                float montc=c.getFloat(15);
-                String devc=c.getString(16);
-                String datec=c.getString(17);
-                String heure=c.getString(18);
-                int cote=c.getInt(19);
-                String com=c.getString(20);
-                int ismy=c.getInt(21);
-                int isacc=c.getInt(22);
-                int isref=c.getInt(23);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                long ids=c.getLong(c.getColumnIndex(ID_SERVICE));
+                String des=c.getString(c.getColumnIndex(DESCRIPTION_SERVICE));
+                float mont=c.getFloat(c.getColumnIndex(MONTANT_SERVICE));
+                String nomu=c.getString(c.getColumnIndex(NOM_USER));
+                String phnu=c.getString(c.getColumnIndex(PHONE_USER));
+                long idu=c.getLong(c.getColumnIndex(ID_USER));
+                String urlimg=c.getString(c.getColumnIndex(URL_IMAGE_USER));
+                String date=c.getString(c.getColumnIndex(DATE));
+                int stat=c.getInt(c.getColumnIndex(STATUT));
+                int have=c.getInt(c.getColumnIndex(HAVE_SOLLICITED));
+                String cat=c.getString(c.getColumnIndex(CATEGORIE));
+                String scat=c.getString(c.getColumnIndex(SOUS_CATEGORIE));
+                int rdv=c.getInt(c.getColumnIndex(IS_RDV));
+                int conclu=c.getInt(c.getColumnIndex(IS_CONCLU));
+                float montc=c.getFloat(c.getColumnIndex(MONTANT_CONCLU));
+                String devc=c.getString(c.getColumnIndex(DEVISE_CONCLU));
+                String datec=c.getString(c.getColumnIndex(DATE_RDV));
+                String heure=c.getString(c.getColumnIndex(HEURE_RDV));
+                int cote=c.getInt(c.getColumnIndex(COTE));
+                String com=c.getString(c.getColumnIndex(COMMENT));
+                int ismy=c.getInt(c.getColumnIndex(IS_MY));
+                int isacc=c.getInt(c.getColumnIndex(IS_ACCEPTED));
+                int isref=c.getInt(c.getColumnIndex(IS_REFUSED));
+                String dev=c.getString(c.getColumnIndex(DEVISE_SERVICE));
 
                 object = new Sollicitation();
                 object.setId(_id);
@@ -215,6 +219,7 @@ public class SollicitationDAO extends DAOBase {
                 if(ismy==1) object.setMy(true);
                 if(isacc==1) object.setAccepted(true);
                 if(isref==1) object.setRefused(true);
+                object.setDevise(dev);
             }
             c.close();
             close();
@@ -275,6 +280,7 @@ public class SollicitationDAO extends DAOBase {
         value.put(ID_SERVICE, object.getIdService());
         value.put(DESCRIPTION_SERVICE, object.getDescriptionService());
         value.put(MONTANT_SERVICE, object.getMontant());
+        value.put(DEVISE_SERVICE, object.getDevise());
         value.put(NOM_USER, object.getNomsUser());
         value.put(PHONE_USER, object.getPhoneUser());
         value.put(ID_USER, object.getIdUser());

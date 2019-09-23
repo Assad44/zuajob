@@ -838,7 +838,7 @@ public class RemoteDataSync {
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     cdao.ajouter(object);
-                    Log.e("Sollicitation", "description : " + object.descriptionService);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
             } else {
                 ANError error = response.getError();
@@ -904,7 +904,7 @@ public class RemoteDataSync {
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     cdao.ajouter(object);
-                    Log.e("Sollicitation", "description : " + object.descriptionService);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
             } else {
                 ANError error = response.getError();
@@ -937,7 +937,7 @@ public class RemoteDataSync {
                 for (Sollicitation object : list) {
                     object.setHaveSollicited(true);
                     cdao.ajouter(object);
-                    Log.e("Sollicitation", "description : " + object.descriptionService);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
             } else {
                 ANError error = response.getError();
@@ -1093,7 +1093,7 @@ public class RemoteDataSync {
         try{
             ANRequest request = AndroidNetworking.post(url)
                     .addBodyParameter(sollicitation) // posting java object
-                    .setTag("sollicitation" + sollicitation.phoneUser)
+                    .setTag("sollicitation" + sollicitation.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
@@ -1116,15 +1116,15 @@ public class RemoteDataSync {
                 }
             } else {
                 sollicitation = new Sollicitation();
-                sollicitation.error = true;
-                sollicitation.errorCode = 31921;
-                sollicitation.errorMessage = response.getError().getMessage();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
-            sollicitation.error = true;
-            sollicitation.errorCode = 49288;
-            sollicitation.errorMessage = ex.getMessage();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
         }
 
         return sollicitation;
@@ -1336,15 +1336,15 @@ public class RemoteDataSync {
                 }
             } else {
                 sollicitation = new Sollicitation();
-                sollicitation.error = true;
-                sollicitation.errorCode = 31921;
-                sollicitation.errorMessage = response.getError().getMessage();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
-            sollicitation.error = true;
-            sollicitation.errorCode = 49288;
-            sollicitation.errorMessage = ex.getMessage();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
         }
 
         return sollicitation;
@@ -1426,15 +1426,15 @@ public class RemoteDataSync {
                 }
             } else {
                 sollicitation = new Sollicitation();
-                sollicitation.error = true;
-                sollicitation.errorCode = 31921;
-                sollicitation.errorMessage = response.getError().getMessage();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
-            sollicitation.error = true;
-            sollicitation.errorCode = 49288;
-            sollicitation.errorMessage = ex.getMessage();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
         }
 
         return sollicitation;
@@ -1514,15 +1514,15 @@ public class RemoteDataSync {
                 }
             } else {
                 sollicitation = new Sollicitation();
-                sollicitation.error = true;
-                sollicitation.errorCode = 31921;
-                sollicitation.errorMessage = response.getError().getMessage();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
-            sollicitation.error = true;
-            sollicitation.errorCode = 49288;
-            sollicitation.errorMessage = ex.getMessage();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
         }
 
         return sollicitation;
@@ -1558,15 +1558,15 @@ public class RemoteDataSync {
                 }
             } else {
                 sollicitation = new Sollicitation();
-                sollicitation.error = true;
-                sollicitation.errorCode = 31921;
-                sollicitation.errorMessage = response.getError().getMessage();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
-            sollicitation.error = true;
-            sollicitation.errorCode = 49288;
-            sollicitation.errorMessage = ex.getMessage();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
         }
 
         return sollicitation;
