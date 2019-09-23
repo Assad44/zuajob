@@ -5,23 +5,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Annonce {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public long idSousCategorie = -1;
-    public String sousCategorie = "";
-    public String description = "";
-    public String devise = "";
-    public float montant = 0;
-    public long idUser = -1;
-    public String nomsUser = "";
-    public String phoneUser = "";
-    public String urlImageUser = "";
-    public long idCategorie = -1;
-    public String categorie = "";
-    public String datePublication = "";
-    public boolean isConfied = false;
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private long idSousCategorie = -1;
+    private String sousCategorie = "";
+    private String description = "";
+    private String devise = "";
+    private float montant = 0;
+    private long idUser = -1;
+    private String nomsUser = "";
+    private String phoneUser = "";
+    private String urlImageUser = "";
+    private long idCategorie = -1;
+    private String categorie = "";
+    private String datePublication = "";
+    private boolean isConfied = false;
+    private boolean isMy = false;
 
     public boolean isMy() {
         return isMy;
@@ -30,8 +31,6 @@ public class Annonce {
     public void setMy(boolean my) {
         isMy = my;
     }
-
-    public boolean isMy = false;
 
     public boolean isError() {
         return error;

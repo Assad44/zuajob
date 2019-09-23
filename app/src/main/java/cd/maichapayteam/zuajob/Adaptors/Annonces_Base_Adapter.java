@@ -135,7 +135,7 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
         postullants.setVisibility(View.GONE);
 
-        if (S.isConfied == true){
+        if (S.isConfied() == true){
             avatar.setImageResource(profil);
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());

@@ -138,21 +138,21 @@ public class AnnonceDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Annonce object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String cat=c.getString(1);
-                String des=c.getString(2);
-                String dev=c.getString(3);
-                long idcat=c.getLong(4);
-                long idus=c.getLong(5);
-                long idscat=c.getLong(6);
-                float mont=c.getFloat(7);
-                String nomsus=c.getString(8);
-                String phoneus=c.getString(9);
-                String sousCat=c.getString(10);
-                String urlImage=c.getString(11);
-                String date=c.getString(12);
-                int ismy=c.getInt(13);
-                int isc=c.getInt(14);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String cat=c.getString(c.getColumnIndex(CATEGORIE));
+                String des=c.getString(c.getColumnIndex(DESCRIPTION));
+                String dev=c.getString(c.getColumnIndex(DEVISE));
+                long idcat=c.getLong(c.getColumnIndex(ID_CATEGORIE));
+                long idus=c.getLong(c.getColumnIndex(ID_USER));
+                long idscat=c.getLong(c.getColumnIndex(ID_SOUS_CATEGORIE));
+                float mont=c.getFloat(c.getColumnIndex(MONTANT));
+                String nomsus=c.getString(c.getColumnIndex(NOMS_USER));
+                String phoneus=c.getString(c.getColumnIndex(PHONE_USER));
+                String sousCat=c.getString(c.getColumnIndex(SOUS_CATEGORIE));
+                String urlImage=c.getString(c.getColumnIndex(URL_PHOTO_USER));
+                String date=c.getString(c.getColumnIndex(DATE));
+                int ismy=c.getInt(c.getColumnIndex(IS_MY));
+                int isc=c.getInt(c.getColumnIndex(IS_CONFIED));
 
                 object = new Annonce();
                 object.setId(_id);

@@ -144,7 +144,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
 
-        if (S.isConfied == true){
+        if (S.isConfied() == true){
             avatar.setImageResource(profil);
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());

@@ -184,7 +184,7 @@ public class GenerateData {
                 }
             }
             postuler.setId(postulerDAO.max()+1);
-            postuler.idAnnonce = annonce.id;
+            postuler.setIdAnnonce(annonce.getId());
             postuler.descriptionAnnonce = annonce.getDescription();
             postuler.setMontant(annonce.getMontant());
             postuler.setDevise(annonce.getDevise());

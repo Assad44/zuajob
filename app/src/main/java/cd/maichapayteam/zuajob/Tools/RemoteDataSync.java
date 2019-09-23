@@ -507,7 +507,7 @@ public class RemoteDataSync {
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
-                    Log.e("Annonce", "designation : " + object.description);
+                    Log.e("Annonce", "designation : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -538,7 +538,7 @@ public class RemoteDataSync {
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
-                    Log.e("Annonce", "designation : " + object.description);
+                    Log.e("Annonce", "designation : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -569,7 +569,7 @@ public class RemoteDataSync {
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
-                    Log.e("Annonce", "designation : " + object.description);
+                    Log.e("Annonce", "designation : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -598,7 +598,7 @@ public class RemoteDataSync {
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
-                    Log.e("MesAnnonce", "description : " + object.description);
+                    Log.e("MesAnnonce", "description : " + object.getDescription());
                 }
             } else {
                 ANError error = response.getError();
@@ -1136,7 +1136,7 @@ public class RemoteDataSync {
         try{
             ANRequest request = AndroidNetworking.post(url)
                     .addBodyParameter(object) // posting java object
-                    .setTag("publierannonce" + object.phoneUser)
+                    .setTag("publierannonce" + object.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
@@ -1159,15 +1159,15 @@ public class RemoteDataSync {
                 }
             } else {
                 object = new Annonce();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
+                object.setError(true);
+                object.setErrorCode(31921);
+                object.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             object = new Annonce();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
+            object.setError(true);
+            object.setErrorCode(49288);
+            object.setErrorMessage(ex.getMessage());
         }
 
         return object;
@@ -1639,7 +1639,7 @@ public class RemoteDataSync {
         try{
             ANRequest request = AndroidNetworking.put(url)
                     .addBodyParameter(object)
-                    .setTag("updateannonce" + object.phoneUser)
+                    .setTag("updateannonce" + object.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
@@ -1661,15 +1661,15 @@ public class RemoteDataSync {
                 }
             } else {
                 object = new Annonce();
-                object.error = true;
-                object.errorCode = 31921;
-                object.errorMessage = response.getError().getMessage();
+                object.setError(true);
+                object.setErrorCode(31921);
+                object.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             object = new Annonce();
-            object.error = true;
-            object.errorCode = 49288;
-            object.errorMessage = ex.getMessage();
+            object.setError(true);
+            object.setErrorCode(49288);
+            object.setErrorMessage(ex.getMessage());
         }
 
         return object;

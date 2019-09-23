@@ -152,7 +152,7 @@ public class Postullances_Base_Adapter extends BaseAdapter {
         TextView categore = convertView.findViewById(R.id.categore);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
-        if (S.isConfied == true){
+        if (S.isConfied() == true){
             avatar.setImageResource(profil);
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());
