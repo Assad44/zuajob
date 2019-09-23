@@ -89,11 +89,11 @@ public class SousCategorieDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             SousCategorie object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                String designation=c.getString(1);
-                String description=c.getString(2);
-                String url=c.getString(3);
-                long cat=c.getLong(4);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                String designation=c.getString(c.getColumnIndex(DESIGNATION));
+                String description=c.getString(c.getColumnIndex(DESCRIPTION));
+                String url=c.getString(c.getColumnIndex(URL_IMAGE));
+                long cat=c.getLong(c.getColumnIndex(ID_CATEGORIE));
 
                 object = new SousCategorie();
                 object.setId(_id);

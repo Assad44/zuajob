@@ -15,14 +15,14 @@ import cd.maichapayteam.zuajob.Tools.GeneralClass;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SousCategorie {
 
-    public boolean error = false;
-    public String errorMessage = "";
-    public int errorCode = 0;
-    public long id = -1;
-    public String designation = "";
-    public String description = "";
-    public long idCategorie = -1;
-    public String urlImage = "";
+    private boolean error = false;
+    private String errorMessage = "";
+    private int errorCode = 0;
+    private long id = -1;
+    private String designation = "";
+    private String description = "";
+    private long idCategorie = -1;
+    private String urlImage = "";
 
     public boolean isError() {
         return error;

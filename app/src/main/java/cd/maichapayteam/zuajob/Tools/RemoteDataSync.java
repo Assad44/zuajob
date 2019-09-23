@@ -333,7 +333,7 @@ public class RemoteDataSync {
                 SousCategorieDAO cdao = new SousCategorieDAO(GeneralClass.applicationContext);
                 for (SousCategorie object : list) {
                     cdao.ajouter(object);
-                    Log.e("Under Category", "designation : " + object.designation);
+                    Log.e("Under Category", "designation : " + object.getDesignation());
                 }
             } else {
                 ANError error = response.getError();

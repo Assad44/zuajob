@@ -71,7 +71,7 @@ public class GenerateData {
             }
             service.setMy(false);
             service.setDatePublication(GeneralClass.randomDate(2018, 2019).toString());
-            service.setSousCategorie(sousCategorie.designation);
+            service.setSousCategorie(sousCategorie.getDesignation());
             service.setPhoneJobeur(prestateur.getCodePays() + prestateur.getPhone());
             service.setNomsJobeur(prestateur.getPrenom() + prestateur.getNom());
             max = max + 1;
@@ -86,7 +86,7 @@ public class GenerateData {
                 service.setMontant(new Random().nextInt(10000) + 1);
             }
             service.setDevise(dev);
-            service.setIdSousCategorie(sousCategorie.id);
+            service.setIdSousCategorie(sousCategorie.getId());
             service.setIdJobeur(prestateur.getId());
             service.setCategorie(categorie.getDesignation());
             service.setIdCategorie(categorie.getId());
@@ -114,7 +114,7 @@ public class GenerateData {
                 annonce.setMy(true);
             }
             annonce.setDatePublication(GeneralClass.randomDate(2018, 2019).toString());
-            annonce.setSousCategorie(sousCategorie.designation);
+            annonce.setSousCategorie(sousCategorie.getDesignation());
             annonce.setPhoneUser(user.getCodePays() + user.getPhone());
             annonce.setNomsUser(user.getPrenom() + user.getNom());
             annonce.setId(annonceDAO.max()+1);
@@ -128,7 +128,7 @@ public class GenerateData {
                 annonce.setMontant(new Random().nextInt(10000) + 1);
             }
             annonce.setDevise(dev);
-            annonce.setIdSousCategorie(sousCategorie.id);
+            annonce.setIdSousCategorie(sousCategorie.getId());
             annonce.setIdUser(user.getId());
             annonce.setCategorie(categorie.getDesignation());
             annonce.setIdCategorie(categorie.getId());
