@@ -54,6 +54,9 @@ public class Publications_view extends AppCompatActivity {
     Services_Base_Adapter serviceAdapter;
     int turn = 0;
 
+    Annonces_Base_Adapter annonceAdapter;
+    int turnA = 0;
+
     private void Init_Components(){
         list = findViewById(R.id.list);
         swipper = findViewById(R.id.swipper);
@@ -74,17 +77,45 @@ public class Publications_view extends AppCompatActivity {
 
     void Load_Annonce(){
 
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                ANNOCE_L = GenerateData.listRandomAnnonce(cout);
+                for (Annonce c : ANNOCE_L){
+                    ANNOCE.add(c);
+                }
+                //ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                progressbar.setVisibility(View.GONE);
+
+                if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else{
+                    if (turnA != 0) {
+                        annonceAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                    annonceAdapter = new Annonces_Base_Adapter(context, ANNOCE,"");
+                    list.setAdapter(annonceAdapter);
+                }
 
 
+            }
 
+        }.execute();
 
-        ANNOCE_L = GenerateData.listRandomAnnonce(list.getCount());
-        ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
-
-        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,""));
-        }
     }
 
     void Load_SERVICE(){
@@ -99,8 +130,11 @@ public class Publications_view extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
+                SERVICE_L.clear();
                 SERVICE_L = GenerateData.listRandomService(cout);
-                SERVICES = (ArrayList<Service>) SERVICE_L;
+                for (Service c : SERVICE_L){
+                    SERVICES.add(c);
+                }
                 return null;
             }
 
@@ -108,9 +142,10 @@ public class Publications_view extends AppCompatActivity {
             protected void onPostExecute(Object o) {
                 swipper.setRefreshing(false);
                 progressbar.setVisibility(View.GONE);
+                serviceAdapter = new Services_Base_Adapter(context, SERVICES);
                 if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
                 else{
-                    serviceAdapter = new Services_Base_Adapter(context, SERVICES);
+                    Log.e("SSSSS", String.valueOf(SERVICES.size()));
                     if (turn != 0) {
                         serviceAdapter.notifyDataSetChanged();
                         return;
@@ -122,6 +157,7 @@ public class Publications_view extends AppCompatActivity {
 
         }.execute();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
