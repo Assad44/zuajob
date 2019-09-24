@@ -10,6 +10,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -28,6 +29,11 @@ import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
+import cd.maichapayteam.zuajob.Models.Lists.ListAnnonce;
+import cd.maichapayteam.zuajob.Models.Lists.ListCategorie;
+import cd.maichapayteam.zuajob.Models.Lists.ListService;
+import cd.maichapayteam.zuajob.Models.Lists.ListSousCategorie;
+import cd.maichapayteam.zuajob.Models.Lists.ListUser;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Comment;
@@ -286,7 +292,7 @@ public class RemoteDataSync {
     }
 
     public static List<Categorie> getListCategorie () {
-        String url = BASE_URL + "category/";
+        String url = BASE_URL + "categories";
 
         List<Categorie> list = new ArrayList<>();
 
@@ -294,27 +300,35 @@ public class RemoteDataSync {
                 .build();
 
         try{
-            ANResponse<List<Categorie>> response = request.executeForObjectList(Categorie.class);
+            ANResponse<ListCategorie> response = request.executeForObject(ListCategorie.class);
             if (response.isSuccess()) {
-                list = response.getResult();
-                CategorieDAO cdao = new CategorieDAO(GeneralClass.applicationContext);
-                for (Categorie object : list) {
-                    cdao.ajouter(object);
-                    Log.e("Category", "designation : " + object.getDesignation());
+                if(response.getResult().isError()) {
+                    Log.e("Category", "server error : " + response.getResult().getErrorMessage());
+                } else {
+                    list = response.getResult().getListe();
+                    CategorieDAO cdao = new CategorieDAO(GeneralClass.applicationContext);
+                    for (Categorie object : list) {
+                        cdao.ajouter(object);
+                        Log.e("Category", "designation : " + object.getDesignation());
+                    }
                 }
             } else {
                 ANError error = response.getError();
-                Log.e("Category" + ":error", error.getMessage());
+                if(error!=null) {
+                    Log.e("Category", "AN error: " + error.getErrorBody());
+                } else {
+                    Log.e("Category", "AN error is null");
+                }
             }
         } catch (Exception ex) {
-            Log.e("Category" + ":errorLocal", ex.getMessage());
+            Log.e("Category", "errorLocal:" + ex.getMessage());
         }
 
         return list;
     }
 
     public static List<SousCategorie> getListSousCategorie () {
-        String url = BASE_URL + "undercat/";
+        String url = BASE_URL + "souscategories";
 
         List<SousCategorie> list = new ArrayList<>();
 
@@ -322,13 +336,17 @@ public class RemoteDataSync {
                 .build();
 
         try{
-            ANResponse<List<SousCategorie>> response = request.executeForObjectList(SousCategorie.class);
+            ANResponse<ListSousCategorie> response = request.executeForObject(ListSousCategorie.class);
             if (response.isSuccess()) {
-                list = response.getResult();
-                SousCategorieDAO cdao = new SousCategorieDAO(GeneralClass.applicationContext);
-                for (SousCategorie object : list) {
-                    cdao.ajouter(object);
-                    Log.e("Under Category", "designation : " + object.getDesignation());
+                if(response.getResult().isError()) {
+                    Log.e("Category", "server error : " + response.getResult().getErrorMessage());
+                } else {
+                    list = response.getResult().getListe();
+                    SousCategorieDAO cdao = new SousCategorieDAO(GeneralClass.applicationContext);
+                    for (SousCategorie object : list) {
+                        cdao.ajouter(object);
+                        Log.e("Under Category", "designation : " + object.getDesignation());
+                    }
                 }
             } else {
                 ANError error = response.getError();
@@ -342,29 +360,30 @@ public class RemoteDataSync {
     }
 
     public static List<User> getListJobeur (int next) {
-        String url = BASE_URL + "listjobeur/";
+        String url = BASE_URL + "listjobeurs/" + next;
 
         List<User> list = new ArrayList<>();
 
         ANRequest request = AndroidNetworking.get(url)
-                .addQueryParameter("next", String.valueOf(next))
+                //.addQueryParameter("next", String.valueOf(next))
                 .build();
 
         try{
-            ANResponse<List<User>> response = request.executeForObjectList(User.class);
+            ANResponse<ListUser> response = request.executeForObject(ListUser.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
                     objectDAO.ajouter(object);
                     Log.e("User", "id : " + object.getId());
                 }
+                //Log.e("User", "id : " + response.getResult().get("liste"));
             } else {
                 ANError error = response.getError();
-                Log.e("User" + ":error", error.getMessage());
+                Log.e("User", "error:" + error.getMessage());
             }
         } catch (Exception ex) {
-            Log.e("User" + ":errorLocal", ex.getMessage());
+            Log.e("User", "errorLocal:" + ex.getMessage());
         }
 
         return list;
@@ -485,20 +504,20 @@ public class RemoteDataSync {
         //return new User();
     }
 
-    public static List<Annonce> getRandomAnnonces (int next) {
-        String url = BASE_URL + "randomannonces/";
+    public static List<Annonce> getRandomAnnonces () {
+        String url = BASE_URL + "randomannonces";
 
         List<Annonce> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
@@ -516,15 +535,15 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "annonces/";
+        String url = BASE_URL + "annonces/" + souscategorie + "/" + next;
 
         List<Annonce> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
@@ -547,20 +566,20 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "newannonces/";
+        String url = BASE_URL + "newannonces/" + souscategorie + "/" + next;
 
         List<Annonce> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
@@ -578,18 +597,18 @@ public class RemoteDataSync {
     }
 
     public static List<Annonce> getMesAnnonces () {
-        String url = BASE_URL + "mesannonces/";
+        String url = BASE_URL + "mesannonces/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
                     cdao.ajouter(object);
@@ -607,18 +626,18 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getMesServices () {
-        String url = BASE_URL + "messervices/";
+        String url = BASE_URL + "messervices/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
+            ANResponse<ListService> response = request.executeForObject(ListService.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
@@ -636,20 +655,20 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getNewServices (int next, long souscategorie) {
-        String url = BASE_URL + "newservices/";
+        String url = BASE_URL + "newservices/" + souscategorie + "/" + next;
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
+            ANResponse<ListService> response = request.executeForObject(ListService.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
@@ -667,19 +686,19 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getRandomServices (int next) {
-        String url = BASE_URL + "randomservices/";
+        String url = BASE_URL + "randomservices";
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
+            ANResponse<ListService> response = request.executeForObject(ListService.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
@@ -697,20 +716,20 @@ public class RemoteDataSync {
     }
 
     public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
-        String url = BASE_URL + "servicesbyrealisationcount/";
+        String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next;
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
+            ANResponse<ListService> response = request.executeForObject(ListService.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
@@ -727,21 +746,21 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static List<Service> getServicesByLevel (int next, int souscategorie) {
-        String url = BASE_URL + "servicesbylevel/";
+    public static List<Service> getServicesByCote (int next, int souscategorie) {
+        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next;;
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("next", String.valueOf(next))
-                    .addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("next", String.valueOf(next))
+                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Service>> response = request.executeForObjectList(Service.class);
+            ANResponse<ListService> response = request.executeForObjectList(ListService.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
                     cdao.ajouter(object);
@@ -1126,14 +1145,14 @@ public class RemoteDataSync {
     }
 
     public static Annonce publierAnnonce (Annonce object) {
-        String url = BASE_URL + "annonce";
+        String url = BASE_URL + "annonce/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.post(url)
-                    .addBodyParameter(object) // posting java object
+                    .addJSONObjectBody(object.toJsonObject())
                     .setTag("publierannonce" + object.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<Annonce> response = request.executeForObject(Annonce.class);
@@ -1169,14 +1188,13 @@ public class RemoteDataSync {
     }
 
     public static Service publierService (Service object) {
-        String url = BASE_URL + "service";
+        String url = BASE_URL + "service/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.post(url)
-                    .addBodyParameter(object) // posting java object
+                    .addJSONObjectBody(object.toJsonObject())
                     .setTag("publierservice" + object.getNomsJobeur())
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<Service> response = request.executeForObject(Service.class);
@@ -1185,8 +1203,8 @@ public class RemoteDataSync {
                 if(object!=null) {
                     if(!object.isError()) {
                         object.setMy(true);
-                        ServiceDAO annonceDAO = new ServiceDAO(GeneralClass.applicationContext);
-                        object = annonceDAO.ajouter(object);
+                        ServiceDAO serviceDAO = new ServiceDAO(GeneralClass.applicationContext);
+                        object = serviceDAO.ajouter(object);
                         if(object==null) {
                             object = new Service();
                             object.setError(true);
@@ -1194,6 +1212,11 @@ public class RemoteDataSync {
                             object.setErrorMessage("Une erreur est survenue lors de la publication de votre service.");
                         }
                     }
+                } else {
+                    object = new Service();
+                    object.setError(true);
+                    object.setErrorCode(14347);
+                    object.setErrorMessage("Une erreur est survenue lors de la publication de votre service.");
                 }
             } else {
                 object = new Service();

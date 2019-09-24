@@ -116,7 +116,7 @@ public class ManageLocalData {
     }
 
     public static List<Annonce> listRandomAnnonce(int min) {
-        RemoteDataSync.getRandomAnnonces((int)(min/20));
+        RemoteDataSync.getRandomAnnonces();
         AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
         return annonceDAO.randomAnnonce(min);
     }

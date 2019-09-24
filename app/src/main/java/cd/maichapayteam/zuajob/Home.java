@@ -51,7 +51,9 @@ import cd.maichapayteam.zuajob.Front_end.Publications_view;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
@@ -113,9 +115,12 @@ public class Home extends AppCompatActivity
         //    BTN_jober.setVisibility(View.GONE);
 
 
-        Toast.makeText(Home.this, "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(Home.this, "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count(), Toast.LENGTH_LONG).show();
 
-        Log.e("Home", "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count());
+        //Log.e("Home", "Liste des users size : " + UserDAO.getInstance(GeneralClass.applicationContext).count());
+
+        TestAsync testAsync = new TestAsync();
+        testAsync.execute();
     }
 
     void Load_CAtegorie(){
@@ -471,17 +476,12 @@ public class Home extends AppCompatActivity
         return true;
     }
 
-    class CheckAsync extends AsyncTask<String, String, Boolean> {
+    class TestAsync extends AsyncTask<String, String, Boolean> {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            List<Categorie> listCategorie = GenerateData.listCategorie();
-            Log.e("LastCheck", "List categorie size: " + listCategorie.size());
-            if(listCategorie.size()>0) {
-                List<SousCategorie> listSousCategorie = GenerateData.listSousCategorie(listCategorie.get(0));
-                Log.e("LastCheck", "List sous categorie size: " + listSousCategorie.size());
-            }
-            RemoteDataSync.getListCategorie();
+            List<Annonce> annonceList = RemoteDataSync.getMesAnnonces();
+            Log.e("Test", "Liste mes annonces size: " + annonceList.size());
             return null;
         }
 
