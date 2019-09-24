@@ -116,7 +116,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="848484848"/>
                             <TextView
-                                android:visibility="gone"
+                                android:textColor="@color/colorAccent"
                                 android:id="@+id/realisation"
                                 android:textSize="10dp"
                                 android:gravity="center"
@@ -141,6 +141,10 @@
                 android:layout_height="0.1dp"/>
 
             <RatingBar
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:isIndicator="true"
                 android:layout_marginTop="5dp"
                 android:rating="4.5"
                 android:layout_gravity="center"
@@ -155,7 +159,7 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="A propos du jobeur"/>
+                android:text="Déscription du service"/>
             <TextView
                 android:textStyle="bold"
                 android:fontFamily="@font/alegreya_sans_thin"

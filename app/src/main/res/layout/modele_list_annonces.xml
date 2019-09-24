@@ -111,6 +111,7 @@
                     android:text="@string/Lorem_short"
                     android:textSize="12dp"/>
                 <TextView
+                    android:maxLength="100"
                     android:id="@+id/time"
                     android:textColor="@color/colorAccent"
                     android:gravity="center"

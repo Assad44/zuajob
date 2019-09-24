@@ -2,6 +2,8 @@ package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -37,6 +41,8 @@ public class Publications_view extends AppCompatActivity {
     SearchView rechercher;
     SwipeRefreshLayout swipper;
 
+    LinearLayout progressbar;
+
     ArrayList<Service> SERVICES = new ArrayList<>();
     List<Service> SERVICE_L = new ArrayList<>();
     ArrayList<Service> Search = new ArrayList<>();
@@ -45,10 +51,16 @@ public class Publications_view extends AppCompatActivity {
     List<Annonce> ANNOCE_L = new ArrayList<>();
     ArrayList<Annonce> SearchA = new ArrayList<>();
 
+    Services_Base_Adapter serviceAdapter;
+    int turn = 0;
+
     private void Init_Components(){
         list = findViewById(R.id.list);
         swipper = findViewById(R.id.swipper);
         rechercher = findViewById(R.id.rechercher);
+        progressbar = findViewById(R.id.progressbar);
+
+        progressbar.setVisibility(View.GONE);
     }
 
     private void Load_Header(){
@@ -61,20 +73,9 @@ public class Publications_view extends AppCompatActivity {
     }
 
     void Load_Annonce(){
-        ANNOCE.clear();
-        /*String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-        for (int i = 0; i < 10; i++) {
-            Annonce s = new Annonce();
-            s.setNomsUser(Tool.Versions()[i]);
-            s.setDescription(description);
-            s.setMontantAnnonce(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSousCategorie("Sous catégorie "+i);
-            s.setDatePublication("2019-09-09 23:57:00");
-            s.setDeviseAnnonce("USD");
-            s.setPhoneUser("+243 81 451 10 83");
-            ANNOCE.add(s);
-        }*/
+
+
+
 
 
         ANNOCE_L = GenerateData.listRandomAnnonce(list.getCount());
@@ -87,33 +88,39 @@ public class Publications_view extends AppCompatActivity {
     }
 
     void Load_SERVICE(){
-        SERVICES.clear();
-        /*String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                super.onPreExecute();
+            }
 
-        for (int i = 0; i < 10; i++) {
-            Service s = new Service();
-            s.setNomsJobeur(Tool.Versions()[i]);
-            s.setDescription(description);
-            s.setMontantAnnonce(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSousCategorie("Sous catégorie "+i);
-            s.setDeviseAnnonce("USD");
-            s.setPhoneJobeur("+243 81 451 10 83");
-            s.setCote(new Random().nextInt(200));
-            s.setNombreRealisation(new Random().nextInt(20));
-            SERVICES.add(s);
-        }*/
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                SERVICE_L = GenerateData.listRandomService(cout);
+                SERVICES = (ArrayList<Service>) SERVICE_L;
+                return null;
+            }
 
-        SERVICE_L = GenerateData.listRandomService(list.getCount());
-        Log.e("FFFFFFFF", String.valueOf(SERVICE_L.size()));
-        Toast.makeText(context, String.valueOf(SERVICE_L.size()), Toast.LENGTH_SHORT).show();
-        SERVICES = (ArrayList<Service>) SERVICE_L;
-        if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            list.setAdapter(new Services_Base_Adapter(context, SERVICES));
-            list.setNumColumns(1);
-        }
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                progressbar.setVisibility(View.GONE);
+                if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else{
+                    serviceAdapter = new Services_Base_Adapter(context, SERVICES);
+                    if (turn != 0) {
+                        serviceAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                    list.setAdapter(serviceAdapter);
+                    list.setNumColumns(1);
+                }
+            }
 
+        }.execute();
     }
 
     @Override
@@ -126,6 +133,7 @@ public class Publications_view extends AppCompatActivity {
         Load_Header();
         if (title.equals("Services")) Load_SERVICE();
         else Load_Annonce();
+
     }
 
     @Override
@@ -142,6 +150,34 @@ public class Publications_view extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+                    int last=view.getLastVisiblePosition();// la position de la derniere elements par
+                    int total= view.getCount();// Le nombre total d'element contenue de la list
+                    if(last+2>total){
+                        progressbar.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Load_SERVICE();
+                                turn = 1;
+                                //progressbar.setVisibility(View.GONE);
+                            }
+                        }, 2000);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
 
         swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -123,14 +126,22 @@ public class PhoneVerif_screen extends AppCompatActivity {
 
     class CheckingNumberAsync extends AsyncTask<String, String, Boolean> {
 
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+        TextView write_response = convertView.findViewById(R.id.write_response);
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView);
+        // Setting dialogview
+        final AlertDialog alert = a.create();
+
         @Override
         protected void onPreExecute() {
             //TODO : show a load dialog here
-            /*progressDialog = new ProgressDialog(PhoneVerif_screen.this);
-            progressDialog.setCancelable(false);
-            progressDialog.setTitle("Vérification du numéro");
-            progressDialog.show();*/
-            progressbar.setVisibility(View.VISIBLE);
+            write_response.setText("Vérification du numéro de téléphone...");
+
+            Window window = alert.getWindow();
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
+            alert.show();
             super.onPreExecute();
         }
 
@@ -145,7 +156,7 @@ public class PhoneVerif_screen extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //TODO : dismiss a load dialog here
-            progressbar.setVisibility(View.GONE);
+            alert.cancel();
             if(!aBoolean) {
                 Tool.setUserPreferences(context,"phone",numero);
                 Tool.setUserPreferences(context,"CountryCode",codeCountry);

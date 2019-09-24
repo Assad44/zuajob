@@ -49,11 +49,11 @@ public class Myprofil extends AppCompatActivity {
         number = findViewById(R.id.number);
         Sexe = findViewById(R.id.Sexe);
         toolbar = findViewById(R.id.toolbar);
-        pays = findViewById(R.id.pays);
+        /*pays = findViewById(R.id.pays);
         street = findViewById(R.id.street);
         quartier = findViewById(R.id.quartier);
         commune = findViewById(R.id.commune);
-        email = findViewById(R.id.email);
+        email = findViewById(R.id.email);*/
         typeswitcher = findViewById(R.id.typeswitcher);
     }
 

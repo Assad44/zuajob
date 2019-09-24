@@ -57,6 +57,7 @@
                             android:layout_height="wrap_content"
                             android:text="Titre du Job"/>
                         <TextView
+                            android:maxLength="200"
                             android:textStyle="bold"
                             android:fontFamily="@font/alegreya_sans_thin"
                             android:id="@+id/S_descriptions"

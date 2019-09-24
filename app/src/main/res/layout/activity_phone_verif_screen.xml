@@ -29,6 +29,7 @@
             android:layout_height="match_parent">
 
             <ProgressBar
+                android:visibility="gone"
                 android:id="@+id/progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"

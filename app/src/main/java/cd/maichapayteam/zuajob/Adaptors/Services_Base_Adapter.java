@@ -78,7 +78,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
         float rating = cote * 5 / real;
-        Rating.setRating(rating);
+        Rating.setRating(cote);
 
         int profil = 0;
         if (position%3 == 0)
@@ -142,7 +142,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
         float rating = cote * 5 / real;
-        Rating.setRating(rating);
+        Rating.setRating(cote);
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
