@@ -87,7 +87,7 @@ public class Tool {
         try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
             Ion.with(imageView)
-                    //.placeholder(R.drawable.avatar)
+                    .placeholder(R.drawable.avatar)
                     .error(gifFromResource)
                     .animateGif(AnimateGifMode.ANIMATE)
                     .load(url);

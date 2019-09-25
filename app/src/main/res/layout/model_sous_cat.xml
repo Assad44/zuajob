@@ -2,78 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="160dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:orientation="vertical">
 
   <android.support.v7.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="10dp"
+      android:layout_margin="5dp"
       app:cardBackgroundColor="@color/white"
-      android:elevation="10dp">
+      android:elevation="15dp">
 
     <LinearLayout
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
-      <de.hdodenhof.circleimageview.CircleImageView
-          android:id="@+id/profil"
-          android:layout_width="100dp"
-          android:layout_height="120dp"
-          android:src="@drawable/avatar"/>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginTop="0dp"
-          android:layout_marginBottom="5dp"
-          android:background="@color/colorPrimaryDark"/>
-
-      <LinearLayout
-          android:gravity="center_vertical"
-          android:layout_marginLeft="10dp"
+      <TextView
+          android:padding="10dp"
+          android:fontFamily="@font/alegreya_sans_thin"
+          android:id="@+id/scat"
+          android:textColor="@color/black"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical">
+          android:text="Souscat"
+          android:textSize="20dp"/>
+      <LinearLayout
+          android:layout_marginTop="10dp"
+          android:id="@+id/block"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/nom"
-            android:textColor="@color/dark8"
-            android:layout_width="wrap_content"
+          <TextView
+              android:background="@drawable/corner_blue_border_white"
+              android:textColor="@color/white"
+              android:id="@+id/open_annonces"
+              android:padding="10dp"
+              android:layout_width="150dp"
+              android:gravity="center"
+              android:layout_height="wrap_content"
+              android:text="Voir les annonces"
+              android:textSize="12dp"/>
+          <TextView
+            android:background="@drawable/corner_primary_border_white"
+            android:textColor="@color/white"
+            android:id="@+id/open_services"
+            android:padding="10dp"
+            android:layout_width="150dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="Nom du jobeur"
-            android:textSize="18dp"/>
-
-        <TextView
-            android:id="@+id/description_service"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Lorem_short"
+            android:text="Voir les services"
             android:textSize="12dp"/>
-        <RatingBar
-            android:rating="3"
-            android:id="@+id/Rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-        </LinearLayout>
 
       </LinearLayout>
-
     </LinearLayout>
 
   </android.support.v7.widget.CardView>

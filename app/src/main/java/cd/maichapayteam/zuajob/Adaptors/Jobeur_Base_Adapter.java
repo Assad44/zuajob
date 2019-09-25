@@ -49,21 +49,22 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
 
         ImageView avatar = convertView.findViewById(R.id.avatar);
         TextView nom = convertView.findViewById(R.id.nom);
-        TextView desc = convertView.findViewById(R.id.desc);
+        TextView phone = convertView.findViewById(R.id.phone);
         TextView age = convertView.findViewById(R.id.age);
         RatingBar MyRating = convertView.findViewById(R.id.MyRating);
 
         User S = DATA.get(position);
 
         nom.setText(S.getNom());
+        phone.setText(S.getPhone());
         age.setText(String.valueOf(S.getBirthday()));
         MyRating.setRating(new Random().nextInt(5));
 
-        /*int cote = S.getc;
+        /*int cote = S.getCote();
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
-        float rating = cote * 5 / real;
-        MyRating.setRating(rating);*/
+        float rating = cote * 5 / real;*/
+        MyRating.setRating(0);
 
         int profil = 0;
         if (position%3 == 0)

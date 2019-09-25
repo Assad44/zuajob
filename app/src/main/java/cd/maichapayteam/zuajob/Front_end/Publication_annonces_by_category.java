@@ -20,20 +20,17 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
-import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
-import cd.maichapayteam.zuajob.Tools.Tool;
 
-public class Publications_view extends AppCompatActivity {
+public class Publication_annonces_by_category extends AppCompatActivity {
 
     Context context = this;
     String title = "";
@@ -43,18 +40,11 @@ public class Publications_view extends AppCompatActivity {
 
     LinearLayout progressbar;
 
-    ArrayList<Service> SERVICES = new ArrayList<>();
-    List<Service> SERVICE_L = new ArrayList<>();
-    ArrayList<Service> Search = new ArrayList<>();
-
     ArrayList<Annonce> ANNOCE = new ArrayList<>();
     List<Annonce> ANNOCE_L = new ArrayList<>();
     ArrayList<Annonce> SearchA = new ArrayList<>();
 
-    Services_Base_Adapter serviceAdapter;
-    int turn = 0;
-
-    Annonces_Base_Adapter annonceAdapter;
+    Annonces_Base_Adapter_random annonceAdapter;
     int turnA = 0;
 
     private void Init_Components(){
@@ -67,32 +57,38 @@ public class Publications_view extends AppCompatActivity {
     }
 
     private void Load_Header(){
-        if (!getIntent().hasExtra("type")) onBackPressed();
-        title = getIntent().getExtras().getString("type");
-        getSupportActionBar().setTitle(title);
+        if (!getIntent().hasExtra("ID_CATEGORIE")) onBackPressed();
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("CATEGORIE"));
+        getSupportActionBar().setSubtitle(
+                getIntent().getExtras().getString("SOUSCATEGORIE")+" "+
+                getIntent().getExtras().getLong("ID_SOUSCATEGORIE")
+        );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
     }
 
     void Load_Annonce(){
-
         AsyncTask task = new AsyncTask() {
             int cout = list.getCount();
+            int ids;
+
             @Override
             protected void onPreExecute() {
                 swipper.setRefreshing(true);
                 Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                Log.e("DDDDD","sssssssssss "+ getIntent().getExtras().getLong("ID_SOUSCATEGORIE"));
+                ids = (int) getIntent().getExtras().getLong("ID_SOUSCATEGORIE");
                 super.onPreExecute();
             }
 
             @Override
             protected Object doInBackground(Object[] objects) {
-                ANNOCE_L = GenerateData.listRandomAnnonce(cout);
+                ANNOCE_L = GenerateData.listNewAnnonce(cout,ids);
                 for (Annonce c : ANNOCE_L){
+                    Log.e("DDDDDX","sssssssssss "+ c.getNomsUser());
                     ANNOCE.add(c);
                 }
-                //ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
                 return null;
             }
 
@@ -103,73 +99,32 @@ public class Publications_view extends AppCompatActivity {
 
                 if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
                 else{
+                    Toast.makeText(context, "---------- "+ ANNOCE.size() , Toast.LENGTH_SHORT).show();
                     if (turnA != 0) {
                         annonceAdapter.notifyDataSetChanged();
                         return;
                     }
-                    annonceAdapter = new Annonces_Base_Adapter(context, ANNOCE,"");
+                    annonceAdapter = new Annonces_Base_Adapter_random(context, ANNOCE,"");
                     list.setAdapter(annonceAdapter);
-                }
-
-
-            }
-
-        }.execute();
-
-    }
-
-    void Load_SERVICE(){
-        AsyncTask task = new AsyncTask() {
-            int cout = list.getCount();
-            @Override
-            protected void onPreExecute() {
-                swipper.setRefreshing(true);
-                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
-                super.onPreExecute();
-            }
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                SERVICE_L.clear();
-                SERVICE_L = GenerateData.listRandomService(cout);
-                for (Service c : SERVICE_L){
-                    SERVICES.add(c);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                swipper.setRefreshing(false);
-                progressbar.setVisibility(View.GONE);
-                serviceAdapter = new Services_Base_Adapter(context, SERVICES);
-                if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else{
-                    Log.e("SSSSS", String.valueOf(SERVICES.size()));
-                    if (turn != 0) {
-                        serviceAdapter.notifyDataSetChanged();
-                        return;
-                    }
-                    list.setAdapter(serviceAdapter);
                     list.setNumColumns(1);
+                    turnA = 1;
                 }
+
             }
 
         }.execute();
-    }
 
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publications_view);
+        setContentView(R.layout.activity_publication_annonces_by_category);
         Init_Components();
 
         // Todo ; launching methods
         Load_Header();
-        if (title.equals("Services")) Load_SERVICE();
-        else Load_Annonce();
-
+        Load_Annonce();
     }
 
     @Override
@@ -198,9 +153,7 @@ public class Publications_view extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Load_SERVICE();
-                                turn = 1;
-                                //progressbar.setVisibility(View.GONE);
+                                Load_Annonce();
                             }
                         }, 2000);
 
@@ -218,9 +171,7 @@ public class Publications_view extends AppCompatActivity {
         swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (title.equals("Services")) Load_SERVICE();
-                else Load_Annonce();
-                swipper.setRefreshing(false);
+                Load_Annonce();
             }
         });
 
@@ -232,42 +183,23 @@ public class Publications_view extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Search.clear();
+
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    if (title.equals("Services")) {
-                        list.setAdapter(new Services_Base_Adapter(context, SERVICES));
-                        list.setNumColumns(1);
-                    }
-                    else list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,""));
+                    list.setAdapter(new Annonces_Base_Adapter_random(context, ANNOCE,""));
                     return true;
                 }
 
-                if (title.equals("Services")){
-                    for ( Service s : SERVICES ) {
-                        if (
-                                s.getNomsJobeur().toUpperCase().contains(newText.toUpperCase()) ||
-                                String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
-                        ){
-                            Search.add(s);
-                        }
+                for ( Annonce s : ANNOCE ) {
+                    if (
+                            s.getNomsUser().toUpperCase().contains(newText.toUpperCase()) ||
+                                    String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
+                    ){
+                        SearchA.add(s);
                     }
-                    list.setAdapter(new Services_Base_Adapter(context, Search));
-                    list.setNumColumns(1);
-                }else{
-                    for ( Annonce s : ANNOCE ) {
-                        if (
-                                s.getNomsUser().toUpperCase().contains(newText.toUpperCase()) ||
-                                String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
-                        ){
-                            SearchA.add(s);
-                        }
-                    }
-                    list.setAdapter(new Annonces_Base_Adapter(context, SearchA,""));
                 }
-
-
+                list.setAdapter(new Annonces_Base_Adapter_random(context, SearchA,""));
                 return true;
             }
         });
@@ -283,7 +215,9 @@ public class Publications_view extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(context, Home.class);
+        Intent i = new Intent(context, Sous_categories.class);
+        i.putExtra("title",getIntent().getExtras().getString("CATEGORIE"));
+        i.putExtra("id",getIntent().getExtras().getString("ID_CATEGORIE"));
         startActivity(i);
         finish();
     }

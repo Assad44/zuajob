@@ -26,7 +26,7 @@
             android:padding="10dp">
 
             <LinearLayout
-                android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,17 +37,6 @@
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/like"
-                        android:layout_weight="1"
-                        android:background="@color/dark8"
-                        android:padding="10dp"
-                        android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:drawableLeft="@drawable/ic_hearth_white"
-                        android:textSize="15dp"/>
                     <TextView
                         android:id="@+id/share"
                         android:layout_weight="1"
@@ -100,25 +89,17 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/nom"
+                                android:id="@+id/nom_user"
                                 android:textColor="@color/black"
                                 android:textSize="15dp"
                                 android:textStyle="bold"
                                 android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nom du Job"/>
+                                android:text="Aucun jobeur n'a été habilité pour cette annonce "/>
                             <TextView
                                 android:id="@+id/number"
-                                android:textSize="10dp"
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="848484848"/>
-                            <TextView
-                                android:textColor="@color/colorAccent"
-                                android:id="@+id/realisation"
-                                android:textSize="10dp"
+                                android:textSize="12dp"
                                 android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -130,79 +111,82 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
             </LinearLayout>
             <LinearLayout
                 android:background="#C9C9C9"
                 android:elevation="1dp"
+                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"/>
 
-            <RatingBar
-                android:clickable="false"
-                android:focusableInTouchMode="false"
-                android:focusable="false"
-                android:isIndicator="true"
-                android:layout_marginTop="5dp"
-                android:rating="4.5"
-                android:layout_gravity="center"
-                android:id="@+id/MyRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <TextView
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Déscription du service"/>
+                android:text="A propos de l'annonces"/>
+
             <TextView
-                android:id="@+id/categorie"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
+                android:id="@+id/categore"
+                android:layout_weight="1"
+                android:textStyle="italic"
+                android:text="Categorie>sous categorie"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Déscription du service"/>
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="13dp"/>
+
             <TextView
                 android:textStyle="bold"
                 android:fontFamily="@font/alegreya_sans_thin"
-                android:id="@+id/S_descriptions"
+                android:id="@+id/description"
                 android:layout_weight="1"
                 android:textSize="13dp"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Lorems"/>
 
+            <TextView
+                android:textStyle="bold"
+                android:fontFamily="@font/alegreya_sans_thin"
+                android:id="@+id/time"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A l'instant"/>
+
             <LinearLayout
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:weightSum="2"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/S_prix"
                     android:layout_weight="1"
                     android:background="@color/dark8"
                     android:padding="10dp"
-                    android:text="Prix du services"
+                    android:text="Prix du service"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textSize="13dp"/>
                 <TextView
-                    android:id="@+id/S_prix"
+                    android:id="@+id/postullants"
                     android:layout_weight="1"
                     android:background="@color/dark3"
                     android:padding="10dp"
                     android:textStyle="bold"
-                    android:text="50 USD"
+                    android:text="Les postulants"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

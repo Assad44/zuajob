@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Front_end.Sous_categories">
 
     <LinearLayout
@@ -17,6 +18,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:visibility="gone"
             android:background="@color/white"
             android:weightSum="2"
             android:orientation="horizontal"
@@ -41,7 +43,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -50,6 +51,7 @@
         android:id="@+id/swiper">
 
         <ListView
+            android:divider="@android:color/transparent"
             android:numColumns="auto_fit"
             android:id="@+id/list"
             android:layout_width="match_parent"

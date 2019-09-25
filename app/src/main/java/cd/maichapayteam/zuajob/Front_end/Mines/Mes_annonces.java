@@ -2,22 +2,32 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Adaptors.Mes_Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_annonces extends AppCompatActivity {
@@ -26,34 +36,67 @@ public class Mes_annonces extends AppCompatActivity {
     GridView list;
     SearchView rechercher;
 
+    SwipeRefreshLayout swipper;
+
+    LinearLayout progressbar;
+
     ArrayList<Annonce> ANNOCE = new ArrayList<>();
+    List<Annonce> ANNOCE_L = new ArrayList<>();
     ArrayList<Annonce> SearchA = new ArrayList<>();
+
+
+    Annonces_Base_Adapter annonceAdapter;
+    int turnA = 0;
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
+        swipper = findViewById(R.id.swipper);
+        progressbar = findViewById(R.id.progressbar);
+
+        progressbar.setVisibility(View.GONE);
     }
 
     void Load_Annonce(){
-        ANNOCE.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-        for (int i = 0; i < 10; i++) {
-            Annonce s = new Annonce();
-            s.setNomsUser(Tool.Versions()[i]);
-            s.setDescription(description);
-            s.setMontant(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSousCategorie("Sous catégorie "+i);
-            s.setDatePublication("2019-09-09 23:57:00");
-            s.setDevise("USD");
-            s.setPhoneUser("+243 81 451 10 83");
-            ANNOCE.add(s);
-        }
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                super.onPreExecute();
+            }
 
-        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
-        }
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                ANNOCE_L = GenerateData.listMesAnnonces();
+                for (Annonce c : ANNOCE_L){
+                    ANNOCE.add(c);
+                }
+                //ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+
+                if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(context, "---------- "+ ANNOCE.size() , Toast.LENGTH_SHORT).show();
+                    if (turnA != 0) {
+                        annonceAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                    annonceAdapter = new Annonces_Base_Adapter(context, ANNOCE,"");
+                    list.setAdapter(annonceAdapter);
+                    list.setNumColumns(1);
+                    turnA = 1;
+                }
+
+            }
+
+        }.execute();
     }
 
     @Override
@@ -88,6 +131,13 @@ public class Mes_annonces extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Load_Annonce();
+            }
+        });
+
         rechercher.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -96,10 +146,11 @@ public class Mes_annonces extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
+                    list.setAdapter(new Annonces_Base_Adapter_random(context, ANNOCE,""));
                     return true;
                 }
 
@@ -111,7 +162,7 @@ public class Mes_annonces extends AppCompatActivity {
                         SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Mes_Annonces_Base_Adapter(context, SearchA,"mine"));
+                list.setAdapter(new Annonces_Base_Adapter_random(context, SearchA,""));
                 return true;
             }
         });

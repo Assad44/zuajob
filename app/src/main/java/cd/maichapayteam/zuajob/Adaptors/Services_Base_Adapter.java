@@ -70,7 +70,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         // todo : Affects values to the componants
         S_categorie.setText(S.getNomsJobeur());
         number.setText(S.getPhoneJobeur());
-        S_descriptions.setText(S.getDescription());
+        S_descriptions.setText(S.getSousCategorie()+" > "+ S.getSousCategorie());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
 
@@ -121,7 +121,7 @@ public class Services_Base_Adapter extends BaseAdapter {
 
     private void details(final Service S, int profil){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details,null);
-        TextView S_categorie = convertView.findViewById(R.id.nom);
+        TextView nom = convertView.findViewById(R.id.nom);
         TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
         TextView S_prix = convertView.findViewById(R.id.S_prix);
         TextView share = convertView.findViewById(R.id.share);
@@ -129,10 +129,12 @@ public class Services_Base_Adapter extends BaseAdapter {
         TextView like = convertView.findViewById(R.id.like);
         TextView realisation = convertView.findViewById(R.id.realisation);
         TextView number = convertView.findViewById(R.id.number);
+        TextView categorie = convertView.findViewById(R.id.categorie);
         RatingBar Rating = convertView.findViewById(R.id.MyRating);
         ImageView avatar = convertView.findViewById(R.id.avatar);
 
-        S_categorie.setText(S.getNomsJobeur());
+        nom.setText(S.getNomsJobeur());
+        categorie.setText(S.getCategorie()+" > "+S.getSousCategorie());
         number.setText(S.getPhoneJobeur());
         S_descriptions.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
@@ -164,13 +166,13 @@ public class Services_Base_Adapter extends BaseAdapter {
             }
         });
 
-
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
                 .setPositiveButton("Solliciter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        long idS = S.getId();
                         dialog.dismiss();
                     }
                 })

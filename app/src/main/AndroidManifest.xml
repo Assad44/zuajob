@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Front_end.Mines.Mes_postulances"></activity>
+        <activity android:name=".Front_end.Publication_services_by_category"></activity>
+        <activity android:name=".Front_end.Publication_annonces_by_category" />
+        <activity android:name=".Front_end.Publications_Annonces" />
+        <activity android:name=".Front_end.Mines.Mes_postulances" />
         <activity android:name=".Front_end.Mines.Mes_services_sollicites" />
         <activity android:name=".Front_end.Mines.Mes_rendez_vous" />
         <activity android:name=".Front_end.Mines.Mes_Sollicitations" />
@@ -19,7 +22,7 @@
         <activity android:name=".Front_end.Sous_categories" />
         <activity android:name=".Front_end.Blanks.Publication_blank" />
         <activity android:name=".Front_end.Jobeur_list" />
-        <activity android:name=".Front_end.Publications_view" />
+        <activity android:name=".Front_end.Publications_services" />
         <activity android:name=".Front_end.Signup.Login" />
         <activity android:name=".Front_end.Categorie_view" />
         <activity android:name=".Front_end.Paramettres" />

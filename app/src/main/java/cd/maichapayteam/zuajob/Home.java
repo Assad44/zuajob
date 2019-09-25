@@ -1,7 +1,6 @@
 package cd.maichapayteam.zuajob;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,7 +31,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Categorie_view;
@@ -47,19 +44,15 @@ import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
-import cd.maichapayteam.zuajob.Front_end.Publications_view;
+import cd.maichapayteam.zuajob.Front_end.Publications_Annonces;
+import cd.maichapayteam.zuajob.Front_end.Publications_services;
 import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.Service;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
-import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
-import cd.maichapayteam.zuajob.Tools.IncomingSms;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -317,7 +310,7 @@ public class Home extends AppCompatActivity
         BTN_annonces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, Publications_view.class);
+                Intent i = new Intent(context, Publications_Annonces.class);
                 i.putExtra("type", "Annonces");
                 startActivity(i);
                 finish();
@@ -326,7 +319,7 @@ public class Home extends AppCompatActivity
         BTN_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, Publications_view.class);
+                Intent i = new Intent(context, Publications_services.class);
                 i.putExtra("type", "Services");
                 startActivity(i);
                 finish();
@@ -345,13 +338,14 @@ public class Home extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
+
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //exit_alert();
-            if (exit == 0){
+            if (exit == 0) {
                 Toast.makeText(context, "Appuyer encore pour quitter", Toast.LENGTH_SHORT).show();
                 exit = 1;
-            }else finish();
+            } else finish();
 
             new Handler().postDelayed(new Runnable() {
                 @Override

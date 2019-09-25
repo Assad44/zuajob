@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,26 +14,21 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.builder.AnimateGifMode;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
-import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Annonces_Base_Adapter extends BaseAdapter {
+public class Annonces_Base_Adapter_random extends BaseAdapter {
     Context context;
     ArrayList<Annonce> DATA;
 
-    public Annonces_Base_Adapter(Context context, ArrayList<Annonce> DATA, String mode) {
+    public Annonces_Base_Adapter_random(Context context, ArrayList<Annonce> DATA, String mode) {
         this.context = context;
         this.DATA = DATA;
     }
@@ -56,49 +50,76 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces,null);
+        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces_random,null);
         TextView description = convertView.findViewById(R.id.description);
-        TextView confier = convertView.findViewById(R.id.confier);
+        TextView nom_user = convertView.findViewById(R.id.nom_user);
+        TextView number = convertView.findViewById(R.id.number);
         TextView time = convertView.findViewById(R.id.time);
-        TextView price = convertView.findViewById(R.id.price);
         TextView categorie = convertView.findViewById(R.id.categorie);
+        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
         LinearLayout header = convertView.findViewById(R.id.header);
 
-        final Annonce S = DATA.get(position);
-        // todo : Affects values to the componants
-        description.setText(S.getDescription());
-        price.setText(S.getMontant()+ " "+ S.getDevise());
-        categorie.setText(
-                S.getCategorie()+" > "+S.getSousCategorie()
-        );
-
-        Log.e("TIMMMMMMMMMMMMM", S.getDatePublication());
-        time.setText(Tool.formatingDate(S.getDatePublication()));
+        //description.setVisibility(View.GONE);
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
-        if (S.isConfied() == true){
-            confier.setText("Déjà confié");
-            confier.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-        }else{
-            confier.setText("Pas encore confié");
-            confier.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-        }
+        final Annonce S = DATA.get(position);
+        // todo : Affects values to the componants
+        nom_user.setText(S.getNomsUser());
+        number.setText(S.getPhoneUser());
 
+
+
+        description.setText(S.getDescription());
+        categorie.setText(
+                S.getCategorie()+">"+S.getSousCategorie()
+        );
+
+        int profil = 0;
+        if (position%3 == 0){
+            profil = R.drawable.avatar3;
+        }else{
+            profil = R.drawable.avatar2;
+        }
+        avatar.setImageResource(profil);
+
+        time.setText(Tool.formatingDate(S.getDatePublication()));
+
+        final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                details(S);
+                details(S, finalProfil);
+            }
+        });
+
+        number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, v);
+                popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
 
         return convertView;
     }
 
-    private void details(final Annonce S){
+    private void details(final Annonce S, int profil){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_random,null);
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
@@ -113,15 +134,9 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
         postullants.setVisibility(View.GONE);
 
-        if (S.isConfied() == true){
-            Tool.Load_Image(context,avatar,"");
-            nom_user.setText(S.getNomsUser());
-            number.setText(S.getPhoneUser());
-        }else{
-            nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
-            number.setText("");
-        }
-
+        avatar.setImageResource(profil);
+        nom_user.setText(S.getNomsUser());
+        number.setText(S.getPhoneUser());
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());

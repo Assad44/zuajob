@@ -29,11 +29,58 @@
 
     </LinearLayout>
 
-    <ListView
-        android:numColumns="auto_fit"
-        android:id="@+id/list"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:numColumns="auto_fit"
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:background="#af1fb6ff"
+            android:id="@+id/progressbar"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="50dp">
+
+
+            <ProgressBar
+                android:indeterminate="true"
+                android:layout_below="@+id/framelauout"
+                android:indeterminateTint="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="30dp" />
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Chargement..."
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
 
 
 </LinearLayout>
