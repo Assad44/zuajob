@@ -44,6 +44,8 @@
         android:layout_height="1dp"/>
 
     <TextView
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/excellent"
         android:fontFamily="@font/alegreya_sans_thin"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -54,9 +56,11 @@
         android:layout_marginRight="20dp"
         android:background="@color/excellent"
         android:layout_height="wrap_content"
-        android:text="Excelent"
+        android:text="Excellent"
         android:textSize="20dp"/>
     <TextView
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/bon"
         android:fontFamily="@font/alegreya_sans_thin"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -70,6 +74,8 @@
         android:text="Bon"
         android:textSize="20dp"/>
     <TextView
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/assez_bon"
         android:fontFamily="@font/alegreya_sans_thin"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -83,6 +89,8 @@
         android:text="Assez bon"
         android:textSize="20dp"/>
     <TextView
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/mauvais"
         android:fontFamily="@font/alegreya_sans_thin"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -96,6 +104,8 @@
         android:text="Mauvais"
         android:textSize="20dp"/>
     <TextView
+        style="?android:borderlessButtonStyle"
+        android:id="@+id/mediocre"
         android:fontFamily="@font/alegreya_sans_thin"
         android:textStyle="bold"
         android:textColor="@color/black"

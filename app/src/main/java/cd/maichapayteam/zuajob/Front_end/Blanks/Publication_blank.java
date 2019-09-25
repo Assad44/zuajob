@@ -25,7 +25,7 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class Publication_blank extends AppCompatActivity {
 
     Context context = this;
-    String title = "";
+
 
     Spinner Publication_type,devise,categorie,sous_categorie;
     TextView description,montant,btn_validate;
@@ -80,7 +80,7 @@ public class Publication_blank extends AppCompatActivity {
 
     private void Load_Header(){
         if (!getIntent().hasExtra("type")) onBackPressed();
-        title = getIntent().getExtras().getString("type");
+        //title = getIntent().getExtras().getString("type");
         getSupportActionBar().setTitle("Nouvelle publication ");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

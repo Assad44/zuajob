@@ -63,13 +63,13 @@
 
                     <TextView
                         android:textStyle="bold"
-                        android:fontFamily="@font/alegreya_sans_thin"
                         android:id="@+id/categorie"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:text="Catgorie > Sous categorie"
-                        android:textSize="13dp"/>
+                        android:textSize="15dp"/>
 
                     <TextView
                         android:textStyle="bold"
@@ -90,8 +90,9 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/editer_heure"
                             android:layout_margin="1dp"
-                            android:text="Edit"
+                            android:text="Editer heure"
                             android:background="@drawable/corner_primary_border_white"
                             android:padding="10dp"
                             android:textColor="@color/white"
@@ -120,6 +121,7 @@
                             android:textSize="13dp"
                             />
                         <TextView
+                            android:id="@+id/annuler_rdv"
                             android:layout_margin="1dp"
                             android:text="Annuler"
                             android:background="@drawable/corner_green_border_white"
@@ -163,7 +165,7 @@
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/Lorems2"
+                    android:text="@string/advices_cotation"
                     android:layout_margin="10dp"
                     android:textSize="12dp"/>
 

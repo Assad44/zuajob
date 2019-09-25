@@ -61,10 +61,42 @@ public class Rdv_Base_Adapter extends BaseAdapter {
 
         final LinearLayout details_option = convertView.findViewById(R.id.details_option);
         TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
+        TextView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
+        TextView editer_heure = convertView.findViewById(R.id.editer_heure);
         TextView coter = convertView.findViewById(R.id.coter);
 
         details_option.setVisibility(View.GONE);
 
+
+        editer_heure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        annuler_rdv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder a = new AlertDialog.Builder(context,R.style.MyDialogTheme)
+                        .setTitle("Confirmation")
+                        .setMessage("Voulez-vous vraimment annuler ce rendez-vous ?")
+                        .setCancelable(true)
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                final AlertDialog alert = a.create();
+                alert.show();
+            }
+        });
         BTN_valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +116,13 @@ public class Rdv_Base_Adapter extends BaseAdapter {
             public void onClick(View v) {
                 View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
                 ImageView close = convertView.findViewById(R.id.close);
+                TextView excellent = convertView.findViewById(R.id.excellent);
+                TextView bon = convertView.findViewById(R.id.bon);
+                TextView assez_bon = convertView.findViewById(R.id.assez_bon);
+                TextView mauvais = convertView.findViewById(R.id.mauvais);
+                TextView mediocre = convertView.findViewById(R.id.mediocre);
+
+
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
                         .setView(convertView)
                         .setCancelable(true);
