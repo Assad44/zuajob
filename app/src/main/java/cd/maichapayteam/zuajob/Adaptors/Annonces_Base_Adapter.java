@@ -10,7 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 import pl.droidsonroids.gif.GifDrawable;
@@ -111,13 +115,14 @@ public class Annonces_Base_Adapter extends BaseAdapter {
         TextView categore = convertView.findViewById(R.id.categore);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
-        postullants.setVisibility(View.GONE);
 
         if (S.isConfied() == true){
             Tool.Load_Image(context,avatar,"");
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());
+            postullants.setVisibility(View.GONE);
         }else{
+            postullants.setVisibility(View.VISIBLE);
             nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
             number.setText("");
         }
@@ -144,6 +149,12 @@ public class Annonces_Base_Adapter extends BaseAdapter {
                     }
                 });
                 popupMenu.show();
+            }
+        });
+        postullants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postullants(String.valueOf(S.getId()));
             }
         });
 
@@ -183,5 +194,28 @@ public class Annonces_Base_Adapter extends BaseAdapter {
 
     }
 
+
+    private void postullants(String id){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_list_postullants,null);
+        TextView count = convertView.findViewById(R.id.count);
+        GridView list= convertView.findViewById(R.id.list);
+
+        list.setAdapter(new Postullants_Base_Adapter(context, id));
+
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView)
+                .setCancelable(true)
+                .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = a.create();
+        alert.show();
+
+
+
+    }
 
 }

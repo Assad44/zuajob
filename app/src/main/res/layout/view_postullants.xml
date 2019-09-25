@@ -66,7 +66,7 @@
                 <TextView
                     android:background="@drawable/corner_blue_border_white"
                     android:padding="10dp"
-                    android:id="@+id/number"
+                    android:id="@+id/confier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
