@@ -11,6 +11,7 @@ LES LISTES DE DONNEES ET LEURS EMPLACEMENTS
 
 
 
+
 ==> GenerateData.listCategorie() : List<Categorie>
 
 ==> GenerateData.listSousCategorie(Categorie) : List<SousCategorie>
@@ -49,5 +50,9 @@ LES LISTES DE DONNEES ET LEURS EMPLACEMENTS
     la liste des annonces de l'utilisateur en cours
 
 
+
+
+
+if(!us.isError()) GenerateData.generateAll();
 
 

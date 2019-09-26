@@ -1,11 +1,15 @@
 package cd.maichapayteam.zuajob.Front_end.Blanks;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -16,10 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Publication_blank extends AppCompatActivity {
@@ -36,6 +43,7 @@ public class Publication_blank extends AppCompatActivity {
     ArrayList<String> DATA2 = new ArrayList<>();
 
     ArrayList<String> SCAT = new ArrayList<>();
+    ArrayList<String> SCAT_id = new ArrayList<>();
     List<SousCategorie> LSC = new ArrayList<>();
 
     private void Init_Components(){
@@ -47,33 +55,22 @@ public class Publication_blank extends AppCompatActivity {
         montant = findViewById(R.id.montantAnnonce);
         btn_validate = findViewById(R.id.btn_validate);
 
-
         sous_categorie.setVisibility(View.GONE);
     }
 
 
     void Load_CAtegorie(){
-        /*for (int i = 0; i < 10; i++) {
-            Categorie c = new Categorie();
-            c.setDesignation("Categorie "+i);
-            c.setDescription("Description "+i);
-            DATA.add(c);
-        }
-        */
-
         Categorie c = new Categorie();
         c.setDesignation("--Selectionner une catégorie-- ");
         DATA1 = GenerateData.listCategorie();
+        DATA1.add(0, c);
         DATA = (ArrayList<Categorie>) DATA1;
-
 
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
             for (Categorie s : DATA ) {
                 DATA2.add(s.getDesignation());
-                Log.e("DDDDDDDDDDDDD___", s.getDesignation());
             }
-
             Tool.setEntries(context,categorie, DATA2);
         }
     }
@@ -86,7 +83,6 @@ public class Publication_blank extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setElevation(0);
     }
-
 
     private boolean CheckinZones(){
         if (Publication_type.getSelectedItemPosition() == 0){
@@ -141,7 +137,7 @@ public class Publication_blank extends AppCompatActivity {
 
                     for (SousCategorie s : LSC ) {
                         SCAT.add(s.getDesignation());
-                        //Log.e("DDDDDDDDDDDDD___", s.getDesignation());
+                        SCAT_id.add(String.valueOf(s.getId()));
                     }
 
                     Tool.setEntries(context,sous_categorie, SCAT);
@@ -165,9 +161,23 @@ public class Publication_blank extends AppCompatActivity {
 
                 // Todo : Checking publication type and create object
                 if (Publication_type.getSelectedItemPosition() == 1){
-                    // create Service object
+                    service_publication();
                 }else {
-                    // create annonce object
+                    AlertDialog.Builder a = new AlertDialog.Builder(context)
+                            .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    Annonce AA = ManageLocalData.creerAnnonce(Annonce_publication());
+                    if (AA.isError() == true ){
+                        a.setMessage(AA.getErrorMessage()+ " "+AA.getErrorCode());
+                    }else{
+                        a.setMessage("Opération réussi");
+                    }
+                    a.show();
+
                 }
             }
         });
@@ -176,10 +186,60 @@ public class Publication_blank extends AppCompatActivity {
 
 
     private void service_publication(){
+        AsyncTask aaa = new AsyncTask<Void, Void, Service>() {
+            Service s = new Service();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Publication du service encours...");
+                s.setIdSousCategorie(Long.parseLong(SCAT_id.get(sous_categorie.getSelectedItemPosition())));
+                s.setDescription(description.getText().toString().replace("'","''"));
+                s.setDevise(devise.getSelectedItem().toString());
+                s.setMontant(Integer.parseInt(montant.getText().toString()));
+                alert.show();
+            }
+
+            @Override
+            protected Service doInBackground(Void... voids) {
+                return ManageLocalData.creerService(s);
+            }
+
+
+            @Override
+            protected void onPostExecute(Service service) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (service.isError() == true ){
+                    a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+                }
+                a.show();
+            }
+        }.execute();
 
     }
-    private void Annonce_publication(){
-
+    private Annonce Annonce_publication(){
+        Annonce s = new Annonce();
+        s.setIdSousCategorie(Long.parseLong(SCAT_id.get(sous_categorie.getSelectedItemPosition())));
+        s.setDescription(description.getText().toString().replace("'","''"));
+        s.setDevise(devise.getSelectedItem().toString());
+        s.setMontant(Integer.parseInt(montant.getText().toString()));
+        return s;
     }
 
 

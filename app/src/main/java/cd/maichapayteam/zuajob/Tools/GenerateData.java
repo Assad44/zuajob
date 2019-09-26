@@ -27,7 +27,7 @@ public class GenerateData {
         UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
         List<User> list = new ArrayList<>();
         long max = userDAO.max();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             User user = GeneralClass.getRandomUser();
             max++;
             user.setId(max+1);
@@ -35,7 +35,7 @@ public class GenerateData {
             user = userDAO.ajouter(user);
             if(user!=null) list.add(user);
         }
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             User user = GeneralClass.getRandomUser();
             max++;
             user.setId(max+1);
@@ -59,7 +59,7 @@ public class GenerateData {
         List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllJobeurs();
         ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
         long max = serviceDAO.max();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Categorie categorie = categorieList.get(GeneralClass.randBetween(0, categorieList.size()-1));
             List<SousCategorie> sousCategorieList = SousCategorieDAO.getInstance(GeneralClass.applicationContext).getAll(categorie);
             SousCategorie sousCategorie = sousCategorieList.get(GeneralClass.randBetween(0, sousCategorieList.size()-1));
@@ -103,7 +103,7 @@ public class GenerateData {
         List<Categorie> categorieList = CategorieDAO.getInstance(GeneralClass.applicationContext).getAll();
         List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllUsers();
         AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Categorie categorie = categorieList.get(GeneralClass.randBetween(0, categorieList.size()-1));
             List<SousCategorie> sousCategorieList = SousCategorieDAO.getInstance(GeneralClass.applicationContext).getAll(categorie);
             SousCategorie sousCategorie = sousCategorieList.get(GeneralClass.randBetween(0, sousCategorieList.size()-1));
@@ -148,7 +148,7 @@ public class GenerateData {
 
         List<Annonce> listAnnonce = AnnonceDAO.getInstance(GeneralClass.applicationContext).getAll();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Annonce annonce = listAnnonce.get(new Random().nextInt(listAnnonce.size()));
             User prestateur = prestateurList.get(GeneralClass.randBetween(0, prestateurList.size()-1));
             Postuler postuler = new Postuler();

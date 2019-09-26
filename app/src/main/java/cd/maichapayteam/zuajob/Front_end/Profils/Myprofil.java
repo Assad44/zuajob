@@ -28,14 +28,16 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Myprofil extends AppCompatActivity {
 
     Context context = this;
     private static final int PICK_FILE_REQUEST = 12;
-    TextView update_Adresses;
-    ImageView picture, Pickpicture;
+    TextView update_Adresses,details;
+    RoundedImageView picture;
+    ImageView Pickpicture;
     TextView nom,number,Sexe;
     TextView street,quartier,commune,pays,email,typeswitcher;
 
@@ -47,6 +49,7 @@ public class Myprofil extends AppCompatActivity {
         Pickpicture = findViewById(R.id.Pickpicture);
         nom = findViewById(R.id.nom);
         number = findViewById(R.id.number);
+        details = findViewById(R.id.details);
         Sexe = findViewById(R.id.Sexe);
         toolbar = findViewById(R.id.toolbar);
         /*pays = findViewById(R.id.pays);
@@ -69,6 +72,10 @@ public class Myprofil extends AppCompatActivity {
         Sexe.setText(
                 u.getSexe()+ " / "+ u.getBirthday()
         );
+
+        if (u.getDescription().equals("")) details.setText("Aucun détails sur votre profil ");
+        else details.setText(u.getDescription());
+
 
     }
 

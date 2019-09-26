@@ -51,6 +51,7 @@ import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
@@ -185,6 +186,29 @@ public class Home extends AppCompatActivity
 
     }
 
+    private void Header_initialize(){
+        User u = GeneralClass.Currentuser;
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setTitle(u.getNom());
+            /*nom.setText(Tool.getUserPreferences(context, "nom"));
+            String numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
+            phone.setText(numero);*/
+            //getSupportActionBar().setIcon(R.drawable.ic_humburger);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // TODO ; Visibilities
+        if (u.getType() == 0){// utilisateur simple
+            BTN_annonces.setVisibility(View.GONE);
+            navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
+        }else{
+            navigationView.inflateMenu(R.menu.activity_home_drawer);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,18 +223,7 @@ public class Home extends AppCompatActivity
         }
 
         Init_Components();
-
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setTitle(Tool.getUserPreferences(context,"nom"));
-            /*nom.setText(Tool.getUserPreferences(context, "nom"));
-            String numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
-            phone.setText(numero);*/
-            //getSupportActionBar().setIcon(R.drawable.ic_humburger);
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        Header_initialize();
 
         Load_CAtegorie();
 
@@ -219,11 +232,6 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         //drawer.openDrawer(GravityCompat.START);
         toggle.syncState();
-
-        if (Tool.getUserPreferences(context,"type").equals("1"))
-            navigationView.inflateMenu(R.menu.activity_home_drawer);
-        else
-            navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
 
         navigationView.setNavigationItemSelectedListener(this);
 

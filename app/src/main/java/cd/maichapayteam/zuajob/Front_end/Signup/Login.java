@@ -162,7 +162,8 @@ public class Login extends AppCompatActivity {
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
         TextView write_response = convertView.findViewById(R.id.write_response);
         AlertDialog.Builder a = new AlertDialog.Builder(context)
-                .setView(convertView);
+                .setView(convertView)
+                .setCancelable(false);
         // Setting dialogview
         final AlertDialog alert = a.create();
 
@@ -175,6 +176,7 @@ public class Login extends AppCompatActivity {
             Window window = alert.getWindow();
             window.setGravity(Gravity.CENTER);
             window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
+
             alert.show();
             super.onPreExecute();
         }

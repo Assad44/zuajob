@@ -171,7 +171,6 @@ public class Jobeur_list extends AppCompatActivity {
 
                 if (newText.equals("")) {
                     list.setAdapter(new Jobeur_Base_Adapter(context, DATA));
-                    list.setNumColumns(1);
                     return true;
                 }
 

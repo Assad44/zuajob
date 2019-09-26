@@ -176,7 +176,7 @@ public class Identity_screen extends AppCompatActivity {
             progressDialog.setMessage("Votre inscription est encours. Veuillez patienter SVP.");
             //return RemoteDataSync.confirmCode(numero, code);
             User us = ManageLocalData.createUser(user);
-            if(!us.isError()) GenerateData.generateAll();
+
             return us;
             //return  GenerateData.createUser(user);
         }
@@ -228,6 +228,9 @@ public class Identity_screen extends AppCompatActivity {
             return false;
         }else if (TextUtils.isEmpty(Cpasse.getText().toString())){
             Cpasse.setError("Champ obligatoire");
+            return false;
+        }else if (type.getSelectedItemPosition() == 0){
+            Toast.makeText(context, "Veuillez selectionner le type d'utilisateur", Toast.LENGTH_SHORT).show();
             return false;
         }else return true;
     }
