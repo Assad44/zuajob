@@ -31,6 +31,7 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Publications_services extends AppCompatActivity {
@@ -79,7 +80,7 @@ public class Publications_services extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 SERVICE_L.clear();
-                SERVICE_L = GenerateData.listRandomService(cout);
+                SERVICE_L = ManageLocalData.listRandomService(cout);
                 for (Service c : SERVICE_L){
                     SERVICES.add(c);
                 }

@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,7 +106,7 @@ public class Categorie_view extends AppCompatActivity {
         }
         */
 
-        DATA1 = GenerateData.listCategorie();
+        DATA1 = ManageLocalData.listCategorie();
         DATA = (ArrayList<Categorie>) DATA1;
 
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
@@ -142,7 +143,8 @@ public class Categorie_view extends AppCompatActivity {
 
         Init_Components();
         //Load_online();
-        Load_CAtegorie();
+        LoadCategories loadCategories = new LoadCategories();
+        loadCategories.execute();
     }
 
     @Override
@@ -168,5 +170,43 @@ public class Categorie_view extends AppCompatActivity {
         finish();
     }
 
+    private class LoadCategories extends AsyncTask<String, String, List<Categorie>> {
+
+        @Override
+        protected List<Categorie> doInBackground(String... strings) {
+            return ManageLocalData.listCategorie();
+        }
+
+        @Override
+        protected void onPostExecute(List<Categorie> categories) {
+
+            DATA1 = ManageLocalData.listCategorie();
+            DATA = (ArrayList<Categorie>) DATA1;
+
+            if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+            else{
+                Toast.makeText(context, "" + DATA.size(), Toast.LENGTH_SHORT).show();
+                list.setAdapter(new Categorie_Base_Adapter(context, DATA ));
+            }
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Log.e("DDDDDDDDDDDDD", String.valueOf(DATA.get(position).getId()));
+                    Log.e("DDDDDDDDDDDDD", String.valueOf(DATA.get(position).getDesignation()));
+                    String identifiant = String.valueOf(DATA.get(position).getId());
+                    String designation = String.valueOf(DATA.get(position).getDesignation());
+                    Intent i = new Intent(context, Sous_categories.class);
+                    i.putExtra("id",identifiant);
+                    i.putExtra("title",designation);
+                    startActivity(i);
+                    finish();
+                }
+            });
+
+            super.onPostExecute(categories);
+        }
+    }
 
 }

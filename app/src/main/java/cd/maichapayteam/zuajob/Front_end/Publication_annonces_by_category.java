@@ -29,6 +29,7 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Publication_annonces_by_category extends AppCompatActivity {
 
@@ -84,7 +85,7 @@ public class Publication_annonces_by_category extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
-                ANNOCE_L = GenerateData.listNewAnnonce(cout,ids);
+                ANNOCE_L = ManageLocalData.listNewAnnonce(cout,ids);
                 for (Annonce c : ANNOCE_L){
                     Log.e("DDDDDX","sssssssssss "+ c.getNomsUser());
                     ANNOCE.add(c);

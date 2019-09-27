@@ -1222,7 +1222,7 @@ public class RemoteDataSync {
                 object = new Service();
                 object.setError(true);
                 object.setErrorCode(31921);
-                object.setErrorMessage(response.getError().getMessage());
+                object.setErrorMessage(response.getError().getErrorBody());
             }
         } catch (Exception ex) {
             object = new Service();

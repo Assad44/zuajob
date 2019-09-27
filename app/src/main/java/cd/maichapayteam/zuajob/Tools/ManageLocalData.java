@@ -91,7 +91,9 @@ public class ManageLocalData {
         return serviceDAO.randomService(min);
     }
 
-    public static List<Service> listNewService(int min, SousCategorie sousCategorie) {
+    public static List<Service> listNewService(int min, long idSC) {
+        SousCategorie sousCategorie = new SousCategorie();
+        sousCategorie.setId(idSC);
         RemoteDataSync.getNewServices((int)(min/20), sousCategorie.getId());
         ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
         return serviceDAO.getNewService(min, sousCategorie);
@@ -103,7 +105,9 @@ public class ManageLocalData {
         return serviceDAO.getServiceByCote(min, sousCategorie);
     }
 
-    public static List<Annonce> listNewAnnonce(int min, SousCategorie sousCategorie) {
+    public static List<Annonce> listNewAnnonce(int min, long idSC) {
+        SousCategorie sousCategorie = new SousCategorie();
+        sousCategorie.setId(idSC);
         RemoteDataSync.getNewAnnonces((int)(min/20), sousCategorie.getId());
         AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
         return annonceDAO.getNewAnnonce(min, sousCategorie);

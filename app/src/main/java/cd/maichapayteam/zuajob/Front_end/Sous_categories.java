@@ -29,6 +29,7 @@ import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Sous_categories extends AppCompatActivity {
@@ -65,7 +66,7 @@ public class Sous_categories extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... strings) {
-                LSC = GenerateData.listSousCategorie(sc);
+                LSC = ManageLocalData.listSousCategorie(sc);
                 return null;
             }
             @Override

@@ -62,7 +62,7 @@ public class Publication_blank extends AppCompatActivity {
     void Load_CAtegorie(){
         Categorie c = new Categorie();
         c.setDesignation("--Selectionner une catégorie-- ");
-        DATA1 = GenerateData.listCategorie();
+        DATA1 = ManageLocalData.listCategorie();
         DATA1.add(0, c);
         DATA = (ArrayList<Categorie>) DATA1;
 
@@ -133,7 +133,7 @@ public class Publication_blank extends AppCompatActivity {
                     sous_categorie.setVisibility(View.VISIBLE);
                     String identifiant = String.valueOf(DATA.get(position).getId());
                     String designation = String.valueOf(DATA.get(position).getDesignation());
-                    LSC = GenerateData.listSousCategorie(DATA.get(position));
+                    LSC = ManageLocalData.listSousCategorie(DATA.get(position));
 
                     for (SousCategorie s : LSC ) {
                         SCAT.add(s.getDesignation());

@@ -56,6 +56,7 @@ import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -130,7 +131,7 @@ public class Home extends AppCompatActivity
         }*/
 
         // Todo loading datas
-        DATA1 = GenerateData.listCategorie();
+        DATA1 = ManageLocalData.listCategorie();
         DATA = (ArrayList<Categorie>) DATA1;
 
         if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
@@ -489,8 +490,8 @@ public class Home extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            List<Annonce> annonceList = RemoteDataSync.getMesAnnonces();
-            Log.e("Test", "Liste mes annonces size: " + annonceList.size());
+            //List<Annonce> annonceList = RemoteDataSync.getMesAnnonces();
+            //Log.e("Test", "Liste mes annonces size: " + annonceList.size());
             return null;
         }
 

@@ -28,6 +28,7 @@ import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Jobeur_list extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class Jobeur_list extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 DATA_L.clear();
-                DATA_L = GenerateData.listJobeurs(cout);
+                DATA_L = ManageLocalData.listJobeurs(cout);
                 for (User c : DATA_L){
                     DATA.add(c);
                 }

@@ -212,6 +212,7 @@ public class ServiceDAO extends DAOBase {
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
+            Log.e("randomService", "List des services :" + next + " - " + list.size());
             c.close();
             close();
         }catch (Exception e){

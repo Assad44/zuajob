@@ -23,374 +23,374 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 
 public class GenerateData {
 
-    private static List<User> listJobeurs() {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        List<User> list = new ArrayList<>();
-        long max = userDAO.max();
-        for (int i = 0; i < 100; i++) {
-            User user = GeneralClass.getRandomUser();
-            max++;
-            user.setId(max+1);
-            user.setType(1);
-            user = userDAO.ajouter(user);
-            if(user!=null) list.add(user);
-        }
-        for (int i = 0; i < 100; i++) {
-            User user = GeneralClass.getRandomUser();
-            max++;
-            user.setId(max+1);
-            user.setType(0);
-            user = userDAO.ajouter(user);
-            if(user!=null) list.add(user);
-        }
-        Log.e("GenerateData", "all users:" + userDAO.count());
-        return list;
-    }
-
-    public static List<Categorie> listUserPreferenceCategorie() {
-        CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
-        List<Categorie> list = categorieDAO.getAllUserPreference();
-        return list;
-    }
-
-    private static List<Service> listService() {
-        List<Service> list = new ArrayList<>();
-        List<Categorie> categorieList = CategorieDAO.getInstance(GeneralClass.applicationContext).getAll();
-        List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllJobeurs();
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        long max = serviceDAO.max();
-        for (int i = 0; i < 100; i++) {
-            Categorie categorie = categorieList.get(GeneralClass.randBetween(0, categorieList.size()-1));
-            List<SousCategorie> sousCategorieList = SousCategorieDAO.getInstance(GeneralClass.applicationContext).getAll(categorie);
-            SousCategorie sousCategorie = sousCategorieList.get(GeneralClass.randBetween(0, sousCategorieList.size()-1));
-            User prestateur = userList.get(GeneralClass.randBetween(0, userList.size()-1));
-            Service service = new Service();
-            if(new Random().nextInt(200)==0) {
-                prestateur = UserDAO.getInstance(GeneralClass.applicationContext).myProfil();
-                service.setMy(true);
-            }
-            service.setMy(false);
-            service.setDatePublication(GeneralClass.randomDate(2018, 2019).toString());
-            service.setSousCategorie(sousCategorie.getDesignation());
-            service.setPhoneJobeur(prestateur.getCodePays() + prestateur.getPhone());
-            service.setNomsJobeur(prestateur.getPrenom() + prestateur.getNom());
-            max = max + 1;
-            service.setId(max);
-            service.setNombreRealisation(GeneralClass.randBetween(0, 100));
-            service.setMontant(new Random().nextInt());
-            String dev = "CDF";
-            if(new Random().nextInt(2)==0) {
-                dev = "USD";
-                service.setMontant(new Random().nextInt(100) + 1);
-            } else {
-                service.setMontant(new Random().nextInt(10000) + 1);
-            }
-            service.setDevise(dev);
-            service.setIdSousCategorie(sousCategorie.getId());
-            service.setIdJobeur(prestateur.getId());
-            service.setCategorie(categorie.getDesignation());
-            service.setIdCategorie(categorie.getId());
-            service.setDescription(GeneralClass.getRandomPhrase(new Random().nextInt(4) + 1));
-            service.setCote(new Random().nextInt(6));
-            service = serviceDAO.ajouter(service);
-            if(service!=null) list.add(service);
-        }
-        return list;
-    }
-
-    private static List<Annonce> listAnnonce() {
-        List<Annonce> list = new ArrayList<>();
-        List<Categorie> categorieList = CategorieDAO.getInstance(GeneralClass.applicationContext).getAll();
-        List<User> userList = UserDAO.getInstance(GeneralClass.applicationContext).listAllUsers();
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        for (int i = 0; i < 100; i++) {
-            Categorie categorie = categorieList.get(GeneralClass.randBetween(0, categorieList.size()-1));
-            List<SousCategorie> sousCategorieList = SousCategorieDAO.getInstance(GeneralClass.applicationContext).getAll(categorie);
-            SousCategorie sousCategorie = sousCategorieList.get(GeneralClass.randBetween(0, sousCategorieList.size()-1));
-            User user = userList.get(GeneralClass.randBetween(0, userList.size()-1));
-            Annonce annonce = new Annonce();
-            if(new Random().nextInt(200)==0) {
-                user = UserDAO.getInstance(GeneralClass.applicationContext).myProfil();
-                annonce.setMy(true);
-            }
-            annonce.setDatePublication(GeneralClass.randomDate(2018, 2019).toString());
-            annonce.setSousCategorie(sousCategorie.getDesignation());
-            annonce.setPhoneUser(user.getCodePays() + user.getPhone());
-            annonce.setNomsUser(user.getPrenom() + user.getNom());
-            annonce.setId(annonceDAO.max()+1);
-            if(new Random().nextInt(90)==0) annonce.setConfied(true);
-            annonce.setMontant(new Random().nextInt());
-            String dev = "CDF";
-            if(new Random().nextInt(2)==0) {
-                dev = "USD";
-                annonce.setMontant(new Random().nextInt(100) + 1);
-            } else {
-                annonce.setMontant(new Random().nextInt(10000) + 1);
-            }
-            annonce.setDevise(dev);
-            annonce.setIdSousCategorie(sousCategorie.getId());
-            annonce.setIdUser(user.getId());
-            annonce.setCategorie(categorie.getDesignation());
-            annonce.setIdCategorie(categorie.getId());
-            annonce.setDescription(GeneralClass.getRandomPhrase(new Random().nextInt(4) + 1));
-            annonce = annonceDAO.ajouter(annonce);
-            if(new Random().nextInt(200)==0) annonce.setMy(true);
-            if(annonce !=null) list.add(annonce);
-        }
-        return list;
-    }
-
-    private static List<Postuler> listPostuler() {
-        List<Postuler> list = new ArrayList<>();
-        PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        List<User> prestateurList = userDAO.listAllJobeurs();
-
-        List<Annonce> listAnnonce = AnnonceDAO.getInstance(GeneralClass.applicationContext).getAll();
-
-        for (int i = 0; i < 100; i++) {
-            Annonce annonce = listAnnonce.get(new Random().nextInt(listAnnonce.size()));
-            User prestateur = prestateurList.get(GeneralClass.randBetween(0, prestateurList.size()-1));
-            Postuler postuler = new Postuler();
-            if(annonce.isMy()) {
-                postuler.setMy(true);
-                postuler.setPhoneUser(prestateur.getCodePays() + prestateur.getPhone());
-                postuler.setNomsUser(prestateur.getPrenom() + " " + prestateur.getNom());
-                postuler.setIdUser(prestateur.getId());
-            } else {
-                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.getType()==1) {
-                    if(new Random().nextInt(20)==0) {
-                        postuler.setHavePostuled(true);
-                        postuler.setPhoneUser(annonce.getPhoneUser());
-                        postuler.setNomsUser(annonce.getNomsUser());
-                        postuler.setIdUser(annonce.getIdUser());
-                    }
-                }
-            }
-            if(new Random().nextInt(4)==0) {
-                postuler.setRDV(true);
-                String dev = "CDF";
-                if(new Random().nextInt(2)==0) {
-                    dev = "USD";
-                    postuler.setMontantConclu(new Random().nextInt(100) + 1);
-                } else {
-                    postuler.setMontantConclu(new Random().nextInt(10000) + 1);
-                }
-                postuler.setDeviseConclu(dev);
-                postuler.setHeureRDV("08:30");
-                postuler.setDateRDV(GeneralClass.randomDate().toString());
-                if(new Random().nextInt(3)==0) {
-                    postuler.setConclu(true);
-                }
-            }
-            postuler.setId(postulerDAO.max()+1);
-            postuler.setIdAnnonce(annonce.getId());
-            postuler.setDescriptionAnnonce(annonce.getDescription());
-            postuler.setMontantAnnonce(annonce.getMontant());
-            postuler.setDeviseAnnonce(annonce.getDevise());
-            postuler.setDate(GeneralClass.randomDate().toString());
-            postuler.setComment(GeneralClass.getRandomPhrase(1));
-            postuler.setCote(new Random().nextInt(6));
-            postuler = postulerDAO.ajouter(postuler);
-            if(postuler !=null) list.add(postuler);
-        }
-        return list;
-    }
-
-    private static List<Sollicitation> listSolliciter() {
-        List<Sollicitation> list = new ArrayList<>();
-        SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        List<User> userList = userDAO.getAll();
-
-        List<Service> listService = ServiceDAO.getInstance(GeneralClass.applicationContext).getAll();
-
-        for (int i = 0; i < 1000; i++) {
-            Service service = listService.get(new Random().nextInt(listService.size()));
-            User user = userList.get(GeneralClass.randBetween(0, userList.size()-1));
-            Sollicitation sollicitation = new Sollicitation();
-            if(service.isMy()) {
-                sollicitation.setMy(true);
-                sollicitation.setPhoneUser(user.getCodePays() + user.getPhone());
-                sollicitation.setNomsUser(user.getPrenom() + " " + user.getNom());
-                sollicitation.setIdUser(user.getId());
-            } else {
-                if(GeneralClass.Currentuser != null && GeneralClass.Currentuser.getType()==1) {
-                    if(new Random().nextInt(20)==0) {
-                        sollicitation.setHaveSollicited(true);
-                        sollicitation.setPhoneUser(service.getPhoneJobeur());
-                        sollicitation.setNomsUser(service.getNomsJobeur());
-                        sollicitation.setIdUser(service.getIdJobeur());
-                    }
-                }
-            }
-            if(new Random().nextInt(4)==0) {
-                sollicitation.setRDV(true);
-                String dev = "CDF";
-                if(new Random().nextInt(2)==0) {
-                    dev = "USD";
-                    sollicitation.setMontantConclu(new Random().nextInt(100) + 1);
-                } else {
-                    sollicitation.setMontantConclu(new Random().nextInt(10000) + 1);
-                }
-                sollicitation.setDeviseConclu(dev);
-                sollicitation.setHeureRDV("08:30");
-                sollicitation.setDateRDV(GeneralClass.randomDate().toString());
-                if(new Random().nextInt(3)==0) {
-                    sollicitation.setConclu(true);
-                }
-            }
-            sollicitation.setId(sollicitationDAO.max()+1);
-            sollicitation.setIdService(service.getId());
-            sollicitation.setDescriptionService(service.getDescription());
-            sollicitation.setMontant(service.getMontant());
-            sollicitation.setDevise(service.getDevise());
-            sollicitation.setDate(GeneralClass.randomDate().toString());
-            sollicitation.setComment(GeneralClass.getRandomPhrase(1));
-            sollicitation.setCote(new Random().nextInt(6));
-            sollicitation = sollicitationDAO.ajouter(sollicitation);
-            if(sollicitation !=null) list.add(sollicitation);
-        }
-        return list;
-    }
-
-    public static void generateAll() {
-        CategorieDAO.createCategories();
-        SousCategorie.createSousCategories();
-        List<User> userList = listJobeurs();
-        Log.e("GenerateData", "Users created : " + userList.size());
-        List<Service> serviceList = listService();
-        Log.e("GenerateData", "Service created : " + serviceList.size());
-        List<Annonce> annonceList = listAnnonce();
-        Log.e("GenerateData", "Annonce created : " + annonceList.size());
-        List<Postuler> postulerList = listPostuler();
-        Log.e("GenerateData", "Postuler created : " + postulerList.size());
-        List<Sollicitation> sollicitationList = listSolliciter();
-        Log.e("GenerateData", "Sollicitation created : " + sollicitationList.size());
-    }
-
-    private static String generate(int length) {
-        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // Tu supprimes les lettres dont tu ne veux pas
-        String pass = "";
-        for(int x=0;x<length;x++) {
-            int i = (int)Math.floor(Math.random() * 62); // Si tu supprimes des lettres tu diminues ce nb
-            pass += chars.charAt(i);
-        }
-        return pass;
-    }
-
-
-
-
-
-    public static User createUser(User user) {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        user.setId(userDAO.max() + 1);
-        user.setAuthCode(generate(32));
-        user.setMyProfil(true);
-        userDAO.ajouter(user);
-        generateAll();
-        return userDAO.ajouter(user);
-    }
-
-    public static boolean checkNumero(String numero) {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        User user = userDAO.findByPhoneNumer(numero);
-        if(user!=null) return true;
-        return false;
-    }
-
-    public static User login(String phone, String mdp) {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        User user = userDAO.findByPhoneNumer(phone);
-        if(user!=null) {
-            if(user.getPassword().equals(mdp)) {
-                generateAll();
-                //RemoteDataSync.getRandomUser(100);
-                return user;
-            }
-        }
-        user = new User();
-        user.setError(true);
-        user.setErrorCode(36212);
-        user.setErrorMessage("Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.");
-        return user;
-    }
-
-    public static List<User> listJobeurs(int min) {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        List<User> list = userDAO.listJobeurs(min);
-        return list;
-    }
-
-    public static List<User> listJobeurs(int min, String keyword) {
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        return userDAO.listJobeurs(min, keyword);
-    }
-
-    public static List<Categorie> listCategorie() {
-        CategorieDAO categorieDAO = CategorieDAO.getInstance(GeneralClass.applicationContext);
-        List<Categorie> list = categorieDAO.getAll();
-        return list;
-    }
-
-    public static List<SousCategorie> listSousCategorie(Categorie categorie) {
-        SousCategorieDAO sousCategorieDAO = SousCategorieDAO.getInstance(GeneralClass.applicationContext);
-        List<SousCategorie> list = sousCategorieDAO.getAll(categorie);
-        return list;
-    }
-
-    public boolean deconnection() {
-        if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) return true;
-        return false;
-    }
-
-    public static List<Service> listRandomService(int min) {
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        List<Service> list = serviceDAO.randomService(min);
-        return list;
-    }
-
-    public static List<Service> listNewService(int min, int idSousCategorie) {
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        SousCategorie sousCategorie = new SousCategorie();
-        sousCategorie.setId(idSousCategorie);
-        List<Service> list = serviceDAO.getNewService(min, sousCategorie);
-        return list;
-    }
-
-    public static List<Service> listServiceByCote(int min, int idSousCategorie) {
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        SousCategorie sousCategorie = new SousCategorie();
-        sousCategorie.setId(idSousCategorie);
-        List<Service> list = serviceDAO.getServiceByCote(min, sousCategorie);
-        return list;
-    }
-
-    public static List<Service> listMesServices() {
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        List<Service> list = serviceDAO.getMesServices();
-        return list;
-    }
-
-    public static List<Annonce> listRandomAnnonce(int min) {
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        List<Annonce> list = annonceDAO.randomAnnonce(min);
-        return list;
-    }
-
-    public static List<Annonce> listNewAnnonce(int min, int idSousCategorie) {
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        SousCategorie sousCategorie = new SousCategorie();
-        sousCategorie.setId(idSousCategorie);
-        List<Annonce> list = annonceDAO.getNewAnnonce(min, sousCategorie);
-        return list;
-    }
-
-    public static List<Annonce> listMesAnnonces() {
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        List<Annonce> list = annonceDAO.getMesAnnonces();
-        return list;
-    }
+    //private static list<user> listjobeurs() {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    list<user> list = new arraylist<>();
+    //    long max = userdao.max();
+    //    for (int i = 0; i < 100; i++) {
+    //        user user = generalclass.getrandomuser();
+    //        max++;
+    //        user.setid(max+1);
+    //        user.settype(1);
+    //        user = userdao.ajouter(user);
+    //        if(user!=null) list.add(user);
+    //    }
+    //    for (int i = 0; i < 100; i++) {
+    //        user user = generalclass.getrandomuser();
+    //        max++;
+    //        user.setid(max+1);
+    //        user.settype(0);
+    //        user = userdao.ajouter(user);
+    //        if(user!=null) list.add(user);
+    //    }
+    //    log.e("generatedata", "all users:" + userdao.count());
+    //    return list;
+    //}
+//
+    //public static list<categorie> listuserpreferencecategorie() {
+    //    categoriedao categoriedao = categoriedao.getinstance(generalclass.applicationcontext);
+    //    list<categorie> list = categoriedao.getalluserpreference();
+    //    return list;
+    //}
+//
+    //private static list<service> listservice() {
+    //    list<service> list = new arraylist<>();
+    //    list<categorie> categorielist = categoriedao.getinstance(generalclass.applicationcontext).getall();
+    //    list<user> userlist = userdao.getinstance(generalclass.applicationcontext).listalljobeurs();
+    //    servicedao servicedao = servicedao.getinstance(generalclass.applicationcontext);
+    //    long max = servicedao.max();
+    //    for (int i = 0; i < 100; i++) {
+    //        categorie categorie = categorielist.get(generalclass.randbetween(0, categorielist.size()-1));
+    //        list<souscategorie> souscategorielist = souscategoriedao.getinstance(generalclass.applicationcontext).getall(categorie);
+    //        souscategorie souscategorie = souscategorielist.get(generalclass.randbetween(0, souscategorielist.size()-1));
+    //        user prestateur = userlist.get(generalclass.randbetween(0, userlist.size()-1));
+    //        service service = new service();
+    //        if(new random().nextint(200)==0) {
+    //            prestateur = userdao.getinstance(generalclass.applicationcontext).myprofil();
+    //            service.setmy(true);
+    //        }
+    //        service.setmy(false);
+    //        service.setdatepublication(generalclass.randomdate(2018, 2019).tostring());
+    //        service.setsouscategorie(souscategorie.getdesignation());
+    //        service.setphonejobeur(prestateur.getcodepays() + prestateur.getphone());
+    //        service.setnomsjobeur(prestateur.getprenom() + prestateur.getnom());
+    //        max = max + 1;
+    //        service.setid(max);
+    //        service.setnombrerealisation(generalclass.randbetween(0, 100));
+    //        service.setmontant(new random().nextint());
+    //        string dev = "cdf";
+    //        if(new random().nextint(2)==0) {
+    //            dev = "usd";
+    //            service.setmontant(new random().nextint(100) + 1);
+    //        } else {
+    //            service.setmontant(new random().nextint(10000) + 1);
+    //        }
+    //        service.setdevise(dev);
+    //        service.setidsouscategorie(souscategorie.getid());
+    //        service.setidjobeur(prestateur.getid());
+    //        service.setcategorie(categorie.getdesignation());
+    //        service.setidcategorie(categorie.getid());
+    //        service.setdescription(generalclass.getrandomphrase(new random().nextint(4) + 1));
+    //        service.setcote(new random().nextint(6));
+    //        service = servicedao.ajouter(service);
+    //        if(service!=null) list.add(service);
+    //    }
+    //    return list;
+    //}
+//
+    //private static list<annonce> listannonce() {
+    //    list<annonce> list = new arraylist<>();
+    //    list<categorie> categorielist = categoriedao.getinstance(generalclass.applicationcontext).getall();
+    //    list<user> userlist = userdao.getinstance(generalclass.applicationcontext).listallusers();
+    //    annoncedao annoncedao = annoncedao.getinstance(generalclass.applicationcontext);
+    //    for (int i = 0; i < 100; i++) {
+    //        categorie categorie = categorielist.get(generalclass.randbetween(0, categorielist.size()-1));
+    //        list<souscategorie> souscategorielist = souscategoriedao.getinstance(generalclass.applicationcontext).getall(categorie);
+    //        souscategorie souscategorie = souscategorielist.get(generalclass.randbetween(0, souscategorielist.size()-1));
+    //        user user = userlist.get(generalclass.randbetween(0, userlist.size()-1));
+    //        annonce annonce = new annonce();
+    //        if(new random().nextint(200)==0) {
+    //            user = userdao.getinstance(generalclass.applicationcontext).myprofil();
+    //            annonce.setmy(true);
+    //        }
+    //        annonce.setdatepublication(generalclass.randomdate(2018, 2019).tostring());
+    //        annonce.setsouscategorie(souscategorie.getdesignation());
+    //        annonce.setphoneuser(user.getcodepays() + user.getphone());
+    //        annonce.setnomsuser(user.getprenom() + user.getnom());
+    //        annonce.setid(annoncedao.max()+1);
+    //        if(new random().nextint(90)==0) annonce.setconfied(true);
+    //        annonce.setmontant(new random().nextint());
+    //        string dev = "cdf";
+    //        if(new random().nextint(2)==0) {
+    //            dev = "usd";
+    //            annonce.setmontant(new random().nextint(100) + 1);
+    //        } else {
+    //            annonce.setmontant(new random().nextint(10000) + 1);
+    //        }
+    //        annonce.setdevise(dev);
+    //        annonce.setidsouscategorie(souscategorie.getid());
+    //        annonce.setiduser(user.getid());
+    //        annonce.setcategorie(categorie.getdesignation());
+    //        annonce.setidcategorie(categorie.getid());
+    //        annonce.setdescription(generalclass.getrandomphrase(new random().nextint(4) + 1));
+    //        annonce = annoncedao.ajouter(annonce);
+    //        if(new random().nextint(200)==0) annonce.setmy(true);
+    //        if(annonce !=null) list.add(annonce);
+    //    }
+    //    return list;
+    //}
+//
+    //private static list<postuler> listpostuler() {
+    //    list<postuler> list = new arraylist<>();
+    //    postulerdao postulerdao = postulerdao.getinstance(generalclass.applicationcontext);
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    list<user> prestateurlist = userdao.listalljobeurs();
+//
+    //    list<annonce> listannonce = annoncedao.getinstance(generalclass.applicationcontext).getall();
+//
+    //    for (int i = 0; i < 100; i++) {
+    //        annonce annonce = listannonce.get(new random().nextint(listannonce.size()));
+    //        user prestateur = prestateurlist.get(generalclass.randbetween(0, prestateurlist.size()-1));
+    //        postuler postuler = new postuler();
+    //        if(annonce.ismy()) {
+    //            postuler.setmy(true);
+    //            postuler.setphoneuser(prestateur.getcodepays() + prestateur.getphone());
+    //            postuler.setnomsuser(prestateur.getprenom() + " " + prestateur.getnom());
+    //            postuler.setiduser(prestateur.getid());
+    //        } else {
+    //            if(generalclass.currentuser != null && generalclass.currentuser.gettype()==1) {
+    //                if(new random().nextint(20)==0) {
+    //                    postuler.sethavepostuled(true);
+    //                    postuler.setphoneuser(annonce.getphoneuser());
+    //                    postuler.setnomsuser(annonce.getnomsuser());
+    //                    postuler.setiduser(annonce.getiduser());
+    //                }
+    //            }
+    //        }
+    //        if(new random().nextint(4)==0) {
+    //            postuler.setrdv(true);
+    //            string dev = "cdf";
+    //            if(new random().nextint(2)==0) {
+    //                dev = "usd";
+    //                postuler.setmontantconclu(new random().nextint(100) + 1);
+    //            } else {
+    //                postuler.setmontantconclu(new random().nextint(10000) + 1);
+    //            }
+    //            postuler.setdeviseconclu(dev);
+    //            postuler.setheurerdv("08:30");
+    //            postuler.setdaterdv(generalclass.randomdate().tostring());
+    //            if(new random().nextint(3)==0) {
+    //                postuler.setconclu(true);
+    //            }
+    //        }
+    //        postuler.setid(postulerdao.max()+1);
+    //        postuler.setidannonce(annonce.getid());
+    //        postuler.setdescriptionannonce(annonce.getdescription());
+    //        postuler.setmontantannonce(annonce.getmontant());
+    //        postuler.setdeviseannonce(annonce.getdevise());
+    //        postuler.setdate(generalclass.randomdate().tostring());
+    //        postuler.setcomment(generalclass.getrandomphrase(1));
+    //        postuler.setcote(new random().nextint(6));
+    //        postuler = postulerdao.ajouter(postuler);
+    //        if(postuler !=null) list.add(postuler);
+    //    }
+    //    return list;
+    //}
+//
+    //private static list<sollicitation> listsolliciter() {
+    //    list<sollicitation> list = new arraylist<>();
+    //    sollicitationdao sollicitationdao = sollicitationdao.getinstance(generalclass.applicationcontext);
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    list<user> userlist = userdao.getall();
+//
+    //    list<service> listservice = servicedao.getinstance(generalclass.applicationcontext).getall();
+//
+    //    for (int i = 0; i < 1000; i++) {
+    //        service service = listservice.get(new random().nextint(listservice.size()));
+    //        user user = userlist.get(generalclass.randbetween(0, userlist.size()-1));
+    //        sollicitation sollicitation = new sollicitation();
+    //        if(service.ismy()) {
+    //            sollicitation.setmy(true);
+    //            sollicitation.setphoneuser(user.getcodepays() + user.getphone());
+    //            sollicitation.setnomsuser(user.getprenom() + " " + user.getnom());
+    //            sollicitation.setiduser(user.getid());
+    //        } else {
+    //            if(generalclass.currentuser != null && generalclass.currentuser.gettype()==1) {
+    //                if(new random().nextint(20)==0) {
+    //                    sollicitation.sethavesollicited(true);
+    //                    sollicitation.setphoneuser(service.getphonejobeur());
+    //                    sollicitation.setnomsuser(service.getnomsjobeur());
+    //                    sollicitation.setiduser(service.getidjobeur());
+    //                }
+    //            }
+    //        }
+    //        if(new random().nextint(4)==0) {
+    //            sollicitation.setrdv(true);
+    //            string dev = "cdf";
+    //            if(new random().nextint(2)==0) {
+    //                dev = "usd";
+    //                sollicitation.setmontantconclu(new random().nextint(100) + 1);
+    //            } else {
+    //                sollicitation.setmontantconclu(new random().nextint(10000) + 1);
+    //            }
+    //            sollicitation.setdeviseconclu(dev);
+    //            sollicitation.setheurerdv("08:30");
+    //            sollicitation.setdaterdv(generalclass.randomdate().tostring());
+    //            if(new random().nextint(3)==0) {
+    //                sollicitation.setconclu(true);
+    //            }
+    //        }
+    //        sollicitation.setid(sollicitationdao.max()+1);
+    //        sollicitation.setidservice(service.getid());
+    //        sollicitation.setdescriptionservice(service.getdescription());
+    //        sollicitation.setmontant(service.getmontant());
+    //        sollicitation.setdevise(service.getdevise());
+    //        sollicitation.setdate(generalclass.randomdate().tostring());
+    //        sollicitation.setcomment(generalclass.getrandomphrase(1));
+    //        sollicitation.setcote(new random().nextint(6));
+    //        sollicitation = sollicitationdao.ajouter(sollicitation);
+    //        if(sollicitation !=null) list.add(sollicitation);
+    //    }
+    //    return list;
+    //}
+//
+    //public static void generateall() {
+    //    categoriedao.createcategories();
+    //    souscategorie.createsouscategories();
+    //    list<user> userlist = listjobeurs();
+    //    log.e("generatedata", "users created : " + userlist.size());
+    //    list<service> servicelist = listservice();
+    //    log.e("generatedata", "service created : " + servicelist.size());
+    //    list<annonce> annoncelist = listannonce();
+    //    log.e("generatedata", "annonce created : " + annoncelist.size());
+    //    list<postuler> postulerlist = listpostuler();
+    //    log.e("generatedata", "postuler created : " + postulerlist.size());
+    //    list<sollicitation> sollicitationlist = listsolliciter();
+    //    log.e("generatedata", "sollicitation created : " + sollicitationlist.size());
+    //}
+//
+    //private static string generate(int length) {
+    //    string chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1234567890"; // tu supprimes les lettres dont tu ne veux pas
+    //    string pass = "";
+    //    for(int x=0;x<length;x++) {
+    //        int i = (int)math.floor(math.random() * 62); // si tu supprimes des lettres tu diminues ce nb
+    //        pass += chars.charat(i);
+    //    }
+    //    return pass;
+    //}
+//
+//
+//
+//
+//
+    //public static user createuser(user user) {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    user.setid(userdao.max() + 1);
+    //    user.setauthcode(generate(32));
+    //    user.setmyprofil(true);
+    //    userdao.ajouter(user);
+    //    generateall();
+    //    return userdao.ajouter(user);
+    //}
+//
+    //public static boolean checknumero(string numero) {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    user user = userdao.findbyphonenumer(numero);
+    //    if(user!=null) return true;
+    //    return false;
+    //}
+//
+    //public static user login(string phone, string mdp) {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    user user = userdao.findbyphonenumer(phone);
+    //    if(user!=null) {
+    //        if(user.getpassword().equals(mdp)) {
+    //            generateall();
+    //            //remotedatasync.getrandomuser(100);
+    //            return user;
+    //        }
+    //    }
+    //    user = new user();
+    //    user.seterror(true);
+    //    user.seterrorcode(36212);
+    //    user.seterrormessage("le numéro de téléphone et le mot de passe saisis ne correspondent pas. veuillez réessayer svp.");
+    //    return user;
+    //}
+//
+    //public static list<user> listjobeurs(int min) {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    list<user> list = userdao.listjobeurs(min);
+    //    return list;
+    //}
+//
+    //public static list<user> listjobeurs(int min, string keyword) {
+    //    userdao userdao = userdao.getinstance(generalclass.applicationcontext);
+    //    return userdao.listjobeurs(min, keyword);
+    //}
+//
+    //public static list<categorie> listcategorie() {
+    //    categoriedao categoriedao = categoriedao.getinstance(generalclass.applicationcontext);
+    //    list<categorie> list = categoriedao.getall();
+    //    return list;
+    //}
+//
+    //public static list<souscategorie> listsouscategorie(categorie categorie) {
+    //    souscategoriedao souscategoriedao = souscategoriedao.getinstance(generalclass.applicationcontext);
+    //    list<souscategorie> list = souscategoriedao.getall(categorie);
+    //    return list;
+    //}
+//
+    //public boolean deconnection() {
+    //    if(userdao.getinstance(generalclass.applicationcontext).deconnection()>0) return true;
+    //    return false;
+    //}
+//
+    //public static list<service> listrandomservice(int min) {
+    //    servicedao servicedao = servicedao.getinstance(generalclass.applicationcontext);
+    //    list<service> list = servicedao.randomservice(min);
+    //    return list;
+    //}
+//
+    //public static list<service> listnewservice(int min, int idsouscategorie) {
+    //    servicedao servicedao = servicedao.getinstance(generalclass.applicationcontext);
+    //    souscategorie souscategorie = new souscategorie();
+    //    souscategorie.setid(idsouscategorie);
+    //    list<service> list = servicedao.getnewservice(min, souscategorie);
+    //    return list;
+    //}
+//
+    //public static list<service> listservicebycote(int min, int idsouscategorie) {
+    //    servicedao servicedao = servicedao.getinstance(generalclass.applicationcontext);
+    //    souscategorie souscategorie = new souscategorie();
+    //    souscategorie.setid(idsouscategorie);
+    //    list<service> list = servicedao.getservicebycote(min, souscategorie);
+    //    return list;
+    //}
+//
+    //public static list<service> listmesservices() {
+    //    servicedao servicedao = servicedao.getinstance(generalclass.applicationcontext);
+    //    list<service> list = servicedao.getmesservices();
+    //    return list;
+    //}
+//
+    //public static list<annonce> listrandomannonce(int min) {
+    //    annoncedao annoncedao = annoncedao.getinstance(generalclass.applicationcontext);
+    //    list<annonce> list = annoncedao.randomannonce(min);
+    //    return list;
+    //}
+//
+    //public static list<annonce> listnewannonce(int min, int idsouscategorie) {
+    //    annoncedao annoncedao = annoncedao.getinstance(generalclass.applicationcontext);
+    //    souscategorie souscategorie = new souscategorie();
+    //    souscategorie.setid(idsouscategorie);
+    //    list<annonce> list = annoncedao.getnewannonce(min, souscategorie);
+    //    return list;
+    //}
+//
+    //public static list<annonce> listmesannonces() {
+    //    annoncedao annoncedao = annoncedao.getinstance(generalclass.applicationcontext);
+    //    list<annonce> list = annoncedao.getmesannonces();
+    //    return list;
+    //}
 
 }

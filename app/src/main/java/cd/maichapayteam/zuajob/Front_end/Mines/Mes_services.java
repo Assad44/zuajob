@@ -27,6 +27,7 @@ import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_services extends AppCompatActivity {
@@ -65,7 +66,7 @@ public class Mes_services extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 SERVICE_L.clear();
-                SERVICE_L = GenerateData.listMesServices();
+                SERVICE_L = ManageLocalData.listMesServices();
                 for (Service c : SERVICE_L){
                     SERVICES.add(c);
                 }

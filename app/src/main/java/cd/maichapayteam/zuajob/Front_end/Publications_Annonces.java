@@ -30,6 +30,7 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Publications_Annonces extends AppCompatActivity {
 
@@ -76,7 +77,7 @@ public class Publications_Annonces extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
-                ANNOCE_L = GenerateData.listRandomAnnonce(cout);
+                ANNOCE_L = ManageLocalData.listRandomAnnonce(cout);
                 for (Annonce c : ANNOCE_L){
                     ANNOCE.add(c);
                 }

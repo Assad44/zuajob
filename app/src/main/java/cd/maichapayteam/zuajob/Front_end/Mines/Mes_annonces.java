@@ -28,6 +28,7 @@ import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_annonces extends AppCompatActivity {
@@ -69,7 +70,7 @@ public class Mes_annonces extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
-                ANNOCE_L = GenerateData.listMesAnnonces();
+                ANNOCE_L = ManageLocalData.listMesAnnonces();
                 for (Annonce c : ANNOCE_L){
                     ANNOCE.add(c);
                 }
