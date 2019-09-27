@@ -1106,6 +1106,8 @@ public class RemoteDataSync {
     public static Sollicitation solliciter (long idService) {
         String url = BASE_URL + "solliciter/" + idService + "/" + GeneralClass.Currentuser.getAuthCode();
 
+        Sollicitation sollicitation;
+
         try{
             ANRequest request = AndroidNetworking.post(url)
                     //.addBodyParameter(sollicitation) // posting java object
@@ -1113,8 +1115,6 @@ public class RemoteDataSync {
                     .setPriority(Priority.MEDIUM)
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
-
-            Sollicitation sollicitation;
 
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {

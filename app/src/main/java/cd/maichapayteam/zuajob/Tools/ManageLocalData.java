@@ -175,8 +175,8 @@ public class ManageLocalData {
         return list;
     }
 
-    public static Sollicitation solliciter(Sollicitation sollicitation) {
-        return RemoteDataSync.solliciter(sollicitation);
+    public static Sollicitation solliciter(long idService) {
+        return RemoteDataSync.solliciter(idService);
     }
 
     public static Service creerService(Service service) {
