@@ -3,14 +3,12 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -18,18 +16,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Adaptors.Mes_Annonces_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
-import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_annonces extends AppCompatActivity {
 
@@ -45,8 +39,7 @@ public class Mes_annonces extends AppCompatActivity {
     List<Annonce> ANNOCE_L = new ArrayList<>();
     ArrayList<Annonce> SearchA = new ArrayList<>();
 
-
-    Annonces_Base_Adapter annonceAdapter;
+    Mes_Annonces_Base_Adapter annonceAdapter;
     int turnA = 0;
 
     private void Init_Components(){
@@ -88,7 +81,7 @@ public class Mes_annonces extends AppCompatActivity {
                         annonceAdapter.notifyDataSetChanged();
                         return;
                     }
-                    annonceAdapter = new Annonces_Base_Adapter(context, ANNOCE,"");
+                    annonceAdapter = new Mes_Annonces_Base_Adapter(context, ANNOCE,"");
                     list.setAdapter(annonceAdapter);
                     list.setNumColumns(1);
                     turnA = 1;

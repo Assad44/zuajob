@@ -197,7 +197,7 @@ public class Jobeur_list extends AppCompatActivity {
                 TextView realisation = view.findViewById(R.id.realisation);
 
                 User u = DATA.get(position);
-                nom.setText(u.getNom());
+                nom.setText(u.getPrenom()+" "+ u.getNom());
                 number.setText(u.getPhone());
                 //nom.setText(u.getnoreaPhone());
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
