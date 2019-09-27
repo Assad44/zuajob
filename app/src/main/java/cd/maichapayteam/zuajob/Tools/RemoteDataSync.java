@@ -611,6 +611,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
+                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("MesAnnonce", "description : " + object.getDescription());
                 }
@@ -1280,19 +1281,25 @@ public class RemoteDataSync {
         return object;
     }
 
-    public static Postuler creerRDVbyPostuler (long idPostuler, String date, String heure, String detail) {
-        String url = BASE_URL + "creerrdvbypostuler";
+    public static Postuler creerRDVbyPostuler (long idPostuler, String date, String heure, String detail, String codePayement, float montant, String devise) {
+        String url = BASE_URL + "creerrdv/user/" + GeneralClass.Currentuser.getAuthCode();
 
         Postuler postuler;
 
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idPostulance", idPostuler); } catch (JSONException e) { }
+        try { jsonObject.put("date", date); } catch (JSONException e) { }
+        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
+        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
+        try { jsonObject.put("codePayement", codePayement); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+
         try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("id", String.valueOf(idPostuler))
-                    .addQueryParameter("datePublication", date)
-                    .addQueryParameter("heure", heure)
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<Postuler> response = request.executeForObject(Postuler.class);
@@ -1326,19 +1333,24 @@ public class RemoteDataSync {
         return postuler;
     }
 
-    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure, String detail) {
+    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure, String detail, float montant, String devise) {
         String url = BASE_URL + "creerrdvbysolliciter";
 
         Sollicitation sollicitation;
 
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idSollicitation", idSolliciter); } catch (JSONException e) { }
+        try { jsonObject.put("date", date); } catch (JSONException e) { }
+        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
+        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+
         try{
             ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idsolliciter", String.valueOf(idSolliciter))
-                    .addQueryParameter("datePublication", date)
-                    .addQueryParameter("heure", heure)
-                    .setTag("creerRDVBySollicitation" + idSolliciter)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
