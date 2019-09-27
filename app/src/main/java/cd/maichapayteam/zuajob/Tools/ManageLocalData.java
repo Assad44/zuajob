@@ -187,8 +187,8 @@ public class ManageLocalData {
         return RemoteDataSync.publierAnnonce(annonce);
     }
 
-    public static Postuler postuler(Postuler postuler) {
-        return RemoteDataSync.postuler(postuler);
+    public static Postuler postuler(long idAnnonece) {
+        return RemoteDataSync.postuler(idAnnonece);
     }
 
     public static List<Object> historiqueBySollicitation() {

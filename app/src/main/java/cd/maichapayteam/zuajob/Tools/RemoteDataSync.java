@@ -1059,14 +1059,16 @@ public class RemoteDataSync {
         //return new User();
     }
 
-    public static Postuler postuler (Postuler postuler) {
-        String url = BASE_URL + "postuler";
+    public static Postuler postuler (long idAnnonce) {
+        String url = BASE_URL + "postuler/" + idAnnonce + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler;
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .setTag("postuler" + postuler.getPhoneUser())
+                    //.setTag("postuler" + postuler.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<Postuler> response = request.executeForObject(Postuler.class);
@@ -1101,16 +1103,18 @@ public class RemoteDataSync {
         return postuler;
     }
 
-    public static Sollicitation solliciter (Sollicitation sollicitation) {
-        String url = BASE_URL + "solliciter";
+    public static Sollicitation solliciter (long idService) {
+        String url = BASE_URL + "solliciter/" + idService + "/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.post(url)
-                    .addBodyParameter(sollicitation) // posting java object
-                    .setTag("sollicitation" + sollicitation.getPhoneUser())
+                    //.addBodyParameter(sollicitation) // posting java object
+                    //.setTag("sollicitation" + sollicitation.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
+
+            Sollicitation sollicitation;
 
             ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
