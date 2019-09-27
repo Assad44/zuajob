@@ -641,6 +641,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
+                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("MesService", "description : " + object.getDescription());
                 }
