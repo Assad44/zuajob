@@ -74,7 +74,6 @@ public class Mes_annonces extends AppCompatActivity {
                 for (Annonce c : ANNOCE_L){
                     ANNOCE.add(c);
                 }
-                //ANNOCE = (ArrayList<Annonce>) ANNOCE_L;
                 return null;
             }
 

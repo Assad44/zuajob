@@ -33,6 +33,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Categorie_view;
@@ -53,6 +54,8 @@ import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
@@ -122,74 +125,79 @@ public class Home extends AppCompatActivity
         testAsync.execute();
     }
 
-    void Load_CAtegorie(){
-        /*for (int i = 0; i < 10; i++) {
-            Categorie c = new Categorie();
-            c.setDesignation("Categorie "+i);
-            c.setDescription(getResources().getString(R.string.Lorem_short));
-            DATA.add(c);
-        }*/
+    private void LoadCategories(){
+        new AsyncTask<String, String, List<Categorie>>() {
 
-        // Todo loading datas
-        DATA1 = ManageLocalData.listCategorie();
-        DATA = (ArrayList<Categorie>) DATA1;
-
-        if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            int i = 0;
-            for ( final Categorie c : DATA) {
-                LayoutInflater inflater = LayoutInflater.from(context);
-                View responses = inflater.inflate(R.layout.view_categorie, null);
-                CardView element = responses.findViewById(R.id.element);
-                TextView title = responses.findViewById(R.id.title);
-                ImageView img = responses.findViewById(R.id.img);
-                TextView description   = responses.findViewById(R.id.description);
-
-                title.setText( c.getDesignation());
-                description.setText(c.getDescription());
-                if (i%2 == 0)img.setImageResource(R.drawable.pub);
-                else img.setImageResource(R.drawable.pub4);
-
-                // Todo : Chargement des images par Ion librairy
-                Tool.Load_Image(context,img,"");
-                //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-
-                sous.addView(responses, 0);
-
-                final int finalI = i;
-                element.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalI != 0){
-                            Intent i = new Intent(context, Sous_categories.class);
-                            i.putExtra("title",c.getDesignation());
-                            String identifiant = String.valueOf(c.getId());
-                            i.putExtra("id",identifiant);
-                            startActivity(i);
-                            finish();
-                        }else{
-                            startActivity(new Intent(context, Categorie_view.class));
-                            finish();
-                        }
-                    }
-                });
-
-                if (i == 0){
-                    title.setText("Autres catégories");
-                    description.setText("");
-                    img.setImageResource(R.drawable.ic_more_primary);
-                    img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                }
-                if (i == 3){
-                    break;
-                }
-                i++;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
             }
 
-        }
+            @Override
+            protected List<Categorie> doInBackground(String... strings) {
+                return ManageLocalData.listCategorie();
+            }
 
+            @Override
+            protected void onPostExecute(List<Categorie> categories) {
+                DATA = (ArrayList<Categorie>) categories;
 
+                if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else{
+                    int i = 0;
+                    for ( final Categorie c : DATA) {
+                        LayoutInflater inflater = LayoutInflater.from(context);
+                        View responses = inflater.inflate(R.layout.view_categorie, null);
+                        CardView element = responses.findViewById(R.id.element);
+                        TextView title = responses.findViewById(R.id.title);
+                        ImageView img = responses.findViewById(R.id.img);
+                        TextView description   = responses.findViewById(R.id.description);
+
+                        title.setText( c.getDesignation());
+                        description.setText(c.getDescription());
+                        if (i%2 == 0)img.setImageResource(R.drawable.pub);
+                        else img.setImageResource(R.drawable.pub4);
+
+                        // Todo : Chargement des images par Ion librairy
+                        Tool.Load_Image(context,img,"");
+                        //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                        sous.addView(responses, 0);
+
+                        final int finalI = i;
+                        element.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (finalI != 0){
+                                    Intent i = new Intent(context, Sous_categories.class);
+                                    i.putExtra("title",c.getDesignation());
+                                    String identifiant = String.valueOf(c.getId());
+                                    i.putExtra("id",identifiant);
+                                    startActivity(i);
+                                    finish();
+                                }else{
+                                    startActivity(new Intent(context, Categorie_view.class));
+                                    finish();
+                                }
+                            }
+                        });
+
+                        if (i == 0){
+                            title.setText("Autres catégories");
+                            description.setText("");
+                            img.setImageResource(R.drawable.ic_more_primary);
+                            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        }
+                        if (i == 3){
+                            break;
+                        }
+                        i++;
+                    }
+                }
+            }
+        }.execute();
     }
+
 
     private void Header_initialize(){
         setSupportActionBar(toolbar);
@@ -233,7 +241,8 @@ public class Home extends AppCompatActivity
         Init_Components();
         Header_initialize();
 
-        Load_CAtegorie();
+        // Todo loading caterogies
+        LoadCategories();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -569,7 +578,7 @@ public class Home extends AppCompatActivity
                             return;
                         }
 
-                        User u = new User();
+
                         u.setAdresse(street.getText().toString().replace("'","''"));
                         u.setQuartier(quartier.getText().toString().replace("'","''"));
                         u.setCommune(quartier.getText().toString().replace("'","''"));
@@ -577,6 +586,7 @@ public class Home extends AppCompatActivity
                         u.setDescription(about_U.getText().toString().replace("'","''"));
 
                         // Todo : methode pour mette a jour les information du user
+                        update();
 
                     }
                 })
@@ -591,6 +601,49 @@ public class Home extends AppCompatActivity
 
     }
 
+    private void update(){
+        AsyncTask aaa = new AsyncTask<Void, Void, User>() {
+            Service s = new Service();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
 
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Mise à jour des information en cours...");
+                alert.show();
+            }
+
+            @Override
+            protected User doInBackground(Void... voids) {
+                return ManageLocalData.updateUser(u);
+            }
+
+            @Override
+            protected void onPostExecute(User service) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (service.isError() == true ){
+                    a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+
+                }
+                a.show();
+            }
+        }.execute();
+
+    }
 
 }
