@@ -61,18 +61,12 @@ public class Postullances_Base_Adapter extends BaseAdapter {
         TextView categorie = convertView.findViewById(R.id.categorie);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
-        LinearLayout header = convertView.findViewById(R.id.header);
 
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
-        // Todo : Cacher la photo
-        if (mode.equals("mine")){
-            header.setVisibility(View.GONE);
-            categorie.setTextSize(17);
-        }
 
         final Annonce S = DATA.get(position);
         // todo : Affects values to the componants

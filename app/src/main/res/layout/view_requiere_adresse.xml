@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="30dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:paddingBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end|center">
+
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:id="@+id/close"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_closse_white" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/localisation" />
+
+        <TextView
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/alegreya_sans_thin"
+            android:textStyle="bold"
+            android:text="@string/requied_adresse"
+            android:textColor="@color/white"
+            android:textSize="17dp" />
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/corner_blue_border_white"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/BTN_add"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_setting_white"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="Ajouter"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -23,7 +23,9 @@ import java.io.FileInputStream;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
+import cd.maichapayteam.zuajob.Front_end.Signup.index_screen;
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
@@ -39,7 +41,7 @@ public class Myprofil extends AppCompatActivity {
     RoundedImageView picture;
     ImageView Pickpicture;
     TextView nom,number,Sexe;
-    TextView street,quartier,commune,pays,email,typeswitcher;
+    TextView type_compte,quartier,commune,pays,email,typeswitcher;
 
     Toolbar toolbar;
 
@@ -52,6 +54,7 @@ public class Myprofil extends AppCompatActivity {
         details = findViewById(R.id.details);
         Sexe = findViewById(R.id.Sexe);
         toolbar = findViewById(R.id.toolbar);
+        type_compte = findViewById(R.id.type_compte);
         /*pays = findViewById(R.id.pays);
         street = findViewById(R.id.street);
         quartier = findViewById(R.id.quartier);
@@ -68,7 +71,7 @@ public class Myprofil extends AppCompatActivity {
         nom.setText(
                 u.getNom() + " "+u.getPrenom()
         );
-        number.setText(u.getPhone());
+        number.setText("+"+ u.getPhone());
         Sexe.setText(
                 u.getSexe()+ " / "+ u.getBirthday()
         );
@@ -76,6 +79,8 @@ public class Myprofil extends AppCompatActivity {
         if (u.getDescription().equals("")) details.setText("Aucun détails sur votre profil ");
         else details.setText(u.getDescription());
 
+        if (u.getType() == 0) type_compte.setText("Demandeur ou chercheur de service");
+        else type_compte.setText("Prestataire ou offreur des services");
 
     }
 
@@ -113,12 +118,6 @@ public class Myprofil extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        update_Adresses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Edit_addresses_alert();
-            }
-        });
 
         Pickpicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +160,7 @@ public class Myprofil extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.publication) {
             Intent i = new Intent(context, Publication_blank.class);
+            i.putExtra("type", "other");
             startActivity(i);
             finish();
             return true;
@@ -176,33 +176,42 @@ public class Myprofil extends AppCompatActivity {
             return true;
         }
         if (id == R.id.nav_exit) {
-            onBackPressed();
+            exit_alert();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    void Edit_addresses_alert(){
-        View view  = LayoutInflater.from(context).inflate(R.layout.view_edit_adresse,null);
+
+
+    void exit_alert(){
+        TextView sortie;
+        TextView cancel;
+        View view  = LayoutInflater.from(context).inflate(R.layout.view_exit,null);
+        sortie     = view.findViewById(R.id.sortie);
+        cancel     = view.findViewById(R.id.cancel);
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(view)
-                .setCancelable(false)
-                .setPositiveButton("Mettre a jours", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setCancelable(false);
         final AlertDialog alert = a.create();
         alert.show();
 
+        sortie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDAO.getInstance(context).deconnection();
+                GeneralClass.Currentuser = null;
+                startActivity(new Intent(context, index_screen.class));
+                finish();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.cancel();
+            }
+        });
     }
 
     private void pickPicture(){

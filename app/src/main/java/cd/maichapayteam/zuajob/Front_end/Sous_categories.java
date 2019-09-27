@@ -78,7 +78,6 @@ public class Sous_categories extends AppCompatActivity {
                             LSC,
                             getIntent().getExtras().getString("title"),
                             getIntent().getExtras().getString("id")));
-
                 }
             }
         }.execute();

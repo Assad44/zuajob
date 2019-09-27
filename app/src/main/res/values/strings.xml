@@ -165,6 +165,11 @@
         Veuillez coter la préstation du jobeur en par rapport avec le travail effectué,
         et n\'hésitez pas à lui coter excellent si sa préstation a été à la hauteur des vos attentes
     </string>
+    <string name="requied_adresse">
+        Veuillez renseigner votre adresse physique,
+        votre residence ou domicile et autres informations sur vous afin que ceux qui vont vous
+        solliciter puisse être confiant
+    </string>
 
 
 </resources>

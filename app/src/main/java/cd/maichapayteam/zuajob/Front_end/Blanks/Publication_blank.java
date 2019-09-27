@@ -163,21 +163,7 @@ public class Publication_blank extends AppCompatActivity {
                 if (Publication_type.getSelectedItemPosition() == 1){
                     service_publication();
                 }else {
-                    AlertDialog.Builder a = new AlertDialog.Builder(context)
-                            .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    Annonce AA = ManageLocalData.creerAnnonce(Annonce_publication());
-                    if (AA.isError() == true ){
-                        a.setMessage(AA.getErrorMessage()+ " "+AA.getErrorCode());
-                    }else{
-                        a.setMessage("Opération réussi");
-                    }
-                    a.show();
-
+                    Annonce_publication();
                 }
             }
         });
@@ -227,19 +213,60 @@ public class Publication_blank extends AppCompatActivity {
                     a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                 }else{
                     a.setMessage("Opération réussi");
+
                 }
                 a.show();
             }
         }.execute();
 
     }
-    private Annonce Annonce_publication(){
-        Annonce s = new Annonce();
-        s.setIdSousCategorie(Long.parseLong(SCAT_id.get(sous_categorie.getSelectedItemPosition())));
-        s.setDescription(description.getText().toString().replace("'","''"));
-        s.setDevise(devise.getSelectedItem().toString());
-        s.setMontant(Integer.parseInt(montant.getText().toString()));
-        return s;
+    private void Annonce_publication(){
+        AsyncTask aaa = new AsyncTask<Void, Void, Annonce>() {
+            Annonce s = new Annonce();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Publication de l'annonce encours...");
+                s.setIdSousCategorie(Long.parseLong(SCAT_id.get(sous_categorie.getSelectedItemPosition())));
+                s.setDescription(description.getText().toString().replace("'","''"));
+                s.setDevise(devise.getSelectedItem().toString());
+                s.setMontant(Integer.parseInt(montant.getText().toString()));
+                alert.show();
+            }
+
+            @Override
+            protected Annonce doInBackground(Void... voids) {
+                return ManageLocalData.creerAnnonce(s);
+            }
+
+            @Override
+            protected void onPostExecute(Annonce annonce) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (annonce.isError() == true ){
+                    a.setMessage(annonce.getErrorMessage()+ " "+annonce.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+                }
+                a.show();
+            }
+        }.execute();
+
+
     }
 
 

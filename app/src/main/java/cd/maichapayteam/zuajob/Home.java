@@ -1,6 +1,7 @@
 package cd.maichapayteam.zuajob;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +62,8 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Context context = this;
+    User u = GeneralClass.Currentuser;
+
     int exit = 0;
     ListView list;
     Toolbar toolbar;
@@ -187,7 +191,6 @@ public class Home extends AppCompatActivity
     }
 
     private void Header_initialize(){
-        User u = GeneralClass.Currentuser;
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
@@ -204,9 +207,13 @@ public class Home extends AppCompatActivity
         if (u.getType() == 0){// utilisateur simple
             BTN_annonces.setVisibility(View.GONE);
             navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
+
+
         }else{
             navigationView.inflateMenu(R.menu.activity_home_drawer);
+            requiered_location();
         }
+
     }
 
     @Override
@@ -488,5 +495,101 @@ public class Home extends AppCompatActivity
         }
 
     }
+
+
+    /**
+     * Requierement
+     */
+    private void requiered_location(){
+        if (null == u) return;
+        if (u.getType() == 1){
+            if (u.getAdresse().equals("")){
+                View convertView  = LayoutInflater.from(context).inflate(R.layout.view_requiere_adresse,null);
+                TextView BTN_add = convertView.findViewById(R.id.BTN_add);
+                ImageView close = convertView.findViewById(R.id.close);
+
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setView(convertView)
+                        .setCancelable(true);
+                final AlertDialog alert = a.create();
+                alert.show();
+
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.cancel();
+                    }
+                });
+
+                BTN_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Edit_addresses_alert();
+                    }
+                });
+
+
+            }
+
+        }
+
+    }
+
+
+    void Edit_addresses_alert(){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_edit_adresse,null);
+        final TextView street = convertView.findViewById(R.id.street);
+        final TextView quartier = convertView.findViewById(R.id.quartier);
+        final TextView commune = convertView.findViewById(R.id.commune);
+        final TextView email = convertView.findViewById(R.id.email);
+        final TextView about_U = convertView.findViewById(R.id.about_U);
+
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView)
+                .setCancelable(false)
+                .setPositiveButton("Mettre a jours", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Todo : Checking empty zone
+                        if (TextUtils.isEmpty(street.getText().toString())){
+                            street.setError("Veuillez fournir cette information");
+                            return;
+                        }else if (TextUtils.isEmpty(quartier.getText().toString())){
+                            quartier.setError("Veuillez fournir cette information");
+                            return;
+                        }else if (TextUtils.isEmpty(commune.getText().toString())){
+                            commune.setError("Veuillez fournir cette information");
+                            return;
+                        }else if (TextUtils.isEmpty(email.getText().toString())){
+                            email.setError("Veuillez fournir cette information");
+                            return;
+                        }else if (TextUtils.isEmpty(about_U.getText().toString())){
+                            about_U.setError("Veuillez fournir cette information");
+                            return;
+                        }
+
+                        User u = new User();
+                        u.setAdresse(street.getText().toString().replace("'","''"));
+                        u.setQuartier(quartier.getText().toString().replace("'","''"));
+                        u.setCommune(quartier.getText().toString().replace("'","''"));
+                        u.setEmail(email.getText().toString().replace("'","''"));
+                        u.setDescription(about_U.getText().toString().replace("'","''"));
+
+                        // Todo : methode pour mette a jour les information du user
+
+                    }
+                })
+                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = a.create();
+        alert.show();
+
+    }
+
+
 
 }

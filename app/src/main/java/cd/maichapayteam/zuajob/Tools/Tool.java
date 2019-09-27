@@ -46,6 +46,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +65,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Tool {
 
+
+    /**
+     * Methode pour mettre des espaces dans un nombre
+     * @param number
+     * @return
+     */
+    public static String  NUMBER_FORMAT(String number){
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat format = new DecimalFormat("#,###", symbols);
+        return format.format(Integer.parseInt(number));
+    }
 
     public static String[] Versions(){
         return new String[]{

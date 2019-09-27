@@ -175,6 +175,95 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/alegreya_sans_thin"
+                            android:text="Type de compte"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/type_compte"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:gravity="center"
+                            android:text="@string/Lorem_short"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/alegreya_sans_thin"
+                                android:gravity="end"
+                                android:text="Avenue"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/street"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/alegreya_sans_thin"
+                                android:gravity="start"
+                                android:text="Avenue"
+                                android:textColor="@color/green"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/update_Adresses"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorAccent"
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Mettre à jour"
+                            android:textColor="@color/white"
+                            android:textSize="13dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardElevation="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:elevation="1dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/alegreya_sans_thin"
                             android:text="A propos de vous "
                             android:textColor="@color/colorPrimary"
                             android:textSize="18dp"
