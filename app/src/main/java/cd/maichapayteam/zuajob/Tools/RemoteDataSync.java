@@ -1065,7 +1065,7 @@ public class RemoteDataSync {
         Postuler postuler;
 
         try{
-            ANRequest request = AndroidNetworking.get(url)
+            ANRequest request = AndroidNetworking.post(url)
                     //.setTag("postuler" + postuler.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
@@ -1280,17 +1280,17 @@ public class RemoteDataSync {
         return object;
     }
 
-    public static Postuler creerRDVbyPostuler (long isPostuler, String date, String heure) {
+    public static Postuler creerRDVbyPostuler (long idPostuler, String date, String heure, String detail) {
         String url = BASE_URL + "creerrdvbypostuler";
 
         Postuler postuler;
 
         try{
             ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("id", String.valueOf(isPostuler))
+                    .addQueryParameter("id", String.valueOf(idPostuler))
                     .addQueryParameter("datePublication", date)
                     .addQueryParameter("heure", heure)
-                    .setTag("creerRDVByPostuler" + isPostuler)
+                    .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
@@ -1326,7 +1326,7 @@ public class RemoteDataSync {
         return postuler;
     }
 
-    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure) {
+    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure, String detail) {
         String url = BASE_URL + "creerrdvbysolliciter";
 
         Sollicitation sollicitation;
