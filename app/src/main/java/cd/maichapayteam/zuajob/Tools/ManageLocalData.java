@@ -100,6 +100,12 @@ public class ManageLocalData {
     }
 
     public static List<Service> listServiceByCote(int min, SousCategorie sousCategorie) {
+        RemoteDataSync.getServicesByCote((int)(min/20), sousCategorie.getId());
+        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+        return serviceDAO.getServiceByCote(min, sousCategorie);
+    }
+
+    public static List<Service> listServiceByRealisation(int min, SousCategorie sousCategorie) {
         RemoteDataSync.getServicesByRealisationCount((int)(min/20), sousCategorie.getId());
         ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
         return serviceDAO.getServiceByCote(min, sousCategorie);
@@ -198,8 +204,15 @@ public class ManageLocalData {
         return objectList;
     }
 
-    public boolean deconnection() {
-        if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) return true;
+    public static boolean deconnection() {
+        if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) {
+            CategorieDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            AnnonceDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            ServiceDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            PostulerDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            SollicitationDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            return true;
+        }
         return false;
     }
 

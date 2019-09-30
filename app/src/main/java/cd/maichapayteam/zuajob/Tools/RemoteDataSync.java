@@ -31,7 +31,9 @@ import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Lists.ListAnnonce;
 import cd.maichapayteam.zuajob.Models.Lists.ListCategorie;
+import cd.maichapayteam.zuajob.Models.Lists.ListPostulance;
 import cd.maichapayteam.zuajob.Models.Lists.ListService;
+import cd.maichapayteam.zuajob.Models.Lists.ListSollicitation;
 import cd.maichapayteam.zuajob.Models.Lists.ListSousCategorie;
 import cd.maichapayteam.zuajob.Models.Lists.ListUser;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
@@ -56,7 +58,7 @@ public class RemoteDataSync {
     /**
      *   GET METHODS
      */
-//
+    //OK
     public static boolean checkNumero(String numero) {
         numero = numero.replace("+", "");
         String url = BASE_URL + "checknumero";
@@ -83,6 +85,7 @@ public class RemoteDataSync {
         return true;
     }
 
+    //OK
     public static long[] sendSMS(String numero) {
         long[] rep = new long[]{-1, -1};
         String url = BASE_URL + "sendsms";
@@ -120,6 +123,7 @@ public class RemoteDataSync {
         return rep;
     }
 
+    //OK
     public static String confirmCode(long id, String code) {
         String url = BASE_URL + "confirmcode/" + id + "/" + code;
         Log.e("Users", "confirmCode:url:" + url);
@@ -147,6 +151,7 @@ public class RemoteDataSync {
         return "";
     }
 
+    //Pas encore implementé
     public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
         String url = BASE_URL + "uploadimage?";
         String TAG = "uploadimage";
@@ -193,6 +198,7 @@ public class RemoteDataSync {
 
     }
 
+    //Pas encore implementé
     public static String uploadImage(File image, final UploadImageListener uploadImageListener) {
         String url = BASE_URL + "uploadimage?";
 
@@ -261,19 +267,20 @@ public class RemoteDataSync {
     //    return list;
     //}
 
+    //Pas encore implementé
     public static List<Categorie> getUserPreference () {
-        String url = BASE_URL + "userpreference/";
+        String url = BASE_URL + "userpreference/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Categorie> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Categorie>> response = request.executeForObjectList(Categorie.class);
+            ANResponse<ListCategorie> response = request.executeForObject(ListCategorie.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 CategorieDAO cdao = new CategorieDAO(GeneralClass.applicationContext);
                 for (Categorie object : list) {
                     object.setUserPreference(true);
@@ -291,6 +298,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Categorie> getListCategorie () {
         String url = BASE_URL + "categories";
 
@@ -327,6 +335,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<SousCategorie> getListSousCategorie () {
         String url = BASE_URL + "souscategories";
 
@@ -359,6 +368,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<User> getListJobeur (int next) {
         String url = BASE_URL + "listjobeurs/" + next;
 
@@ -374,6 +384,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getId()) object.setMyProfil(true);
                     objectDAO.ajouter(object);
                     Log.e("User", "id : " + object.getId());
                 }
@@ -389,6 +400,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //Pas encore implementé
     public static List<User> getListJobeur (String keyword, int next) {
         String url = BASE_URL + "listjobeur/";
 
@@ -400,11 +412,12 @@ public class RemoteDataSync {
                 .build();
 
         try{
-            ANResponse<List<User>> response = request.executeForObjectList(User.class);
+            ANResponse<ListUser> response = request.executeForObject(ListUser.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getId()) object.setMyProfil(true);
                     objectDAO.ajouter(object);
                     Log.e("User", "id : " + object.getId());
                 }
@@ -419,6 +432,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //Pas encore implementé
     public static List<Comment> getListComment (int next) {
         String url = BASE_URL + "comment/";
 
@@ -429,7 +443,7 @@ public class RemoteDataSync {
                 .build();
 
         try{
-            ANResponse<List<Comment>> response = request.executeForObjectList(Comment.class);
+            ANResponse<List<Comment>> response = request.executeForObject(Comment.class);
             if (response.isSuccess()) {
                 list = response.getResult();
                 CommentDAO objectDAO = new CommentDAO(GeneralClass.applicationContext);
@@ -448,6 +462,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static User login(String phone, String password) {
         String url = BASE_URL + "login";
 
@@ -504,6 +519,8 @@ public class RemoteDataSync {
         //return new User();
     }
 
+
+    //OK
     public static List<Annonce> getRandomAnnonces () {
         String url = BASE_URL + "randomannonces";
 
@@ -520,6 +537,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -534,6 +552,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Annonce> getAnnonces (int next, long souscategorie) {
         String url = BASE_URL + "annonces/" + souscategorie + "/" + next;
 
@@ -546,11 +565,12 @@ public class RemoteDataSync {
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Annonce>> response = request.executeForObjectList(Annonce.class);
+            ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -565,6 +585,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
         String url = BASE_URL + "newannonces/" + souscategorie + "/" + next;
 
@@ -582,6 +603,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -596,6 +618,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Annonce> getMesAnnonces () {
         String url = BASE_URL + "mesannonces/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -626,6 +649,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Service> getMesServices () {
         String url = BASE_URL + "messervices/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -656,6 +680,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Service> getNewServices (int next, long souscategorie) {
         String url = BASE_URL + "newservices/" + souscategorie + "/" + next;
 
@@ -663,9 +688,6 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addQueryParameter("next", String.valueOf(next))
-                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<ListService> response = request.executeForObject(ListService.class);
@@ -673,6 +695,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -687,6 +710,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Service> getRandomServices (int next) {
         String url = BASE_URL + "randomservices";
 
@@ -694,8 +718,6 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addQueryParameter("next", String.valueOf(next))
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<ListService> response = request.executeForObject(ListService.class);
@@ -703,6 +725,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("RandomService", "description : " + object.getDescription());
                 }
@@ -717,6 +740,7 @@ public class RemoteDataSync {
         return list;
     }
 
+    //OK
     public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
         String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next;
 
@@ -734,6 +758,7 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -748,23 +773,22 @@ public class RemoteDataSync {
         return list;
     }
 
-    public static List<Service> getServicesByCote (int next, int souscategorie) {
-        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next;;
+    //OK
+    public static List<Service> getServicesByCote (int next, long souscategorie) {
+        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next;
 
         List<Service> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addQueryParameter("next", String.valueOf(next))
-                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<ListService> response = request.executeForObjectList(ListService.class);
+            ANResponse<ListService> response = request.executeForObject(ListService.class);
             if (response.isSuccess()) {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
+                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -778,23 +802,24 @@ public class RemoteDataSync {
 
         return list;
     }
-
+    //OK
     public static List<Postuler> getPostulants (long idAnnonce) {
-        String url = BASE_URL + "postulant/";
+        String url = BASE_URL + "postulants/" + idAnnonce + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Postuler> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
+                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
                 }
@@ -819,7 +844,7 @@ public class RemoteDataSync {
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
+            ANResponse<List<Postuler>> response = request.executeForObject(Postuler.class);
             if (response.isSuccess()) {
                 list = response.getResult();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
@@ -848,7 +873,7 @@ public class RemoteDataSync {
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
+            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 list = response.getResult();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
@@ -870,21 +895,23 @@ public class RemoteDataSync {
     /**
      * Les annonces auxquels moi j'ai postulé
      */
+    //OK
     public static List<Postuler> getMesPostulations () {
-        String url = BASE_URL + "maspostulation/";
+        String url = BASE_URL + "mespostulances/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Postuler> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Postuler>> response = request.executeForObjectList(Postuler.class);
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
+                    object.setHavePostuled(true);
                     object.setHavePostuled(true);
                     cdao.ajouter(object);
                     Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
@@ -903,22 +930,24 @@ public class RemoteDataSync {
     /**
      * Les annonces auxquels moi j'ai sollicité
      */
+    //OK
     public static List<Sollicitation> getSollicitations (long idService) {
-        String url = BASE_URL + "sollicitation/";
+        String url = BASE_URL + "sollicitants/" + idService + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Sollicitation> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addQueryParameter("idService", String.valueOf(idService))
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addQueryParameter("idService", String.valueOf(idService))
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
+                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -936,21 +965,264 @@ public class RemoteDataSync {
     /**
      * Les sollicitaations auxquels moi j'ai sollicité
      */
+    //OK
     public static List<Sollicitation> getMesSollicitations () {
-        String url = BASE_URL + "massollicitation/";
+        String url = BASE_URL + "messollicitations/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Sollicitation> list = new ArrayList<>();
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObjectList(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
+                for (Sollicitation object : list) {
+                    object.setHaveSollicited(true);
+                    object.setHaveSollicited(true);
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+
+    //OK
+    public static List<Postuler> getMesRDVenAttentePost () {
+        String url = BASE_URL + "mesrdvattente/postulance/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Postuler> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
+                for (Postuler object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionAnnonce());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Sollicitation> getMesRDVenAttenteSoll () {
+        String url = BASE_URL + "mesrdvattente/sollicitation/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Sollicitation> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
+                for (Sollicitation object : list) {
+                    object.setHaveSollicited(true);
+                    object.setHaveSollicited(true);
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Sollicitation> getMesRDVSollicitance () {
+        String url = BASE_URL + "mesrdvaccepte/sollicitation/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Sollicitation> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
             if (response.isSuccess()) {
                 list = response.getResult();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
+                    object.setHaveSollicited(true);
+                    object.setHaveSollicited(true);
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Postuler> getMesRDVPostulance () {
+        String url = BASE_URL + "mesrdvaccepte/postulance/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Postuler> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
+                for (Postuler object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionAnnonce());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Sollicitation> getMesSollicitationsRefuses () {
+        String url = BASE_URL + "messollicitationsrefuses/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Sollicitation> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
+                for (Sollicitation object : list) {
+                    object.setHaveSollicited(true);
+                    object.setHaveSollicited(true);
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionService());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Postuler> getMesPostulancesRefuses () {
+        String url = BASE_URL + "mespostulancesrefuses/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Postuler> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
+                for (Postuler object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionAnnonce());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Postuler> getMesAnnoncesConclu () {
+        String url = BASE_URL + "mesannoncesconclu/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Postuler> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
+                for (Postuler object : list) {
+                    cdao.ajouter(object);
+                    Log.e("Sollicitation", "description : " + object.getDescriptionAnnonce());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Sollicitation" + ":error", error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Sollicit" + ":errorLocal", ex.getMessage());
+        }
+
+        return list;
+    }
+    //OK
+    public static List<Sollicitation> getMesServicesConclu () {
+        String url = BASE_URL + "messervicesconclu/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Sollicitation> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) {
+                list = response.getResult();
+                SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
+                for (Sollicitation object : list) {
+                    object.setHaveSollicited(true);
                     object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
@@ -1005,7 +1277,7 @@ public class RemoteDataSync {
      POST METHODS
 
      */
-
+    //OK
     public static User createUser (User user) {
         String url = BASE_URL + "createuser";
 
@@ -1060,7 +1332,7 @@ public class RemoteDataSync {
         return user;
         //return new User();
     }
-
+    //OK
     public static Postuler postuler (long idAnnonce) {
         String url = BASE_URL + "postuler/" + idAnnonce + "/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -1104,7 +1376,7 @@ public class RemoteDataSync {
 
         return postuler;
     }
-
+    //OK
     public static Sollicitation solliciter (long idService) {
         String url = BASE_URL + "solliciter/" + idService + "/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -1149,7 +1421,7 @@ public class RemoteDataSync {
 
         return sollicitation;
     }
-
+    //OK
     public static Annonce publierAnnonce (Annonce object) {
         String url = BASE_URL + "annonce/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -1192,7 +1464,7 @@ public class RemoteDataSync {
 
         return object;
     }
-
+    //OK
     public static Service publierService (Service object) {
         String url = BASE_URL + "service/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -1282,339 +1554,14 @@ public class RemoteDataSync {
         return object;
     }
 
-    public static Postuler creerRDVbyPostuler (long idPostuler, String date, String heure, String detail, String codePayement, float montant, String devise) {
-        String url = BASE_URL + "creerrdv/user/" + GeneralClass.Currentuser.getAuthCode();
-
-        Postuler postuler;
-
-        JSONObject jsonObject = new JSONObject();
-        try { jsonObject.put("idPostulance", idPostuler); } catch (JSONException e) { }
-        try { jsonObject.put("date", date); } catch (JSONException e) { }
-        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
-        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
-        try { jsonObject.put("codePayement", codePayement); } catch (JSONException e) { }
-        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
-        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
-
-        try{
-            ANRequest request = AndroidNetworking.put(url)
-                    .addJSONObjectBody(jsonObject)
-                    .setTag("creerRDVByPostuler" + idPostuler)
-                    .setPriority(Priority.MEDIUM)
-                    .build();
-
-            ANResponse<Postuler> response = request.executeForObject(Postuler.class);
-            if (response.isSuccess()) {
-                postuler = response.getResult();
-                if(postuler!=null) {
-                    if(!postuler.isError()) {
-                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
-                        postuler = postulerDAO.ajouter(postuler);
-                        if(postuler==null) {
-                            postuler = new Postuler();
-                            postuler.setError(true);
-                            postuler.setErrorCode(1127);
-                            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
-                        }
-                    }
-                }
-            } else {
-                postuler = new Postuler();
-                postuler.setError(true);
-                postuler.setErrorCode(31921);
-                postuler.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            postuler = new Postuler();
-            postuler.setError(true);
-            postuler.setErrorCode(49288);
-            postuler.setErrorMessage(ex.getMessage());
-        }
-
-        return postuler;
-    }
-
-    public static Sollicitation creerRDVbySolliciter (long idSolliciter, String date, String heure, String detail, float montant, String devise) {
-        String url = BASE_URL + "creerrdvbysolliciter";
-
-        Sollicitation sollicitation;
-
-        JSONObject jsonObject = new JSONObject();
-        try { jsonObject.put("idSollicitation", idSolliciter); } catch (JSONException e) { }
-        try { jsonObject.put("date", date); } catch (JSONException e) { }
-        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
-        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
-        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
-        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addJSONObjectBody(jsonObject)
-                    .setTag("creerRDVByPostuler" + idSolliciter)
-                    .setPriority(Priority.MEDIUM)
-                    .build();
-
-            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
-            if (response.isSuccess()) {
-                sollicitation = response.getResult();
-                if(sollicitation!=null) {
-                    if(!sollicitation.isError()) {
-                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
-                        sollicitation = sollicitationDAO.ajouter(sollicitation);
-                        if(sollicitation==null) {
-                            sollicitation = new Sollicitation();
-                            sollicitation.setError(true);
-                            sollicitation.setErrorCode(1127);
-                            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
-                        }
-                    }
-                }
-            } else {
-                sollicitation = new Sollicitation();
-                sollicitation.setError(true);
-                sollicitation.setErrorCode(31921);
-                sollicitation.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            sollicitation = new Sollicitation();
-            sollicitation.setError(true);
-            sollicitation.setErrorCode(49288);
-            sollicitation.setErrorMessage(ex.getMessage());
-        }
-
-        return sollicitation;
-    }
-
-    public static Postuler confirmationRDVbyUser (long isPostuler, String phoneMaisha, String passwordMaisha) {
-        String url = BASE_URL + "confirmationrdvbyuser";
-
-        Postuler postuler;
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idPostuler", String.valueOf(isPostuler))
-                    .addQueryParameter("phonemaisha", phoneMaisha)
-                    .addQueryParameter("passwordmaisha", passwordMaisha)
-                    .setTag("confirmationRDVbyUser" + isPostuler)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<Postuler> response = request.executeForObject(Postuler.class);
-            if (response.isSuccess()) {
-                postuler = response.getResult();
-                if(postuler!=null) {
-                    if(!postuler.isError()) {
-                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
-                        postuler = postulerDAO.ajouter(postuler);
-                        if(postuler==null) {
-                            postuler = new Postuler();
-                            postuler.setError(true);
-                            postuler.setErrorCode(1127);
-                            postuler.setErrorMessage("Une erreur est survenue lors de la confirmation de votre rendez-vous.");
-                        }
-                    }
-                }
-            } else {
-                postuler = new Postuler();
-                postuler.setError(true);
-                postuler.setErrorCode(31921);
-                postuler.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            postuler = new Postuler();
-            postuler.setError(true);
-            postuler.setErrorCode(49288);
-            postuler.setErrorMessage(ex.getMessage());
-        }
-
-        return postuler;
-    }
-
-    public static Sollicitation confirmationRDVbyJobeur (long idSollicitation) {
-        String url = BASE_URL + "confirmationrdvbyjobeur";
-
-        Sollicitation sollicitation;
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                    .setTag("confirmationRDVbyJobeur" + idSollicitation)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
-            if (response.isSuccess()) {
-                sollicitation = response.getResult();
-                if(sollicitation!=null) {
-                    if(!sollicitation.isError()) {
-                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
-                        sollicitation = objectDAO.ajouter(sollicitation);
-                        if(sollicitation==null) {
-                            sollicitation = new Sollicitation();
-                            sollicitation.setError(true);
-                            sollicitation.setErrorCode(1127);
-                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre rendez-vous.");
-                        }
-                    }
-                }
-            } else {
-                sollicitation = new Sollicitation();
-                sollicitation.setError(true);
-                sollicitation.setErrorCode(31921);
-                sollicitation.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            sollicitation = new Sollicitation();
-            sollicitation.setError(true);
-            sollicitation.setErrorCode(49288);
-            sollicitation.setErrorMessage(ex.getMessage());
-        }
-
-        return sollicitation;
-    }
-
-    public static boolean confirmationDuServiceRendu (String code, int cote, String comment) {
-        String url = BASE_URL + "confirmationservice";
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("code", code)
-                    .addBodyParameter("cote", String.valueOf(cote))
-                    .addBodyParameter("comment", comment)
-                    .setTag("confirmationDuServiceRendu" + code)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<String> response = request.executeForString();
-            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
-        } catch (Exception ex) {
-
-        }
-
-        return false;
-    }
-
-    public static boolean signalerUtilisateur (long idUtilisateur, String comment, int niveauDanger) {
-        String url = BASE_URL + "signaler";
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idUtilisateur", String.valueOf(idUtilisateur))
-                    .addBodyParameter("comment", comment)
-                    .addBodyParameter("niveau", String.valueOf(niveauDanger))
-                    .setTag("signalerUtilisateur" + idUtilisateur)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
-            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
-        } catch (Exception ex) {
-
-        }
-
-        return false;
-    }
-
-    public static Sollicitation accepterSollicitation (long idSollicitation) {
-        String url = BASE_URL + "acceptersollicitation";
-
-        Sollicitation sollicitation;
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                    .setTag("accepterSollicitation" + idSollicitation)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
-            if (response.isSuccess()) {
-                sollicitation = response.getResult();
-                if(sollicitation!=null) {
-                    if(!sollicitation.isError()) {
-                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
-                        sollicitation = objectDAO.ajouter(sollicitation);
-                        if(sollicitation==null) {
-                            sollicitation = new Sollicitation();
-                            sollicitation.setError(true);
-                            sollicitation.setErrorCode(1127);
-                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre acceptation.");
-                        }
-                    }
-                }
-            } else {
-                sollicitation = new Sollicitation();
-                sollicitation.setError(true);
-                sollicitation.setErrorCode(31921);
-                sollicitation.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            sollicitation = new Sollicitation();
-            sollicitation.setError(true);
-            sollicitation.setErrorCode(49288);
-            sollicitation.setErrorMessage(ex.getMessage());
-        }
-
-        return sollicitation;
-    }
-
-    public static Sollicitation refuserSollicitation (long idSollicitation) {
-        String url = BASE_URL + "refusersollicitation";
-
-        Sollicitation sollicitation;
-
-        try{
-            ANRequest request = AndroidNetworking.post(url)
-                    .addQueryParameter("idSollicitation", String.valueOf(idSollicitation))
-                    .setTag("refuserSollicitation" + idSollicitation)
-                    .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
-                    .build();
-
-            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
-            if (response.isSuccess()) {
-                sollicitation = response.getResult();
-                if(sollicitation!=null) {
-                    if(!sollicitation.isError()) {
-                        SollicitationDAO objectDAO = new SollicitationDAO(GeneralClass.applicationContext);
-                        sollicitation = objectDAO.ajouter(sollicitation);
-                        if(sollicitation==null) {
-                            sollicitation = new Sollicitation();
-                            sollicitation.setError(true);
-                            sollicitation.setErrorCode(1127);
-                            sollicitation.setErrorMessage("Une erreur est survenue lors de la confirmation de votre acceptation.");
-                        }
-                    }
-                }
-            } else {
-                sollicitation = new Sollicitation();
-                sollicitation.setError(true);
-                sollicitation.setErrorCode(31921);
-                sollicitation.setErrorMessage(response.getError().getMessage());
-            }
-        } catch (Exception ex) {
-            sollicitation = new Sollicitation();
-            sollicitation.setError(true);
-            sollicitation.setErrorCode(49288);
-            sollicitation.setErrorMessage(ex.getMessage());
-        }
-
-        return sollicitation;
-    }
-
 
 
     /**
 
-     POST METHODS
+     PUT METHODS
 
      */
-
+    //OK
     public static User updateUser (User user) {
         String url = BASE_URL + "user/" + user.getId();
 
@@ -1667,7 +1614,7 @@ public class RemoteDataSync {
         return user;
         //return new User();
     }
-
+    //Pas encore implémenté
     public static Annonce updateAnnonce (Annonce object) {
         String url = BASE_URL + "annonce";
 
@@ -1709,7 +1656,7 @@ public class RemoteDataSync {
 
         return object;
     }
-
+    //Pas encore implémenté
     public static Service updateService (Service object) {
         String url = BASE_URL + "service";
 
@@ -1752,10 +1699,9 @@ public class RemoteDataSync {
 
         return object;
     }
-
+    //OK
     public static boolean updatePassword (String lastpassword, String newPassword) {
-        //String url = BASE_URL + "updatepassword/" + GeneralClass.Currentuser.getAuthCode();
-        String url = BASE_URL + "updatepassword/18a4257308f2a901d949d20a68bb7ed8";
+        String url = BASE_URL + "updatepassword/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.put(url)
@@ -1779,6 +1725,453 @@ public class RemoteDataSync {
             }
         } catch (Exception ex) {
             Log.e("updatePassword", "general error:" + ex.getMessage());
+        }
+
+        return false;
+    }
+
+
+    //OK
+    public static Sollicitation creerRDVbyJobeur (long idSolliciter, String date, String heure, String detail, float montant, String devise) {
+        String url = BASE_URL + "creerrdv/jobeur/" + GeneralClass.Currentuser.getAuthCode();
+
+        Sollicitation sollicitation = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idSollicitation", idSolliciter); } catch (JSONException e) { }
+        try { jsonObject.put("date", date); } catch (JSONException e) { }
+        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
+        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("created")) {
+                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = sollicitationDAO.find(idSolliciter);
+                        if(sollicitation!=null) {
+                            sollicitation.setRDV(true);
+                            sollicitation.setDateRDV(date);
+                            sollicitation.setHeureRDV(heure);
+                            sollicitation.setDetailRDV(detail);
+                            sollicitation.setMontantConclu(montant);
+                            sollicitation.setDeviseConclu(devise);
+                            sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
+        }
+
+        if(sollicitation==null) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(1127);
+            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+        }
+
+        return sollicitation;
+    }
+    //OK
+    public static Sollicitation refuserSollicitation (long idSolliciter) {
+        String url = BASE_URL + "refusersollicitation/jobeur/" + idSolliciter + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Sollicitation sollicitation = null;
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                JSONObject jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("refused")) {
+                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = sollicitationDAO.find(idSolliciter);
+                        if(sollicitation!=null) {
+                            sollicitation.setRefused(true);
+                            sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
+        }
+
+        if(sollicitation==null) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(1127);
+            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+        }
+
+        return sollicitation;
+    }
+    //OK
+    public static Sollicitation confirmerRDVbyUser (long idSolliciter, String codePayement) {
+        String url = BASE_URL + "confirmerrdv/user/" + GeneralClass.Currentuser.getAuthCode();
+
+        Sollicitation sollicitation = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idSollicitation", idSolliciter); } catch (JSONException e) { }
+        try { jsonObject.put("codePayement", codePayement); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("confirmed")) {
+                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = sollicitationDAO.find(idSolliciter);
+                        if(sollicitation!=null) {
+                            sollicitation.setAccepted(true);
+                            sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
+        }
+
+        if(sollicitation==null) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(1127);
+            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+        }
+
+        return sollicitation;
+    }
+    //OK
+    public static Sollicitation serviceRenduBySollicitance (long idSolliciter, int cote, String comment) {
+        String url = BASE_URL + "servicerendu/sollicitation/" + idSolliciter + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Sollicitation sollicitation = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("cote", cote); } catch (JSONException e) { }
+        try { jsonObject.put("comment", comment); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("rended")) {
+                        SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
+                        sollicitation = sollicitationDAO.find(idSolliciter);
+                        if(sollicitation!=null) {
+                            sollicitation.setConclu(true);
+                            sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        }
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
+        }
+
+        if(sollicitation==null) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(1127);
+            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+        }
+
+        return sollicitation;
+    }
+
+
+
+
+
+    //OK
+    public static Postuler creerRDVbyUser (long idPostuler, String date, String heure, String detail, String codePayement, float montant, String devise) {
+        String url = BASE_URL + "creerrdv/user/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idPostulance", idPostuler); } catch (JSONException e) { }
+        try { jsonObject.put("date", date); } catch (JSONException e) { }
+        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
+        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
+        try { jsonObject.put("codePayement", codePayement); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("created")) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.find(idPostuler);
+                        if(postuler!=null) {
+                            postuler.setRDV(true);
+                            postuler.setDateRDV(date);
+                            postuler.setHeureRDV(heure);
+                            postuler.setDetailRDV(detail);
+                            postuler.setMontantConclu(montant);
+                            postuler.setDeviseConclu(devise);
+                            postuler = postulerDAO.ajouter(postuler);
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
+        }
+        if(postuler==null) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(1127);
+            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+        }
+        return postuler;
+    }
+    //OK
+    public static Postuler refuserPostulance (long idPostuler) {
+        String url = BASE_URL + "refuserpostulance/user/" + idPostuler + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler = null;
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .setTag("creerRDVByPostuler" + idPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                JSONObject jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("refused")) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.find(idPostuler);
+                        if(postuler!=null) {
+                            postuler.setRefused(true);
+                            postuler = postulerDAO.ajouter(postuler);
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
+        }
+        if(postuler==null) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(1127);
+            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+        }
+        return postuler;
+    }
+    //OK
+    public static Postuler confirmerRDVbyJobeur (long idPostuler) {
+        String url = BASE_URL + "confirmerrdv/jobeur/" + idPostuler + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler = null;
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .setTag("creerRDVByPostuler" + idPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                JSONObject jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("confirmed")) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.find(idPostuler);
+                        if(postuler!=null) {
+                            postuler.setAccepted(true);
+                            postuler = postulerDAO.ajouter(postuler);
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
+        }
+        if(postuler==null) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(1127);
+            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+        }
+        return postuler;
+    }
+    //OK
+    public static Postuler serviceRenduByPostulance (long idPostuler, int cote, String comment) {
+        String url = BASE_URL + "servicerendu/postulance/" + idPostuler + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("cote", cote); } catch (JSONException e) { }
+        try { jsonObject.put("comment", comment); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.put(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("rended")) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.find(idPostuler);
+                        if(postuler!=null) {
+                            postuler.setConclu(true);
+                            postuler = postulerDAO.ajouter(postuler);
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
+        }
+        if(postuler==null) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(1127);
+            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+        }
+        return postuler;
+    }
+
+
+
+
+
+
+
+    public static boolean signalerUtilisateur (long idUtilisateur, String comment, int niveauDanger) {
+        String url = BASE_URL + "signaler";
+
+        try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addQueryParameter("idUtilisateur", String.valueOf(idUtilisateur))
+                    .addBodyParameter("comment", comment)
+                    .addBodyParameter("niveau", String.valueOf(niveauDanger))
+                    .setTag("signalerUtilisateur" + idUtilisateur)
+                    .setPriority(Priority.MEDIUM)
+                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
+                    .build();
+
+            ANResponse<Sollicitation> response = request.executeForObject(Sollicitation.class);
+            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+        } catch (Exception ex) {
+
         }
 
         return false;

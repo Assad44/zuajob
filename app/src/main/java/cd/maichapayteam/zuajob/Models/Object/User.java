@@ -39,6 +39,16 @@ public class User {
     private String birthday = "";
     private String description = "";
     private int cote = 0;
+
+    public int getNombreRealisation() {
+        return nombreRealisation;
+    }
+
+    public void setNombreRealisation(int nombreRealisation) {
+        this.nombreRealisation = nombreRealisation;
+    }
+
+    private int nombreRealisation = 0;
     private int typeIdentite = 0;
     private String numIdentite = "";
 

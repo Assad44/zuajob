@@ -38,6 +38,9 @@ public class PostulerDAO extends DAOBase {
     public static final String COTE = "cote";
     public static final String COMMENT = "comments";
     public static final String IS_MY = "is_my";
+    public static final String IS_ACCEPTED = "isacc";
+    public static final String IS_REFUSED = "isref";
+    public static final String DETAIL_RDV = "det_rdv";
     public static final String TABLE_NOM = "t_postuler";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -61,7 +64,10 @@ public class PostulerDAO extends DAOBase {
                     DEVISE + " TEXT, " +
                     COTE + " INTEGER, " +
                     COMMENT + " TEXT, " +
-                    IS_MY + " INTEGER);";
+                    IS_MY + " INTEGER, " +
+                    IS_ACCEPTED + " INTEGER, " +
+                    IS_REFUSED + " INTEGER, " +
+                    DETAIL_RDV + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -103,6 +109,9 @@ public class PostulerDAO extends DAOBase {
                 value.put(COTE, object.getCote());
                 value.put(COMMENT, object.getComment());
                 value.put(IS_MY, object.isMy());
+                value.put(IS_ACCEPTED, object.isAccepted());
+                value.put(IS_REFUSED, object.isRefused());
+                value.put(DETAIL_RDV, object.getDetailRDV());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -156,27 +165,30 @@ public class PostulerDAO extends DAOBase {
             Cursor c = mDb.rawQuery("select * from " + TABLE_NOM + " where " + KEY + " = ?", new String[]{String.valueOf(id)});
             Postuler object = null;
             while (c.moveToNext()) {
-                long _id = c.getLong(0);
-                long ids=c.getLong(1);
-                String des=c.getString(2);
-                float mont=c.getFloat(3);
-                String nomu=c.getString(4);
-                String phnu=c.getString(5);
-                long idu=c.getLong(6);
-                String urlimg=c.getString(7);
-                String date=c.getString(8);
-                int stat=c.getInt(9);
-                int have=c.getInt(10);
-                int rdv=c.getInt(11);
-                int conclu=c.getInt(12);
-                float montc=c.getFloat(13);
-                String devc=c.getString(14);
-                String datec=c.getString(15);
-                String heure=c.getString(16);
-                String dev=c.getString(17);
-                int cote=c.getInt(18);
-                String com=c.getString(19);
-                int ismy=c.getInt(20);
+                long _id = c.getLong(c.getColumnIndex(KEY));
+                long ids=c.getLong(c.getColumnIndex(ID_ANNONCE));
+                String des=c.getString(c.getColumnIndex(DESCRIPTION_ANNONCE));
+                float mont=c.getFloat(c.getColumnIndex(MONTANT_ANNONCE));
+                String nomu=c.getString(c.getColumnIndex(NOM_USER));
+                String phnu=c.getString(c.getColumnIndex(PHONE_USER));
+                long idu=c.getLong(c.getColumnIndex(ID_USER));
+                String urlimg=c.getString(c.getColumnIndex(URL_IMAGE_USER));
+                String date=c.getString(c.getColumnIndex(DATE));
+                int stat=c.getInt(c.getColumnIndex(STATUT));
+                int have=c.getInt(c.getColumnIndex(HAVE_POSTULED));
+                int rdv=c.getInt(c.getColumnIndex(IS_RDV));
+                int conclu=c.getInt(c.getColumnIndex(IS_CONCLU));
+                float montc=c.getFloat(c.getColumnIndex(MONTANT_CONCLU));
+                String devc=c.getString(c.getColumnIndex(DEVISE_CONCLU));
+                String datec=c.getString(c.getColumnIndex(DATE_RDV));
+                String heure=c.getString(c.getColumnIndex(HEURE_RDV));
+                String dev=c.getString(c.getColumnIndex(DEVISE));
+                int cote=c.getInt(c.getColumnIndex(COTE));
+                String com=c.getString(c.getColumnIndex(COMMENT));
+                int ismy=c.getInt(c.getColumnIndex(IS_MY));
+                int isacc=c.getInt(c.getColumnIndex(IS_ACCEPTED));
+                int isref=c.getInt(c.getColumnIndex(IS_REFUSED));
+                String detail = c.getString(c.getColumnIndex(DETAIL_RDV));
 
                 object = new Postuler();
                 object.setId(_id);
@@ -201,6 +213,9 @@ public class PostulerDAO extends DAOBase {
                 object.setCote(cote);
                 object.setComment(com);
                 if(ismy==1) object.setMy(true);
+                if(isacc==1) object.setAccepted(true);
+                if(isref==1) object.setRefused(true);
+                object.setDetailRDV(detail);
             }
             c.close();
             close();
@@ -278,8 +293,21 @@ public class PostulerDAO extends DAOBase {
         value.put(COTE, object.getCote());
         value.put(COMMENT, object.getComment());
         value.put(IS_MY, object.isMy());
+        value.put(IS_ACCEPTED, object.isAccepted());
+        value.put(IS_REFUSED, object.isRefused());
+        value.put(DETAIL_RDV, object.getDetailRDV());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
+        close();
+        return rep;
+    }
+
+    public long deletePersonnelData() {
+        ContentValues value = new ContentValues();
+        value.put(HAVE_POSTULED, false);
+        value.put(IS_MY, false);
+        open();
+        long rep = mDb.update(TABLE_NOM, value, null, null);
         close();
         return rep;
     }

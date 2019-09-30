@@ -30,6 +30,35 @@ public class Postuler {
     private String heureRDV = "";
     private int cote = 0;
     private String comment = "";
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
+    }
+
+    public boolean isRefused() {
+        return isRefused;
+    }
+
+    public void setRefused(boolean refused) {
+        isRefused = refused;
+    }
+
+    private boolean isAccepted = false;
+    private boolean isRefused = false;
+
+    public String getDetailRDV() {
+        return detailRDV;
+    }
+
+    public void setDetailRDV(String detailRDV) {
+        this.detailRDV = detailRDV;
+    }
+
+    private String detailRDV = "";
     private boolean havePostuled = false;
     private boolean isMy = false;
 

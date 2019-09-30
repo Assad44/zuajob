@@ -40,6 +40,7 @@ public class UserDAO extends DAOBase {
     public static final String COMMUNE = "commune";
     public static final String DESCRIPTION = "description";
     public static final String COTE = "cote";
+    public static final String NOMBRE_REALISATION = "nbr_rel";
     public static final String TABLE_NOM = "t_user";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -66,7 +67,8 @@ public class UserDAO extends DAOBase {
                     COMMUNE + " TEXT, " +
                     DESCRIPTION + " TEXT, " +
                     COTE + " INTEGER, " +
-                    URL_THUMBNAIL + " TEXT);";
+                    URL_THUMBNAIL + " TEXT, " +
+                    NOMBRE_REALISATION + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -111,6 +113,7 @@ public class UserDAO extends DAOBase {
                 value.put(DESCRIPTION, object.getDescription());
                 value.put(COTE, object.getCote());
                 value.put(URL_THUMBNAIL, object.getUrlThumbnail());
+                value.put(NOMBRE_REALISATION, object.getNombreRealisation());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -189,6 +192,7 @@ public class UserDAO extends DAOBase {
                 String description=c.getString(c.getColumnIndex(DESCRIPTION));
                 int cote=c.getInt(c.getColumnIndex(COTE));
                 String urlt=c.getString(c.getColumnIndex(URL_THUMBNAIL));
+                int nbr=c.getInt(c.getColumnIndex(NOMBRE_REALISATION));
 
                 object = new User();
                 object.setId(_id);
@@ -215,6 +219,7 @@ public class UserDAO extends DAOBase {
                 object.setDescription(description);
                 object.setCote(cote);
                 object.setUrlThumbnail(urlt);
+                object.setNombreRealisation(nbr);
             }
             c.close();
             close();
@@ -374,6 +379,7 @@ public class UserDAO extends DAOBase {
         value.put(DESCRIPTION, object.getDescription());
         value.put(COTE, object.getCote());
         value.put(URL_THUMBNAIL, object.getUrlThumbnail());
+        value.put(NOMBRE_REALISATION, object.getNombreRealisation());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

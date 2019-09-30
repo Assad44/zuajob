@@ -30,6 +30,7 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -200,7 +201,7 @@ public class Myprofil extends AppCompatActivity {
         sortie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDAO.getInstance(context).deconnection();
+                ManageLocalData.deconnection();
                 GeneralClass.Currentuser = null;
                 startActivity(new Intent(context, index_screen.class));
                 finish();

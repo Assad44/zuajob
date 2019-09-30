@@ -42,6 +42,7 @@ public class SollicitationDAO extends DAOBase {
     public static final String IS_MY = "is_my";
     public static final String IS_ACCEPTED = "isacc";
     public static final String IS_REFUSED = "isref";
+    public static final String DETAIL_RDV = "det_rdv";
     public static final String TABLE_NOM = "t_sollicitation";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -69,7 +70,8 @@ public class SollicitationDAO extends DAOBase {
                     IS_MY + " INTEGER, " +
                     IS_ACCEPTED + " INTEGER, " +
                     IS_REFUSED + " INTEGER, " +
-                    DEVISE_SERVICE + " TEXT);";
+                    DEVISE_SERVICE + " TEXT, " +
+                    DETAIL_RDV + " TEXT);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -115,6 +117,7 @@ public class SollicitationDAO extends DAOBase {
                 value.put(IS_MY, object.isMy());
                 value.put(IS_ACCEPTED, object.isAccepted());
                 value.put(IS_REFUSED, object.isRefused());
+                value.put(DETAIL_RDV, object.getDetailRDV());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -191,6 +194,7 @@ public class SollicitationDAO extends DAOBase {
                 int ismy=c.getInt(c.getColumnIndex(IS_MY));
                 int isacc=c.getInt(c.getColumnIndex(IS_ACCEPTED));
                 int isref=c.getInt(c.getColumnIndex(IS_REFUSED));
+                String detail = c.getString(c.getColumnIndex(DETAIL_RDV));
                 String dev=c.getString(c.getColumnIndex(DEVISE_SERVICE));
 
                 object = new Sollicitation();
@@ -220,6 +224,7 @@ public class SollicitationDAO extends DAOBase {
                 if(isacc==1) object.setAccepted(true);
                 if(isref==1) object.setRefused(true);
                 object.setDevise(dev);
+                object.setDetailRDV(detail);
             }
             c.close();
             close();
@@ -301,8 +306,19 @@ public class SollicitationDAO extends DAOBase {
         value.put(IS_MY, object.isMy());
         value.put(IS_ACCEPTED, object.isAccepted());
         value.put(IS_REFUSED, object.isRefused());
+        value.put(DETAIL_RDV, object.getDetailRDV());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
+        close();
+        return rep;
+    }
+
+    public long deletePersonnelData() {
+        ContentValues value = new ContentValues();
+        value.put(HAVE_SOLLICITED, false);
+        value.put(IS_MY, false);
+        open();
+        long rep = mDb.update(TABLE_NOM, value, null, null);
         close();
         return rep;
     }

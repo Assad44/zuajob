@@ -296,4 +296,13 @@ public class AnnonceDAO extends DAOBase {
         return rep;
     }
 
+    public long deletePersonnelData() {
+        ContentValues value = new ContentValues();
+        value.put(IS_MY, false);
+        open();
+        long rep = mDb.update(TABLE_NOM, value, null, null);
+        close();
+        return rep;
+    }
+
 }

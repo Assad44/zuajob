@@ -387,7 +387,7 @@ public class Home extends AppCompatActivity
         sortie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDAO.getInstance(context).deconnection();
+                ManageLocalData.deconnection();
                 GeneralClass.Currentuser = null;
                 startActivity(new Intent(context, index_screen.class));
                 finish();

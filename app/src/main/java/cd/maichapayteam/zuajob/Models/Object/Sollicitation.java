@@ -34,9 +34,19 @@ public class Sollicitation {
     private String heureRDV = "";
     private int cote = 0;
     private String comment = "";
+
+    public String getDetailRDV() {
+        return detailRDV;
+    }
+
+    public void setDetailRDV(String detailRDV) {
+        this.detailRDV = detailRDV;
+    }
+
+    private String detailRDV = "";
     private boolean isMy = false;
-    private boolean accepted = false;
-    private boolean refused = false;
+    private boolean isAccepted = false;
+    private boolean isRefused = false;
     private boolean recent = false;
 
     public boolean isAujourd() {
@@ -48,19 +58,19 @@ public class Sollicitation {
     }
 
     public boolean isAccepted() {
-        return accepted;
+        return isAccepted;
     }
 
     public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+        this.isAccepted = accepted;
     }
 
     public boolean isRefused() {
-        return refused;
+        return isRefused;
     }
 
     public void setRefused(boolean refused) {
-        this.refused = refused;
+        this.isRefused = refused;
     }
 
     public boolean isMy() {

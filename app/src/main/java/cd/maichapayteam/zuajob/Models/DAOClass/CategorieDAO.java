@@ -169,6 +169,15 @@ public class CategorieDAO extends DAOBase {
         return rep;
     }
 
+    public long deletePersonnelData() {
+        ContentValues value = new ContentValues();
+        value.put(USER_PREFERENCE, false);
+        open();
+        long rep = mDb.update(TABLE_NOM, value, null, null);
+        close();
+        return rep;
+    }
+
     public static void createCategories() {
         CategorieDAO categorieDAO = new CategorieDAO(GeneralClass.applicationContext);
 
