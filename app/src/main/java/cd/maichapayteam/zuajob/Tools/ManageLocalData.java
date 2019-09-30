@@ -204,6 +204,30 @@ public class ManageLocalData {
         return objectList;
     }
 
+    public static List<Object> mesRDVenAttente() {
+        List<Postuler> post = RemoteDataSync.getMesRDVenAttentePost();
+        List<Sollicitation> soll = RemoteDataSync.getMesRDVenAttenteSoll();
+        List<Object> objectList = new ArrayList<>();
+        SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
+        if(post.size()==0) post = new ArrayList<>();
+        if(soll.size()==0) soll = new ArrayList<>();
+        objectList.add(post);
+        objectList.add(soll);
+        return objectList;
+    }
+
+    public static List<Object> mesRDV() {
+        List<Postuler> post = RemoteDataSync.getMesRDVPostulance();
+        List<Sollicitation> soll = RemoteDataSync.getMesRDVSollicitance();
+        List<Object> objectList = new ArrayList<>();
+        SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
+        if(post.size()==0) post = new ArrayList<>();
+        if(soll.size()==0) soll = new ArrayList<>();
+        objectList.add(post);
+        objectList.add(soll);
+        return objectList;
+    }
+
     public static boolean deconnection() {
         if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) {
             CategorieDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
