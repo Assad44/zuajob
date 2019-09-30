@@ -228,6 +228,72 @@ public class ManageLocalData {
         return objectList;
     }
 
+    public static List<Sollicitation> mesSollicitationsRefusees() {
+        List<Sollicitation> sollicitationList = RemoteDataSync.getMesSollicitationsRefuses();
+        if(sollicitationList.size()==0) {
+            //TODO recupérer dans la bdd
+        }
+        return sollicitationList;
+    }
+
+    public static List<Postuler> mesPostulancesRefusees() {
+        List<Postuler> postulerList = RemoteDataSync.getMesPostulancesRefuses();
+        if(postulerList.size()==0) {
+            //TODO recupérer dans la bdd
+        }
+        return postulerList;
+    }
+
+    public static List<Postuler> mesAnnoncesConclus() {
+        List<Postuler> postulerList = RemoteDataSync.getMesAnnoncesConclu();
+        if(postulerList.size()==0) {
+            //TODO recupérer dans la bdd
+        }
+        return postulerList;
+    }
+
+    public static List<Sollicitation> mesServicesConclus() {
+        List<Sollicitation> sollicitationList = RemoteDataSync.getMesServicesConclu();
+        if(sollicitationList.size()==0) {
+            //TODO recupérer dans la bdd
+        }
+        return sollicitationList;
+    }
+
+    public static Sollicitation creerRDVbyJobeur(long idSollicitation, String date, String heure, String detail, float montant, String devise) {
+        return RemoteDataSync.creerRDVbyJobeur(idSollicitation, date, heure, detail, montant, devise);
+    }
+
+    public static Sollicitation refuserSollicitation(long idSollicitation) {
+        return RemoteDataSync.refuserSollicitation(idSollicitation);
+    }
+
+    public static Sollicitation confirmerRDVbyUser(long idSollicitation, String codePayement) {
+        return RemoteDataSync.confirmerRDVbyUser(idSollicitation, codePayement);
+    }
+
+    public static Sollicitation serviceRenduBySollicitance(long idSollicitation, int cote, String comment) {
+        return RemoteDataSync.serviceRenduBySollicitance(idSollicitation, cote, comment);
+    }
+
+
+    public static Postuler creerRDVbyUser(long idPostulance, String date, String heure, String detail, float montant, String devise, String codePayement) {
+        return RemoteDataSync.creerRDVbyUser(idPostulance, date, heure, detail, codePayement, montant, devise);
+    }
+
+    public static Postuler refuserPostulance(long idPostulance) {
+        return RemoteDataSync.refuserPostulance(idPostulance);
+    }
+
+    public static Postuler confirmerRDVbyJobeur(long idPostulance) {
+        return RemoteDataSync.confirmerRDVbyJobeur(idPostulance);
+    }
+
+    public static Postuler serviceRenduByPostulance(long idPostulance, int cote, String comment) {
+        return RemoteDataSync.serviceRenduByPostulance(idPostulance, cote, comment);
+    }
+
+
     public static boolean deconnection() {
         if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) {
             CategorieDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
