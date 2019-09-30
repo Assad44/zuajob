@@ -1565,7 +1565,7 @@ public class RemoteDataSync {
     public static User updateUser (User user) {
         String url = BASE_URL + "user/" + user.getId();
 
-        ANRequest request = AndroidNetworking.put(url)
+        ANRequest request = AndroidNetworking.post(url)
                 .addJSONObjectBody(user.toJsonObject())
                 .setTag("user" + user.getId())
                 .setPriority(Priority.MEDIUM)
@@ -1619,7 +1619,7 @@ public class RemoteDataSync {
         String url = BASE_URL + "annonce";
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addBodyParameter(object)
                     .setTag("updateannonce" + object.getPhoneUser())
                     .setPriority(Priority.MEDIUM)
@@ -1661,7 +1661,7 @@ public class RemoteDataSync {
         String url = BASE_URL + "service";
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addBodyParameter(object)
                     .setTag("updateservice" + object.getNomsJobeur())
                     .setPriority(Priority.MEDIUM)
@@ -1704,7 +1704,7 @@ public class RemoteDataSync {
         String url = BASE_URL + "updatepassword/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addQueryParameter("ancienpassword", lastpassword)
                     .addQueryParameter("nouveaupassword", newPassword)
                     .setPriority(Priority.MEDIUM)
@@ -1746,7 +1746,7 @@ public class RemoteDataSync {
         try { jsonObject.put("devise", devise); } catch (JSONException e) { }
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idSolliciter)
                     .setPriority(Priority.MEDIUM)
@@ -1799,7 +1799,7 @@ public class RemoteDataSync {
         Sollicitation sollicitation = null;
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .setTag("creerRDVByPostuler" + idSolliciter)
                     .setPriority(Priority.MEDIUM)
                     .build();
@@ -1850,7 +1850,7 @@ public class RemoteDataSync {
         try { jsonObject.put("codePayement", codePayement); } catch (JSONException e) { }
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idSolliciter)
                     .setPriority(Priority.MEDIUM)
@@ -1902,7 +1902,7 @@ public class RemoteDataSync {
         try { jsonObject.put("comment", comment); } catch (JSONException e) { }
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idSolliciter)
                     .setPriority(Priority.MEDIUM)
@@ -1964,7 +1964,7 @@ public class RemoteDataSync {
         try { jsonObject.put("devise", devise); } catch (JSONException e) { }
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
@@ -2015,7 +2015,7 @@ public class RemoteDataSync {
         Postuler postuler = null;
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
                     .build();
@@ -2060,7 +2060,7 @@ public class RemoteDataSync {
         Postuler postuler = null;
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
                     .build();
@@ -2109,7 +2109,7 @@ public class RemoteDataSync {
         try { jsonObject.put("comment", comment); } catch (JSONException e) { }
 
         try{
-            ANRequest request = AndroidNetworking.put(url)
+            ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
                     .setTag("creerRDVByPostuler" + idPostuler)
                     .setPriority(Priority.MEDIUM)
