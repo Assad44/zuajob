@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,9 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -32,6 +35,7 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class Publication_blank extends AppCompatActivity {
 
     Context context = this;
+    User u = GeneralClass.Currentuser;
 
 
     Spinner Publication_type,devise,categorie,sous_categorie;
@@ -55,9 +59,17 @@ public class Publication_blank extends AppCompatActivity {
         montant = findViewById(R.id.montantAnnonce);
         btn_validate = findViewById(R.id.btn_validate);
 
+        ArrayAdapter<String> adapter1;
+        if (u.getType() == 0) {// utilisateur simple
+            adapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.Publication_type_simple_user));
+        }else{
+            adapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.Publication_type));
+        }
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Publication_type.setAdapter(adapter1);
+
         sous_categorie.setVisibility(View.GONE);
     }
-
 
     void Load_CAtegorie(){
         Categorie c = new Categorie();
@@ -216,6 +228,9 @@ public class Publication_blank extends AppCompatActivity {
 
                 }
                 a.show();
+
+                startActivity(new Intent(context, Publication_blank.class));
+                finish();
             }
         }.execute();
 
@@ -263,6 +278,8 @@ public class Publication_blank extends AppCompatActivity {
                     a.setMessage("Opération réussi");
                 }
                 a.show();
+                startActivity(new Intent(context, Publication_blank.class));
+                finish();
             }
         }.execute();
 

@@ -14,6 +14,7 @@ import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -57,7 +58,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
 
         nom.setText(S.getNom());
         phone.setText(S.getPhone());
-        age.setText(String.valueOf(S.getBirthday()));
+        age.setText(String.valueOf(Tool.formatingDate(S.getBirthday())));
         MyRating.setRating(new Random().nextInt(5));
 
         /*int cote = S.getCote();

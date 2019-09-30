@@ -30,6 +30,10 @@
         <item>Services</item>
         <item>Annonces</item>
     </string-array>
+    <string-array name="Publication_type_simple_user">
+        <item>Selectionnez type publication</item>
+        <item>Annonces</item>
+    </string-array>
 
     <string-array name="user_type">
         <item>---Type de compte---</item>

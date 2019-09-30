@@ -65,6 +65,7 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_sollicitation,null);
 
         TextView view = convertView.findViewById(R.id.view);
+        TextView nom = convertView.findViewById(R.id.nom);
         TextView call = convertView.findViewById(R.id.call);
         TextView time = convertView.findViewById(R.id.time);
         TextView categorie = convertView.findViewById(R.id.categorie);

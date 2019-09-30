@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <cd.maichapayteam.zuajob.Tools.RoundedImageView
+                <ImageView
                     android:id="@+id/avatar"
                     android:layout_width="100dp"
                     android:layout_height="120dp"
@@ -54,16 +54,18 @@
                     android:layout_height="wrap_content"
                     android:text="Nom du jobeur"
                     android:textSize="15dp"/>
-
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/nom_number"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/colorPrimaryDark"/>
+                    android:layout_height="wrap_content"
+                    android:text="814511083"
+                    android:textSize="11dp"/>
 
                 <TextView
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/corner_blue_border_white"
                     android:padding="10dp"
                     android:id="@+id/confier"

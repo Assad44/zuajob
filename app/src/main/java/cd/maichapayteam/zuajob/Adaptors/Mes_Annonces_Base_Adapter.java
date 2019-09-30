@@ -2,27 +2,37 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GenerateData;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -56,100 +66,66 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_annonces,null);
         TextView description = convertView.findViewById(R.id.description);
         TextView confier = convertView.findViewById(R.id.confier);
-        TextView nom_user = convertView.findViewById(R.id.nom_user);
-        TextView number = convertView.findViewById(R.id.number);
         TextView time = convertView.findViewById(R.id.time);
+        TextView price = convertView.findViewById(R.id.price);
         TextView categorie = convertView.findViewById(R.id.categorie);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
         LinearLayout header = convertView.findViewById(R.id.header);
 
+        final Annonce S = DATA.get(position);
+        // todo : Affects values to the componants
+        description.setText(S.getDescription());
+        price.setText(S.getMontant()+ " "+ S.getDevise());
+        categorie.setText(
+                S.getCategorie()+" > "+S.getSousCategorie()
+        );
+
+        Log.e("TIMMMMMMMMMMMMM", S.getDatePublication());
+        time.setText(Tool.formatingDate(S.getDatePublication()));
 
         if (DATA == null ) {
             Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
         }
 
-        header.setVisibility(View.GONE);
-        categorie.setTextSize(17);
-
-        final Annonce S = DATA.get(position);
-        // todo : Affects values to the componants
-        nom_user.setText(S.getNomsUser());
-        number.setText(S.getPhoneUser());
-        description.setText(S.getDescription());
-        categorie.setText(
-                S.getCategorie()+">"+S.getSousCategorie()
-        );
-
-        int profil = 0;
-        if (position%3 == 0){
-            profil = R.drawable.avatar3;
-            confier.setText("Tache déjà confiée");
+        if (S.isConfied() == true){
+            confier.setText("Déjà confié");
             confier.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-            confier.setVisibility(View.VISIBLE);
-            S.setConfied(true);
         }else{
-            profil = R.drawable.avatar2;
-            confier.setText("Tache non confiée");
+            confier.setText("Pas encore confié");
             confier.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-            confier.setVisibility(View.VISIBLE);
-            S.setConfied(false);
         }
-        avatar.setImageResource(profil);
 
-        time.setText(Tool.formatingDate(S.getDatePublication()));
-
-        final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                details(S, finalProfil);
-            }
-        });
-
-        number.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, v);
-                popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return false;
-                    }
-                });
-                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return false;
-                    }
-                });
-                popupMenu.show();
+                details(S);
             }
         });
 
         return convertView;
     }
 
-    private void details(final Annonce S, int profil){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details,null);
+    private void details(final Annonce S){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_random,null);
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
         TextView description = convertView.findViewById(R.id.description);
         TextView nom_user = convertView.findViewById(R.id.nom_user);
         TextView number = convertView.findViewById(R.id.number);
         TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView time = convertView.findViewById(R.id.time);
         TextView postullants = convertView.findViewById(R.id.postullants);
+        TextView time = convertView.findViewById(R.id.time);
         TextView categore = convertView.findViewById(R.id.categore);
         RoundedImageView avatar = convertView.findViewById(R.id.avatar);
 
 
         if (S.isConfied() == true){
-            avatar.setImageResource(profil);
+            Tool.Load_Image(context,avatar,"");
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());
+            postullants.setVisibility(View.GONE);
         }else{
-            //avatar.setImageResource(profil);
+            postullants.setVisibility(View.VISIBLE);
             nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
             number.setText("");
         }
@@ -178,14 +154,12 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
                 popupMenu.show();
             }
         });
-
         postullants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Postulant_list();
+                postullants(String.valueOf(S.getId()));
             }
         });
-
 
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
@@ -223,11 +197,33 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
 
     }
 
+    private void postullants(final String id){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_list_postullants,null);
+        final TextView count = convertView.findViewById(R.id.count);
+        final GridView list= convertView.findViewById(R.id.list);
+        final SwipeRefreshLayout swipper= convertView.findViewById(R.id.swipper);
 
-    private void Postulant_list(){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.model_postulances,null);
-        GridView list = convertView.findViewById(R.id.list);
-        list.setAdapter(new Test_Base_Adapter(context, R.layout.view_postullants));
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                list.setAdapter(new Postullants_Base_Adapter(context, id));
+                count.setText(list.getCount()+" Postullants");
+            }
+
+        }.execute();
+
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
@@ -240,31 +236,6 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         final AlertDialog alert = a.create();
         alert.show();
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                details_jobeur();
-
-            }
-        });
     }
-
-    private void details_jobeur(){
-        View view  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details2,null);
-
-        AlertDialog.Builder a = new AlertDialog.Builder(context)
-                .setView(view)
-                .setCancelable(false)
-                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        final AlertDialog alert = a.create();
-        alert.show();
-    }
-
-
 
 }

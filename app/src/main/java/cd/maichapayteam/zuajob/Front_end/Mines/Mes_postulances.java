@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Mes_Annonces_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Postullances_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
@@ -96,7 +96,7 @@ public class Mes_postulances extends AppCompatActivity {
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Annonces_Base_Adapter(context, ANNOCE,"mine"));
+                    list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
                     return true;
                 }
 
@@ -108,7 +108,7 @@ public class Mes_postulances extends AppCompatActivity {
                         SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Annonces_Base_Adapter(context, SearchA,"mine"));
+                list.setAdapter(new Mes_Annonces_Base_Adapter(context, SearchA,"mine"));
                 return true;
             }
         });

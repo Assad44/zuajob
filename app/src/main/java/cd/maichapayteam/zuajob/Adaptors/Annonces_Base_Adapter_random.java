@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -17,7 +18,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.Postuler;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -169,6 +173,8 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        long idS = S.getId();
+                        POSTULLER(idS);
                     }
                 })
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -195,6 +201,51 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
             }
         });
 
+
+    }
+
+    private void POSTULLER(final long idS){
+        AsyncTask aaa = new AsyncTask<Void, Void, Postuler>() {
+            Service s = new Service();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Opération encours...");
+                alert.show();
+            }
+
+            @Override
+            protected Postuler doInBackground(Void... voids) {
+                return ManageLocalData.postuler(idS);
+            }
+
+            @Override
+            protected void onPostExecute(Postuler service) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (service.isError() == true ){
+                    a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+
+                }
+                a.show();
+            }
+        }.execute();
 
     }
 

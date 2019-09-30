@@ -7,7 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,6 +39,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;*/
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.bitmap.Transform;
 import com.koushikdutta.ion.builder.AnimateGifMode;
 
 import org.json.JSONArray;
@@ -98,14 +104,70 @@ public class Tool {
     }
 
     // TODO LOAD IMAGES
-    public static void Load_Image(Context context, ImageView imageView, String url){
+    public static void Load_Image(Context context, RoundedImageView imageView, String url){
         try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
             Ion.with(imageView)
                     .placeholder(R.drawable.avatar)
-                    .error(gifFromResource)
-                    .animateGif(AnimateGifMode.ANIMATE)
+                    .error(R.drawable.ic_alarm_blue)
+                    //.animateGif(AnimateGifMode.ANIMATE)
                     .load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void Load_Image2(Context context, ImageView imageView, String url){
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(imageView)
+                    .error(R.drawable.avatar_vested)
+                    .placeholder(R.drawable.avatar)
+                    .transform(new Transform() {
+                        @Override
+                        public Bitmap transform(Bitmap b) {
+                            return createCircleBitmap(b);
+                        }
+
+                        @Override
+                        public String key() {
+                            return null;
+                        }
+                    })
+                    .load(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Bitmap createCircleBitmap(Bitmap bitmap){
+        //设置一个与位图同样大小的新位图
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
+                Bitmap.Config.ARGB_8888);
+
+        //设置一个图片大小的矩形
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        Canvas canvas = new Canvas(output);
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        int halfWidth = bitmap.getWidth()/2;
+        int halfHeight = bitmap.getHeight()/2;
+        canvas.drawCircle(halfWidth, halfHeight, Math.max(halfWidth, halfHeight), paint);
+        //设置为取两层图像交集部门,只显示上层图像
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        //画图像
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
+
+    public static void Load_Image(Context context, ImageView imageView, String url){
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(imageView)
+                    .placeholder(gifFromResource)
+                    .error(R.drawable.avatar_error)
+                    .animateGif(AnimateGifMode.ANIMATE)
+                    .load("http://hotprintdesign.com/wp-content/uploads/2019/02/no-profile-photo.jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }
