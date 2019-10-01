@@ -115,15 +115,19 @@ public class Mes_rendez_vous extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 SOLLICITATION = (List<Sollicitation>) ManageLocalData.mesRDVenAttente().get(1);
+
                 return null;
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 swipper.setRefreshing(false);
-
                 if (null == SOLLICITATION) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else{
+                else if (SOLLICITATION.isEmpty()){
+                    Sollicitation s = new Sollicitation();
+                    s.setDate("2019-10-01");
+                    SOLLICITATION.add(s);
+                }else{
                     sous.removeAllViews();
                     for ( final Sollicitation c : SOLLICITATION) {
                         LayoutInflater inflater = LayoutInflater.from(context);

@@ -117,25 +117,13 @@ public class Rdv_Base_Adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
-                ImageView close = convertView.findViewById(R.id.close);
-                TextView excellent = convertView.findViewById(R.id.excellent);
-                TextView bon = convertView.findViewById(R.id.bon);
-                TextView assez_bon = convertView.findViewById(R.id.assez_bon);
-                TextView mauvais = convertView.findViewById(R.id.mauvais);
-                TextView mediocre = convertView.findViewById(R.id.mediocre);
-
 
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
                         .setView(convertView)
                         .setCancelable(true);
                 final AlertDialog alert = a.create();
                 alert.show();
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alert.cancel();
-                    }
-                });
+
             }
         });
 

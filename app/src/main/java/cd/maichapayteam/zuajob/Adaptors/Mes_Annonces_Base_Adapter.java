@@ -113,7 +113,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
     }
 
     private void details(final Annonce S){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_random,null);
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_mine,null);
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
         TextView description = convertView.findViewById(R.id.description);

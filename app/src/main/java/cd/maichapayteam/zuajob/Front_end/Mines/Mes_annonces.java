@@ -187,9 +187,9 @@ public class Mes_annonces extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.add) {
             Intent i = new Intent(context, Publication_blank.class);
+            i.putExtra("type", "other");
             startActivity(i);
             finish();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }

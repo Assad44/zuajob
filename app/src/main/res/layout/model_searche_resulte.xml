@@ -65,21 +65,27 @@
                     android:background="@drawable/corner_blue_border_white"
                     android:textColor="@color/white"
                     android:id="@+id/open_annonces"
-                    android:padding="10dp"
-                    android:layout_width="150dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="wrap_content"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="Voir les annonces"
+                    android:text="Les annonces"
                     android:textSize="12dp"/>
                 <TextView
                     android:background="@drawable/corner_primary_border_white"
                     android:textColor="@color/white"
                     android:id="@+id/open_services"
-                    android:padding="10dp"
-                    android:layout_width="150dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="wrap_content"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="Voir les services"
+                    android:text="Les services"
                     android:textSize="12dp"/>
 
             </LinearLayout>

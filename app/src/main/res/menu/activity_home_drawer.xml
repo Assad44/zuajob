@@ -6,16 +6,16 @@
 
     <item
         android:id="@+id/nav_annonce"
-        android:icon="@drawable/ic_menu_slideshow"
+        android:icon="@drawable/ic_annonce"
         android:title="@string/menu_annonces" />
     <item
         android:id="@+id/nav_services"
-        android:icon="@drawable/ic_menu_manage"
+        android:icon="@drawable/ic_sollicitation"
         android:title="@string/menu_services" />
 
     <item
         android:id="@+id/nav_rdv_jobeur"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_rdv"
         android:title="@string/menu_rdv" />
     <item
         android:id="@+id/nav_rdv_annonce"
@@ -25,7 +25,7 @@
         android:title="@string/menu_rdv_service" />
     <item
         android:id="@+id/nav_soliicioation"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/ic_sollicitation"
         android:title="@string/menu_sollicitations" />
     <item
         android:id="@+id/nav_postullance"

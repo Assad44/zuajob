@@ -1,12 +1,18 @@
 package cd.maichapayteam.zuajob;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -36,6 +42,7 @@ import com.koushikdutta.ion.builder.AnimateGifMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
@@ -123,7 +130,7 @@ public class Home extends AppCompatActivity
         BTN_annonces = findViewById(R.id.BTN_annonces);
         list = findViewById(R.id.list);
 
-        fab.setVisibility(View.GONE);
+        //fab.setVisibility(View.GONE);
         search_bar.setVisibility(View.GONE);
 
         rechercher.setIconified(true);
@@ -273,6 +280,8 @@ public class Home extends AppCompatActivity
             requiered_location();
         }
 
+
+        Tool.Set_Alarm(context);
     }
 
     @Override
@@ -303,7 +312,6 @@ public class Home extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
     }
 
     @Override
@@ -313,20 +321,10 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View v = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
-                AlertDialog.Builder a = new AlertDialog.Builder(context)
-                        .setCancelable(true)
-                        .setView(v);
-                final AlertDialog aa = a.create();
-                aa.show();
-
-                TextView cancel = v.findViewById(R.id.cancel);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        aa.dismiss();
-                    }
-                });
+                Intent i = new Intent(context, Publication_blank.class);
+                i.putExtra("type", "other");
+                startActivity(i);
+                finish();
             }
         });
 
@@ -738,5 +736,10 @@ public class Home extends AppCompatActivity
         }.execute();
 
     }
+
+
+
+
+
 
 }

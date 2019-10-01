@@ -1,7 +1,9 @@
 package cd.maichapayteam.zuajob.Tools;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.DownloadManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,9 +65,11 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import cd.maichapayteam.zuajob.Front_end.Notification_result_classes.BroadCast;
 import cd.maichapayteam.zuajob.R;
 import pl.droidsonroids.gif.GifDrawable;
 
+import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
@@ -158,7 +162,6 @@ public class Tool {
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
-
 
     public static void Load_Image(Context context, ImageView imageView, String url){
         try {
@@ -494,6 +497,16 @@ public class Tool {
     }
 
 
+
+    // TODO : ALARME
+    public static  void Set_Alarm(Context context){
+        Intent intent = new Intent(context, BroadCast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),3600000, pendingIntent);
+        //Toast.makeText(this, "Alarm set in " + 1 + " seconds",Toast.LENGTH_LONG).show();
+    }
 
     public static void Camera_Picker(int n){
         Intent camera = new Intent(

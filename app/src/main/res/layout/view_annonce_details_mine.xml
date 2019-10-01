@@ -184,7 +184,7 @@
 
                 <LinearLayout
                     android:layout_marginTop="15dp"
-                    android:weightSum="1"
+                    android:weightSum="3"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -201,7 +201,6 @@
                         android:gravity="center"
                         android:textSize="12dp"/>
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/postullants"
                         android:layout_weight="1"
                         android:background="@color/colorAccent"
@@ -214,7 +213,6 @@
                         android:gravity="center"
                         android:textSize="12dp"/>
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/delete"
                         android:layout_weight="1"
                         android:background="@color/red"
