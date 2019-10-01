@@ -72,6 +72,8 @@ public class Publication_blank extends AppCompatActivity {
     }
 
     void Load_CAtegorie(){
+        DATA.clear();
+        DATA1.clear();
         Categorie c = new Categorie();
         c.setDesignation("--Selectionner une catégorie-- ");
         DATA1 = ManageLocalData.listCategorie();
@@ -142,6 +144,9 @@ public class Publication_blank extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0){
+                    LSC.clear();
+                    SCAT.clear();
+                    SCAT_id.clear();
                     sous_categorie.setVisibility(View.VISIBLE);
                     String identifiant = String.valueOf(DATA.get(position).getId());
                     String designation = String.valueOf(DATA.get(position).getDesignation());
@@ -285,7 +290,6 @@ public class Publication_blank extends AppCompatActivity {
 
 
     }
-
 
 
     @Override

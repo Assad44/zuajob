@@ -14,9 +14,15 @@
         android:title="@string/menu_services" />
 
     <item
-        android:id="@+id/nav_rdv"
+        android:id="@+id/nav_rdv_jobeur"
         android:icon="@drawable/ic_menu_share"
         android:title="@string/menu_rdv" />
+    <item
+        android:id="@+id/nav_rdv_annonce"
+        android:title="@string/menu_rdv_annonce" />
+    <item
+        android:id="@+id/nav_rdv_service"
+        android:title="@string/menu_rdv_service" />
     <item
         android:id="@+id/nav_soliicioation"
         android:icon="@drawable/ic_menu_send"

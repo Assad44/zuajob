@@ -71,7 +71,7 @@ public class Publications_Annonces extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 swipper.setRefreshing(true);
-                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
                 super.onPreExecute();
             }
 
@@ -91,8 +91,9 @@ public class Publications_Annonces extends AppCompatActivity {
                 progressbar.setVisibility(View.GONE);
 
                 if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (ANNOCE.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
                 else{
-                    Toast.makeText(context, "---------- "+ ANNOCE.size() , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "---------- "+ ANNOCE.size() , Toast.LENGTH_SHORT).show();
                     if (turnA != 0) {
                         annonceAdapter.notifyDataSetChanged();
                         return;

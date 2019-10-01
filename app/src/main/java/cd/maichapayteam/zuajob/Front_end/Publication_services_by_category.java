@@ -25,6 +25,7 @@ import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
+import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
@@ -92,9 +93,10 @@ public class Publication_services_by_category extends AppCompatActivity {
                 swipper.setRefreshing(false);
                 progressbar.setVisibility(View.GONE);
                 if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (SERVICES.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
                 else{
                     Log.e("SSSSS", String.valueOf(SERVICES.size()));
-                    Toast.makeText(context, "---------- "+ SERVICES.size() , Toast.LENGTH_SHORT).show();
+
                     if (turn != 0) {
                         serviceAdapter.notifyDataSetChanged();
                         return;
@@ -213,11 +215,17 @@ public class Publication_services_by_category extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(context, Sous_categories.class);
-        i.putExtra("title",getIntent().getExtras().getString("CATEGORIE"));
-        i.putExtra("id",getIntent().getExtras().getString("ID_CATEGORIE"));
-        startActivity(i);
-        finish();
+        if (getSupportActionBar().getTitle().equals("Recherche")){
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }else{
+            Intent i = new Intent(context, Sous_categories.class);
+            i.putExtra("title",getIntent().getExtras().getString("CATEGORIE"));
+            i.putExtra("id",getIntent().getExtras().getString("ID_CATEGORIE"));
+            startActivity(i);
+            finish();
+        }
     }
 
     @Override

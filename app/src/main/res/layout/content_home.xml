@@ -21,7 +21,7 @@
         <SearchView
             android:elevation="2dp"
             android:id="@+id/rechercher"
-            android:queryHint="Recherche services ou annonces"
+            android:queryHint="Recherche"
             android:animateLayoutChanges="true"
             android:foregroundTint="@color/colorPrimaryDark"
             android:layout_width="match_parent"
@@ -41,17 +41,24 @@
             <TextView
                 android:padding="10dp"
                 android:textSize="10dp"
-                android:text="Quel service cherchez-vous ?"
+                android:text="Quelle catégorie de publication cherchez-vous ?"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <ListView
-                android:numColumns="auto_fit"
-                android:id="@+id/list"
-                android:divider="@color/white"
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                android:layout_height="wrap_content"
+                android:id="@+id/swiper">
+                <ListView
+                    android:numColumns="auto_fit"
+                    android:id="@+id/list"
+                    android:divider="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
 
         </LinearLayout>
 
@@ -278,7 +285,7 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/alegreya_sans_thin"
                     android:background="@color/colorPrimaryDark"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:id="@+id/BTN_services"
                     android:text="Services disponibles"
                     android:textColor="@color/white"
@@ -294,7 +301,7 @@
                     android:id="@+id/BTN_annonces"
                     android:layout_marginTop="5dp"
                     android:background="@color/dark5"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:text="Annonces des services"
                     android:textColor="@color/white"
                     android:textSize="18dp"
@@ -309,7 +316,7 @@
                     android:id="@+id/BTN_jober"
                     android:layout_marginTop="5dp"
                     android:background="@color/dark3"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:text="Nos jobeurs "
                     android:textColor="@color/white"
                     android:textSize="18dp"
@@ -324,7 +331,7 @@
                     android:id="@+id/BTN_categorie"
                     android:layout_marginTop="5dp"
                     android:background="#c22c0e"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:text="Toutes les catégories"
                     android:textColor="@color/white"
                     android:textSize="18dp"
@@ -337,6 +344,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

@@ -68,6 +68,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         TextView confier = convertView.findViewById(R.id.confier);
         TextView time = convertView.findViewById(R.id.time);
         TextView price = convertView.findViewById(R.id.price);
+        TextView delate = convertView.findViewById(R.id.delate);
         TextView categorie = convertView.findViewById(R.id.categorie);
         LinearLayout element = convertView.findViewById(R.id.element);
         LinearLayout header = convertView.findViewById(R.id.header);
@@ -77,7 +78,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         description.setText(S.getDescription());
         price.setText(S.getMontant()+ " "+ S.getDevise());
         categorie.setText(
-                S.getCategorie()+" > "+S.getSousCategorie()
+                S.getCategorie()+" | "+S.getSousCategorie()
         );
 
         Log.e("TIMMMMMMMMMMMMM", S.getDatePublication());
@@ -101,6 +102,12 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
                 details(S);
             }
         });
+        delate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "..............", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return convertView;
     }
@@ -113,14 +120,13 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         TextView nom_user = convertView.findViewById(R.id.nom_user);
         TextView number = convertView.findViewById(R.id.number);
         TextView S_prix = convertView.findViewById(R.id.S_prix);
+        TextView delate = convertView.findViewById(R.id.delete);
         TextView postullants = convertView.findViewById(R.id.postullants);
         TextView time = convertView.findViewById(R.id.time);
         TextView categore = convertView.findViewById(R.id.categore);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
-
+        ImageView avatar = convertView.findViewById(R.id.avatar);
 
         if (S.isConfied() == true){
-            Tool.Load_Image(context,avatar,"");
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());
             postullants.setVisibility(View.GONE);
@@ -129,12 +135,19 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
             nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
             number.setText("");
         }
+        Tool.Load_Image(context,avatar,S.getUrlImageUser());
 
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
-        categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
+        categore.setText(S.getCategorie()+ " | "+ S.getSousCategorie());
         time.setText(Tool.formatingDate(S.getDatePublication()));
 
+        delate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "..............", Toast.LENGTH_SHORT).show();
+            }
+        });
         number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

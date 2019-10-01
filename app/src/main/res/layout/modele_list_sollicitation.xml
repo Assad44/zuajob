@@ -75,7 +75,7 @@
 
             </LinearLayout>
 
-            <cd.maichapayteam.zuajob.Tools.RoundedImageView
+            <ImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/avatar"
                 android:layout_width="85dp"
@@ -110,34 +110,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Il ya une 1 heure"/>
-                    <TextView
-                        android:id="@+id/time"
-                        android:textColor="@color/black"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/alegreya_sans_thin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Il ya une 1 heure"/>
 
                     <TextView
-                        android:fontFamily="@font/alegreya_sans_thin"
                         android:id="@+id/categorie"
                         android:layout_marginBottom="-5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
                         android:text="Informatique"
-                        android:textSize="13dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
                     <TextView
-                        android:fontFamily="@font/alegreya_sans_thin"
                         android:id="@+id/Scategorie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Informatique"
                         android:textColor="@color/colorAccent"
-                        android:textSize="15dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/alegreya_sans_thin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Il ya une 1 heure"/>
 
                 </LinearLayout>
 

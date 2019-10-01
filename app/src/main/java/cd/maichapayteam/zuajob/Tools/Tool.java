@@ -481,12 +481,19 @@ public class Tool {
         context.startActivity(Intent.createChooser(intent, "Partager le lien de X-resolu via :"));
 
     }
+    public static void  CALL(Context context, String phone){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:"+phone));
+        context.startActivity(intent);
+    }
     public static void  LAUNCH_WEB_SITE(Context context){
         Intent intent;
         Uri uri = Uri.parse("url");
         intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(Intent.createChooser(intent, "Ouvrir via :"));
     }
+
+
 
     public static void Camera_Picker(int n){
         Intent camera = new Intent(

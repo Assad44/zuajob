@@ -16,6 +16,8 @@ import com.koushikdutta.ion.builder.AnimateGifMode;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
@@ -58,7 +60,16 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         nom_user.setText(u.getNom() +" "+u.getPrenom());
         nom_number.setText("+"+u.getPhone());
         // TODO  LOAD IMAGE
-        Tool.Load_Image(context,avatar,u.getUrlPhoto());
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(avatar)
+                    .placeholder(gifFromResource)
+                    .error(R.drawable.avatar_error)
+                    .animateGif(AnimateGifMode.ANIMATE)
+                    .load("http://hotprintdesign.com/wp-content/uploads/2019/02/no-profile-photo.jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override

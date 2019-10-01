@@ -86,19 +86,12 @@ public class Services_Base_Adapter extends BaseAdapter {
         float rating = cote * 5 / real;
         Rating.setRating(cote);
 
-        int profil = 0;
-        if (position%3 == 0)
-            profil = R.drawable.avatar3;
-        else{
-            profil = R.drawable.avatar2;
-        }
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context, avatar,S.getUrlImageJobeur());
 
-        final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                details(S, finalProfil);
+                details(S);
             }
         });
         number.setOnClickListener(new View.OnClickListener() {
@@ -124,20 +117,17 @@ public class Services_Base_Adapter extends BaseAdapter {
         return convertView;
     }
 
-
-    private void details(final Service S, int profil){
-        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details,null);
+    private void details(final Service S){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_service_details_random,null);
         TextView nom = convertView.findViewById(R.id.nom);
-        TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
-        TextView S_prix = convertView.findViewById(R.id.S_prix);
-        TextView share = convertView.findViewById(R.id.share);
-        TextView comment = convertView.findViewById(R.id.comment);
-        TextView like = convertView.findViewById(R.id.like);
-        TextView realisation = convertView.findViewById(R.id.realisation);
         TextView number = convertView.findViewById(R.id.number);
-        TextView categorie = convertView.findViewById(R.id.categorie);
+        TextView categorie = convertView.findViewById(R.id.categore);
+        TextView S_descriptions = convertView.findViewById(R.id.description);
+        TextView S_prix = convertView.findViewById(R.id.S_prix);
+        TextView realisation = convertView.findViewById(R.id.realisation);
         RatingBar Rating = convertView.findViewById(R.id.MyRating);
         ImageView avatar = convertView.findViewById(R.id.avatar);
+
 
         nom.setText(S.getNomsJobeur());
         categorie.setText(S.getCategorie()+" > "+S.getSousCategorie());
@@ -145,7 +135,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         S_descriptions.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context, avatar,S.getUrlImageJobeur());
         int cote = S.getCote();
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
@@ -191,29 +181,6 @@ public class Services_Base_Adapter extends BaseAdapter {
                 });
         final AlertDialog alert = a.create();
         alert.show();
-
-
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "La fonctionnalité est prévue pour une versions ulterieure", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "La fonctionnalité est prévue pour une versions ulterieure", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "La fonctionnalité est prévue pour une versions ulterieure", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 

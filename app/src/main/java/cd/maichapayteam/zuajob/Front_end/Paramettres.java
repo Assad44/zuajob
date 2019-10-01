@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,13 +25,14 @@ import cd.maichapayteam.zuajob.Tools.Tool;
 public class Paramettres extends AppCompatActivity {
 
     Context context = this;
+    LinearLayout about_U;
     CheckBox prestataire,notification;
 
     private void Init_Components(){
         //TODO si l'utilisateur a moins de 18 ans n'afficher pas la caégorie sexe
         notification = findViewById(R.id.notification);
         prestataire = findViewById(R.id.prestataire);
-
+        about_U = findViewById(R.id.about_U);
 
     }
 
@@ -87,6 +89,13 @@ public class Paramettres extends AppCompatActivity {
                     Tool.setUserPreferences(context,"notification", "1");
 
                 load();
+            }
+        });
+        about_U.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, About.class));
+                finish();
             }
         });
     }

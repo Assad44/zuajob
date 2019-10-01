@@ -87,9 +87,10 @@ public class Publications_services extends AppCompatActivity {
                 swipper.setRefreshing(false);
                 progressbar.setVisibility(View.GONE);
                 if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (SERVICES.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
                 else{
                     Log.e("SSSSS", String.valueOf(SERVICES.size()));
-                    Toast.makeText(context, "---------- "+ SERVICES.size() , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "---------- "+ SERVICES.size() , Toast.LENGTH_SHORT).show();
                     if (turn != 0) {
                         serviceAdapter.notifyDataSetChanged();
                         return;

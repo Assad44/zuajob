@@ -15,12 +15,16 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Adaptors.Jobeur_Base_Adapter;
@@ -29,6 +33,7 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Jobeur_list extends AppCompatActivity {
 
@@ -82,9 +87,9 @@ public class Jobeur_list extends AppCompatActivity {
                 swipper.setRefreshing(false);
                 progressbar.setVisibility(View.GONE);
                 if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else{   
+                else if (DATA.isEmpty()) Toast.makeText(context, "Aucune donnée"  , Toast.LENGTH_SHORT).show();
+                else{
                     Log.e("SSSSS", String.valueOf(DATA.size()));
-                    Toast.makeText(context, "---------- "+ DATA.size() , Toast.LENGTH_SHORT).show();
                     if (turn != 0) {
                         jobeurAdapter.notifyDataSetChanged();
                         return;
@@ -194,12 +199,27 @@ public class Jobeur_list extends AppCompatActivity {
                 View view  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details2,null);
                 TextView nom = view.findViewById(R.id.nom);
                 TextView number = view.findViewById(R.id.number);
-                TextView realisation = view.findViewById(R.id.realisation);
+                ImageView avatar = view.findViewById(R.id.avatar);
+                TextView age = view.findViewById(R.id.AGE);
+                TextView S_descriptions = view.findViewById(R.id.S_descriptions);
+
 
                 User u = DATA.get(position);
                 nom.setText(u.getPrenom()+" "+ u.getNom());
                 number.setText(u.getPhone());
-                //nom.setText(u.getnoreaPhone());
+                if (u.getDescription().equals("")) S_descriptions.setText(u.getDescription());
+                Tool.Load_Image(context,avatar,DATA.get(position).getUrlPhoto());
+
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+                try {
+                    Date d1 = new Date(sdf1.parse(DATA.get(position).getBirthday()).getTime());
+                    int old = Integer.parseInt(sdf2.format(new Date())) - Integer.parseInt(sdf2.format(d1));
+                    age.setText(String.valueOf(old).concat(" an(s)"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
                         .setView(view)
                         .setCancelable(false)

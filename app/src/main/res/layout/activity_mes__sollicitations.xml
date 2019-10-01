@@ -28,11 +28,17 @@
 
     </LinearLayout>
 
-    <ListView
-        android:divider="@color/zxing_transparent"
-        android:numColumns="auto_fit"
-        android:id="@+id/list"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="wrap_content"
+        android:id="@+id/swipper">
+
+        <ListView
+            android:divider="@color/zxing_transparent"
+            android:numColumns="auto_fit"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

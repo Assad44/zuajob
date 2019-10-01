@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -58,23 +61,28 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
 
         nom.setText(S.getNom());
         phone.setText(S.getPhone());
-        age.setText(String.valueOf(Tool.formatingDate(S.getBirthday())));
-        MyRating.setRating(new Random().nextInt(5));
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+        try {
+            Date d1 = new Date(sdf1.parse(S.getBirthday()).getTime());
+            int old = Integer.parseInt(sdf2.format(new Date())) - Integer.parseInt(sdf2.format(d1));
+            age.setText(String.valueOf(old).concat(" an(s)"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
         /*int cote = S.getCote();
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
         float rating = cote * 5 / real;*/
-        MyRating.setRating(0);
+        MyRating.setRating(S.getCote());
 
-        int profil = 0;
-        if (position%3 == 0)
-            profil = R.drawable.avatar3;
-        else{
-            profil = R.drawable.avatar2;
-        }
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context,avatar,S.getUrlPhoto());
 
         return convertView;
     }
+
 }

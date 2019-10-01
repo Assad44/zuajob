@@ -170,6 +170,9 @@
         votre residence ou domicile et autres informations sur vous afin que ceux qui vont vous
         solliciter puisse être confiant
     </string>
+    <string name="about">A propos de Zua job</string>
+    <string name="menu_rdv_annonce">Annonces</string>
+    <string name="menu_rdv_service">Services</string>
 
 
 </resources>

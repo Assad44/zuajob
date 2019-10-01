@@ -103,11 +103,11 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:max="100"
+                    android:layout_marginTop="-7dp"
                     android:backgroundTint="@color/white"
+                    android:indeterminate="true"
                     android:indeterminateTint="@color/colorAccent"
-                    android:layout_marginTop="-7dp"/>
+                    android:max="100" />
 
             </LinearLayout>
 

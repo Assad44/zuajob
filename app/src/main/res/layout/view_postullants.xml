@@ -34,6 +34,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:scaleType="centerCrop"
                     android:id="@+id/avatar"
                     android:layout_width="100dp"
                     android:layout_height="120dp"

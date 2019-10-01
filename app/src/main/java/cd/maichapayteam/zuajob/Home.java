@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -30,11 +31,19 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Categorie_recherche_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Sous_cat_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Test_Base_Adapter;
+import cd.maichapayteam.zuajob.Front_end.About;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Categorie_view;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
@@ -56,12 +65,14 @@ import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
+import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
+import pl.droidsonroids.gif.GifDrawable;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +80,7 @@ public class Home extends AppCompatActivity
     User u = GeneralClass.Currentuser;
 
     int exit = 0;
+    int sub_M = 0;
     ListView list;
     Toolbar toolbar;
     CardView catégorie_H;
@@ -78,9 +90,12 @@ public class Home extends AppCompatActivity
     SearchView rechercher;
     LinearLayout search_bar,sous;
     TextView BTN_categorie,BTN_jober,BTN_annonces,BTN_services;
-    TextView phone, nom;
-    ArrayList<Categorie> DATA = new ArrayList<>();
+    SwipeRefreshLayout swiper;
+    CardView about;
 
+    ArrayList<Categorie> DATA = new ArrayList<>();
+    List<SousCategorie> LSC = new ArrayList<>();
+    ArrayList<SousCategorie> SearchSC = new ArrayList<>();
     List<Categorie> DATA1 = new ArrayList<>();
     //HorizontalListView hlistview;
 
@@ -92,12 +107,14 @@ public class Home extends AppCompatActivity
         fab = findViewById(R.id.fab);
         /*phone = findViewById(R.id.phone);
         nom = findViewById(R.id.nom);*/
+        swiper = findViewById(R.id.swiper);
         sous = findViewById(R.id.sous);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         rechercher = findViewById(R.id.rechercher);
         search_bar = findViewById(R.id.search_bar);
+        about = findViewById(R.id.about);
 
         BTN_services = findViewById(R.id.BTN_services);
         BTN_categorie = findViewById(R.id.BTN_categorie);
@@ -159,7 +176,17 @@ public class Home extends AppCompatActivity
                         else img.setImageResource(R.drawable.pub4);
 
                         // Todo : Chargement des images par Ion librairy
-                        Tool.Load_Image(context,img,"");
+                        //Tool.Load_Image(context,img,"");
+                        try {
+                            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+                            Ion.with(img)
+                                    .placeholder(gifFromResource)
+                                    .error(R.drawable.baccc)
+                                    .animateGif(AnimateGifMode.ANIMATE)
+                                    .load("");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
                         sous.addView(responses, 0);
@@ -185,8 +212,7 @@ public class Home extends AppCompatActivity
                         if (i == 0){
                             title.setText("Autres catégories");
                             description.setText("");
-                            img.setImageResource(R.drawable.ic_more_primary);
-                            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            img.setImageResource(R.drawable.pub);
                         }
                         if (i == 3){
                             break;
@@ -198,6 +224,30 @@ public class Home extends AppCompatActivity
         }.execute();
     }
 
+    private void LoadSousCategorie(){
+        // TODO la tache asynchronne
+        new AsyncTask<String, Void, String>(){
+            Categorie sc = new Categorie();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                sc.setId(1);
+                swiper.setRefreshing(true);
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                LSC = ManageLocalData.listSousCategorie(sc);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(String o) {
+                swiper.setRefreshing(false);
+            }
+        }.execute();
+
+    }
 
     private void Header_initialize(){
         setSupportActionBar(toolbar);
@@ -217,8 +267,8 @@ public class Home extends AppCompatActivity
             BTN_annonces.setVisibility(View.GONE);
             navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
 
-
         }else{
+            BTN_jober.setVisibility(View.GONE);
             navigationView.inflateMenu(R.menu.activity_home_drawer);
             requiered_location();
         }
@@ -243,6 +293,7 @@ public class Home extends AppCompatActivity
 
         // Todo loading caterogies
         LoadCategories();
+        LoadSousCategorie();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -254,6 +305,7 @@ public class Home extends AppCompatActivity
 
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -289,14 +341,26 @@ public class Home extends AppCompatActivity
                 if (newText.length() < 1){
                     list.setVisibility(View.GONE);
                     search_bar.setVisibility(View.GONE);
+                }else if(newText.equals("*")){
+                    list.setAdapter(new Categorie_recherche_Base_Adapter(context, (ArrayList<SousCategorie>) LSC ));
                 }else{
                     list.setVisibility(View.VISIBLE);
                     search_bar.setVisibility(View.VISIBLE);
-                    list.setAdapter(new Test_Base_Adapter(context, R.layout.model_searche_resulte));
+                    // TODO Filtrage
+                    SearchSC.clear();
+                    for ( SousCategorie s : LSC ) {
+                        if (
+                                s.getDesignation().toUpperCase().contains(newText.toUpperCase())
+                        ){
+                            SearchSC.add(s);
+                        }
+                    }
+                    list.setAdapter(new Categorie_recherche_Base_Adapter(context, SearchSC));
                 }
                 return true;
             }
         });
+
         rechercher.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -329,6 +393,13 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, Categorie_view.class));
+                finish();
+            }
+        });
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, About.class));
                 finish();
             }
         });
@@ -461,37 +532,59 @@ public class Home extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        
+        boolean m = true;
         if (id == R.id.nav_annonce) {
             Intent i = new Intent(context, Mes_annonces.class);
             startActivity(i);
             finish();
+            m = true;
         } else if (id == R.id.nav_services) {
             Intent i = new Intent(context, Mes_services.class);
             startActivity(i);
             finish();
+            m = true;
         } else if (id == R.id.nav_rdv) {
             Intent i = new Intent(context, Mes_rendez_vous.class);
             startActivity(i);
             finish();
+            m = true;
+
+
+        } else if (id == R.id.nav_rdv_jobeur) {
+            m = true;
+        } else if (id == R.id.nav_rdv_annonce) {
+            Intent i = new Intent(context, Mes_rendez_vous.class);
+            startActivity(i);
+            finish();
+            m = true;
+        } else if (id == R.id.nav_rdv_service) {
+            Intent i = new Intent(context, Mes_rendez_vous.class);
+            startActivity(i);
+            finish();
+            m = true;
+
+
         }else if (id == R.id.nav_service_soliicioation) {
             Intent i = new Intent(context, Mes_services_sollicites.class);
             startActivity(i);
             finish();
+            m = true;
         } else if (id == R.id.nav_soliicioation) {
             Intent i = new Intent(context, Mes_Sollicitations.class);
             startActivity(i);
             finish();
+            m = true;
         } else if (id == R.id.nav_postullance) {
             Intent i = new Intent(context, Mes_postulances.class);
             startActivity(i);
             finish();
-        } else if (id == R.id.nav_discuusion) {
-
+            m = true;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if (m == true){
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 

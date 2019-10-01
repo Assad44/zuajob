@@ -38,6 +38,8 @@ public class Rdv_Base_Adapter extends BaseAdapter {
         this.context = context;
     }
 
+
+
     @Override
     public int getCount() {
         return 20;

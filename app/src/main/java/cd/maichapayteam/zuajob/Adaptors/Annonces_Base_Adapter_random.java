@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -60,7 +62,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         TextView number = convertView.findViewById(R.id.number);
         TextView time = convertView.findViewById(R.id.time);
         TextView categorie = convertView.findViewById(R.id.categorie);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
+        final ImageView avatar = convertView.findViewById(R.id.avatar);
         LinearLayout element = convertView.findViewById(R.id.element);
         LinearLayout header = convertView.findViewById(R.id.header);
 
@@ -82,21 +84,15 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                 S.getCategorie()+">"+S.getSousCategorie()
         );
 
-        int profil = 0;
-        if (position%3 == 0){
-            profil = R.drawable.avatar3;
-        }else{
-            profil = R.drawable.avatar2;
-        }
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context, avatar,S.getUrlImageUser());
+
 
         time.setText(Tool.formatingDate(S.getDatePublication()));
 
-        final int finalProfil = profil;
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                details(S, finalProfil);
+                details(S);
             }
         });
 
@@ -123,7 +119,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         return convertView;
     }
 
-    private void details(final Annonce S, int profil){
+    private void details(final Annonce S){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_random,null);
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
@@ -134,11 +130,11 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         TextView postullants = convertView.findViewById(R.id.postullants);
         TextView time = convertView.findViewById(R.id.time);
         TextView categore = convertView.findViewById(R.id.categore);
-        RoundedImageView avatar = convertView.findViewById(R.id.avatar);
+        ImageView avatar = convertView.findViewById(R.id.avatar);
 
         postullants.setVisibility(View.GONE);
 
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context, avatar,S.getUrlImageUser());
         nom_user.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
         description.setText(S.getDescription());
@@ -248,6 +244,5 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         }.execute();
 
     }
-
 
 }

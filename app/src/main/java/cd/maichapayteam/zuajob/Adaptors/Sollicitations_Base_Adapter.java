@@ -77,14 +77,11 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
 
         periode_layout.setVisibility(View.GONE);
 
-        if (DATA == null ) {
-            Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
-        }
-
-
         final Sollicitation S = DATA.get(position);
 
         // todo : Affects values to the componants
+
+        nom.setText("De : "+S.getNomsUser());
         time.setText(Tool.formatingDate(S.getDate()));
 
         // todo : Formatting datePublication for headers
@@ -127,20 +124,12 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         categorie.setText(S.getCategorie());
         Scategorie.setText(S.getSouscategorie());
 
-        int profil = 0;
-        if (position%3 == 0)
-            profil = R.drawable.avatar3;
-        else{
-            profil = R.drawable.avatar2;
-        }
-        avatar.setImageResource(profil);
-
-        final int finalProfil = profil;
+        Tool.Load_Image(context,avatar,S.getUrlImageUser());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                details(S, finalProfil);
+                details(S);
             }
         });
         call.setOnClickListener(new View.OnClickListener() {
@@ -150,15 +139,16 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
                 popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Tool.CALL(context, S.getPhoneUser());
                         return false;
                     }
                 });
-                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                /*popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return false;
                     }
-                });
+                });*/
                 popupMenu.show();
             }
         });
@@ -186,7 +176,7 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         return convertView;
     }
 
-    private void details(final Sollicitation S, int profil){
+    private void details(final Sollicitation S){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details,null);
         TextView S_categorie = convertView.findViewById(R.id.nom);
         TextView S_descriptions = convertView.findViewById(R.id.S_descriptions);
@@ -194,17 +184,14 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         TextView share = convertView.findViewById(R.id.share);
         TextView comment = convertView.findViewById(R.id.comment);
         TextView like = convertView.findViewById(R.id.like);
-        TextView realisation = convertView.findViewById(R.id.realisation);
         TextView number = convertView.findViewById(R.id.number);
-        RatingBar Rating = convertView.findViewById(R.id.MyRating);
         ImageView avatar = convertView.findViewById(R.id.avatar);
 
         S_categorie.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
         S_descriptions.setText(S.getDescriptionService());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
-        realisation.setVisibility(View.GONE);
-        avatar.setImageResource(profil);
+        Tool.Load_Image(context,avatar,S.getUrlImageUser());
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,15 +200,16 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
                 popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Tool.CALL(context, S.getPhoneUser());
                         return false;
                     }
                 });
-                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                /*popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return false;
                     }
-                });
+                });*/
                 popupMenu.show();
             }
         });

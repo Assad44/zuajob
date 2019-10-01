@@ -39,7 +39,6 @@ public class Sous_categories extends AppCompatActivity {
     }
 
     void Load_SCAT(){
-
         // TODO la tache asynchronne
         new AsyncTask<String, Void, String>(){
             Categorie sc = new Categorie();

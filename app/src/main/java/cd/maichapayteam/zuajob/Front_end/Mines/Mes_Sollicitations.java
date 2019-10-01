@@ -2,19 +2,27 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Sollicitations_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_Sollicitations extends AppCompatActivity {
@@ -22,42 +30,72 @@ public class Mes_Sollicitations extends AppCompatActivity {
     Context context = this;
     ListView list;
     SearchView rechercher;
+    SwipeRefreshLayout swipper;
 
     ArrayList<Sollicitation> SERVICES = new ArrayList<>();
+    List<Sollicitation> SERVICE_L = new ArrayList<>();
     ArrayList<Sollicitation> Search = new ArrayList<>();
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
+        swipper = findViewById(R.id.swipper);
     }
 
     void Load_SOLLICITATION(){
-        SERVICES.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
-        int j = 11;
-        for (int i = 0; i < 10; i++) {
-            Sollicitation s = new Sollicitation();
-            s.setNomsUser(Tool.Versions()[i]);
-            s.setDescriptionService(description);
-            s.setMontant(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSouscategorie("Sous catégorie "+i);
-            s.setDevise("USD");
-            s.setPhoneUser("+243 81 451 10 83");
-            String m = String.valueOf(j);
-            if (m.length()<= 1){
-                m = "0"+m;
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                super.onPreExecute();
             }
-            s.setDate("2019-09-"+m+" 02:42:00");
-            j = j-1;
-            SERVICES.add(s);
-        }
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                SERVICE_L.clear();
+                SERVICE_L = ManageLocalData.listMesSollicitations();
+                if (SERVICE_L.isEmpty()){
+                    Sollicitation s = new Sollicitation();
+                    s.setNomsUser("Deon Mass");
+                    String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+                    s.setDescriptionService(description);
+                    s.setMontant(new Random().nextInt(50));
+                    s.setCategorie("Catégorie ");
+                    s.setSouscategorie("Sous catégorie ");
+                    s.setDevise("USD");
+                    s.setPhoneUser("+243 81 451 10 83");
+                    s.setDate("2019-09-28 12:42:00");
+                    SERVICE_L.add(s);
+                }
+                for (Sollicitation c : SERVICE_L){
+                    SERVICES.add(c);
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (SERVICES.isEmpty())Toast.makeText(context, "Aucune donnée", Toast.LENGTH_SHORT).show();
+                else{
+                    Log.e("SSSSS", String.valueOf(SERVICES.size()));
+                    Toast.makeText(context, "---------- "+ SERVICES.size() , Toast.LENGTH_SHORT).show();
+                    list.setAdapter(new Sollicitations_Base_Adapter(context, SERVICES));
+                }
+            }
+
+        }.execute();
+    }
+
+    void Load_SOLLICITATION2(){
+        SERVICES.clear();
+
 
 
         if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
         else{
-            list.setAdapter(new Sollicitations_Base_Adapter(context, SERVICES));
+
         }
 
     }
@@ -92,6 +130,13 @@ public class Mes_Sollicitations extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Load_SOLLICITATION();
+            }
+        });
 
         rechercher.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

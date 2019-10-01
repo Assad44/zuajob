@@ -77,7 +77,6 @@ public class Publication_annonces_by_category extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 swipper.setRefreshing(true);
-                Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
                 Log.e("DDDDD","sssssssssss "+ getIntent().getExtras().getLong("ID_SOUSCATEGORIE"));
                 ids = (int) getIntent().getExtras().getLong("ID_SOUSCATEGORIE");
                 super.onPreExecute();
@@ -99,6 +98,7 @@ public class Publication_annonces_by_category extends AppCompatActivity {
                 progressbar.setVisibility(View.GONE);
 
                 if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (ANNOCE.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
                 else{
                     Toast.makeText(context, "---------- "+ ANNOCE.size() , Toast.LENGTH_SHORT).show();
                     if (turnA != 0) {
@@ -216,11 +216,19 @@ public class Publication_annonces_by_category extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(context, Sous_categories.class);
-        i.putExtra("title",getIntent().getExtras().getString("CATEGORIE"));
-        i.putExtra("id",getIntent().getExtras().getString("ID_CATEGORIE"));
-        startActivity(i);
-        finish();
+        if (getSupportActionBar().getTitle().equals("Recherche")){
+            Intent i = new Intent(context, Home.class);
+            startActivity(i);
+            finish();
+        }else{
+            Intent i = new Intent(context, Sous_categories.class);
+            i.putExtra("title",getIntent().getExtras().getString("CATEGORIE"));
+            i.putExtra("id",getIntent().getExtras().getString("ID_CATEGORIE"));
+            startActivity(i);
+            finish();
+        }
+
+
     }
 
     @Override

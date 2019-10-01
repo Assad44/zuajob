@@ -2,56 +2,87 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
-
-import cd.maichapayteam.zuajob.Adaptors.Mes_Annonces_Base_Adapter;
+import java.util.List;
 import cd.maichapayteam.zuajob.Adaptors.Postullances_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
-import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.Tool;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Mes_postulances extends AppCompatActivity {
 
     Context context = this;
-    GridView list;
+    ListView list;
+    SwipeRefreshLayout swipper;
     SearchView rechercher;
 
-    ArrayList<Annonce> ANNOCE = new ArrayList<>();
-    ArrayList<Annonce> SearchA = new ArrayList<>();
+    ArrayList<Postuler> ANNOCE = new ArrayList<>();
+    List<Postuler> ANNOCE_L = new ArrayList<>();
+    ArrayList<Postuler> SearchA = new ArrayList<>();
 
+    Postullances_Base_Adapter PostulerAdapter;
+    int turnA = 0;
+    
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
+        swipper = findViewById(R.id.swipper);
     }
 
-    void Load_Annonce(){
-        ANNOCE.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-        for (int i = 0; i < 10; i++) {
-            Annonce s = new Annonce();
-            s.setNomsUser(Tool.Versions()[i]);
-            s.setDescription(description);
-            s.setMontant(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSousCategorie("Sous catégorie "+i);
-            s.setDatePublication("2019-09-09 23:57:00");
-            s.setDevise("USD");
-            s.setPhoneUser("+243 81 451 10 83");
-            ANNOCE.add(s);
-        }
+    void Load_Postuler(){
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                //Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
+                super.onPreExecute();
+            }
 
-        if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            list.setAdapter(new Postullances_Base_Adapter(context, ANNOCE,"mine"));
-        }
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                ANNOCE_L = ManageLocalData.listMesPostulances();
+                if (ANNOCE_L.isEmpty()){
+                    Postuler s = new Postuler();
+                    s.setDate("2019-09-28");
+                    s.setDeviseAnnonce("USD");
+                    s.setNomsUser("XXXXXXXXXX");
+                    s.setPhoneUser("XXXXXXXXXX");
+                    ANNOCE_L.add(s);
+                }
+                for (Postuler c : ANNOCE_L){
+                    ANNOCE.add(c);
+                }
+                //ANNOCE = (ArrayList<Postuler>) ANNOCE_L;
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+
+                if (null == ANNOCE) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (ANNOCE.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
+                else{
+                    PostulerAdapter = new Postullances_Base_Adapter(context, ANNOCE);
+                    list.setAdapter(PostulerAdapter);
+                    turnA = 1;
+                }
+
+            }
+
+        }.execute();
+
     }
 
     @Override
@@ -67,7 +98,7 @@ public class Mes_postulances extends AppCompatActivity {
         Init_Components();
 
         // Todo ; launching methods
-        Load_Annonce();
+        Load_Postuler();
     }
 
     @Override
@@ -96,19 +127,19 @@ public class Mes_postulances extends AppCompatActivity {
                 SearchA.clear();
 
                 if (newText.equals("")) {
-                    list.setAdapter(new Mes_Annonces_Base_Adapter(context, ANNOCE,"mine"));
+                    list.setAdapter(new Postullances_Base_Adapter(context, ANNOCE));
                     return true;
                 }
 
-                for ( Annonce s : ANNOCE ) {
+                for ( Postuler s : ANNOCE ) {
                     if (
                             s.getNomsUser().toUpperCase().contains(newText.toUpperCase()) ||
-                                    String.valueOf(s.getMontant()).toUpperCase().equals(newText.toUpperCase())
+                                    String.valueOf(s.getMontantAnnonce()).toUpperCase().equals(newText.toUpperCase())
                     ){
                         SearchA.add(s);
                     }
                 }
-                list.setAdapter(new Mes_Annonces_Base_Adapter(context, SearchA,"mine"));
+                list.setAdapter(new Postullances_Base_Adapter(context, SearchA));
                 return true;
             }
         });
