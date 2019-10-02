@@ -183,7 +183,6 @@ public class Login extends AppCompatActivity {
 
         @Override
         protected User doInBackground(String... strings) {
-            Log.e("Login", "Task called");
             //return RemoteDataSync.confirmCode(numero, code);
             return ManageLocalData.login(number, password);
             //return null;

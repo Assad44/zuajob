@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Rdv_Base_Adapter;
+import cd.maichapayteam.zuajob.Adaptors.Rdv_postuller_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Sollicitations_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Categorie_view;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
@@ -88,13 +89,7 @@ public class Mes_rendez_vous extends AppCompatActivity {
 
                 if (null == POSTULLER) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
                 else{
-                    sous.removeAllViews();
-                    for ( final Postuler c : POSTULLER) {
-                        LayoutInflater inflater = LayoutInflater.from(context);
-                        View responses = inflater.inflate(R.layout.view_rdv, null);
-                        sous.addView(responses, 0);
-
-                    }
+                    list.setAdapter(new Rdv_postuller_Base_Adapter(context, (ArrayList<Postuler>) POSTULLER));
                 }
 
             }
@@ -115,7 +110,11 @@ public class Mes_rendez_vous extends AppCompatActivity {
             @Override
             protected Object doInBackground(Object[] objects) {
                 SOLLICITATION = (List<Sollicitation>) ManageLocalData.mesRDVenAttente().get(1);
-
+                if (SOLLICITATION.isEmpty()){
+                    Sollicitation s = new Sollicitation();
+                    s.setDate("2019-10-01");
+                    SOLLICITATION.add(s);
+                }
                 return null;
             }
 
@@ -123,90 +122,8 @@ public class Mes_rendez_vous extends AppCompatActivity {
             protected void onPostExecute(Object o) {
                 swipper.setRefreshing(false);
                 if (null == SOLLICITATION) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else if (SOLLICITATION.isEmpty()){
-                    Sollicitation s = new Sollicitation();
-                    s.setDate("2019-10-01");
-                    SOLLICITATION.add(s);
-                }else{
-                    sous.removeAllViews();
-                    for ( final Sollicitation c : SOLLICITATION) {
-                        LayoutInflater inflater = LayoutInflater.from(context);
-                        View convertView = inflater.inflate(R.layout.view_rdv, null);
-
-                        final LinearLayout details_option = convertView.findViewById(R.id.details_option);
-                        final CardView element = convertView.findViewById(R.id.element);
-                        TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
-                        TextView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
-                        TextView editer_heure = convertView.findViewById(R.id.editer_heure);
-                        TextView coter = convertView.findViewById(R.id.coter);
-
-
-                        annuler_rdv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                AlertDialog.Builder a = new AlertDialog.Builder(context,R.style.MyDialogTheme)
-                                        .setTitle("Confirmation")
-                                        .setMessage("Voulez-vous vraimment annuler ce rendez-vous ?")
-                                        .setCancelable(true)
-                                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                final AlertDialog alert = a.create();
-                                alert.show();
-                            }
-                        });
-
-
-                        coter.setOnClickListener(new View.OnClickListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.M)
-                            @Override
-                            public void onClick(View v) {
-                                View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
-                                final RatingBar rating = convertView.findViewById(R.id.rating);
-                                final TextView text = convertView.findViewById(R.id.text);
-                                text.setVisibility(View.GONE);
-
-                                rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                                    @Override
-                                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                                        text.setVisibility(View.VISIBLE);
-                                        text.setText(String.valueOf( rating ).concat(" / 5"));
-                                    }
-                                });
-
-                                AlertDialog.Builder a = new AlertDialog.Builder(context)
-                                        .setView(convertView)
-                                        .setCancelable(true)
-                                        .setPositiveButton("Coter", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                float cote = rating.getRating();
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });;
-                                final AlertDialog alert = a.create();
-                                alert.show();
-                            }
-                        });
-
-                        sous.addView(convertView, 0);
-
-                    }
+                else{
+                    list.setAdapter(new Rdv_Base_Adapter(context, (ArrayList<Sollicitation>) SOLLICITATION));
                 }
 
             }

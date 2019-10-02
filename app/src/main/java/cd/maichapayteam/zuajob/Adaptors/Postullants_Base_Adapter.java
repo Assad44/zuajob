@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +82,9 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         confier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setRDV();
                 Toast.makeText(context, id_annonce, Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -107,5 +111,32 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         final AlertDialog alert = a.create();
         alert.show();
     }
+
+    private void setRDV(){
+        View convertView  = LayoutInflater.from(context).inflate(R.layout.view_edit_setting_rdv,null);
+        LinearLayout date_zone = convertView.findViewById(R.id.date_zone);
+        EditText date = convertView.findViewById(R.id.date);
+        LinearLayout heure_zone = convertView.findViewById(R.id.heure_zone);
+        EditText heure = convertView.findViewById(R.id.heure);
+        EditText note = convertView.findViewById(R.id.note);
+
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView)
+                .setCancelable(false)
+                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = a.create();
+        alert.show();
+
+
+
+
+    }
+
+
 
 }

@@ -497,14 +497,23 @@ public class Tool {
     }
 
 
-
     // TODO : ALARME
     public static  void Set_Alarm(Context context){
         Intent intent = new Intent(context, BroadCast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),3600000, pendingIntent);
+        boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
+                intent /*new Intent("com.my.package.MY_UNIQUE_ACTION")*/,
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUp){
+            Log.d("myTag", "Alarm is already active");
+            Toast.makeText(context, "Alarm is already active", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Alarm is NOT YET active", Toast.LENGTH_SHORT).show();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),3600, pendingIntent);
+        }
         //Toast.makeText(this, "Alarm set in " + 1 + " seconds",Toast.LENGTH_LONG).show();
     }
 

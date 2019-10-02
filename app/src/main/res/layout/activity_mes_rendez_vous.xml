@@ -12,6 +12,7 @@
         android:id="@+id/type"
         android:background="@color/white"
         android:padding="10dp"
+        android:elevation="15dp"
         android:entries="@array/Publication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -250,8 +251,6 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

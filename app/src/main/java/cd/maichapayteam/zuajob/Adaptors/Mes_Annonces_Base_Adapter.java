@@ -177,12 +177,6 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
-                .setPositiveButton("Postuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

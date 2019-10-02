@@ -177,7 +177,7 @@ public class Publication_blank extends AppCompatActivity {
                 Toast.makeText(context, "Correct datas", Toast.LENGTH_SHORT).show();
 
                 // Todo : Checking publication type and create object
-                if (Publication_type.getSelectedItemPosition() == 1){
+                if (Publication_type.getSelectedItem().toString().equals("Services")){
                     service_publication();
                 }else {
                     Annonce_publication();

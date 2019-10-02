@@ -2,8 +2,11 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
@@ -33,16 +37,17 @@ import cd.maichapayteam.zuajob.Tools.Tool;
  */
 public class Rdv_Base_Adapter extends BaseAdapter {
     Context context;
+    ArrayList<Sollicitation> SOLLICITATION;
 
-    public Rdv_Base_Adapter(Context context) {
+
+    public Rdv_Base_Adapter(Context context, ArrayList<Sollicitation> SOLLICITATION) {
         this.context = context;
+        this.SOLLICITATION = SOLLICITATION;
     }
-
-
 
     @Override
     public int getCount() {
-        return 20;
+        return SOLLICITATION.size();
     }
 
     @Override
@@ -59,9 +64,10 @@ public class Rdv_Base_Adapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.modele_list_rdv,null);
+        convertView = LayoutInflater.from(context).inflate(R.layout.view_rdv,null);
 
         final LinearLayout details_option = convertView.findViewById(R.id.details_option);
+        final CardView element = convertView.findViewById(R.id.element);
         TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
         TextView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
         TextView editer_heure = convertView.findViewById(R.id.editer_heure);
@@ -114,19 +120,42 @@ public class Rdv_Base_Adapter extends BaseAdapter {
             }
         });
         coter.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
+                final RatingBar rating = convertView.findViewById(R.id.rating);
+                final TextView text = convertView.findViewById(R.id.text);
+                text.setText(String.valueOf( rating ).concat("0.0 / 5"));
+
+                rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        text.setVisibility(View.VISIBLE);
+                        text.setText(String.valueOf( rating ).concat(" / 5"));
+                    }
+                });
 
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
                         .setView(convertView)
-                        .setCancelable(true);
+                        .setCancelable(true)
+                        .setPositiveButton("Coter", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                float cote = rating.getRating();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });;
                 final AlertDialog alert = a.create();
                 alert.show();
-
             }
         });
-
 
         return convertView;
     }

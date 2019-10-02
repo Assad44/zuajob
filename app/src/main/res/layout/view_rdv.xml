@@ -11,7 +11,7 @@
         android:id="@+id/element"
         android:layout_width="340dp"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="20dp">
@@ -45,8 +45,8 @@
 
                     <ImageView
                         android:id="@+id/avatar"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/ic_alarm_blue"/>
 
                     <TextView
