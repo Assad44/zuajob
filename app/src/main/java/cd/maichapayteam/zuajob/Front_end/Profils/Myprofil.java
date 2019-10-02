@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.ion.builder.Builders;
+
 import java.io.FileInputStream;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
@@ -31,6 +36,7 @@ import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.FilePath;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
+import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -232,9 +238,15 @@ public class Myprofil extends AppCompatActivity {
                     String fil = FilePath.getPath(this, selected_Data_Uri);
 
                     try {
-                        FileInputStream fs = new FileInputStream(fil);
-                        byte[] imgbyte = new byte[fs.available()];
-                        int i = fs.read(imgbyte);
+                        String format = "";
+                        int lastIndexOf = fil.lastIndexOf(".");
+                        if (lastIndexOf > -1) format = fil.substring(lastIndexOf);
+
+                        Bitmap bitmap = BitmapFactory.decodeFile(fil);
+
+                        //FileInputStream fs = new FileInputStream(fil);
+                        //byte[] imgbyte = new byte[fs.available()];
+                        //int i = fs.read(imgbyte);
 
                         // TODO ; Vérification de la taille du fichier
                         /*if (String.valueOf(imgbyte.length).length() >5){
@@ -249,6 +261,12 @@ public class Myprofil extends AppCompatActivity {
                         Log.e("ENCODINGGGXXXXXX",encodedImage);
                         String avatar_64 = encodedImage;*/
 
+                        //TODO envoi de la photo en ligne
+
+                        UploadPhoto uploadPhoto = new UploadPhoto(bitmap, format);
+                        uploadPhoto.execute();
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("IMAGE_PATH_ERR",e.getMessage());
@@ -259,6 +277,33 @@ public class Myprofil extends AppCompatActivity {
 
             }
 
+        }
+    }
+
+    private class UploadPhoto extends AsyncTask<String, String, Boolean> {
+        private Bitmap bitmap;
+        private String format = "";
+
+        UploadPhoto(Bitmap btm, String frmt) {
+            this.bitmap = btm;
+            this.format = frmt;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //TODO show cicular progress bar under picture bow
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return RemoteDataSync.uploadImageAsync(bitmap, format);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            //TODO hide circular progress bar
         }
     }
 

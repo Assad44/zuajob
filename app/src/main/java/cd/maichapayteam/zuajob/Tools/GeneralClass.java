@@ -1,7 +1,10 @@
 package cd.maichapayteam.zuajob.Tools;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +22,17 @@ public class GeneralClass {
     public static Context applicationContext;
 
     public static User Currentuser = null;
+
+    public static String bitmapToBase64(Bitmap btm){
+        String imgStr = "";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        btm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] tab = baos.toByteArray();
+        imgStr = Base64.encodeToString(tab,Base64.DEFAULT);
+        //imgStr = imgStr.replace('\n', '');
+        //imgStr = imgStr.replace("\n", "");
+        return imgStr;
+    }
 
     public static String getRandomPhrase(int nbr) {
         List<String> rep = new ArrayList<>();

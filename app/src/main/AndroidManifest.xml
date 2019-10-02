@@ -5,7 +5,7 @@
     <application
         android:name=".Models.Main"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
@@ -40,7 +40,6 @@
         <activity android:name=".Front_end.Signup.Identity_screen" />
         <activity android:name=".Front_end.Signup.PhoneConfirm_screen" />
         <activity android:name=".Front_end.Signup.PhoneVerif_screen" />
-        <activity android:name=".Front_end.About" />
         <activity
             android:name=".Front_end.Profils.Myprofil"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -51,18 +50,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name=".Front_end.Notification_result_classes.BroadCast"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
 
         <meta-data
             android:name="AA_DB_NAME"
@@ -86,6 +73,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+
     <uses-permission android:name="android.permission.SEND_SMS" />
 
 </manifest>
