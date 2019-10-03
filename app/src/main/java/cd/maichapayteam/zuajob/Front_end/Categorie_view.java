@@ -3,37 +3,22 @@ package cd.maichapayteam.zuajob.Front_end;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import cd.maichapayteam.zuajob.Adaptors.Categorie2_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Categorie_Base_Adapter;
-import cd.maichapayteam.zuajob.Back_end.Config;
 import cd.maichapayteam.zuajob.Back_end.Objects.O_Categories;
-import cd.maichapayteam.zuajob.Back_end.Online.Queries_select;
-import cd.maichapayteam.zuajob.Back_end.Online.Update;
 import cd.maichapayteam.zuajob.Home;
-import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.GeneralClass;
-import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Categorie_view extends AppCompatActivity {

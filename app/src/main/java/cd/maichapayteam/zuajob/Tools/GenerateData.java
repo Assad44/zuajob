@@ -1,26 +1,5 @@
 package cd.maichapayteam.zuajob.Tools;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.PostulerDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
-import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
-import cd.maichapayteam.zuajob.Models.Object.Annonce;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
-import cd.maichapayteam.zuajob.Models.Object.Postuler;
-import cd.maichapayteam.zuajob.Models.Object.Service;
-import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
-import cd.maichapayteam.zuajob.Models.Object.User;
-
 public class GenerateData {
 
     //private static list<user> listjobeurs() {

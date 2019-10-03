@@ -3,10 +3,10 @@ package cd.maichapayteam.zuajob.Front_end;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,9 +26,7 @@ import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.GenerateData;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 
 public class Publication_annonces_by_category extends AppCompatActivity {

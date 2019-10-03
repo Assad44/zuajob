@@ -10,7 +10,6 @@ import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
-import cd.maichapayteam.zuajob.Models.Object.User;
 
 /**
  * Created by ElikyaLK on 29/12/2018.

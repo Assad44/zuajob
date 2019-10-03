@@ -1,9 +1,6 @@
 package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**

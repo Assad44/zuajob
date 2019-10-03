@@ -1,19 +1,9 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Service {

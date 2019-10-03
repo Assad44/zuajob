@@ -8,10 +8,7 @@ import com.androidnetworking.common.ANResponse;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +16,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
@@ -31,6 +27,7 @@ import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Lists.ListAnnonce;
 import cd.maichapayteam.zuajob.Models.Lists.ListCategorie;
+import cd.maichapayteam.zuajob.Models.Lists.ListNotification;
 import cd.maichapayteam.zuajob.Models.Lists.ListPostulance;
 import cd.maichapayteam.zuajob.Models.Lists.ListService;
 import cd.maichapayteam.zuajob.Models.Lists.ListSollicitation;
@@ -39,14 +36,12 @@ import cd.maichapayteam.zuajob.Models.Lists.ListUser;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Comment;
+import cd.maichapayteam.zuajob.Models.Object.Notification;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
-import cd.maichapayteam.zuajob.Models.Object.RandomUser;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
-import cd.maichapayteam.zuajob.Models.Object.User2;
-import cd.maichapayteam.zuajob.Models.Object.UserAuth;
 
 public class RemoteDataSync {
 
@@ -844,9 +839,9 @@ public class RemoteDataSync {
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Postuler>> response = request.executeForObject(Postuler.class);
+            ANResponse<ListPostulance> response = request.executeForObject(ListPostulance.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
                     cdao.ajouter(object);
@@ -873,9 +868,9 @@ public class RemoteDataSync {
                     .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     cdao.ajouter(object);
@@ -1068,9 +1063,9 @@ public class RemoteDataSync {
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     object.setHaveSollicited(true);
@@ -1128,9 +1123,9 @@ public class RemoteDataSync {
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     object.setHaveSollicited(true);
@@ -1217,9 +1212,9 @@ public class RemoteDataSync {
                     //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<List<Sollicitation>> response = request.executeForObject(Sollicitation.class);
+            ANResponse<ListSollicitation> response = request.executeForObject(ListSollicitation.class);
             if (response.isSuccess()) {
-                list = response.getResult();
+                list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
                     object.setHaveSollicited(true);
@@ -1270,6 +1265,33 @@ public class RemoteDataSync {
 //
     //return list;
     //}
+
+    //OK
+    public static List<Notification> getMesNotifications () {
+        String url = BASE_URL + "mesnotifications/" + GeneralClass.Currentuser.getAuthCode();
+
+        List<Notification> list = new ArrayList<>();
+
+        try{
+            ANRequest request = AndroidNetworking.get(url)
+                    .build();
+
+            ANResponse<ListNotification> response = request.executeForObject(ListNotification.class);
+            if (response.isSuccess()) {
+                list = response.getResult().getListe();
+                for (Notification object : list) {
+                    Log.e("Notification", "message: " + object.getMessage());
+                }
+            } else {
+                ANError error = response.getError();
+                Log.e("Notification", "AN error:" + error.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e("Notification", "errorLocal: " + ex.getMessage());
+        }
+
+        return list;
+    }
 
 
     /**

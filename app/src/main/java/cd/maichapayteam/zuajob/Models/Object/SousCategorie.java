@@ -1,13 +1,6 @@
 package cd.maichapayteam.zuajob.Models.Object;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;

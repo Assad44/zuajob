@@ -2,16 +2,15 @@ package cd.maichapayteam.zuajob.Front_end.Signup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;

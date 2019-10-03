@@ -2,51 +2,31 @@ package cd.maichapayteam.zuajob.Tools;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-/*import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;*/
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.bitmap.Transform;
 import com.koushikdutta.ion.builder.AnimateGifMode;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,13 +45,17 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import cd.maichapayteam.zuajob.Front_end.Notification_result_classes.BroadCast;
+import cd.maichapayteam.zuajob.Front_end.Notification_result_classes.BrodcastLaunchService;
 import cd.maichapayteam.zuajob.R;
 import pl.droidsonroids.gif.GifDrawable;
 
 import static android.content.Context.ALARM_SERVICE;
-import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+
+/*import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;*/
 
 public class Tool {
 
@@ -499,7 +483,7 @@ public class Tool {
 
     // TODO : ALARME
     public static  void Set_Alarm(Context context){
-        Intent intent = new Intent(context, BroadCast.class);
+        Intent intent = new Intent(context, BrodcastLaunchService.class);
         boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
                 intent /*new Intent("com.my.package.MY_UNIQUE_ACTION")*/,
                 PendingIntent.FLAG_NO_CREATE) != null);

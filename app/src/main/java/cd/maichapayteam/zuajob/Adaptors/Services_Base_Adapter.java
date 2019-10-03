@@ -2,9 +2,7 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,8 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
-import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;

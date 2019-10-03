@@ -1,22 +1,13 @@
 package cd.maichapayteam.zuajob.Tools;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 public class IncomingSms extends BroadcastReceiver {
     private ZuaJobMessageListener mZuaJobMessageListener;

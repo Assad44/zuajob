@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
-import cd.maichapayteam.zuajob.Models.Object.Service;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ListAnnonce {

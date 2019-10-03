@@ -18,7 +18,6 @@ import com.androidnetworking.interfaces.BitmapRequestListener;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Back_end.Objects.O_Categories;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.R;
 
 /**

@@ -1,49 +1,29 @@
 package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.builder.AnimateGifMode;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Rdv_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Rdv_postuller_Base_Adapter;
-import cd.maichapayteam.zuajob.Adaptors.Sollicitations_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Categorie_view;
-import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 import cd.maichapayteam.zuajob.Home;
-import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
-import cd.maichapayteam.zuajob.Tools.Tool;
-import pl.droidsonroids.gif.GifDrawable;
 
 public class Mes_rendez_vous extends AppCompatActivity {
     Context context = this;

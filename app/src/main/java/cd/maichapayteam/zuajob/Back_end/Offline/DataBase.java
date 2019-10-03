@@ -4,11 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static cd.maichapayteam.zuajob.Back_end.Objects.O_Annonces.*;
-import static cd.maichapayteam.zuajob.Back_end.Objects.O_Categories.*;
-import static cd.maichapayteam.zuajob.Back_end.Objects.O_Services.*;
-import static cd.maichapayteam.zuajob.Back_end.Objects.O_Sous_Categories.*;
-
 import cd.maichapayteam.zuajob.Back_end.Config;
 import cd.maichapayteam.zuajob.Back_end.Objects.O_Annonces;
 import cd.maichapayteam.zuajob.Back_end.Objects.O_Categories;

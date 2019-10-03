@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -16,13 +16,9 @@ import android.widget.Toast;
 
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
-import cd.maichapayteam.zuajob.Models.Main;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
-import cd.maichapayteam.zuajob.Tools.GenerateData;
-import cd.maichapayteam.zuajob.Tools.ManageLocalData;
-import cd.maichapayteam.zuajob.Tools.RemoteDataSync;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class index_screen extends AppCompatActivity {

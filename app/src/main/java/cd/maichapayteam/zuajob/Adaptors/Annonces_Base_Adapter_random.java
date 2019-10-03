@@ -2,7 +2,6 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +23,6 @@ import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
-import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**

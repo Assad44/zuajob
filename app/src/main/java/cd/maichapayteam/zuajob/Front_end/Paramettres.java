@@ -2,22 +2,13 @@ package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import cd.maichapayteam.zuajob.Front_end.Signup.Password_screen;
-import cd.maichapayteam.zuajob.Front_end.Signup.Preferences_screen;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.Tool;

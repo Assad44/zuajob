@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ListPostulance {

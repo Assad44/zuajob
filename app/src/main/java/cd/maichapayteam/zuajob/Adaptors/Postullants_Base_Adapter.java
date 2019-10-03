@@ -23,8 +23,6 @@ import java.io.IOException;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
-import cd.maichapayteam.zuajob.Tools.RoundedImageView;
-import cd.maichapayteam.zuajob.Tools.Tool;
 import pl.droidsonroids.gif.GifDrawable;
 
 /**

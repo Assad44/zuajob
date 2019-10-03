@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
-import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ListSollicitation {

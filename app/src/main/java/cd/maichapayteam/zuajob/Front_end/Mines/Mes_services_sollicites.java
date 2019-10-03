@@ -2,10 +2,8 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cd.maichapayteam.zuajob.Adaptors.Services_sollicites_Base_Adapter;
-import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Service;

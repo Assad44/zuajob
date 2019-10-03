@@ -1,15 +1,12 @@
 package cd.maichapayteam.zuajob.Tools;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 /**
  * Created by ElikyaLK on 30/08/2018.

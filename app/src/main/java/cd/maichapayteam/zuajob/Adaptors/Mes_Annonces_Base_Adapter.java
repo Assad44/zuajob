@@ -15,24 +15,15 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.builder.AnimateGifMode;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.GenerateData;
-import cd.maichapayteam.zuajob.Tools.ManageLocalData;
-import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
-import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
