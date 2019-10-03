@@ -1,16 +1,16 @@
 package cd.maichapayteam.zuajob.Front_end;
 
 import android.content.Intent;
-<<<<<<< HEAD
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-=======
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import cd.maichapayteam.zuajob.Home;
->>>>>>> origin/master
+
 import cd.maichapayteam.zuajob.R;
 
 public class About extends AppCompatActivity {

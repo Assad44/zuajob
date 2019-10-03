@@ -16,10 +16,9 @@ import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Front_end.Publication_annonces_by_category;
 import cd.maichapayteam.zuajob.Front_end.Publication_services_by_category;
-<<<<<<< HEAD
-=======
+
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
->>>>>>> origin/master
+
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.R;
 
