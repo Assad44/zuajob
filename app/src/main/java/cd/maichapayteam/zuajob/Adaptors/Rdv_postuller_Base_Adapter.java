@@ -21,10 +21,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> origin/master
 
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
