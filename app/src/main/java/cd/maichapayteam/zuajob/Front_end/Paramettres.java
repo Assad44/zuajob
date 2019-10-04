@@ -17,13 +17,14 @@ public class Paramettres extends AppCompatActivity {
 
     Context context = this;
     LinearLayout about_U;
-    CheckBox prestataire,notification;
+    CheckBox prestataire,notification,alarme;
 
     private void Init_Components(){
         //TODO si l'utilisateur a moins de 18 ans n'afficher pas la caégorie sexe
         notification = findViewById(R.id.notification);
         prestataire = findViewById(R.id.prestataire);
         about_U = findViewById(R.id.about_U);
+        alarme = findViewById(R.id.alarme);
 
     }
 
@@ -78,6 +79,17 @@ public class Paramettres extends AppCompatActivity {
                     Tool.setUserPreferences(context,"notification", "0");
                 else
                     Tool.setUserPreferences(context,"notification", "1");
+
+                load();
+            }
+        });
+        alarme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (Tool.getUserPreferences(context,"alarme").equals("1"))
+                    Tool.setUserPreferences(context,"alarme", "0");
+                else
+                    Tool.setUserPreferences(context,"alarme", "1");
 
                 load();
             }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,16 +31,16 @@
 
             <LinearLayout
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:elevation="10dp"
                     android:id="@+id/date_zone"
-                    android:background="@drawable/corner_gray_corner_blanc"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp"
@@ -71,7 +71,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/heure_zone"
-                    android:background="@drawable/corner_gray_corner_blanc"
+                    android:elevation="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp"
@@ -101,11 +101,51 @@
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="0dp"
+                    android:elevation="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/deviseAnnonce"
+                        android:gravity="center"
+                        android:entries="@array/Devise"
+                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/montant"
+                        android:drawablePadding="10dp"
+                        android:textStyle="bold"
+                        android:padding="15dp"
+                        android:singleLine="true"
+                        android:background="@color/white"
+                        android:inputType="number"
+                        android:textSize="20dp"
+                        android:hint="Cout du service"
+                        android:textColor="@color/black"
+                        android:textColorHint="#8D8D8D"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white"
+                    android:elevation="10dp"
                     android:layout_width="match_parent">
 
                     <EditText
+                        android:background="@color/white"
                         android:id="@+id/note"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -119,6 +159,48 @@
                         android:textSize="17dp"
                         android:textStyle="bold" />
                 </android.support.design.widget.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
+                    android:padding="0dp"
+                    android:elevation="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/submit"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:background="@drawable/corner_blue_border_white"
+                        android:textSize="17dp"
+                        android:gravity="center"
+                        android:text="Creer"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/cancel"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:background="@drawable/corner_red_border_white"
+                        android:textSize="17dp"
+                        android:gravity="center"
+                        android:text="Annuler"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

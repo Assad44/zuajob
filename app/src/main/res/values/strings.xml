@@ -173,6 +173,7 @@
     <string name="about">A propos de Zua job</string>
     <string name="menu_rdv_attente">Sollicitations</string>
     <string name="menu_rdv_confirme">Postullances</string>
+    <string name="Activer_les_alarmes">Activer les alarmes</string>
 
 
 </resources>
