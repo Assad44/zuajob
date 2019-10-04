@@ -109,7 +109,6 @@ public class Mes_annonces extends AppCompatActivity {
         Load_Annonce();
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

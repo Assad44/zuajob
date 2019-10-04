@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".Front_end.Mines.Mes_rendez_vous_sollicitations">
-
+    tools:context=".Front_end.Mines.Mes_rendez_postullances">
     <Spinner
         android:visibility="gone"
         android:id="@+id/type"
@@ -17,7 +16,6 @@
         android:entries="@array/Publication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
@@ -294,5 +292,6 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+
 
 </LinearLayout>

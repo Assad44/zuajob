@@ -45,7 +45,8 @@ import cd.maichapayteam.zuajob.Front_end.Jobeur_list;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_Sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_postulances;
-import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_postullances;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous_sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
@@ -524,22 +525,22 @@ public class Home extends AppCompatActivity
             startActivity(i);
             finish();
             m = true;
-        } else if (id == R.id.nav_rdv) {
-            Intent i = new Intent(context, Mes_rendez_vous.class);
+
+        } else if ( u.getType() == 0  &&  id == R.id.nav_rdv) {
+            Intent i = new Intent(context, Mes_rendez_vous_sollicitations.class);
             startActivity(i);
             finish();
             m = true;
-
 
         } else if (id == R.id.nav_rdv_jobeur) {
             m = true;
-        } else if (id == R.id.nav_rdv_annonce) {
-            Intent i = new Intent(context, Mes_rendez_vous.class);
+        } else if (id == R.id.nav_rdv_sollicitation) {
+            Intent i = new Intent(context, Mes_rendez_vous_sollicitations.class);
             startActivity(i);
             finish();
             m = true;
-        } else if (id == R.id.nav_rdv_service) {
-            Intent i = new Intent(context, Mes_rendez_vous.class);
+        } else if (id == R.id.nav_rdv_confirme) {
+            Intent i = new Intent(context, Mes_rendez_postullances.class);
             startActivity(i);
             finish();
             m = true;

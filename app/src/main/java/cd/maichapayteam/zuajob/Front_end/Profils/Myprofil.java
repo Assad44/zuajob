@@ -80,6 +80,7 @@ public class Myprofil extends AppCompatActivity {
         if (u.getType() == 0) type_compte.setText("Demandeur ou chercheur de service");
         else type_compte.setText("Prestataire ou offreur des services");
 
+
     }
 
     @Override

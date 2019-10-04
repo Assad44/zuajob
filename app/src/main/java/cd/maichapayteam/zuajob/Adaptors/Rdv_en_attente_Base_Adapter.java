@@ -30,12 +30,12 @@ import cd.maichapayteam.zuajob.R;
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Rdv_postuller_Base_Adapter extends BaseAdapter {
+public class Rdv_en_attente_Base_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Postuler> SOLLICITATION;
 
 
-    public Rdv_postuller_Base_Adapter(Context context, ArrayList<Postuler> SOLLICITATION) {
+    public Rdv_en_attente_Base_Adapter(Context context, ArrayList<Postuler> SOLLICITATION) {
         this.context = context;
         this.SOLLICITATION = SOLLICITATION;
     }
@@ -59,7 +59,7 @@ public class Rdv_postuller_Base_Adapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.view_rdv,null);
+        convertView = LayoutInflater.from(context).inflate(R.layout.view_rdv_en_attente,null);
 
         final LinearLayout details_option = convertView.findViewById(R.id.details_option);
         final CardView element = convertView.findViewById(R.id.element);

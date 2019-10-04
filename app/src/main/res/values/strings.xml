@@ -171,8 +171,8 @@
         solliciter puisse être confiant
     </string>
     <string name="about">A propos de Zua job</string>
-    <string name="menu_rdv_annonce">Annonces</string>
-    <string name="menu_rdv_service">Services</string>
+    <string name="menu_rdv_attente">Sollicitations</string>
+    <string name="menu_rdv_confirme">Postullances</string>
 
 
 </resources>

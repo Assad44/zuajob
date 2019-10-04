@@ -17,11 +17,11 @@
         android:icon="@drawable/ic_rdv"
         android:title="@string/menu_rdv" />
     <item
-        android:id="@+id/nav_rdv_annonce"
-        android:title="@string/menu_rdv_annonce" />
+        android:id="@+id/nav_rdv_sollicitation"
+        android:title="@string/menu_rdv_attente" />
     <item
-        android:id="@+id/nav_rdv_service"
-        android:title="@string/menu_rdv_service" />
+        android:id="@+id/nav_rdv_confirme"
+        android:title="@string/menu_rdv_confirme" />
     <item
         android:id="@+id/nav_soliicioation"
         android:icon="@drawable/ic_sollicitation"

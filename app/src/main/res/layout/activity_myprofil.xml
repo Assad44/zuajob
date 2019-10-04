@@ -370,20 +370,14 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/alegreya_sans_thin"
                                 android:gravity="center"
-                                android:text="Nombre de service publiés"
+                                android:text="Ma cotétion"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <RatingBar
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/alegreya_sans_thin"
-                                android:gravity="center"
-                                android:text="10"
-                                android:textColor="@color/black"
-                                android:textSize="18dp"
-                                android:textStyle="bold" />
+                                android:layout_gravity="center_horizontal"/>
 
                         </LinearLayout>
 

@@ -19,10 +19,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
+import cd.maichapayteam.zuajob.Models.Object.Postuler;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**
@@ -103,6 +107,8 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         return convertView;
     }
 
+
+
     private void details(final Annonce S){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_annonce_details_mine,null);
         TextView share = convertView.findViewById(R.id.share);
@@ -161,7 +167,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         postullants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postullants(String.valueOf(S.getId()));
+                postullants(S);
             }
         });
 
@@ -195,11 +201,12 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
 
     }
 
-    private void postullants(final String id){
+    private void postullants(final Annonce id){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_list_postullants,null);
         final TextView count = convertView.findViewById(R.id.count);
         final GridView list= convertView.findViewById(R.id.list);
         final SwipeRefreshLayout swipper= convertView.findViewById(R.id.swipper);
+        final ArrayList<Postuler>[] DATA_L = new ArrayList[]{new ArrayList<>()};
 
         AsyncTask task = new AsyncTask() {
             @Override
@@ -210,14 +217,20 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
 
             @Override
             protected Object doInBackground(Object[] objects) {
+                DATA_L[0].clear();
+                DATA_L[0] =  (ArrayList<Postuler>) ManageLocalData.listPostulants(id);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 swipper.setRefreshing(false);
-                list.setAdapter(new Postullants_Base_Adapter(context, id));
-                count.setText(list.getCount()+" Postullants");
+                if (null == DATA_L[0]) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (DATA_L[0].isEmpty()) Toast.makeText(context, "Aucune donnée"  , Toast.LENGTH_SHORT).show();
+                else{
+                    //list.setAdapter(new Postullants_Base_Adapter(context, id));
+                    count.setText(list.getCount()+" Postullants");
+                }
             }
 
         }.execute();
@@ -235,5 +248,34 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         alert.show();
 
     }
+
+    void Load_Jobeur(final SwipeRefreshLayout swipper, final Annonce id ){
+        final ArrayList<Postuler>[] DATA_L = new ArrayList[]{new ArrayList<>()};
+
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                DATA_L[0].clear();
+                DATA_L[0] =  (ArrayList<Postuler>) ManageLocalData.listPostulants(id);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+
+            }
+
+        }.execute();
+
+
+    }
+
+
 
 }
