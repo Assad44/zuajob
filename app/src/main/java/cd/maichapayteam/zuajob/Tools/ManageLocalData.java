@@ -21,20 +21,10 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 public class ManageLocalData {
 
     public static User createUser(User user) {
-        //user.authCode = generate(32);
-        //user.myProfil = true;
-        //UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        //userDAO.ajouter(user);
-        //RemoteDataSync.getRandomUser();
-
         return RemoteDataSync.createUser(user);
     }
 
     public static boolean checkNumero(String numero) {
-        //UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        //User user = userDAO.findByPhoneNumer(numero);
-        //if(user!=null) return true;
-        //return false;
         return RemoteDataSync.checkNumero(numero);
     }
 
@@ -47,18 +37,6 @@ public class ManageLocalData {
     }
 
     public static User login(String phone, String mdp) {
-        //UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        //User user = userDAO.findByPhoneNumer(phone);
-        //if(user!=null) {
-        //    if(user.password.equals(mdp)) {
-        //        RemoteDataSync.getRandomUser();
-        //        return user;
-        //    }
-        //}
-        //user = new User();
-        //user.error = true;
-        //user.errorCode = 36212;
-        //user.errorMessage = "Le numéro de téléphone et le mot de passe saisis ne correspondent pas. Veuillez réessayer SVP.";
         return RemoteDataSync.login(phone, mdp);
     }
 
@@ -74,97 +52,142 @@ public class ManageLocalData {
     }
 
     public static List<User> listJobeurs(int min) {
-        RemoteDataSync.getListJobeur((int)(min/20));
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        return userDAO.listJobeurs(min);
+        List<User> list = RemoteDataSync.getListJobeur((int)(min/20));
+        if(list.size()==0) {
+            UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+            list = userDAO.listJobeurs(min);
+        }
+        return list;
     }
 
     public static List<User> listJobeurs(int min, String keyword) {
-        RemoteDataSync.getListJobeur(keyword, (int)(min/20));
-        UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
-        return userDAO.listJobeurs(min, keyword);
+        List<User> list = RemoteDataSync.getListJobeur(keyword, (int)(min/20));
+        if(list.size()==0) {
+            UserDAO userDAO = UserDAO.getInstance(GeneralClass.applicationContext);
+            list = userDAO.listJobeurs(min, keyword);
+        }
+        return list;
     }
 
     public static List<Service> listRandomService(int min) {
-        RemoteDataSync.getRandomServices((int)(min/20));
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        return serviceDAO.randomService(min);
+        List<Service> list = RemoteDataSync.getRandomServices((int)(min/20));
+        if(list.size()==0) {
+            ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+            list = serviceDAO.randomService(min);
+        }
+        return list;
     }
 
     public static List<Service> listNewService(int min, long idSC) {
         SousCategorie sousCategorie = new SousCategorie();
         sousCategorie.setId(idSC);
-        RemoteDataSync.getNewServices((int)(min/20), sousCategorie.getId());
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        return serviceDAO.getNewService(min, sousCategorie);
+        List<Service> list = RemoteDataSync.getNewServices((int)(min/20), sousCategorie.getId());
+        if(list.size()==0) {
+            ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+            list = serviceDAO.getNewService(min, sousCategorie);
+        }
+        return list;
     }
 
     public static List<Service> listServiceByCote(int min, SousCategorie sousCategorie) {
-        RemoteDataSync.getServicesByCote((int)(min/20), sousCategorie.getId());
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        return serviceDAO.getServiceByCote(min, sousCategorie);
+        List<Service> list = RemoteDataSync.getServicesByCote((int)(min/20), sousCategorie.getId());
+        if(list.size()==0) {
+            ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+            list = serviceDAO.getServiceByCote(min, sousCategorie);
+        }
+        return list;
     }
 
     public static List<Service> listServiceByRealisation(int min, SousCategorie sousCategorie) {
-        RemoteDataSync.getServicesByRealisationCount((int)(min/20), sousCategorie.getId());
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        return serviceDAO.getServiceByCote(min, sousCategorie);
+        List<Service> list = RemoteDataSync.getServicesByRealisationCount((int)(min/20), sousCategorie.getId());
+        if(list.size()==0) {
+            ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+            list = serviceDAO.getServiceByCote(min, sousCategorie);
+        }
+        return list;
     }
 
     public static List<Annonce> listNewAnnonce(int min, long idSC) {
         SousCategorie sousCategorie = new SousCategorie();
         sousCategorie.setId(idSC);
-        RemoteDataSync.getNewAnnonces((int)(min/20), sousCategorie.getId());
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        return annonceDAO.getNewAnnonce(min, sousCategorie);
+        List<Annonce> list = RemoteDataSync.getNewAnnonces((int)(min/20), sousCategorie.getId());
+        if(list.size()==0) {
+            AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
+            list = annonceDAO.getNewAnnonce(min, sousCategorie);
+        }
+        return list;
     }
 
     public static List<Annonce> listAnnonce(int min, SousCategorie sousCategorie) {
-        RemoteDataSync.getAnnonces((int)(min/20), sousCategorie.getId());
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        return annonceDAO.getAll(min, sousCategorie);
+        List<Annonce> list = RemoteDataSync.getAnnonces((int)(min/20), sousCategorie.getId());
+        if(list.size()==0) {
+            AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
+            list = annonceDAO.getAll(min, sousCategorie);
+        }
+        return list;
     }
 
     public static List<Annonce> listRandomAnnonce(int min) {
-        RemoteDataSync.getRandomAnnonces();
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        return annonceDAO.randomAnnonce(min);
+        List<Annonce> list = RemoteDataSync.getRandomAnnonces();
+        if(list.size()==0) {
+            AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
+            list = annonceDAO.randomAnnonce(min);
+        }
+        return list;
     }
 
     public static List<Service> listMesServices() {
-        RemoteDataSync.getMesServices();
-        ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
-        return serviceDAO.getMesServices();
+        List<Service> list = RemoteDataSync.getMesServices();
+        if(list.size()==0) {
+            ServiceDAO serviceDAO = ServiceDAO.getInstance(GeneralClass.applicationContext);
+            list = serviceDAO.getMesServices();
+        }
+        return list;
     }
 
     public static List<Annonce> listMesAnnonces() {
-        RemoteDataSync.getMesAnnonces();
-        AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
-        return annonceDAO.getMesAnnonces();
+        List<Annonce> list = RemoteDataSync.getMesAnnonces();
+        if(list.size()==0) {
+            AnnonceDAO annonceDAO = AnnonceDAO.getInstance(GeneralClass.applicationContext);
+            list = annonceDAO.getMesAnnonces();
+        }
+        return list;
     }
 
     public static List<Sollicitation> listMesSollicitations() {
-        RemoteDataSync.getMesSollicitations();
-        SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
-        return sollicitationDAO.getMesSollucitations();
+        List<Sollicitation> list = RemoteDataSync.getMesSollicitations();
+        if(list.size()==0) {
+            SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
+            list = sollicitationDAO.getMesSollucitations();
+        }
+        return list;
     }
 
     public static List<Postuler> listMesPostulances() {
-        RemoteDataSync.getMesPostulations();
-        PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
-        return postulerDAO.getMesPostulances();
+        List<Postuler> list = RemoteDataSync.getMesPostulations();
+        if(list.size()==0) {
+            PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
+            list = postulerDAO.getMesPostulances();
+        }
+        return list;
     }
 
     public static List<Postuler> listPostulants(Annonce annonce) {
-        RemoteDataSync.getPostulants(annonce.getId());
-        PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
-        return postulerDAO.getPostulants(annonce);
+        List<Postuler> list = RemoteDataSync.getPostulants(annonce.getId());
+        if(list.size()==0) {
+            PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
+            list = postulerDAO.getPostulants(annonce);
+        }
+        return list;
     }
 
     public static List<Sollicitation> listSollicitant(Service service) {
-        RemoteDataSync.getSollicitations(service.getId());
-        SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
-        return sollicitationDAO.getSollicitants(service);
+        List<Sollicitation> list = RemoteDataSync.getSollicitations(service.getId());
+        if(list.size()==0) {
+            SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
+            list = sollicitationDAO.getSollicitants(service);
+        }
+        return list;
     }
 
     public static List<Categorie> listCategorie() {
@@ -276,7 +299,6 @@ public class ManageLocalData {
         return RemoteDataSync.serviceRenduBySollicitance(idSollicitation, cote, comment);
     }
 
-
     public static Postuler creerRDVbyUser(long idPostulance, String date, String heure, String detail, float montant, String devise, String codePayement) {
         return RemoteDataSync.creerRDVbyUser(idPostulance, date, heure, detail, codePayement, montant, devise);
     }
@@ -293,6 +315,9 @@ public class ManageLocalData {
         return RemoteDataSync.serviceRenduByPostulance(idPostulance, cote, comment);
     }
 
+    public static boolean uploadImage(String image, String format) {
+        return RemoteDataSync.uploadImage(image, format);
+    }
 
     public static boolean deconnection() {
         if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) {

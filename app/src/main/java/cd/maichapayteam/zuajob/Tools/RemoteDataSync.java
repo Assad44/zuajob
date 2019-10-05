@@ -147,84 +147,35 @@ public class RemoteDataSync {
     }
 
     //Pas encore implementé
-    public static void uploadImageAsync(File image, final UploadImageListener uploadImageListener) {
-        String url = BASE_URL + "uploadimage?";
-        String TAG = "uploadimage";
+    public static boolean uploadImage(String image, String format) {
+        String url = BASE_URL + "uploadimage/" + GeneralClass.Currentuser.getAuthCode();
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("image", image); } catch (JSONException e) { }
+        try { jsonObject.put("format", format); } catch (JSONException e) { }
+        try { jsonObject.put("type", "profile"); } catch (JSONException e) { }
 
         try{
-
-            AndroidNetworking.upload(url)
-                    .addMultipartFile("image",image)
-                    //.addMultipartParameter("key","value")
+            ANRequest request = AndroidNetworking.post(url)
+                    .addJSONObjectBody(jsonObject)
                     .setPriority(Priority.HIGH)
-                    .build()
-                    .setUploadProgressListener(new UploadProgressListener() {
-                        @Override
-                        public void onProgress(long bytesUploaded, long totalBytes) {
-                            if(uploadImageListener !=null) uploadImageListener.OnProgress(bytesUploaded, totalBytes);
-                        }
-                    })
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            long id = -1;
-                            String url = "";
-                            try {
-                                id=response.getLong("id");
-                            }catch (Exception ex) {
-
-                            }
-                            try {
-                                url=response.getString("url");
-                            }catch (Exception ex) {
-
-                            }
-                            if(uploadImageListener !=null) uploadImageListener.OnResult(id, url);
-                        }
-                        @Override
-                        public void onError(ANError error) {
-                            if(uploadImageListener !=null) uploadImageListener.OnError(error.getMessage());
-                        }
-                    });
-
-        } catch (Exception ex) {
-
-        }
-
-    }
-
-    //Pas encore implementé
-    public static String uploadImage(File image, final UploadImageListener uploadImageListener) {
-        String url = BASE_URL + "uploadimage?";
-
-        try{
-            ANRequest request = AndroidNetworking.upload(url)
-                    .addMultipartFile("image",image)
-                    //.addMultipartParameter("key","value")
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .setUploadProgressListener(new UploadProgressListener() {
-                        @Override
-                        public void onProgress(long bytesUploaded, long totalBytes) {
-                            if(uploadImageListener !=null) uploadImageListener.OnProgress(bytesUploaded, totalBytes);
-                        }
-                    });
+                    .build();
 
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
-                if(response.getResult().optBoolean("error")) {
-                    return "error:" + response.getResult().optString("errorMessage");
-                } else {
-                    return response.getResult().optString("url");
+                if(!response.getResult().getBoolean("error")) {
+                    String urli = response.getResult().getString("url");
+                    String thumb = response.getResult().getString("thumb");
+                    User user = GeneralClass.Currentuser;
+                    user.setUrlPhoto(urli);
+                    user.setUrlThumbnail(thumb);
+                    UserDAO.getInstance(GeneralClass.applicationContext).ajouter(user);
                 }
-            } else {
-                return "error:" + response.getError().getMessage();
             }
-
         } catch (Exception ex) {
-            return "error:" + ex.getMessage();
-        }
 
+        }
+        return false;
     }
 
     //public static List<Pays> getListPays () {
@@ -555,9 +506,6 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addQueryParameter("next", String.valueOf(next))
-                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
@@ -588,9 +536,6 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addQueryParameter("next", String.valueOf(next))
-                    //.addQueryParameter("sous_categorie", String.valueOf(souscategorie))
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
@@ -621,7 +566,6 @@ public class RemoteDataSync {
 
         try{
             ANRequest request = AndroidNetworking.get(url)
-                    //.addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
             ANResponse<ListAnnonce> response = request.executeForObject(ListAnnonce.class);
@@ -1280,6 +1224,19 @@ public class RemoteDataSync {
             if (response.isSuccess()) {
                 list = response.getResult().getListe();
                 for (Notification object : list) {
+                    if(object.getTypeObject().equals("postulance")) {
+                        if(object.getPostulance()!=null &&
+                                !object.getPostulance().isError()) {
+                            PostulerDAO postulerDAO = PostulerDAO.getInstance(GeneralClass.applicationContext);
+                            postulerDAO.ajouter(object.getPostulance());
+                        }
+                    } else {
+                        if(object.getSollicitation()!=null &&
+                                !object.getSollicitation().isError()) {
+                            SollicitationDAO sollicitationDAO = SollicitationDAO.getInstance(GeneralClass.applicationContext);
+                            sollicitationDAO.ajouter(object.getSollicitation());
+                        }
+                    }
                     Log.e("Notification", "message: " + object.getMessage());
                 }
             } else {
