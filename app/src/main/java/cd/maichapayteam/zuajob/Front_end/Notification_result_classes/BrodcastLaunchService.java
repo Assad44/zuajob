@@ -16,15 +16,17 @@ public class BrodcastLaunchService extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getActiveNetworkInfo();
+        //ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        //NetworkInfo info = manager.getActiveNetworkInfo();
+//
+        //if (context != null && intent != null) {
+        //    if (info !=null && info.isConnected() && !AutoRunService.existInstance()){
+        //
+        //    }
+        //}
 
-        if (context != null && intent != null) {
-            if (info !=null && info.isConnected() && !AutoRunService.existInstance()){
-                Intent launchService = new Intent(context, AutoRunService.class);
-                context.startService(launchService);
-            }
-        }
+        Intent launchService = new Intent(context, AutoRunService.class);
+        context.startService(launchService);
 
     }
 
