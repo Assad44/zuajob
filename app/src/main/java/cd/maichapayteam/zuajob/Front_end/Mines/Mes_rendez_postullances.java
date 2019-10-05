@@ -87,6 +87,13 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         user.setText(c.getNomsUser());
                         date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSousCategorie());
+
+                        if (c.isHavePostuled() == true){
+                            BTN_confirmer.setVisibility(View.VISIBLE);
+                        }else{
+                            BTN_confirmer.setVisibility(View.GONE);
+                        }
+
                         sous.addView(convertView, 0);
                         element.setOnClickListener(new View.OnClickListener() {
                             @Override

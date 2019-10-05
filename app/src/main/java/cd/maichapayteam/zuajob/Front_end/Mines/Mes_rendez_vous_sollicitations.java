@@ -132,7 +132,6 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
 
                     }
 
-                    //list.setAdapter(new Rdv_en_attente_Base_Adapter(context, (ArrayList<Postuler>) POSTULLER));
                 }
 
             }
