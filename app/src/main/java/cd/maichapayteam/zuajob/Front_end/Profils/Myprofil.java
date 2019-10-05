@@ -309,6 +309,19 @@ public class Myprofil extends AppCompatActivity {
 
     private void upload_image(final String img, final ImageView picture){
         new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                try {
+                    GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
+                    picture.setImageDrawable(gifFromResource);
+                } catch (IOException e) {
+                    picture.setImageResource(R.drawable.gif5);
+                    e.printStackTrace();
+                }
+            }
+
             @Override
             protected Boolean doInBackground(Void... voids) {
                 return ManageLocalData.uploadImage(img,".jpg");

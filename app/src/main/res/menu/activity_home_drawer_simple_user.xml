@@ -21,6 +21,9 @@
         android:id="@+id/nav_rdv_sollicitation"
         android:title="@string/menu_rdv_attente" />
     <item
+        android:id="@+id/nav_rdv_confirme"
+        android:title="@string/menu_rdv_confirme" />
+    <item
         android:visible="false"
         android:id="@+id/nav_discuusion"
         android:icon="@drawable/ic_menu_send"

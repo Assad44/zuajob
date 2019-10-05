@@ -2,6 +2,7 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.User;
@@ -131,8 +133,6 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         TextView submit= convertView.findViewById(R.id.submit);
         TextView cancel = convertView.findViewById(R.id.cancel);
 
-
-
         date_zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +206,7 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                         }else{
                             a.setMessage("Opération réussi");
-
+                            context.startActivity(new Intent(context, Mes_annonces.class));
                         }
                         a.show();
                     }

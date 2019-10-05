@@ -133,7 +133,6 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
             number.setText("");
         }
         Tool.Load_Image(context,avatar,S.getUrlImageUser());
-
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ " | "+ S.getSousCategorie());

@@ -63,6 +63,7 @@ public class Mes_annonces extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
+                ANNOCE_L.clear();
                 ANNOCE_L = ManageLocalData.listMesAnnonces();
                 for (Annonce c : ANNOCE_L){
                     ANNOCE.add(c);
@@ -93,6 +94,11 @@ public class Mes_annonces extends AppCompatActivity {
         }.execute();
     }
 
+    private void refresh(){
+        // Todo ; launching methods
+        Load_Annonce();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +111,7 @@ public class Mes_annonces extends AppCompatActivity {
 
         Init_Components();
 
-        // Todo ; launching methods
-        Load_Annonce();
+        refresh();
     }
 
     @Override

@@ -47,12 +47,11 @@ public class Mes_Sollicitations extends AppCompatActivity {
                 swipper.setRefreshing(true);
                 super.onPreExecute();
             }
-
             @Override
             protected Object doInBackground(Object[] objects) {
                 SERVICE_L.clear();
                 SERVICE_L = ManageLocalData.listMesSollicitations();
-                if (SERVICE_L.isEmpty()){
+                /*if (SERVICE_L.isEmpty()){
                     Sollicitation s = new Sollicitation();
                     s.setNomsUser("Deon Mass");
                     String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -64,7 +63,7 @@ public class Mes_Sollicitations extends AppCompatActivity {
                     s.setPhoneUser("+243 81 451 10 83");
                     s.setDate("2019-09-28 12:42:00");
                     SERVICE_L.add(s);
-                }
+                }*/
                 for (Sollicitation c : SERVICE_L){
                     SERVICES.add(c);
                 }
