@@ -54,11 +54,6 @@ import pl.droidsonroids.gif.GifDrawable;
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
-/*import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;*/
-
 public class Tool {
 
 
@@ -197,7 +192,6 @@ public class Tool {
         SharedPreferences mshPreferences = User_Preferences(context);
         return mshPreferences.getString(key,"");
     }
-
 
     public static void setEntries(Context context ,Spinner spinner, ArrayList<String> DATA){
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, DATA);
@@ -524,10 +518,10 @@ public class Tool {
                 PendingIntent.FLAG_NO_CREATE) != null);
 
         if (alarmUp){
-            Log.d("myTag", "Alarm is already active");
-            Toast.makeText(context, "Alarm is already active", Toast.LENGTH_SHORT).show();
+            //Log.d("myTag", "Alarm is already active");
+            //Toast.makeText(context, "Alarm is already active", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Alarm is NOT YET active", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Alarm is NOT YET active", Toast.LENGTH_SHORT).show();
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, 0);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);

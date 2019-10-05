@@ -3,15 +3,20 @@ package cd.maichapayteam.zuajob.Front_end.Blanks;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +31,7 @@ import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.AutoRunService;
 import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
@@ -174,12 +180,25 @@ public class Publication_blank extends AppCompatActivity {
                 if (CheckinZones() == false) return;
                 Toast.makeText(context, "Correct datas", Toast.LENGTH_SHORT).show();
 
-                // Todo : Checking publication type and create object
-                if (Publication_type.getSelectedItem().toString().equals("Services")){
-                    service_publication();
-                }else {
-                    Annonce_publication();
+
+                ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = manager.getActiveNetworkInfo();
+                if (info !=null && info.isConnected()){
+                    // Todo : Checking publication type and create object
+                    if (Publication_type.getSelectedItem().toString().equals("Services")){
+                        service_publication();
+                    }else {
+                        Annonce_publication();
+                    }
+                }else{
+                    Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Vous n'êtes pas connecté", Snackbar.LENGTH_LONG);
+                    View view = snack.getView();
+                    FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
+                    params.gravity = Gravity.BOTTOM;
+                    view.setLayoutParams(params);
+                    snack.show();
                 }
+
             }
         });
 

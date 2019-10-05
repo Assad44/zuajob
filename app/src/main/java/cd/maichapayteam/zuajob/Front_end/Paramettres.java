@@ -206,7 +206,7 @@ public class Paramettres extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 });
-                        if (service == true ){
+                        if (service != true ){
                             a.setMessage("Erreur");
                         }else{
                             a.setMessage("Opération réussi");

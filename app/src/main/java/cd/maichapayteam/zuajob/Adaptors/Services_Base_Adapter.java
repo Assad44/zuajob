@@ -2,6 +2,8 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -20,7 +22,9 @@ import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -161,20 +165,33 @@ public class Services_Base_Adapter extends BaseAdapter {
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
-                .setPositiveButton("Solliciter", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        long idS = S.getId();
-                        SOLLICITER(idS);
-                        dialog.dismiss();
-                    }
-                })
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
+
+            User u = GeneralClass.Currentuser;
+            if (u.getId() != S.getIdJobeur()){
+                a.setPositiveButton("Solliciter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        long idS = S.getId();
+
+                        ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo info = manager.getActiveNetworkInfo();
+                        if (info !=null && info.isConnected()){
+                            SOLLICITER(idS);
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(context, "Vous n'êtes pas connecté", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+
         final AlertDialog alert = a.create();
         alert.show();
 

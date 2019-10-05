@@ -2,14 +2,18 @@ package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -21,7 +25,9 @@ import java.util.ArrayList;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
@@ -136,7 +142,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         number.setText(S.getPhoneUser());
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
-        categore.setText(S.getCategorie()+ ">"+ S.getSousCategorie());
+        categore.setText(S.getCategorie()+ " | "+ S.getSousCategorie());
         time.setText(Tool.formatingDate(S.getDatePublication()));
 
         number.setOnClickListener(new View.OnClickListener() {
@@ -149,12 +155,6 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                         return false;
                     }
                 });
-                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return false;
-                    }
-                });
                 popupMenu.show();
             }
         });
@@ -162,20 +162,32 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
                 .setCancelable(true)
-                .setPositiveButton("Postuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        long idS = S.getId();
-                        POSTULLER(idS);
-                    }
-                })
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
+
+        User u = GeneralClass.Currentuser;
+        if (u.getId() != S.getIdUser()){
+            a.setPositiveButton("Postuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    long idS = S.getId();
+                    ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo info = manager.getActiveNetworkInfo();
+                    if (info !=null && info.isConnected()){
+                        POSTULLER(idS);
+                    }else{
+                        Toast.makeText(context, "Vous n'êtes pas connecté", Toast.LENGTH_SHORT).show();
+                    }
+                    }
+            });
+        }
+
+
         final AlertDialog alert = a.create();
         alert.show();
 
@@ -196,6 +208,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
 
 
     }
+
 
     private void POSTULLER(final long idS){
         AsyncTask aaa = new AsyncTask<Void, Void, Postuler>() {

@@ -2,13 +2,17 @@ package cd.maichapayteam.zuajob.Front_end.Profils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +23,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.bitmap.Transform;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
@@ -32,6 +41,7 @@ import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.RoundedImageView;
 import cd.maichapayteam.zuajob.Tools.Tool;
+import pl.droidsonroids.gif.GifDrawable;
 
 public class Myprofil extends AppCompatActivity {
 
@@ -72,6 +82,20 @@ public class Myprofil extends AppCompatActivity {
         nom.setText(
                 u.getNom() + " "+u.getPrenom()
         );
+
+        Tool.Load_Image(context, picture, u.getUrlThumbnail());
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(picture)
+                    .placeholder(gifFromResource)
+                    .error(R.drawable.avatar_error)
+                    .animateGif(AnimateGifMode.ANIMATE)
+                    .load(u.getUrlThumbnail());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         number.setText("+"+ u.getPhone());
         Sexe.setText(
                 u.getSexe()+ " / "+ u.getBirthday()
@@ -125,6 +149,12 @@ public class Myprofil extends AppCompatActivity {
         }
 
         Profil_initialize();
+    }
+
+    @Override
+    protected void onRestart() {
+        Profil_initialize();
+        super.onRestart();
     }
 
     @Override
@@ -257,14 +287,14 @@ public class Myprofil extends AppCompatActivity {
                             Toast.makeText(context, "L'image est trop volumineuse", Toast.LENGTH_LONG).show();
                             return;
                         }*/
-                        picture.setImageURI(Uri.parse(fil));
+                        //picture.setImageURI(Uri.parse(fil));
                         //ImageSrcPath.setText(fil);
 
 
-                        /*// TODO ; Conversion en base64
+                        // TODO ; Conversion en base64
                         String encodedImage = Base64.encodeToString(imgbyte, Base64.DEFAULT);
                         Log.e("ENCODINGGGXXXXXX",encodedImage);
-                        String avatar_64 = encodedImage;*/
+                        upload_image(encodedImage, picture);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -278,5 +308,34 @@ public class Myprofil extends AppCompatActivity {
 
         }
     }
+
+    private void upload_image(final String img, final ImageView picture){
+        new AsyncTask() {
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                return ManageLocalData.uploadImage(img,".jpg");
+            }
+            @Override
+            protected void onPostExecute(Object o) {
+                //alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (o!= true ){
+                    a.setMessage("Erreur lors de l'envoi de la photo au serveur");
+                }else{
+                    a.setMessage("Opération réussi");
+                    onRestart();
+                }
+                a.show();
+            }
+        }.execute();
+    }
+
 
 }
