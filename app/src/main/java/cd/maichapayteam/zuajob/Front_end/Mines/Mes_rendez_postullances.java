@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -264,11 +267,50 @@ public class Mes_rendez_postullances extends AppCompatActivity {
 
                         details_option.setVisibility(View.GONE);
                         user.setText(c.getNomsUser());
+                        BTN_valider.setText("Confirmer service rendu");
                         /*date_time.setText(c.getDate() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSouscategorie());*/
 
 
                         sous2.addView(convertView, 0);
+
+                        coter.setOnClickListener(new View.OnClickListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onClick(View v) {
+                                View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
+                                final RatingBar rating = convertView.findViewById(R.id.rating);
+                                final TextView text = convertView.findViewById(R.id.text);
+                                text.setText("0.0 / 5");
+                                rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                    @Override
+                                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                        text.setVisibility(View.VISIBLE);
+                                        text.setText(String.valueOf( rating ).concat(" / 5"));
+                                    }
+                                });
+
+                                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                                        .setView(convertView)
+                                        .setCancelable(true)
+                                        .setPositiveButton("Coter", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                float cote = rating.getRating();
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });;
+                                final AlertDialog alert = a.create();
+                                alert.show();
+                            }
+                        });
+
                         annuler_rdv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
