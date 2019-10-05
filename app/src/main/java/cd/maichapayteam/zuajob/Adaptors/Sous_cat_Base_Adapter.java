@@ -16,7 +16,9 @@ import java.util.List;
 import cd.maichapayteam.zuajob.Front_end.Publication_annonces_by_category;
 import cd.maichapayteam.zuajob.Front_end.Publication_services_by_category;
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -58,6 +60,9 @@ public class Sous_cat_Base_Adapter extends BaseAdapter {
         final LinearLayout block = convertView.findViewById(R.id.block);
         
         block.setVisibility(View.GONE);
+        User u = GeneralClass.Currentuser;
+        if (u.getType() == 0) open_annonces.setVisibility(View.GONE);
+        else open_annonces.setVisibility(View.VISIBLE);
 
         scat.setText(LSC.get(position).getDesignation()/*.concat(" "+LSC.get(position).getId())*/);
 

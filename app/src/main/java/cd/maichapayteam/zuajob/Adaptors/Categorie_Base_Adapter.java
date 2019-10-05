@@ -8,10 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -51,7 +57,16 @@ public class Categorie_Base_Adapter extends BaseAdapter {
         Categorie C = DATAS.get(position);
         categorie.setText(C.getDesignation());
         description.setText(C.getDescription());
-
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            Ion.with(backImage)
+                    .placeholder(gifFromResource)
+                    .error(R.drawable.baccc)
+                    .animateGif(AnimateGifMode.ANIMATE)
+                    .load(C.getUrlImage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return convertView;
     }

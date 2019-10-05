@@ -2,8 +2,11 @@ package cd.maichapayteam.zuajob.Front_end.Mines;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,13 +14,16 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_sollicites_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Details.Details_publication;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Mes_services_sollicites extends AppCompatActivity {
@@ -25,38 +31,52 @@ public class Mes_services_sollicites extends AppCompatActivity {
     Context context = this;
     ListView list;
     SearchView rechercher;
+    SwipeRefreshLayout swipper;
 
     ArrayList<Service> SERVICES = new ArrayList<>();
+    List<Service> SERVICE_L = new ArrayList<>();
     ArrayList<Service> Search = new ArrayList<>();
+
+    Services_Base_Adapter serviceAdapter;
 
     private void Init_Components(){
         list = findViewById(R.id.list);
         rechercher = findViewById(R.id.rechercher);
+        swipper = findViewById(R.id.swipper);
     }
 
     void Load_SERVICE(){
-        SERVICES.clear();
-        String description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        AsyncTask task = new AsyncTask() {
+            int cout = list.getCount();
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                super.onPreExecute();
+            }
 
-        for (int i = 0; i < 10; i++) {
-            Service s = new Service();
-            s.setNomsJobeur(Tool.Versions()[i]);
-            s.setDescription(description);
-            s.setMontant(new Random().nextInt(50));
-            s.setCategorie("Catégorie "+i);
-            s.setSousCategorie("Sous catégorie "+i);
-            s.setDevise("USD");
-            s.setPhoneJobeur("+243 81 451 10 83");
-            s.setCote(new Random().nextInt(200));
-            s.setNombreRealisation(new Random().nextInt(20));
-            SERVICES.add(s);
-        }
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                SERVICE_L.clear();
+                //SERVICE_L /*ManageLocalData.sol(cout)*/;
+                for (Service c : SERVICE_L){
+                    SERVICES.add(c);
+                }
+                return null;
+            }
 
-        if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-        else{
-            list.setAdapter(new Services_sollicites_Base_Adapter(context, SERVICES));
-        }
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                if (null == SERVICES) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (SERVICES.isEmpty())Toast.makeText(context, "Aucune donnée" , Toast.LENGTH_SHORT).show();
+                else{
+                    Log.e("SSSSS", String.valueOf(SERVICES.size()));
+                    serviceAdapter = new Services_Base_Adapter(context, SERVICES);
+                    list.setAdapter(serviceAdapter);
+                }
+            }
 
+        }.execute();
     }
 
     @Override
@@ -73,6 +93,7 @@ public class Mes_services_sollicites extends AppCompatActivity {
 
         // Todo ; launching methods
         Load_SERVICE();
+
     }
 
     @Override

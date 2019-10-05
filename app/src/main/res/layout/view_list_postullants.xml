@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Liste des postullants"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
         <LinearLayout
             android:layout_weight="1"
             android:gravity="end"
@@ -39,7 +39,7 @@
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 postullants"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="11dp" />
 

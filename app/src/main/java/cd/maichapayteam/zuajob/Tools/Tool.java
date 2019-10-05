@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Tools;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
@@ -257,6 +259,39 @@ public class Tool {
 
         datePickerDialog.show();
         Log.i("TTTTTTTTTT", Date[0]);
+
+        return start_date.getText().toString();
+    }
+
+    public static String Time_Picker(final Context context, final EditText start_date){
+
+        final Calendar c = Calendar.getInstance();
+        final int mYear, mMonth, mDay, mhour, mMin;
+
+        mhour = c.get(Calendar.HOUR_OF_DAY) +1;
+        mMin = c.get(Calendar.MINUTE) +1;
+
+        final String[] Date = {""};
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String m = String.valueOf(minute);
+                if (m.length()<= 1){
+                    m = "0"+m;
+                }
+                String d = String.valueOf(hourOfDay);
+                if (d.length()<= 1){
+                    d = "0"+d;
+                }
+
+                String time = d+ ":" + m ;
+                start_date.setText(time);
+
+                Log.i("TTTTTTTTTTime", Date[0]);
+            }
+        },mhour, mMin, true);
+        timePickerDialog.show();
 
         return start_date.getText().toString();
     }

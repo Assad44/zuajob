@@ -228,7 +228,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
                 if (null == DATA_L[0]) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
                 else if (DATA_L[0].isEmpty()) Toast.makeText(context, "Aucune donnée"  , Toast.LENGTH_SHORT).show();
                 else{
-                    //list.setAdapter(new Postullants_Base_Adapter(context, id));
+                    list.setAdapter(new Postullants_Base_Adapter(context, DATA_L[0]));
                     count.setText(list.getCount()+" Postullants");
                 }
             }
@@ -248,34 +248,6 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         alert.show();
 
     }
-
-    void Load_Jobeur(final SwipeRefreshLayout swipper, final Annonce id ){
-        final ArrayList<Postuler>[] DATA_L = new ArrayList[]{new ArrayList<>()};
-
-        AsyncTask task = new AsyncTask() {
-            @Override
-            protected void onPreExecute() {
-                swipper.setRefreshing(true);
-                super.onPreExecute();
-            }
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                DATA_L[0].clear();
-                DATA_L[0] =  (ArrayList<Postuler>) ManageLocalData.listPostulants(id);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-
-            }
-
-        }.execute();
-
-
-    }
-
 
 
 }

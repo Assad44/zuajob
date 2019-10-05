@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.AnimateGifMode;
@@ -25,10 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
-import cd.maichapayteam.zuajob.Models.Object.Service;
+import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.GeneralClass;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
 import cd.maichapayteam.zuajob.Tools.Tool;
 import pl.droidsonroids.gif.GifDrawable;
@@ -36,11 +34,11 @@ import pl.droidsonroids.gif.GifDrawable;
 /**
  * Created by Deon-Mass on 08/02/2018.
  */
-public class Postullants_Base_Adapter extends BaseAdapter {
+public class Sollicitants_Base_Adapter extends BaseAdapter {
     Context context;
-    ArrayList<Postuler> DATA;
+    ArrayList<Sollicitation> DATA;
 
-    public Postullants_Base_Adapter(Context context, ArrayList<Postuler> DATA) {
+    public Sollicitants_Base_Adapter(Context context, ArrayList<Sollicitation> DATA) {
         this.context = context;
         this.DATA = DATA;
     }
@@ -66,7 +64,9 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         TextView confier = convertView.findViewById(R.id.confier);
         ImageView avatar = convertView.findViewById(R.id.avatar);
 
-        final Postuler u = DATA.get(position);
+        confier.setText("Accepter");
+
+        final Sollicitation u = DATA.get(position);
         nom_user.setText(u.getNomsUser());
         nom_number.setText("+"+u.getPhoneUser());
         // TODO  LOAD IMAGE
@@ -91,35 +91,13 @@ public class Postullants_Base_Adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 setRDV(u);
-
             }
         });
 
         return convertView;
     }
 
-    private void detail_jobeur(@NotNull User u){
-        View view  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details2,null);
-        TextView nom = view.findViewById(R.id.nom);
-        TextView number = view.findViewById(R.id.number);
-        TextView realisation = view.findViewById(R.id.realisation);
-
-        nom.setText(u.getNom() +" "+u.getPrenom());
-        number.setText(u.getPhone());
-        AlertDialog.Builder a = new AlertDialog.Builder(context)
-                .setView(view)
-                .setCancelable(false)
-                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        final AlertDialog alert = a.create();
-        alert.show();
-    }
-
-    private void setRDV(final Postuler u){
+    private void setRDV(final Sollicitation u){
         View convertView  = LayoutInflater.from(context).inflate(R.layout.view_edit_setting_rdv,null);
         LinearLayout date_zone = convertView.findViewById(R.id.date_zone);
         final EditText date = convertView.findViewById(R.id.date);
@@ -146,8 +124,6 @@ public class Postullants_Base_Adapter extends BaseAdapter {
             }
         });
 
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +139,7 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                     return;
                 }
 
-                new AsyncTask<Void, Void, Postuler>() {
+                new AsyncTask<Void, Void, Sollicitation>() {
                     View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
                     TextView write_response = convertView.findViewById(R.id.write_response);
                     AlertDialog.Builder a = new AlertDialog.Builder(context)
@@ -180,20 +156,19 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                     }
 
                     @Override
-                    protected Postuler doInBackground(Void... voids) {
-                        return ManageLocalData.creerRDVbyUser(
+                    protected Sollicitation doInBackground(Void... voids) {
+                        return ManageLocalData.creerRDVbyJobeur(
                                 u.getId(),
                                 date.getText().toString(),
                                 heure.getText().toString(),
                                 note.getText().toString().replace("'","''"),
                                 Integer.parseInt(montant.getText().toString()),
-                                devise.getSelectedItem().toString(),
-                                "1234"
+                                devise.getSelectedItem().toString()
                         );
                     }
 
                     @Override
-                    protected void onPostExecute(Postuler service) {
+                    protected void onPostExecute(Sollicitation service) {
                         alert.cancel();
                         AlertDialog.Builder a = new AlertDialog.Builder(context)
                                 .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
@@ -206,7 +181,6 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                         }else{
                             a.setMessage("Opération réussi");
-
                         }
                         a.show();
                     }
@@ -214,7 +188,6 @@ public class Postullants_Base_Adapter extends BaseAdapter {
 
             }
         });
-
 
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)
