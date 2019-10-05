@@ -76,7 +76,6 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         number.setText(S.getPhoneUser());
 
 
-
         description.setText(S.getDescription());
         categorie.setText(
                 S.getCategorie()+">"+S.getSousCategorie()

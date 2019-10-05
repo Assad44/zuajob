@@ -159,7 +159,7 @@
     <string name="passeword">Mot de passe</string>
     <string name="confirme_code">Confirmer le mot de passe</string>
     <string name="Activer_les_notifications">Activer les notifications</string>
-    <string name="Devenir_prestateur">Passer en mode prestataire</string>
+    <string name="Devenir_prestateur">Changer de type de compte</string>
 
     <string name="advices_cotation">
         Veuillez coter la préstation du jobeur en par rapport avec le travail effectué,
@@ -174,6 +174,11 @@
     <string name="menu_rdv_attente">Sollicitations</string>
     <string name="menu_rdv_confirme">Postullances</string>
     <string name="Activer_les_alarmes">Activer les alarmes</string>
+    <string name="changerpasse">Changer mon mot de passe</string>
+    <string name="about_app">
+        Vous donnez la possibilité de trouver des services que vous avez besoin et de publier des annonces de services afin de trouver des competences pour vous aider est le but même de cette application
+        vous pouvez pu
+    </string>
 
 
 </resources>

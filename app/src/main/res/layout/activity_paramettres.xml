@@ -20,13 +20,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/black"
-                android:fontFamily="@font/alegreya_sans_thin"
-                android:textSize="25dp"
-                android:text="@string/Activer_les_notifications"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:textSize="20dp"
+                    android:text="@string/Activer_les_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="14dp"
+                    android:text="Pour les nousvelles publications et autres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:gravity="end"
@@ -39,7 +51,7 @@
                     android:id="@+id/notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     />
             </LinearLayout>
 
@@ -52,13 +64,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/black"
-                android:fontFamily="@font/alegreya_sans_thin"
-                android:textSize="25dp"
-                android:text="@string/Activer_les_alarmes"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:textSize="20dp"
+                    android:text="@string/Activer_les_alarmes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="14dp"
+                    android:text="Vous alarmer le jour d'un rendez-vous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:gravity="end"
@@ -71,7 +95,7 @@
                     android:id="@+id/alarme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     />
             </LinearLayout>
 
@@ -92,15 +116,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/black"
-                android:fontFamily="@font/alegreya_sans_thin"
-                android:textSize="25dp"
-                android:text="@string/Devenir_prestateur"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:textSize="20dp"
+                    android:text="@string/Devenir_prestateur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/type_conte"
+                    
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:gravity="end"
                 android:padding="10dp"
                 android:orientation="horizontal"
@@ -111,11 +148,42 @@
                     android:id="@+id/prestataire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     />
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/changerpasse"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    
+                    android:textSize="20dp"
+                    android:text="@string/changerpasse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    
+                    android:fontFamily="@font/alegreya_sans_thin"
+                    android:textSize="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
         <LinearLayout
             android:padding="10dp"
             android:layout_gravity="center"
@@ -132,9 +200,8 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="@color/black"
-                android:fontFamily="@font/alegreya_sans_thin"
-                android:textSize="25dp"
+                
+                android:textSize="20dp"
                 android:text="@string/about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

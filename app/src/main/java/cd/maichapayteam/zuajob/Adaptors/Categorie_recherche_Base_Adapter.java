@@ -20,7 +20,9 @@ import cd.maichapayteam.zuajob.Front_end.Publication_services_by_category;
 import cd.maichapayteam.zuajob.Front_end.Sous_categories;
 
 import cd.maichapayteam.zuajob.Models.Object.SousCategorie;
+import cd.maichapayteam.zuajob.Models.Object.User;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.GeneralClass;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -61,6 +63,10 @@ public class Categorie_recherche_Base_Adapter extends BaseAdapter {
         souscategorie.setText(DATA.get(position).getDesignation());
 
         block.setVisibility(View.GONE);
+
+        User u = GeneralClass.Currentuser;
+        if (u.getType() == 0) open_annonces.setVisibility(View.GONE);
+        else open_annonces.setVisibility(View.VISIBLE);
 
         element.setOnClickListener(new View.OnClickListener() {
             @Override

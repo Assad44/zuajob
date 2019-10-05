@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
@@ -37,30 +39,31 @@ public class Myprofil extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST = 12;
     TextView update_Adresses,details;
     RoundedImageView picture;
+    CardView evolution,details_user;
     ImageView Pickpicture;
-    TextView nom,number,Sexe;
-    TextView type_compte,quartier,commune,pays,email,typeswitcher;
+    TextView nom,number,Sexe,nbr_real;
+    RatingBar rating;
+    TextView type_compte,address,typeswitcher;
 
     Toolbar toolbar;
 
     private void Init_Components(){
         update_Adresses = findViewById(R.id.update_Adresses);
         picture = findViewById(R.id.picture);
+        rating = findViewById(R.id.rating);
         Pickpicture = findViewById(R.id.Pickpicture);
         nom = findViewById(R.id.nom);
         number = findViewById(R.id.number);
         details = findViewById(R.id.details);
         Sexe = findViewById(R.id.Sexe);
+        nbr_real = findViewById(R.id.nbr_real);
         toolbar = findViewById(R.id.toolbar);
         type_compte = findViewById(R.id.type_compte);
-        /*pays = findViewById(R.id.pays);
-        street = findViewById(R.id.street);
-        quartier = findViewById(R.id.quartier);
-        commune = findViewById(R.id.commune);
-        email = findViewById(R.id.email);*/
+        evolution = findViewById(R.id.evolution);
+        details_user = findViewById(R.id.details_user);
+        address = findViewById(R.id.address);
         typeswitcher = findViewById(R.id.typeswitcher);
     }
-
 
     private void Profil_initialize(){
 
@@ -74,12 +77,27 @@ public class Myprofil extends AppCompatActivity {
                 u.getSexe()+ " / "+ u.getBirthday()
         );
 
-        if (u.getDescription().equals("")) details.setText("Aucun détails sur votre profil ");
-        else details.setText(u.getDescription());
-
-        if (u.getType() == 0) type_compte.setText("Demandeur ou chercheur de service");
-        else type_compte.setText("Prestataire ou offreur des services");
-
+        if (u.getType() == 0) {
+            type_compte.setText("Demandeur ou chercheur de service");
+            evolution.setVisibility(View.GONE);
+            details_user.setVisibility(View.GONE);
+        }else {
+            type_compte.setText("Prestataire ou offreur des services");
+            evolution.setVisibility(View.VISIBLE);
+            details_user.setVisibility(View.VISIBLE);
+            rating.setRating(u.getCote());
+            nbr_real.setText(String.valueOf(u.getNombreRealisation()));
+            details.setText(u.getDescription());
+            if (u.getAdresse().equals("") && u.getCommune().equals("") && u.getQuartier().equals("")){
+                address.setText("Aucune adresse sur vous");
+            }else{
+                address.setText(
+                        "Ave./ "+u.getAdresse()+
+                                " Q/ "+u.getQuartier()+
+                                " C/ "+u.getCommune()
+                );
+            }
+        }
 
     }
 
@@ -100,7 +118,7 @@ public class Myprofil extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+            getSupportActionBar().setTitle("Mon profil");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             //getSupportActionBar().setIcon(R.drawable.ic_back_white);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

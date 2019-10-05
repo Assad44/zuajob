@@ -88,6 +88,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+
                     <LinearLayout
                         android:visibility="gone"
                         android:orientation="horizontal"
@@ -408,7 +409,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="A propos de Zua-job ?"
+                            android:text="A propos de Zua-job "
                             android:textSize="25dp"/>
                         <TextView
                             android:fontFamily="@font/alegreya_sans_thin"
@@ -416,7 +417,17 @@
                             android:layout_marginLeft="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Lorem_short"
+                            android:maxLength="110"
+                            android:text="@string/about_app"
+                            android:textSize="16dp"/>
+                        <TextView
+                            android:fontFamily="@font/alegreya_sans_thin"
+                            android:textColor="@color/dark8"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lire plus"
+                            android:textStyle="bold"
                             android:textSize="16dp"/>
 
                     </LinearLayout>

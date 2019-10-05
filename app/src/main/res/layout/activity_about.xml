@@ -41,7 +41,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Version 1.0.0.1" />
+            android:text="Version 1.0" />
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="13dp"
@@ -54,7 +54,7 @@
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Lorems" />
+            android:text="@string/about_app" />
 
 
 
@@ -78,7 +78,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2018 X-TEAM" />
+            android:text="2019 X-TEAM" />
         <TextView
             android:textSize="12dp"
             android:textColor="@color/white"
@@ -87,6 +87,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="All rights reserved" />
+        <TextView
+            android:textSize="12dp"
+            android:textColor="#63FFFFFF"
+            android:visibility="visible"
+            android:gravity="center"
+            android:fontFamily="@font/alegreya_sans_thin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deon Design" />
 
     </LinearLayout>
 

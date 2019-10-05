@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cd.maichapayteam.zuajob.Adaptors.Mes_Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Services_Base_Adapter;
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Home;
@@ -37,7 +38,7 @@ public class Mes_services extends AppCompatActivity {
     List<Service> SERVICE_L = new ArrayList<>();
     ArrayList<Service> Search = new ArrayList<>();
 
-    Services_Base_Adapter serviceAdapter;
+    Mes_Services_Base_Adapter serviceAdapter;
     int turn = 0;
 
     private void Init_Components(){
@@ -81,7 +82,7 @@ public class Mes_services extends AppCompatActivity {
                         serviceAdapter.notifyDataSetChanged();
                         return;
                     }
-                    serviceAdapter = new Services_Base_Adapter(context, SERVICES);
+                    serviceAdapter = new Mes_Services_Base_Adapter(context, SERVICES);
                     turn = 1;
                     list.setAdapter(serviceAdapter);
                 }

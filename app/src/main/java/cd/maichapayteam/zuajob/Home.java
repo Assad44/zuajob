@@ -150,7 +150,25 @@ public class Home extends AppCompatActivity
                 DATA = (ArrayList<Categorie>) categories;
 
                 if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else{
+                else if (DATA.isEmpty()){
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View responses = inflater.inflate(R.layout.view_categorie_waiting, null);
+                    ImageView img = responses.findViewById(R.id.img);
+                    try {
+                        GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+                        Ion.with(img)
+                                .placeholder(gifFromResource)
+                                .error(gifFromResource)
+                                .animateGif(AnimateGifMode.ANIMATE)
+                                .load("");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                    sous.addView(responses, 0);
+
+                }else{
                     int i = 0;
                     for ( final Categorie c : DATA) {
                         LayoutInflater inflater = LayoutInflater.from(context);
@@ -173,7 +191,7 @@ public class Home extends AppCompatActivity
                                     .placeholder(gifFromResource)
                                     .error(R.drawable.baccc)
                                     .animateGif(AnimateGifMode.ANIMATE)
-                                    .load("");
+                                    .load(c.getUrlImage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -245,6 +263,7 @@ public class Home extends AppCompatActivity
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setTitle(u.getNom());
+
             /*nom.setText(Tool.getUserPreferences(context, "nom"));
             String numero = Tool.getUserPreferences(context, "CountryCode") +" "+ Tool.getUserPreferences(context, "phone");
             phone.setText(numero);*/
@@ -527,10 +546,10 @@ public class Home extends AppCompatActivity
             m = true;
 
         } else if ( u.getType() == 0  &&  id == R.id.nav_rdv) {
-            Intent i = new Intent(context, Mes_rendez_vous_sollicitations.class);
+            /*Intent i = new Intent(context, Mes_rendez_vous_sollicitations.class);
             startActivity(i);
-            finish();
-            m = true;
+            finish();*/
+            m = false;
 
         } else if (id == R.id.nav_rdv_jobeur) {
             m = true;
