@@ -260,7 +260,9 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         final LinearLayout details_option = convertView.findViewById(R.id.details_option);
                         final CardView element = convertView.findViewById(R.id.element);
                         TextView user = convertView.findViewById(R.id.user);
+                        TextView categorie = convertView.findViewById(R.id.categorie);
                         TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
+                        TextView date_time = convertView.findViewById(R.id.date_time);
                         TextView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
                         TextView editer_heure = convertView.findViewById(R.id.editer_heure);
                         TextView coter = convertView.findViewById(R.id.coter);
@@ -268,9 +270,8 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         details_option.setVisibility(View.GONE);
                         user.setText(c.getNomsUser());
                         BTN_valider.setText("Confirmer service rendu");
-                        /*date_time.setText(c.getDate() + " à " + c.getHeureRDV());
-                        categorie.setText(c.getCategorie() + " | " + c.getSouscategorie());*/
-
+                        date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
+                        categorie.setText(c.getCategorie() + " | " + c.getSousCategorie());
 
                         sous2.addView(convertView, 0);
 
