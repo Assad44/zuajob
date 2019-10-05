@@ -261,8 +261,8 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         final CardView element = convertView.findViewById(R.id.element);
                         TextView user = convertView.findViewById(R.id.user);
                         TextView categorie = convertView.findViewById(R.id.categorie);
-                        TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
                         TextView date_time = convertView.findViewById(R.id.date_time);
+                        TextView BTN_valider = convertView.findViewById(R.id.BTN_valider);
                         TextView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
                         TextView editer_heure = convertView.findViewById(R.id.editer_heure);
                         TextView coter = convertView.findViewById(R.id.coter);
