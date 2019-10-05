@@ -30,6 +30,43 @@ public class Postuler {
     private String heureRDV = "";
     private int cote = 0;
     private String comment = "";
+    private int idSousCategorie = -1;
+    private int idCategorie = -1;
+    private String sousCategorie = "";
+
+    public int getIdSousCategorie() {
+        return idSousCategorie;
+    }
+
+    public void setIdSousCategorie(int idSousCategorie) {
+        this.idSousCategorie = idSousCategorie;
+    }
+
+    public int getIdCategorie() {
+        return idCategorie;
+    }
+
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
+    }
+
+    public String getSousCategorie() {
+        return sousCategorie;
+    }
+
+    public void setSousCategorie(String sousCategorie) {
+        this.sousCategorie = sousCategorie;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    private String categorie = "";
 
     public boolean isAccepted() {
         return isAccepted;

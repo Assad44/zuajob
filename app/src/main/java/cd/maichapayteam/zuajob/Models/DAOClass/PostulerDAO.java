@@ -41,6 +41,10 @@ public class PostulerDAO extends DAOBase {
     public static final String IS_ACCEPTED = "isacc";
     public static final String IS_REFUSED = "isref";
     public static final String DETAIL_RDV = "det_rdv";
+    public static final String ID_SOUS_CATEGORIE = "idsouscat";
+    public static final String SOUS_CATEGORIE = "souscat";
+    public static final String ID_CATEGORIE = "idcat";
+    public static final String CATEGORIE = "cat";
     public static final String TABLE_NOM = "t_postuler";
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOM + " (" +
@@ -67,7 +71,11 @@ public class PostulerDAO extends DAOBase {
                     IS_MY + " INTEGER, " +
                     IS_ACCEPTED + " INTEGER, " +
                     IS_REFUSED + " INTEGER, " +
-                    DETAIL_RDV + " TEXT);";
+                    DETAIL_RDV + " TEXT, " +
+                    CATEGORIE + " TEXT, " +
+                    SOUS_CATEGORIE + " TEXT, " +
+                    ID_CATEGORIE + " INTEGER, " +
+                    ID_SOUS_CATEGORIE + " INTEGER);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NOM + ";";
 
@@ -112,6 +120,10 @@ public class PostulerDAO extends DAOBase {
                 value.put(IS_ACCEPTED, object.isAccepted());
                 value.put(IS_REFUSED, object.isRefused());
                 value.put(DETAIL_RDV, object.getDetailRDV());
+                value.put(ID_CATEGORIE, object.getIdCategorie());
+                value.put(ID_SOUS_CATEGORIE, object.getIdSousCategorie());
+                value.put(CATEGORIE, object.getCategorie());
+                value.put(SOUS_CATEGORIE, object.getSousCategorie());
                 open();
                 long retour = mDb.insert(TABLE_NOM, null, value);
                 close();
@@ -188,7 +200,11 @@ public class PostulerDAO extends DAOBase {
                 int ismy=c.getInt(c.getColumnIndex(IS_MY));
                 int isacc=c.getInt(c.getColumnIndex(IS_ACCEPTED));
                 int isref=c.getInt(c.getColumnIndex(IS_REFUSED));
+                int idcat=c.getInt(c.getColumnIndex(ID_CATEGORIE));
+                int idsouscat=c.getInt(c.getColumnIndex(ID_SOUS_CATEGORIE));
                 String detail = c.getString(c.getColumnIndex(DETAIL_RDV));
+                String cat = c.getString(c.getColumnIndex(CATEGORIE));
+                String souscat = c.getString(c.getColumnIndex(SOUS_CATEGORIE));
 
                 object = new Postuler();
                 object.setId(_id);
@@ -216,6 +232,10 @@ public class PostulerDAO extends DAOBase {
                 if(isacc==1) object.setAccepted(true);
                 if(isref==1) object.setRefused(true);
                 object.setDetailRDV(detail);
+                object.setCategorie(cat);
+                object.setSousCategorie(souscat);
+                object.setIdCategorie(idcat);
+                object.setIdSousCategorie(idsouscat);
             }
             c.close();
             close();
@@ -296,6 +316,10 @@ public class PostulerDAO extends DAOBase {
         value.put(IS_ACCEPTED, object.isAccepted());
         value.put(IS_REFUSED, object.isRefused());
         value.put(DETAIL_RDV, object.getDetailRDV());
+        value.put(ID_CATEGORIE, object.getIdCategorie());
+        value.put(ID_SOUS_CATEGORIE, object.getIdSousCategorie());
+        value.put(CATEGORIE, object.getCategorie());
+        value.put(SOUS_CATEGORIE, object.getSousCategorie());
         open();
         long rep = mDb.update(TABLE_NOM, value, KEY + " = ?", new String[]{String.valueOf(object.getId())});
         close();

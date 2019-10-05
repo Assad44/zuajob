@@ -35,6 +35,26 @@ public class Sollicitation {
     private int cote = 0;
     private String comment = "";
 
+    private int idCategorie = -1;
+
+    public int getIdCategorie() {
+        return idCategorie;
+    }
+
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
+    }
+
+    public int getIdSousCategorie() {
+        return idSousCategorie;
+    }
+
+    public void setIdSousCategorie(int idSousCategorie) {
+        this.idSousCategorie = idSousCategorie;
+    }
+
+    private int idSousCategorie = -1;
+
     public String getDetailRDV() {
         return detailRDV;
     }
