@@ -180,8 +180,8 @@ public class Home extends AppCompatActivity
 
                         title.setText( c.getDesignation());
                         description.setText(c.getDescription());
-                        if (i%2 == 0)img.setImageResource(R.drawable.pub);
-                        else img.setImageResource(R.drawable.pub4);
+                        /*if (i%2 == 0)img.setImageResource(R.drawable.pub);
+                        else img.setImageResource(R.drawable.pub4);*/
 
                         // Todo : Chargement des images par Ion librairy
                         //Tool.Load_Image(context,img,"");

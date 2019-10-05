@@ -10,7 +10,6 @@
         android:id="@+id/element"
         android:layout_width="340dp"
         android:layout_height="220dp"
-        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
         android:elevation="20dp">
 

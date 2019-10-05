@@ -260,6 +260,7 @@ public class Myprofil extends AppCompatActivity {
                         picture.setImageURI(Uri.parse(fil));
                         //ImageSrcPath.setText(fil);
 
+
                         /*// TODO ; Conversion en base64
                         String encodedImage = Base64.encodeToString(imgbyte, Base64.DEFAULT);
                         Log.e("ENCODINGGGXXXXXX",encodedImage);

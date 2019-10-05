@@ -88,7 +88,7 @@ public class Categorie_view extends AppCompatActivity {
 
             if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
             else{
-                Toast.makeText(context, "" + DATA.size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "" + DATA.size(), Toast.LENGTH_SHORT).show();
                 list.setAdapter(new Categorie_Base_Adapter(context, DATA ));
             }
 
