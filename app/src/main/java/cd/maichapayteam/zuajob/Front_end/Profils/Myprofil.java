@@ -48,7 +48,7 @@ public class Myprofil extends AppCompatActivity {
     Context context = this;
     private static final int PICK_FILE_REQUEST = 12;
     TextView update_Adresses,details;
-    RoundedImageView picture;
+    ImageView picture;
     CardView evolution,details_user;
     ImageView Pickpicture;
     TextView nom,number,Sexe,nbr_real;
@@ -83,8 +83,7 @@ public class Myprofil extends AppCompatActivity {
                 u.getNom() + " "+u.getPrenom()
         );
 
-        Tool.Load_Image(context, picture, u.getUrlThumbnail());
-        try {
+        /*try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
             Ion.with(picture)
                     .placeholder(gifFromResource)
@@ -93,8 +92,7 @@ public class Myprofil extends AppCompatActivity {
                     .load(u.getUrlThumbnail());
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
+        }*/
 
         number.setText("+"+ u.getPhone());
         Sexe.setText(
