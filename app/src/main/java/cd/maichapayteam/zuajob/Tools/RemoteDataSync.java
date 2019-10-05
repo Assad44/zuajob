@@ -169,6 +169,7 @@ public class RemoteDataSync {
                     User user = GeneralClass.Currentuser;
                     user.setUrlPhoto(urli);
                     user.setUrlThumbnail(thumb);
+                    GeneralClass.Currentuser = user;
                     UserDAO.getInstance(GeneralClass.applicationContext).ajouter(user);
                 }
             }
