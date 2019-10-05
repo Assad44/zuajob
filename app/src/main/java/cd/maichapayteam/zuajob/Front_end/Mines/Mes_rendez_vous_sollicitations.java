@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +16,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +31,7 @@ import java.util.List;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Home;
+import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
@@ -236,6 +241,53 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
 
     }
 
+    private void Send_cotation(final long idpos, final float rating, final String com){
+        AsyncTask aaa = new AsyncTask<Void, Void, Sollicitation>() {
+            Service s = new Service();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
+
+            @Override
+            protected Sollicitation doInBackground(Void... voids) {
+                return ManageLocalData.serviceRenduBySollicitance(idpos, (int) rating, com);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Opération encours...");
+                alert.show();
+            }
+
+            @Override
+            protected void onPostExecute(Sollicitation service) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (service.isError() == true ){
+                    a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+                }
+                a.show();
+
+                startActivity(new Intent(context, Publication_blank.class));
+                finish();
+            }
+        }.execute();
+
+    }
+
     void RDV_SOLLICITER(){
         new AsyncTask() {
 
@@ -279,6 +331,43 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                         categorie.setText(c.getCategorie() + " | " + c.getSouscategorie());
 
                         sous2.addView(convertView, 0);
+
+                        coter.setOnClickListener(new View.OnClickListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onClick(View v) {
+                                View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
+                                final RatingBar rating = convertView.findViewById(R.id.rating);
+                                final EditText com = convertView.findViewById(R.id.com);
+                                final TextView text = convertView.findViewById(R.id.text);
+                                text.setText("0.0 / 5");
+                                rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                    @Override
+                                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                        text.setVisibility(View.VISIBLE);
+                                        text.setText(String.valueOf( rating ).concat(" / 5"));
+                                    }
+                                });
+                                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                                        .setView(convertView)
+                                        .setCancelable(true)
+                                        .setPositiveButton("Coter", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                float cote = rating.getRating();
+                                                Send_cotation(c.getId(),cote,com.getText().toString());
+                                                dialog.dismiss();
+                                            }
+                                        }).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });;
+                                final AlertDialog alert = a.create();
+                                alert.show();
+                            }
+                        });
                         annuler_rdv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

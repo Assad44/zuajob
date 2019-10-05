@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -235,6 +236,53 @@ public class Mes_rendez_postullances extends AppCompatActivity {
 
     }
 
+    private void Send_cotation(final long idpos, final float rating, final String com){
+        AsyncTask aaa = new AsyncTask<Void, Void, Postuler>() {
+            Service s = new Service();
+            View convertView  = LayoutInflater.from(context).inflate(R.layout.view_progressebar,null);
+            TextView write_response = convertView.findViewById(R.id.write_response);
+            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                    .setView(convertView)
+                    .setCancelable(false);
+            // Setting dialogview
+            final AlertDialog alert = a.create();
+
+            @Override
+            protected Postuler doInBackground(Void... voids) {
+                return ManageLocalData.serviceRenduByPostulance(idpos, (int) rating, com);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                write_response.setText("Opération encours...");
+                alert.show();
+            }
+
+            @Override
+            protected void onPostExecute(Postuler service) {
+                alert.cancel();
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                if (service.isError() == true ){
+                    a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                }else{
+                    a.setMessage("Opération réussi");
+                }
+                a.show();
+
+                startActivity(new Intent(context, Publication_blank.class));
+                finish();
+            }
+        }.execute();
+
+    }
+
     void RDV_POSTULLER(){
 
         new AsyncTask() {
@@ -288,6 +336,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                             public void onClick(View v) {
                                 View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
                                 final RatingBar rating = convertView.findViewById(R.id.rating);
+                                final EditText com = convertView.findViewById(R.id.com);
                                 final TextView text = convertView.findViewById(R.id.text);
                                 text.setText("0.0 / 5");
                                 rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -305,6 +354,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 float cote = rating.getRating();
+                                                Send_cotation(c.getId(),cote,com.getText().toString());
                                                 dialog.dismiss();
                                             }
                                         })
