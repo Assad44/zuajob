@@ -82,7 +82,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         ImageView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
 
                         user.setText(c.getNomsUser());
-                        date_time.setText(c.getDate() + " à " + c.getHeureRDV());
+                        date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSousCategorie());
                         sous.addView(convertView, 0);
                         element.setOnClickListener(new View.OnClickListener() {
