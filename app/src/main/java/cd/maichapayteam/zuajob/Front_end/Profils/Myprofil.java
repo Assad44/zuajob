@@ -310,14 +310,14 @@ public class Myprofil extends AppCompatActivity {
     }
 
     private void upload_image(final String img, final ImageView picture){
-        new AsyncTask() {
-
+        new AsyncTask<Void, Void, Boolean>() {
             @Override
-            protected Object doInBackground(Object[] objects) {
+            protected Boolean doInBackground(Void... voids) {
                 return ManageLocalData.uploadImage(img,".jpg");
             }
+
             @Override
-            protected void onPostExecute(Object o) {
+            protected void onPostExecute(Boolean o) {
                 //alert.cancel();
                 AlertDialog.Builder a = new AlertDialog.Builder(context)
                         .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
@@ -336,6 +336,5 @@ public class Myprofil extends AppCompatActivity {
             }
         }.execute();
     }
-
 
 }
