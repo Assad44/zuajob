@@ -146,7 +146,7 @@ public class RemoteDataSync {
         return "";
     }
 
-    //Pas encore implementé
+    //OK
     public static boolean uploadImage(String image, String format) {
         String url = BASE_URL + "uploadimage/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -171,10 +171,20 @@ public class RemoteDataSync {
                     user.setUrlThumbnail(thumb);
                     GeneralClass.Currentuser = user;
                     UserDAO.getInstance(GeneralClass.applicationContext).ajouter(user);
+                    Log.e("UploadImage", "uploding succed");
+                    return true;
+                } else {
+                    Log.e("UploadImage", "errorMessage: " + response.getResult().getString("errorMessage"));
+                }
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("UploadImage", "AN error: " + response.getError().getErrorBody());
+                } else {
+                    Log.e("UploadImage", "AN error: is null");
                 }
             }
         } catch (Exception ex) {
-
+            Log.e("UploadImage", "General error: " + ex.getMessage());
         }
         return false;
     }
@@ -2318,11 +2328,5 @@ public class RemoteDataSync {
                OTHERS
 
      */
-
-    public interface UploadImageListener {
-        void OnResult(long id, String url);
-        void OnProgress(long bytesUploaded, long totalBytes);
-        void OnError(String message);
-    }
 
 }
