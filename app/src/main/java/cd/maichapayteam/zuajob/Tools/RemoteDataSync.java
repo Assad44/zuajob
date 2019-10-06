@@ -257,7 +257,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Categorie> getListCategorie () {
-        String url = BASE_URL + "categories";
+        String url = BASE_URL + "categories/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Categorie> list = new ArrayList<>();
 
@@ -294,7 +294,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<SousCategorie> getListSousCategorie () {
-        String url = BASE_URL + "souscategories";
+        String url = BASE_URL + "souscategories/" + GeneralClass.Currentuser.getAuthCode();
 
         List<SousCategorie> list = new ArrayList<>();
 
@@ -327,7 +327,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<User> getListJobeur (int next) {
-        String url = BASE_URL + "listjobeurs/" + next;
+        String url = BASE_URL + "listjobeurs/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<User> list = new ArrayList<>();
 
@@ -359,7 +359,7 @@ public class RemoteDataSync {
 
     //Pas encore implementé
     public static List<User> getListJobeur (String keyword, int next) {
-        String url = BASE_URL + "listjobeur/";
+        String url = BASE_URL + "listjobeur/" + GeneralClass.Currentuser.getAuthCode();
 
         List<User> list = new ArrayList<>();
 
@@ -391,7 +391,7 @@ public class RemoteDataSync {
 
     //Pas encore implementé
     public static List<Comment> getListComment (int next) {
-        String url = BASE_URL + "comment/";
+        String url = BASE_URL + "comment/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Comment> list = new ArrayList<>();
 
@@ -479,7 +479,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getRandomAnnonces () {
-        String url = BASE_URL + "randomannonces";
+        String url = BASE_URL + "randomannonces/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -511,7 +511,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "annonces/" + souscategorie + "/" + next;
+        String url = BASE_URL + "annonces/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -541,7 +541,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "newannonces/" + souscategorie + "/" + next;
+        String url = BASE_URL + "newannonces/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -632,7 +632,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getNewServices (int next, long souscategorie) {
-        String url = BASE_URL + "newservices/" + souscategorie + "/" + next;
+        String url = BASE_URL + "newservices/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -662,7 +662,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getRandomServices (int next) {
-        String url = BASE_URL + "randomservices";
+        String url = BASE_URL + "randomservices/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -692,7 +692,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
-        String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next;
+        String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -725,7 +725,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getServicesByCote (int next, long souscategorie) {
-        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next;
+        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -785,7 +785,7 @@ public class RemoteDataSync {
     }
 
     public static List<Postuler> getHistoriqueRealisationByPostulance () {
-        String url = BASE_URL + "histobypoatulance/";
+        String url = BASE_URL + "histobypoatulance/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Postuler> list = new ArrayList<>();
 
@@ -814,7 +814,7 @@ public class RemoteDataSync {
     }
 
     public static List<Sollicitation> getHistoriqueRealisationBySollicitation () {
-        String url = BASE_URL + "histobysollicitation/";
+        String url = BASE_URL + "histobysollicitation/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Sollicitation> list = new ArrayList<>();
 
