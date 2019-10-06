@@ -1215,6 +1215,8 @@ public class RemoteDataSync {
     public static List<Notification> getMesNotifications () {
         String url = BASE_URL + "mesnotifications/" + GeneralClass.Currentuser.getAuthCode();
 
+        Log.e("Notification", url);
+
         List<Notification> list = new ArrayList<>();
 
         try{
@@ -2184,18 +2186,20 @@ public class RemoteDataSync {
     }
 
     public static boolean deleteAnnonce (long idAnnonce) {
-        String url = BASE_URL + "annonce";
+        String url = BASE_URL + "annonce/" + idAnnonce + "/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.delete(url)
-                    .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
-                    .setTag("deleteannonce" + idAnnonce)
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<String> response = request.executeForString();
-            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                if(response.getResult().getBoolean("deleted")) {
+                    AnnonceDAO.getInstance(GeneralClass.applicationContext).supprimer(idAnnonce);
+                    return true;
+                }
+            }
         } catch (Exception ex) {
 
         }
