@@ -1198,7 +1198,8 @@ public class RemoteDataSync {
 
     //OK
     public static List<Notification> getMesNotifications () {
-        String url = BASE_URL + "mesnotifications/" + GeneralClass.Currentuser.getAuthCode();
+        String url = BASE_URL + "mesnotifications/";
+        if(GeneralClass.Currentuser!=null) url = url + GeneralClass.Currentuser.getAuthCode();
 
         Log.e("Notification", url);
 
