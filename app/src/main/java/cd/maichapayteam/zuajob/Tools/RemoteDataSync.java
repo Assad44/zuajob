@@ -341,7 +341,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getId()) object.setMyProfil(true);
                     objectDAO.ajouter(object);
                     Log.e("User", "id : " + object.getId());
                 }
@@ -374,7 +373,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 UserDAO objectDAO = new UserDAO(GeneralClass.applicationContext);
                 for (User object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getId()) object.setMyProfil(true);
                     objectDAO.ajouter(object);
                     Log.e("User", "id : " + object.getId());
                 }
@@ -437,7 +435,6 @@ public class RemoteDataSync {
                 if(user!=null) {
                     Log.e("Users", "Login:\n" + user.toString());
                     if(!user.isError()) {
-                        user.setMyProfil(true);
                         //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -494,7 +491,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -524,7 +520,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -554,7 +549,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdUser()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Annonce", "designation : " + object.getDescription());
                 }
@@ -584,7 +578,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 AnnonceDAO cdao = new AnnonceDAO(GeneralClass.applicationContext);
                 for (Annonce object : list) {
-                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("MesAnnonce", "description : " + object.getDescription());
                 }
@@ -615,7 +608,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
-                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("MesService", "description : " + object.getDescription());
                 }
@@ -645,7 +637,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -675,7 +666,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("RandomService", "description : " + object.getDescription());
                 }
@@ -708,7 +698,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -738,7 +727,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 ServiceDAO cdao = new ServiceDAO(GeneralClass.applicationContext);
                 for (Service object : list) {
-                    if(GeneralClass.Currentuser.getId()==object.getIdJobeur()) object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("NewService", "description : " + object.getDescription());
                 }
@@ -769,7 +757,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
-                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
                 }
@@ -861,8 +848,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 PostulerDAO cdao = new PostulerDAO(GeneralClass.applicationContext);
                 for (Postuler object : list) {
-                    object.setHavePostuled(true);
-                    object.setHavePostuled(true);
                     cdao.ajouter(object);
                     Log.e("Postuler", "description : " + object.getDescriptionAnnonce());
                 }
@@ -897,7 +882,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setMy(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -931,8 +915,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setHaveSollicited(true);
-                    object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -992,8 +974,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setHaveSollicited(true);
-                    object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -1023,8 +1003,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setHaveSollicited(true);
-                    object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -1083,8 +1061,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setHaveSollicited(true);
-                    object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -1172,8 +1148,6 @@ public class RemoteDataSync {
                 list = response.getResult().getListe();
                 SollicitationDAO cdao = new SollicitationDAO(GeneralClass.applicationContext);
                 for (Sollicitation object : list) {
-                    object.setHaveSollicited(true);
-                    object.setHaveSollicited(true);
                     cdao.ajouter(object);
                     Log.e("Sollicitation", "description : " + object.getDescriptionService());
                 }
@@ -1286,7 +1260,6 @@ public class RemoteDataSync {
                 user = response.getResult();
                 if(user!=null) {
                     if(!user.isError()) {
-                        user.setMyProfil(true);
                         Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -1342,7 +1315,6 @@ public class RemoteDataSync {
                 postuler = response.getResult();
                 if(postuler!=null) {
                     if(!postuler.isError()) {
-                        postuler.setHavePostuled(true);
                         PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
                         postuler = postulerDAO.ajouter(postuler);
                         if(postuler==null) {
@@ -1387,7 +1359,6 @@ public class RemoteDataSync {
                 sollicitation = response.getResult();
                 if(sollicitation!=null) {
                     if(!sollicitation.isError()) {
-                        sollicitation.setHaveSollicited(true);
                         SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
                         sollicitation = sollicitationDAO.ajouter(sollicitation);
                         if(sollicitation==null) {
@@ -1430,7 +1401,6 @@ public class RemoteDataSync {
                 object = response.getResult();
                 if(object!=null) {
                     if(!object.isError()) {
-                        object.setMy(true);
                         AnnonceDAO annonceDAO = new AnnonceDAO(GeneralClass.applicationContext);
                         object = annonceDAO.ajouter(object);
                         if(object==null) {
@@ -1472,7 +1442,6 @@ public class RemoteDataSync {
                 object = response.getResult();
                 if(object!=null) {
                     if(!object.isError()) {
-                        object.setMy(true);
                         ServiceDAO serviceDAO = new ServiceDAO(GeneralClass.applicationContext);
                         object = serviceDAO.ajouter(object);
                         if(object==null) {
@@ -1568,7 +1537,6 @@ public class RemoteDataSync {
                 user = response.getResult();
                 if(user!=null) {
                     if(!user.isError()) {
-                        user.setMyProfil(true);
                         //Log.e("Users", "Inscription:after net" + user.toString());
                         UserDAO userDAO = new UserDAO(GeneralClass.applicationContext);
                         user = userDAO.ajouter(user);
@@ -1665,7 +1633,6 @@ public class RemoteDataSync {
                 object = response.getResult();
                 if(object!=null) {
                     if(!object.isError()) {
-                        object.setMy(true);
                         ServiceDAO annonceDAO = new ServiceDAO(GeneralClass.applicationContext);
                         object = annonceDAO.ajouter(object);
                         if(object==null) {
