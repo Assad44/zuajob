@@ -101,7 +101,7 @@ public class Myprofil extends AppCompatActivity {
         }
 
         Log.e("IMAGE_PROFIL", u.getUrlThumbnail());
-        Toast.makeText(context, u.getUrlThumbnail(), Toast.LENGTH_SHORT).show();
+        ///Toast.makeText(context, u.getUrlThumbnail(), Toast.LENGTH_SHORT).show();
 
         number.setText("+"+ u.getPhone());
         Sexe.setText(
