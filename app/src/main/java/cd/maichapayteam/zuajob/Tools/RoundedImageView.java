@@ -28,6 +28,7 @@ public class RoundedImageView extends android.support.v7.widget.AppCompatImageVi
 
     @Override
     public void setImageDrawable(Drawable drawable) {
+        if(drawable==null) return;
         float radius = 0.5f;
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         RoundedBitmapDrawable rid = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
@@ -37,6 +38,7 @@ public class RoundedImageView extends android.support.v7.widget.AppCompatImageVi
 
     @Override
     public void setImageBitmap(Bitmap bitmap) {
+        if(bitmap==null) return;
         float radius = 0.5f;
         RoundedBitmapDrawable rid = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         rid.setCornerRadius(bitmap.getWidth() * radius);

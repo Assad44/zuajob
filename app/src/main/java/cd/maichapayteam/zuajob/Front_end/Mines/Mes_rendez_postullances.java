@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -251,6 +252,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
 
             @Override
             protected Postuler doInBackground(Void... voids) {
+                Log.e("ServiceRendu", String.valueOf(idpos));
                 return ManageLocalData.serviceRenduByPostulance(idpos, (int) rating, com);
             }
 

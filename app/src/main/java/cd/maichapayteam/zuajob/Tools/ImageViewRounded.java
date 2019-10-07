@@ -46,6 +46,9 @@ public class ImageViewRounded extends android.support.v7.widget.AppCompatImageVi
         int scaledHeight = getMeasuredHeight();
 
         Bitmap mScaledBitmap;
+
+        if (fullSizeBitmap==null) return;
+
         if (scaledWidth == fullSizeBitmap.getWidth()
                 && scaledHeight == fullSizeBitmap.getHeight()) {
             mScaledBitmap = fullSizeBitmap;

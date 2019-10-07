@@ -2095,7 +2095,8 @@ public class RemoteDataSync {
                 postuler = new Postuler();
                 postuler.setError(true);
                 postuler.setErrorCode(31921);
-                postuler.setErrorMessage(response.getError().getMessage());
+                postuler.setErrorMessage(response.getError().getErrorBody());
+                Log.e("ServiceRendu", response.getError().getErrorBody());
             }
         } catch (Exception ex) {
             postuler = new Postuler();
