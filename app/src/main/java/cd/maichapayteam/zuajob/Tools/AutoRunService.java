@@ -88,11 +88,12 @@ public class AutoRunService extends Service implements Runnable {
                 List<Notification> listNotification = RemoteDataSync.getMesNotifications();
                 Log.e("AutoRunService", "notification count: " + listNotification.size());
                 for (Notification noti : listNotification) {
+                    Log.e("AutoRunService", "notification" + noti.getId() + ": " + noti.getMessage());
                     traiteNotif(noti);
                 }
             } catch (InterruptedException e) {
                 Log.e("AutoRunService", "runnable breaked");
-                break;
+                //break;
             }
         }
     }

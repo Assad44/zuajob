@@ -125,7 +125,7 @@ public class Preferences_screen extends AppCompatActivity {
         finish();
     }
 
-    class CreationAccountAsync extends AsyncTask<String, String, User> implements RemoteDataSync.UploadImageListener {
+    class CreationAccountAsync extends AsyncTask<String, String, User> {
 
         @Override
         protected void onPreExecute() {
@@ -192,20 +192,6 @@ public class Preferences_screen extends AppCompatActivity {
             super.onPostExecute(user);
         }
 
-        @Override
-        public void OnResult(long id, String url) {
-
-        }
-
-        @Override
-        public void OnProgress(long bytesUploaded, long totalBytes) {
-            //TODO update onProgress in dialog
-        }
-
-        @Override
-        public void OnError(String message) {
-
-        }
     }
 
 }

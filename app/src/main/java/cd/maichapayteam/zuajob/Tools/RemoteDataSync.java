@@ -146,7 +146,7 @@ public class RemoteDataSync {
         return "";
     }
 
-    //Pas encore implementé
+    //OK
     public static boolean uploadImage(String image, String format) {
         String url = BASE_URL + "uploadimage/" + GeneralClass.Currentuser.getAuthCode();
 
@@ -171,10 +171,20 @@ public class RemoteDataSync {
                     user.setUrlThumbnail(thumb);
                     GeneralClass.Currentuser = user;
                     UserDAO.getInstance(GeneralClass.applicationContext).ajouter(user);
+                    Log.e("UploadImage", "uploding succed");
+                    return true;
+                } else {
+                    Log.e("UploadImage", "errorMessage: " + response.getResult().getString("errorMessage"));
+                }
+            } else {
+                if(response.getError()!=null) {
+                    Log.e("UploadImage", "AN error: " + response.getError().getErrorBody());
+                } else {
+                    Log.e("UploadImage", "AN error: is null");
                 }
             }
         } catch (Exception ex) {
-
+            Log.e("UploadImage", "General error: " + ex.getMessage());
         }
         return false;
     }
@@ -247,7 +257,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Categorie> getListCategorie () {
-        String url = BASE_URL + "categories";
+        String url = BASE_URL + "categories/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Categorie> list = new ArrayList<>();
 
@@ -284,7 +294,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<SousCategorie> getListSousCategorie () {
-        String url = BASE_URL + "souscategories";
+        String url = BASE_URL + "souscategories/" + GeneralClass.Currentuser.getAuthCode();
 
         List<SousCategorie> list = new ArrayList<>();
 
@@ -317,7 +327,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<User> getListJobeur (int next) {
-        String url = BASE_URL + "listjobeurs/" + next;
+        String url = BASE_URL + "listjobeurs/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<User> list = new ArrayList<>();
 
@@ -349,7 +359,7 @@ public class RemoteDataSync {
 
     //Pas encore implementé
     public static List<User> getListJobeur (String keyword, int next) {
-        String url = BASE_URL + "listjobeur/";
+        String url = BASE_URL + "listjobeur/" + GeneralClass.Currentuser.getAuthCode();
 
         List<User> list = new ArrayList<>();
 
@@ -381,7 +391,7 @@ public class RemoteDataSync {
 
     //Pas encore implementé
     public static List<Comment> getListComment (int next) {
-        String url = BASE_URL + "comment/";
+        String url = BASE_URL + "comment/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Comment> list = new ArrayList<>();
 
@@ -469,7 +479,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getRandomAnnonces () {
-        String url = BASE_URL + "randomannonces";
+        String url = BASE_URL + "randomannonces/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -501,7 +511,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "annonces/" + souscategorie + "/" + next;
+        String url = BASE_URL + "annonces/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -531,7 +541,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Annonce> getNewAnnonces (int next, long souscategorie) {
-        String url = BASE_URL + "newannonces/" + souscategorie + "/" + next;
+        String url = BASE_URL + "newannonces/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Annonce> list = new ArrayList<>();
 
@@ -622,7 +632,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getNewServices (int next, long souscategorie) {
-        String url = BASE_URL + "newservices/" + souscategorie + "/" + next;
+        String url = BASE_URL + "newservices/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -652,7 +662,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getRandomServices (int next) {
-        String url = BASE_URL + "randomservices";
+        String url = BASE_URL + "randomservices/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -682,7 +692,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getServicesByRealisationCount (int next, long souscategorie) {
-        String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next;
+        String url = BASE_URL + "servicesbyrealisation/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -715,7 +725,7 @@ public class RemoteDataSync {
 
     //OK
     public static List<Service> getServicesByCote (int next, long souscategorie) {
-        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next;
+        String url = BASE_URL + "servicesbycote/" + souscategorie + "/" + next + "/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Service> list = new ArrayList<>();
 
@@ -775,7 +785,7 @@ public class RemoteDataSync {
     }
 
     public static List<Postuler> getHistoriqueRealisationByPostulance () {
-        String url = BASE_URL + "histobypoatulance/";
+        String url = BASE_URL + "histobypoatulance/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Postuler> list = new ArrayList<>();
 
@@ -804,7 +814,7 @@ public class RemoteDataSync {
     }
 
     public static List<Sollicitation> getHistoriqueRealisationBySollicitation () {
-        String url = BASE_URL + "histobysollicitation/";
+        String url = BASE_URL + "histobysollicitation/" + GeneralClass.Currentuser.getAuthCode();
 
         List<Sollicitation> list = new ArrayList<>();
 
@@ -1214,6 +1224,8 @@ public class RemoteDataSync {
     //OK
     public static List<Notification> getMesNotifications () {
         String url = BASE_URL + "mesnotifications/" + GeneralClass.Currentuser.getAuthCode();
+
+        Log.e("Notification", url);
 
         List<Notification> list = new ArrayList<>();
 
@@ -2184,18 +2196,20 @@ public class RemoteDataSync {
     }
 
     public static boolean deleteAnnonce (long idAnnonce) {
-        String url = BASE_URL + "annonce";
+        String url = BASE_URL + "annonce/" + idAnnonce + "/" + GeneralClass.Currentuser.getAuthCode();
 
         try{
             ANRequest request = AndroidNetworking.delete(url)
-                    .addQueryParameter("idAnnonce", String.valueOf(idAnnonce))
-                    .setTag("deleteannonce" + idAnnonce)
                     .setPriority(Priority.MEDIUM)
-                    .addHeaders("token", GeneralClass.Currentuser.getAuthCode())
                     .build();
 
-            ANResponse<String> response = request.executeForString();
-            if (response.isSuccess()) if(response.getResult().equals("1")) return true;
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                if(response.getResult().getBoolean("deleted")) {
+                    AnnonceDAO.getInstance(GeneralClass.applicationContext).supprimer(idAnnonce);
+                    return true;
+                }
+            }
         } catch (Exception ex) {
 
         }
@@ -2314,11 +2328,5 @@ public class RemoteDataSync {
                OTHERS
 
      */
-
-    public interface UploadImageListener {
-        void OnResult(long id, String url);
-        void OnProgress(long bytesUploaded, long totalBytes);
-        void OnError(String message);
-    }
 
 }
