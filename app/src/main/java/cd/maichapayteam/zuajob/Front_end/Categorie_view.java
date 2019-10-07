@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ public class Categorie_view extends AppCompatActivity {
 
     Context context = this;
     GridView list;
+    SwipeRefreshLayout swipper;
 
     ArrayList<Categorie> DATA = new ArrayList<>();
     List<Categorie> DATA1 = new ArrayList<>();
@@ -33,7 +35,7 @@ public class Categorie_view extends AppCompatActivity {
 
     private void Init_Components(){
         list = findViewById(R.id.list);
-        Log.e("AN_TEST", "je suis bien dans cette activité");
+        swipper = findViewById(R.id.swipper);
     }
 
     @Override
@@ -64,6 +66,13 @@ public class Categorie_view extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        swipper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                LoadCategories loadCategories = new LoadCategories();
+                loadCategories.execute();
+            }
+        });
     }
 
     @Override
@@ -76,15 +85,22 @@ public class Categorie_view extends AppCompatActivity {
     private class LoadCategories extends AsyncTask<String, String, List<Categorie>> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            swipper.setRefreshing(true);
+        }
+
+        @Override
         protected List<Categorie> doInBackground(String... strings) {
             return ManageLocalData.listCategorie();
         }
 
         @Override
         protected void onPostExecute(List<Categorie> categories) {
-
-            DATA1 = ManageLocalData.listCategorie();
-            DATA = (ArrayList<Categorie>) DATA1;
+            swipper.setRefreshing(false);
+            //DATA1 = ManageLocalData.listCategorie();
+            DATA.clear();
+            DATA = (ArrayList<Categorie>) categories;
 
             if (null == DATA) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
             else{

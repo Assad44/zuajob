@@ -28,10 +28,17 @@
 
     </LinearLayout>
 
-    <GridView
-        android:numColumns="auto_fit"
-        android:id="@+id/list"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></GridView>
+        android:layout_height="wrap_content"
+        android:id="@+id/swipper">
+
+        <GridView
+            android:numColumns="auto_fit"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></GridView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

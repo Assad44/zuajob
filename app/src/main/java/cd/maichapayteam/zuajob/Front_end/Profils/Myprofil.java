@@ -20,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.bitmap.Transform;
@@ -54,6 +56,7 @@ public class Myprofil extends AppCompatActivity {
     TextView nom,number,Sexe,nbr_real;
     RatingBar rating;
     TextView type_compte,address,typeswitcher;
+    ProgressBar progressbar;
 
     Toolbar toolbar;
 
@@ -61,6 +64,7 @@ public class Myprofil extends AppCompatActivity {
         update_Adresses = findViewById(R.id.update_Adresses);
         picture = findViewById(R.id.picture);
         rating = findViewById(R.id.rating);
+        progressbar = findViewById(R.id.progressbar);
         Pickpicture = findViewById(R.id.Pickpicture);
         nom = findViewById(R.id.nom);
         number = findViewById(R.id.number);
@@ -73,6 +77,8 @@ public class Myprofil extends AppCompatActivity {
         details_user = findViewById(R.id.details_user);
         address = findViewById(R.id.address);
         typeswitcher = findViewById(R.id.typeswitcher);
+
+        progressbar.setVisibility(View.GONE);
     }
 
     private void Profil_initialize(){
@@ -83,8 +89,8 @@ public class Myprofil extends AppCompatActivity {
                 u.getNom() + " "+u.getPrenom()
         );
 
-        /*try {
-            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
             Ion.with(picture)
                     .placeholder(gifFromResource)
                     .error(R.drawable.avatar_error)
@@ -92,7 +98,10 @@ public class Myprofil extends AppCompatActivity {
                     .load(u.getUrlThumbnail());
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+
+        Log.e("IMAGE_PROFIL", u.getUrlThumbnail());
+        Toast.makeText(context, u.getUrlThumbnail(), Toast.LENGTH_SHORT).show();
 
         number.setText("+"+ u.getPhone());
         Sexe.setText(
@@ -313,6 +322,7 @@ public class Myprofil extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                progressbar.setVisibility(View.VISIBLE);
                 try {
                     GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
                     picture.setImageDrawable(gifFromResource);
@@ -329,21 +339,14 @@ public class Myprofil extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Boolean o) {
-                //alert.cancel();
-                AlertDialog.Builder a = new AlertDialog.Builder(context)
-                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                progressbar.setVisibility(View.GONE);
                 if (o!= true ){
-                    a.setMessage("Erreur lors de l'envoi de la photo au serveur");
+                    Toast.makeText(context, "Echec de la mise à jour du profil", Toast.LENGTH_SHORT).show();
                 }else{
-                    a.setMessage("Opération réussi");
-                    onRestart();
+                    Toast.makeText(context, "Le profil a été mis à jour", Toast.LENGTH_SHORT).show();
+                    //Profil_initialize();
                 }
-                a.show();
+
             }
         }.execute();
     }

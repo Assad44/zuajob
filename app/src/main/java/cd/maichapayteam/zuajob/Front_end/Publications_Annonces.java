@@ -73,6 +73,7 @@ public class Publications_Annonces extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] objects) {
+                ANNOCE_L.clear();
                 ANNOCE_L = ManageLocalData.listRandomAnnonce(cout);
                 for (Annonce c : ANNOCE_L){
                     ANNOCE.add(c);

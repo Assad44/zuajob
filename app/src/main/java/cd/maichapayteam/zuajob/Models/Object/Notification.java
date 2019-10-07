@@ -12,8 +12,8 @@ public class Notification {
     private long idUser = -1;
     private long idObject = -1;
     private String typeObject = "";
-    private String message = "";
     private String typeNotification = "";
+    private String message = "";
     private String time = "";
     private Postuler postulance = null;
     private Sollicitation sollicitation = null;

@@ -150,11 +150,11 @@ public class AutoRunService extends Service implements Runnable {
                 .setSmallIcon(icon)
                 .setContentTitle(titre)
                 .setContentText(notif.getMessage())
-                .setStyle(bigPictureStyle)
+                //.setStyle(bigPictureStyle)
                 .setContentIntent(contentIntent)
                 .setLights(Color.BLUE, 500, 500)
                 .setVibrate(new long[]{0,50,100,150,200,250,300,350,400,450,500})
-                .addAction(R.drawable.ic_annonce, "Voir les détails",contentIntent);
+                .addAction(R.drawable.ic_annonce, "Ouvrir",contentIntent);
 
         android.app.Notification notification = builder.build();
         NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
