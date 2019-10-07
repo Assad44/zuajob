@@ -18,6 +18,16 @@ public class Notification {
     private Postuler postulance = null;
     private Sollicitation sollicitation = null;
 
+    public boolean isReaded() {
+        return isReaded;
+    }
+
+    public void setReaded(boolean readed) {
+        isReaded = readed;
+    }
+
+    private boolean isReaded = false;
+
     public boolean isError() {
         return error;
     }
