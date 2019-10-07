@@ -264,7 +264,7 @@ public class SollicitationDAO extends DAOBase {
         List<Sollicitation> list = new ArrayList<>();
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1 and " + ID_SERVICE + " = ?", new String[]{String.valueOf(service.getId())});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1 and " + IS_REFUSED + " = 0 and " + IS_RDV + " = 0 and " + IS_CONCLU + " = 0 and " + IS_ACCEPTED + " = 0 and " + ID_SERVICE + " = ?", new String[]{String.valueOf(service.getId())});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }

@@ -183,7 +183,7 @@ public class AnnonceDAO extends DAOBase {
         //TODO implements algorithme for return random list of annonce
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " limit ?, 20", new String[]{String.valueOf(next)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_CONFIED + " = 0" + " limit ?, 20", new String[]{String.valueOf(next)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -199,7 +199,7 @@ public class AnnonceDAO extends DAOBase {
         List<Annonce> list = new ArrayList<>();
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ?  order by " + DATE + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_CONFIED + " = 0 AND " + SOUS_CATEGORIE + " = ?  order by " + DATE + " desc limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -231,7 +231,7 @@ public class AnnonceDAO extends DAOBase {
         List<Annonce> list = new ArrayList<>();
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + SOUS_CATEGORIE + " = ? limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_CONFIED + " = 0 AND " + SOUS_CATEGORIE + " = ? limit ?, 20", new String[]{String.valueOf(sousCategorie.getId()), String.valueOf(next)});
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
@@ -247,7 +247,7 @@ public class AnnonceDAO extends DAOBase {
         List<Annonce> list = new ArrayList<>();
         try{
             open();
-            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_MY + " = 1", null);
+            Cursor c = mDb.rawQuery("select " + KEY + " from " + TABLE_NOM + " where " + IS_CONFIED + " = 0 AND " + IS_MY + " = 1", null);
             while (c.moveToNext()) {
                 list.add(find(c.getLong(0)));
             }
