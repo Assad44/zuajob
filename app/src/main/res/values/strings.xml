@@ -179,6 +179,7 @@
         Vous donnez la possibilité de trouver des services que vous avez besoin et de publier des annonces de services afin de trouver des competences pour vous aider est le but même de cette application
         vous pouvez pu
     </string>
+    <string name="menu_notif">Notification</string>
 
 
 </resources>

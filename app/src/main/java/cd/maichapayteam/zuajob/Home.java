@@ -49,6 +49,7 @@ import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_postullances;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_rendez_vous_sollicitations;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services_sollicites;
+import cd.maichapayteam.zuajob.Front_end.Notification_result_classes.Results;
 import cd.maichapayteam.zuajob.Front_end.Paramettres;
 import cd.maichapayteam.zuajob.Front_end.Profils.Myprofil;
 import cd.maichapayteam.zuajob.Front_end.Publications_Annonces;
@@ -277,7 +278,7 @@ public class Home extends AppCompatActivity
             navigationView.inflateMenu(R.menu.activity_home_drawer_simple_user);
 
         }else{
-            BTN_jober.setVisibility(View.GONE);
+            //BTN_jober.setVisibility(View.GONE);
             navigationView.inflateMenu(R.menu.activity_home_drawer);
             requiered_location();
         }
@@ -506,6 +507,12 @@ public class Home extends AppCompatActivity
         }
         if (id == R.id.profil) {
             Intent i = new Intent(context, Myprofil.class);
+            startActivity(i);
+            finish();
+            return true;
+        }
+        if (id == R.id.action_notif) {
+            Intent i = new Intent(context, Results.class);
             startActivity(i);
             finish();
             return true;

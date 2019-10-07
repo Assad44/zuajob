@@ -17,6 +17,11 @@
         android:title="Partager le lien" />
     <item
         app:showAsAction="always"
+        android:id="@+id/action_notif"
+        android:icon="@drawable/ic_notif"
+        android:title="@string/menu_notif" />
+    <item
+        app:showAsAction="always"
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_setting_white"
         android:title="@string/menu_settings" />
