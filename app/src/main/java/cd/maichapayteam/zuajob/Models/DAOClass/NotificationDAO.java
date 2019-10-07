@@ -64,7 +64,7 @@ public class NotificationDAO extends DAOBase {
                 value.put(ID_USER, object.getIdUser());
                 value.put(TYPE_NOTIFICATION, object.getTypeNotification());
                 value.put(TYPE_OBJECT, object.getTypeObject());
-                value.put(MESSAGE, object.getIdUser());
+                value.put(MESSAGE, object.getMessage());
                 value.put(TIME, object.getTime());
                 value.put(IS_READED, object.isReaded());
                 open();
@@ -194,7 +194,7 @@ public class NotificationDAO extends DAOBase {
         value.put(ID_USER, object.getIdUser());
         value.put(TYPE_NOTIFICATION, object.getTypeNotification());
         value.put(TYPE_OBJECT, object.getTypeObject());
-        value.put(MESSAGE, object.getIdUser());
+        value.put(MESSAGE, object.getMessage());
         value.put(TIME, object.getTime());
         value.put(IS_READED, object.isReaded());
         open();
