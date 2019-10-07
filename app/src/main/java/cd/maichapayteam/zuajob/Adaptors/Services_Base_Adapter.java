@@ -77,7 +77,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         // todo : Affects values to the componants
         S_categorie.setText(S.getNomsJobeur());
         number.setText(S.getPhoneJobeur());
-        S_descriptions.setText(S.getSousCategorie()+" > "+ S.getSousCategorie());
+        S_descriptions.setText(S.getCategorie()+" > "+ S.getSousCategorie());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
 
@@ -87,8 +87,8 @@ public class Services_Base_Adapter extends BaseAdapter {
         float rating = cote * 5 / real;
         Rating.setRating(cote);
 
-        Tool.Load_Image(context, avatar,S.getUrlImageJobeur());
-        Log.e("IMAGE_PROFIL", S.getUrlImageJobeur());
+        Tool.Load_Image2(context, avatar,S.getUrlImageJobeur());
+        //Log.e("IMAGE_PROFIL", S.getUrlImageJobeur());
 
         element.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         S_descriptions.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
-        Tool.Load_Image(context, avatar,S.getUrlImageJobeur());
+        Tool.Load_Image2(context, avatar,S.getUrlImageJobeur());
         int cote = S.getCote();
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;

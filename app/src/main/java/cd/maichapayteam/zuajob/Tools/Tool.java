@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.bitmap.Transform;
 import com.koushikdutta.ion.builder.AnimateGifMode;
@@ -89,35 +90,32 @@ public class Tool {
     }
 
     // TODO LOAD IMAGES
-    public static void Load_Image(Context context, RoundedImageView imageView, String url){
+    public static void Load_Image2(Context context, final ImageView imageView, String url){
         try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
-            Ion.with(imageView)
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.ic_alarm_blue)
+            Ion.with(context)
+                    //.error(R.drawable.avatar_error)
+                    .load(url)
                     //.animateGif(AnimateGifMode.ANIMATE)
-                    .load(url);
+                    .withBitmap().asBitmap()
+                    .setCallback(new FutureCallback<Bitmap>() {
+                        @Override
+                        public void onCompleted(Exception e, Bitmap result) {
+                            imageView.setImageBitmap(result);
+                        }
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void Load_Image2(Context context, ImageView imageView, String url){
+
+    public static void Load_Image(Context context, ImageView imageView, String url){
         try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
             Ion.with(imageView)
-                    .error(R.drawable.avatar_vested)
-                    .placeholder(R.drawable.avatar)
-                    .transform(new Transform() {
-                        @Override
-                        public Bitmap transform(Bitmap b) {
-                            return createCircleBitmap(b);
-                        }
-
-                        @Override
-                        public String key() {
-                            return null;
-                        }
-                    })
+                    .placeholder(gifFromResource)
+                    .error(R.drawable.avatar_error)
+                    .animateGif(AnimateGifMode.ANIMATE)
                     .load(url);
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,19 +140,6 @@ public class Tool {
         //画图像
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
-    }
-
-    public static void Load_Image(Context context, ImageView imageView, String url){
-        try {
-            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
-            Ion.with(imageView)
-                    .placeholder(gifFromResource)
-                    .error(R.drawable.avatar_error)
-                    .animateGif(AnimateGifMode.ANIMATE)
-                    .load(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static SharedPreferences User_Preferences(Context context){

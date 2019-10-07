@@ -25,6 +25,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.bitmap.Transform;
 import com.koushikdutta.ion.builder.AnimateGifMode;
@@ -91,11 +92,22 @@ public class Myprofil extends AppCompatActivity {
 
         try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
-            Ion.with(picture)
+            Ion.with(context)
+                    //.error(R.drawable.avatar_error)
+                    .load(u.getUrlThumbnail())
+                    //.animateGif(AnimateGifMode.ANIMATE)
+                    .withBitmap().asBitmap()
+                    .setCallback(new FutureCallback<Bitmap>() {
+                        @Override
+                        public void onCompleted(Exception e, Bitmap result) {
+                            picture.setImageBitmap(result);
+                        }
+                    });
+            /*Ion.with(picture)
                     .placeholder(gifFromResource)
                     .error(R.drawable.avatar_error)
                     .animateGif(AnimateGifMode.ANIMATE)
-                    .load(u.getUrlThumbnail());
+                    .load(u.getUrlThumbnail());*/
         } catch (IOException e) {
             e.printStackTrace();
         }

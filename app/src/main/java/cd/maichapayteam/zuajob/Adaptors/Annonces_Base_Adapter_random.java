@@ -88,7 +88,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                 S.getCategorie()+">"+S.getSousCategorie()
         );
 
-        Tool.Load_Image(context, avatar,S.getUrlImageUser());
+        Tool.Load_Image2(context, avatar,S.getUrlImageUser());
         Log.e("IMAGE_PROFIL", S.getUrlImageUser());
 
         time.setText(Tool.formatingDate(S.getDatePublication()));
@@ -138,7 +138,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
 
         postullants.setVisibility(View.GONE);
 
-        Tool.Load_Image(context, avatar,S.getUrlImageUser());
+        Tool.Load_Image2(context, avatar,S.getUrlImageUser());
         nom_user.setText(S.getNomsUser());
         number.setText(S.getPhoneUser());
         description.setText(S.getDescription());

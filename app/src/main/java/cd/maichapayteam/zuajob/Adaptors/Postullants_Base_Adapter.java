@@ -72,7 +72,9 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         nom_user.setText(u.getNomsUser());
         nom_number.setText("+"+u.getPhoneUser());
         // TODO  LOAD IMAGE
-        try {
+        Tool.Load_Image2(context, avatar,u.getUrlImageUser());
+
+        /*try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
             Ion.with(avatar)
                     .placeholder(gifFromResource)
@@ -81,7 +83,7 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                     .load(u.getUrlImageUser());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override

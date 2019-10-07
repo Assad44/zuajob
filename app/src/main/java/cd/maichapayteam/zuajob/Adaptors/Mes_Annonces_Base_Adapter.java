@@ -127,12 +127,13 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
             nom_user.setText(S.getNomsUser());
             number.setText(S.getPhoneUser());
             postullants.setVisibility(View.GONE);
+            Tool.Load_Image2(context,avatar,S.getUrlImageUser());
+            postullants.setVisibility(View.GONE);
         }else{
             postullants.setVisibility(View.VISIBLE);
             nom_user.setText("Aucun jobeur n'a été habilité pour cette annonce");
             number.setText("");
         }
-        Tool.Load_Image(context,avatar,S.getUrlImageUser());
         description.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         categore.setText(S.getCategorie()+ " | "+ S.getSousCategorie());
@@ -205,6 +206,7 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
         final TextView count = convertView.findViewById(R.id.count);
         final GridView list= convertView.findViewById(R.id.list);
         final SwipeRefreshLayout swipper= convertView.findViewById(R.id.swipper);
+        swipper.setEnabled(false);
         final ArrayList<Postuler>[] DATA_L = new ArrayList[]{new ArrayList<>()};
 
         AsyncTask task = new AsyncTask() {
@@ -233,6 +235,9 @@ public class Mes_Annonces_Base_Adapter extends BaseAdapter {
             }
 
         }.execute();
+
+
+
 
         AlertDialog.Builder a = new AlertDialog.Builder(context)
                 .setView(convertView)

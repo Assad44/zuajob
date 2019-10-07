@@ -8,6 +8,7 @@
     tools:context=".Front_end.Notification_result_classes.Results">
 
     <LinearLayout
+        android:visibility="gone"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         android:paddingTop="-10dp"
