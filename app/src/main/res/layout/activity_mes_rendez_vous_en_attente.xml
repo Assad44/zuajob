@@ -33,6 +33,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="En atente de confirmation"
                     android:fontFamily="@font/alegreya_sans_thin"
                     android:textSize="20dp"
@@ -255,6 +256,7 @@
                 </HorizontalScrollView>
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Déjà confirmé"

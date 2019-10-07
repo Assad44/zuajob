@@ -82,6 +82,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         TextView date_time = convertView.findViewById(R.id.date_time);
                         TextView user = convertView.findViewById(R.id.user);
                         TextView categorie = convertView.findViewById(R.id.categorie);
+                        TextView advice = convertView.findViewById(R.id.advice);
                         TextView BTN_confirmer = convertView.findViewById(R.id.BTN_confirmer);
                         ImageView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
 
@@ -91,10 +92,11 @@ public class Mes_rendez_postullances extends AppCompatActivity {
 
                         if (c.isHavePostuled() == true){
                             BTN_confirmer.setVisibility(View.VISIBLE);
+                            advice.setVisibility(View.GONE);
                         }else{
                             BTN_confirmer.setVisibility(View.GONE);
+                            advice.setVisibility(View.VISIBLE);
                         }
-
                         sous.addView(convertView, 0);
                         element.setOnClickListener(new View.OnClickListener() {
                             @Override

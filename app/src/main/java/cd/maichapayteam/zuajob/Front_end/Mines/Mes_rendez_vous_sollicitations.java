@@ -57,7 +57,6 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
     }
 
     void RDV_SOLLICITATION_ATTENTE() {
-
         new AsyncTask() {
 
 
@@ -87,13 +86,23 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                         final CardView element = convertView.findViewById(R.id.element);
                         TextView date_time = convertView.findViewById(R.id.date_time);
                         TextView user = convertView.findViewById(R.id.user);
+                        TextView advice = convertView.findViewById(R.id.advice);
                         TextView categorie = convertView.findViewById(R.id.categorie);
                         TextView BTN_confirmer = convertView.findViewById(R.id.BTN_confirmer);
                         ImageView annuler_rdv = convertView.findViewById(R.id.annuler_rdv);
 
+
                         user.setText(c.getNomsUser());
                         date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSouscategorie());
+
+                        if (c.isHaveSollicited() == true){
+                            BTN_confirmer.setVisibility(View.VISIBLE);
+                            advice.setVisibility(View.GONE);
+                        }else{
+                            BTN_confirmer.setVisibility(View.GONE);
+                            advice.setVisibility(View.VISIBLE);
+                        }
 
                         sous.addView(convertView, 0);
 

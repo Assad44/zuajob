@@ -98,6 +98,7 @@
                     android:layout_height="wrap_content" />
 
                 <ProgressBar
+                    android:visibility="gone"
                     android:id="@+id/progressbar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="110dp"

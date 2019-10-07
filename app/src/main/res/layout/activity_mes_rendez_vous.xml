@@ -33,6 +33,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="En atente de confirmation"
@@ -257,6 +258,7 @@
                 </HorizontalScrollView>
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Déjà confirmé"

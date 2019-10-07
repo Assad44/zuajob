@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="20dp">
+        app:cardElevation="10dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -49,8 +49,7 @@
 
                     <TextView
                         android:textStyle="bold"
-                        android:id="@+id/date_time
-"
+                        android:id="@+id/date_time"
                         android:textColor="@color/dark8"
                         android:gravity="center"
                         android:layout_width="match_parent"

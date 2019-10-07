@@ -181,10 +181,10 @@ public class Tool {
             SharedPreferences.Editor editor = User_Preferences(context).edit();
             editor.putString(key, values);
             editor.apply();
-            Toast.makeText(context, key+" = "+values, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, key+" = "+values, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Log.e("TAG_PREFERENCES", e.getMessage());
-            Toast.makeText(context, key+" error", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, key+" error", Toast.LENGTH_SHORT).show();
         }
     }
 
