@@ -339,6 +339,15 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                         date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSouscategorie());
 
+                        BTN_valider.setText("Confirmer le service rendu");
+                        if (c.isMy() != true){
+                            BTN_valider.setVisibility(View.VISIBLE);
+                            //advice.setVisibility(View.GONE);
+                        }else{
+                            BTN_valider.setVisibility(View.GONE);
+                            //advice.setVisibility(View.VISIBLE);
+                        }
+
                         sous2.addView(convertView, 0);
 
                         coter.setOnClickListener(new View.OnClickListener() {

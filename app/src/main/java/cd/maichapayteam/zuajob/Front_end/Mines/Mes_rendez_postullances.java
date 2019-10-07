@@ -285,7 +285,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
 
     }
 
-    void RDV_POSTULLER(){
+    void RDV_POSTULLER() {
 
         new AsyncTask() {
 
@@ -295,6 +295,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                 //Toast.makeText(context, "---------- "+ cout , Toast.LENGTH_SHORT).show();
                 super.onPreExecute();
             }
+
             @Override
             protected Object doInBackground(Object[] objects) {
                 POSTULLER = (List<Postuler>) ManageLocalData.mesRDV().get(0);
@@ -309,9 +310,10 @@ public class Mes_rendez_postullances extends AppCompatActivity {
             @Override
             protected void onPostExecute(Object o) {
                 swipper.setRefreshing(false);
-                if (null == POSTULLER) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
-                else{
-                    for ( final Postuler c : POSTULLER) {
+                if (null == POSTULLER)
+                    Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else {
+                    for (final Postuler c : POSTULLER) {
                         View convertView = LayoutInflater.from(context).inflate(R.layout.view_rdv, null);
 
                         final LinearLayout details_option = convertView.findViewById(R.id.details_option);
@@ -330,13 +332,22 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         date_time.setText(c.getDateRDV() + " à " + c.getHeureRDV());
                         categorie.setText(c.getCategorie() + " | " + c.getSousCategorie());
 
+                        BTN_valider.setText("Confirmer le service rendu");
+                        if (c.isMy() == true){
+                            BTN_valider.setVisibility(View.VISIBLE);
+                            //advice.setVisibility(View.GONE);
+                        }else{
+                            BTN_valider.setVisibility(View.GONE);
+                            //advice.setVisibility(View.VISIBLE);
+                        }
+
                         sous2.addView(convertView, 0);
 
                         coter.setOnClickListener(new View.OnClickListener() {
                             @RequiresApi(api = Build.VERSION_CODES.M)
                             @Override
                             public void onClick(View v) {
-                                View convertView  = LayoutInflater.from(context).inflate(R.layout.view_dialog_options,null);
+                                View convertView = LayoutInflater.from(context).inflate(R.layout.view_dialog_options, null);
                                 final RatingBar rating = convertView.findViewById(R.id.rating);
                                 final EditText com = convertView.findViewById(R.id.com);
                                 final TextView text = convertView.findViewById(R.id.text);
@@ -345,7 +356,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                                     @Override
                                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                                         text.setVisibility(View.VISIBLE);
-                                        text.setText(String.valueOf( rating ).concat(" / 5"));
+                                        text.setText(String.valueOf(rating).concat(" / 5"));
                                     }
                                 });
 
@@ -356,7 +367,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 float cote = rating.getRating();
-                                                Send_cotation(c.getId(),cote,com.getText().toString());
+                                                Send_cotation(c.getId(), cote, com.getText().toString());
                                                 dialog.dismiss();
                                             }
                                         })
@@ -365,7 +376,8 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.dismiss();
                                             }
-                                        });;
+                                        });
+                                ;
                                 final AlertDialog alert = a.create();
                                 alert.show();
                             }
@@ -374,7 +386,7 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         annuler_rdv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                AlertDialog.Builder a = new AlertDialog.Builder(context,R.style.MyDialogTheme)
+                                AlertDialog.Builder a = new AlertDialog.Builder(context, R.style.MyDialogTheme)
                                         .setTitle("Confirmation")
                                         .setMessage("Voulez-vous vraimment annuler ce rendez-vous ?")
                                         .setCancelable(true)
@@ -398,12 +410,12 @@ public class Mes_rendez_postullances extends AppCompatActivity {
                         BTN_valider.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final Animation dropdup = AnimationUtils.loadAnimation(context,R.anim.move_up);
-                                final Animation dropdown = AnimationUtils.loadAnimation(context,R.anim.move_down);
-                                if (details_option.getVisibility() == View.GONE){
+                                final Animation dropdup = AnimationUtils.loadAnimation(context, R.anim.move_up);
+                                final Animation dropdown = AnimationUtils.loadAnimation(context, R.anim.move_down);
+                                if (details_option.getVisibility() == View.GONE) {
                                     details_option.setAnimation(dropdown);
                                     details_option.setVisibility(View.VISIBLE);
-                                }else{
+                                } else {
                                     details_option.setAnimation(dropdup);
                                     details_option.setVisibility(View.GONE);
                                 }
