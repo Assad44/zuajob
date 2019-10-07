@@ -77,7 +77,9 @@ public class Notifications_Base_Adapter extends BaseAdapter {
 
         if (N.getTypeNotification().equals("created") && N.getTypeObject().equals("sollicitation") ){
             img.setImageResource(R.drawable.ic_sollicitation);
-        }else{
+        }else if (N.getTypeNotification().equals("rended") && N.getTypeObject().equals("confied") ){
+            img.setImageResource(R.drawable.ic_rdv);
+        } else{
             img.setImageResource(R.drawable.ic_annonce);
         }
 
