@@ -65,6 +65,8 @@ public class Results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
         getSupportActionBar().setTitle("Notifications");
         getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Init_Components();
 
@@ -76,6 +78,13 @@ public class Results extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
