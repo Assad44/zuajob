@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <cd.maichapayteam.zuajob.Tools.ImageViewRounded
+                <ImageView
                     android:scaleType="centerCrop"
                     android:id="@+id/avatar"
                     android:layout_width="100dp"
