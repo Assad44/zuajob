@@ -151,7 +151,7 @@ public class Tool {
                     .placeholder(gifFromResource)
                     .error(R.drawable.avatar_error)
                     .animateGif(AnimateGifMode.ANIMATE)
-                    .load("http://hotprintdesign.com/wp-content/uploads/2019/02/no-profile-photo.jpg");
+                    .load(url);
         } catch (IOException e) {
             e.printStackTrace();
         }

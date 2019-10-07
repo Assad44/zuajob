@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,6 +88,7 @@ public class Services_Base_Adapter extends BaseAdapter {
         Rating.setRating(cote);
 
         Tool.Load_Image(context, avatar,S.getUrlImageJobeur());
+        Log.e("IMAGE_PROFIL", S.getUrlImageJobeur());
 
         element.setOnClickListener(new View.OnClickListener() {
             @Override

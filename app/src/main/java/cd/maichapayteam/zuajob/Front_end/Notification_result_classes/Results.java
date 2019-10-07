@@ -18,14 +18,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Adaptors.Annonces_Base_Adapter_random;
+import cd.maichapayteam.zuajob.Adaptors.Notifications_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Postullants_Base_Adapter;
 import cd.maichapayteam.zuajob.Adaptors.Sollicitants_Base_Adapter;
 import cd.maichapayteam.zuajob.Home;
@@ -36,6 +39,7 @@ import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
 import cd.maichapayteam.zuajob.R;
 import cd.maichapayteam.zuajob.Tools.ManageLocalData;
+import pl.droidsonroids.gif.GifDrawable;
 
 public class Results extends AppCompatActivity {
 
@@ -63,9 +67,8 @@ public class Results extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
         Init_Components();
-        
-        
-        
+
+        Notifications();
 
     }
 
@@ -80,6 +83,39 @@ public class Results extends AppCompatActivity {
         Intent i = new Intent(context, Home.class);
         startActivity(i);
         finish();
+    }
+
+
+    // TODO Load list notif
+
+
+    private void Notifications(){
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected void onPreExecute() {
+                swipper.setRefreshing(true);
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                NOTIF.clear();
+                NOTIF =   (ArrayList<Notification>) ManageLocalData.getListNotifications();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                swipper.setRefreshing(false);
+                if (null == NOTIF) Toast.makeText(context, "Null DATA", Toast.LENGTH_SHORT).show();
+                else if (NOTIF.isEmpty()) Toast.makeText(context, "Aucune donnée"  , Toast.LENGTH_SHORT).show();
+                else{
+                    list.setAdapter(new Notifications_Base_Adapter(context, NOTIF));
+                    //count.setText(list.getCount()+" Postullants");
+                }
+            }
+
+        }.execute();
     }
 
 

@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -88,7 +89,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
         );
 
         Tool.Load_Image(context, avatar,S.getUrlImageUser());
-
+        Log.e("IMAGE_PROFIL", S.getUrlImageUser());
 
         time.setText(Tool.formatingDate(S.getDatePublication()));
 

@@ -334,7 +334,7 @@ public class Myprofil extends AppCompatActivity {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                return ManageLocalData.uploadImage(img,".jpg");
+                return ManageLocalData.uploadImage(img,"jpg");
             }
 
             @Override
