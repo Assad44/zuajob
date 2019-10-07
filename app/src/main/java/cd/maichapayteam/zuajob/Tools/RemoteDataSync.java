@@ -20,6 +20,7 @@ import java.util.List;
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CommentDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.NotificationDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.PostulerDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
@@ -1210,7 +1211,9 @@ public class RemoteDataSync {
             ANResponse<ListNotification> response = request.executeForObject(ListNotification.class);
             if (response.isSuccess()) {
                 list = response.getResult().getListe();
+                NotificationDAO notificationDAO = NotificationDAO.getInstance(GeneralClass.applicationContext);
                 for (Notification object : list) {
+                    notificationDAO.ajouter(object);
                     if(object.getTypeObject().equals("postulance")) {
                         if(object.getPostulance()!=null &&
                                 !object.getPostulance().isError()) {

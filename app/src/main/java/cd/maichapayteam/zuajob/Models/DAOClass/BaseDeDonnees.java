@@ -34,6 +34,7 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
             db.execSQL(SollicitationDAO.TABLE_CREATE);
             db.execSQL(SousCategorieDAO.TABLE_CREATE);
             db.execSQL(UserDAO.TABLE_CREATE);
+            db.execSQL(NotificationDAO.TABLE_CREATE);
         }catch (Exception ex){
             Toast.makeText(cnt, ex.toString(), Toast.LENGTH_LONG).show();
         }
@@ -50,6 +51,7 @@ public class BaseDeDonnees  extends SQLiteOpenHelper {
             db.execSQL(SollicitationDAO.TABLE_DROP);
             db.execSQL(SousCategorieDAO.TABLE_DROP);
             db.execSQL(UserDAO.TABLE_DROP);
+            db.execSQL(NotificationDAO.TABLE_DROP);
             onCreate(db);
         }catch (Exception ex){
             Toast.makeText(cnt, ex.toString(), Toast.LENGTH_LONG).show();

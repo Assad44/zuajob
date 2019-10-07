@@ -5,6 +5,7 @@ import java.util.List;
 
 import cd.maichapayteam.zuajob.Models.DAOClass.AnnonceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.CategorieDAO;
+import cd.maichapayteam.zuajob.Models.DAOClass.NotificationDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.PostulerDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.ServiceDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.SollicitationDAO;
@@ -12,6 +13,7 @@ import cd.maichapayteam.zuajob.Models.DAOClass.SousCategorieDAO;
 import cd.maichapayteam.zuajob.Models.DAOClass.UserDAO;
 import cd.maichapayteam.zuajob.Models.Object.Annonce;
 import cd.maichapayteam.zuajob.Models.Object.Categorie;
+import cd.maichapayteam.zuajob.Models.Object.Notification;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.Sollicitation;
@@ -319,6 +321,14 @@ public class ManageLocalData {
         return RemoteDataSync.uploadImage(image, format);
     }
 
+    public static List<Notification> getListNotifications() {
+        return NotificationDAO.getInstance(GeneralClass.applicationContext).getAll();
+    }
+
+    public static void setNotificationReaded(long idNotification) {
+        NotificationDAO.getInstance(GeneralClass.applicationContext).setReaded(idNotification);
+    }
+
     public static boolean deconnection() {
         if(UserDAO.getInstance(GeneralClass.applicationContext).deconnection()>0) {
             CategorieDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
@@ -326,6 +336,7 @@ public class ManageLocalData {
             ServiceDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
             PostulerDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
             SollicitationDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
+            NotificationDAO.getInstance(GeneralClass.applicationContext).deletePersonnelData();
             return true;
         }
         return false;
