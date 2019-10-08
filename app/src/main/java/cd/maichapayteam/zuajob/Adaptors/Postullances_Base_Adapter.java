@@ -69,13 +69,12 @@ public class Postullances_Base_Adapter extends BaseAdapter {
         number.setText(S.getPhoneUser());
 
 
-
         description.setText(S.getDescriptionAnnonce());
         categorie.setText(
                "Les categories ne s'y retrouve pas" /*S.getCategorie()+">"+S.getSousCategorie()*/
         );
 
-        Tool.Load_Image(context, avatar,S.getUrlImageUser());
+        Tool.Load_Image2(context, avatar,S.getUrlImageUser());
 
 
         time.setText(Tool.formatingDate(S.getDate()));

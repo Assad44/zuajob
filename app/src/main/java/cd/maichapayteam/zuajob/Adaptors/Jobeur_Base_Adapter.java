@@ -79,7 +79,7 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         float rating = cote * 5 / real;*/
         MyRating.setRating(S.getCote());
 
-        Tool.Load_Image(context,avatar,S.getUrlPhoto());
+        Tool.Load_Image2(context,avatar,S.getUrlPhoto());
 
         return convertView;
     }

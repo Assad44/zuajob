@@ -10,8 +10,10 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".Tools.AutoRunService" />
-        <activity android:name=".Front_end.Notification_result_classes.Results"></activity>
+        <activity android:name=".Front_end.Webpaiemnt"></activity>
+
+        <activity android:name=".Front_end.Notification_result_classes.Results" />
+
         <activity android:name=".Front_end.Publication_services_by_category" />
         <activity android:name=".Front_end.Publication_annonces_by_category" />
         <activity android:name=".Front_end.Publications_Annonces" />
@@ -54,7 +56,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="AA_DB_NAME"
             android:value="test" />
@@ -74,10 +75,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.BOOT_COMPLETED" />
-                <!-- <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.intent.action.CONNECTIVITY_CHANGE" /> -->
+                <!--
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.intent.action.CONNECTIVITY_CHANGE" />
+                -->
             </intent-filter>
         </receiver>
+
+        <service android:name=".Tools.AutoRunService" />
     </application>
     <uses-permission android:name="android.PERMISSION.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />

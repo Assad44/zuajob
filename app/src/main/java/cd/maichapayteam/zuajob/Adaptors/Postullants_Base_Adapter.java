@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
+import cd.maichapayteam.zuajob.Front_end.Webpaiemnt;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.Models.Object.User;
@@ -148,8 +149,6 @@ public class Postullants_Base_Adapter extends BaseAdapter {
             }
         });
 
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,14 +182,13 @@ public class Postullants_Base_Adapter extends BaseAdapter {
 
                     @Override
                     protected Postuler doInBackground(Void... voids) {
-                        return ManageLocalData.creerRDVbyUser(
+                        return ManageLocalData.creerRDVbyUser2(
                                 u.getId(),
                                 date.getText().toString(),
                                 heure.getText().toString(),
                                 note.getText().toString().replace("'","''"),
                                 Integer.parseInt(montant.getText().toString()),
-                                devise.getSelectedItem().toString(),
-                                "1234"
+                                devise.getSelectedItem().toString()
                         );
                     }
 
@@ -208,7 +206,9 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                         }else{
                             a.setMessage("Opération réussi");
-                            context.startActivity(new Intent(context, Mes_annonces.class));
+                            Intent i = new Intent(context, Webpaiemnt.class);
+                            i.putExtra("HTML", service.getHtml());
+                            context.startActivity(i);
                         }
                         a.show();
                     }

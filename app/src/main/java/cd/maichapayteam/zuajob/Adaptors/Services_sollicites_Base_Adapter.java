@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Models.Object.Service;
 import cd.maichapayteam.zuajob.R;
+import cd.maichapayteam.zuajob.Tools.Tool;
 
 /**
  * Created by Deon-Mass on 08/02/2018.
@@ -139,12 +140,12 @@ public class Services_sollicites_Base_Adapter extends BaseAdapter {
         S_descriptions.setText(S.getDescription());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
         realisation.setText(S.getNombreRealisation()+" Réalisation (s)");
-        avatar.setImageResource(profil);
+        Tool.Load_Image2(context, avatar,S.getUrlImageJobeur());
         int cote = S.getCote();
         int real = S.getNombreRealisation()*10;
         if (real == 0) real = 1;
         float rating = cote * 5 / real;
-        Rating.setRating(rating);
+        Rating.setRating(cote);
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override

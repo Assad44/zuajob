@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
+import cd.maichapayteam.zuajob.Front_end.Webpaiemnt;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
@@ -191,6 +192,9 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                     a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                 }else{
                     a.setMessage("Opération réussi");
+                    Intent i = new Intent(context, Webpaiemnt.class);
+                    i.putExtra("HTML", service.getHtml());
+                    context.startActivity(i);
 
                 }
                 a.show();

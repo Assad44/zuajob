@@ -73,16 +73,7 @@ public class Sollicitants_Base_Adapter extends BaseAdapter {
         nom_user.setText(u.getNomsUser());
         nom_number.setText("+"+u.getPhoneUser());
         // TODO  LOAD IMAGE
-        try {
-            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
-            Ion.with(avatar)
-                    .placeholder(gifFromResource)
-                    .error(R.drawable.avatar_error)
-                    .animateGif(AnimateGifMode.ANIMATE)
-                    .load(u.getUrlImageUser());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Tool.Load_Image2(context, avatar, u.getUrlImageUser());
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +102,6 @@ public class Sollicitants_Base_Adapter extends BaseAdapter {
         final Spinner devise= convertView.findViewById(R.id.deviseAnnonce);
         TextView submit= convertView.findViewById(R.id.submit);
         TextView cancel = convertView.findViewById(R.id.cancel);
-
-
 
         date_zone.setOnClickListener(new View.OnClickListener() {
             @Override
