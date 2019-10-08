@@ -113,6 +113,7 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                 popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Tool.LAUNCH_WHATAP(context, S.getPhoneUser());
                         return false;
                     }
                 });
@@ -153,6 +154,13 @@ public class Annonces_Base_Adapter_random extends BaseAdapter {
                 popupMenu.getMenu().add("Appeller "+S.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Tool.LAUNCH_WHATAP(context, S.getPhoneUser());
                         return false;
                     }
                 });

@@ -109,6 +109,7 @@ public class Services_Base_Adapter extends BaseAdapter {
                 popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Tool.LAUNCH_WHATAP(context, S.getPhoneJobeur());
                         return false;
                     }
                 });
@@ -157,6 +158,7 @@ public class Services_Base_Adapter extends BaseAdapter {
                 popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        Tool.LAUNCH_WHATAP(context, S.getPhoneJobeur());
                         return false;
                     }
                 });
