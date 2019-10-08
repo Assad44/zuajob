@@ -1936,7 +1936,8 @@ public class RemoteDataSync {
                 sollicitation = new Sollicitation();
                 sollicitation.setError(true);
                 sollicitation.setErrorCode(31921);
-                sollicitation.setErrorMessage(response.getError().getMessage());
+                sollicitation.setErrorMessage(response.getError().getErrorBody());
+                Log.e("RemoteDataSyn", response.getError().getErrorBody());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();
