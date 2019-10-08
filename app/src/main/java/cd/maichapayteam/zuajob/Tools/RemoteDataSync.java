@@ -46,7 +46,8 @@ import cd.maichapayteam.zuajob.Models.Object.User;
 
 public class RemoteDataSync {
 
-    private static String BASE_URL = "http://apizuajob.000webhostapp.com/v1/";
+    private static String BASE_URL = "http://zuajob2.000webhostapp.com/v1/";
+    //private static String BASE_URL = "http://apizuajob.000webhostapp.com/v1/";
     //private static String BASE_URL = "http://157.245.44.245:8000/api/";
     //private static String BASE_URL = "http://192.168.43.230:8000/api/v1/";
     //private static String BASE_URL = "http://192.168.43.60/zuajob/v1/";
@@ -1692,7 +1693,6 @@ public class RemoteDataSync {
 
         return false;
     }
-
 
     //OK
     public static Sollicitation creerRDVbyJobeur (long idSolliciter, String date, String heure, String detail, float montant, String devise) {
