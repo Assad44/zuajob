@@ -1910,6 +1910,8 @@ public class RemoteDataSync {
     public static Sollicitation confirmerRDVbyUser2 (long idSolliciter) {
         String url = BASE_URL + "confirmerrdv/user/" + idSolliciter + "/" + GeneralClass.Currentuser.getAuthCode();
 
+        Log.e("RemoteDataSyn", "confirmerRDVbyUser2 called");
+
         Sollicitation sollicitation = null;
 
         //JSONObject jsonObject = new JSONObject();
@@ -1930,6 +1932,7 @@ public class RemoteDataSync {
                         String html = jsonObject.getString("html");
                         sollicitation = new Sollicitation();
                         sollicitation.setHtml(html);
+                        Log.e("HTML", html);
                     }
                 }
             } else {

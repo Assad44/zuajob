@@ -168,7 +168,7 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
 
             @Override
             protected Sollicitation doInBackground(Void... voids) {
-                return ManageLocalData.confirmerRDVbyUser(id,"123");
+                return ManageLocalData.confirmerRDVbyUser2(id);
             }
 
             @Override
@@ -195,12 +195,11 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                     Intent i = new Intent(context, Webpaiemnt.class);
                     i.putExtra("HTML", service.getHtml());
                     context.startActivity(i);
-
                 }
                 a.show();
 
-                startActivity(new Intent(context, Publication_blank.class));
-                finish();
+                //startActivity(new Intent(context, Publication_blank.class));
+                //finish();
             }
         }.execute();
 
