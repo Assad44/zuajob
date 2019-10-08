@@ -7,12 +7,15 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -100,8 +103,19 @@ public class Tool {
                     .withBitmap().asBitmap()
                     .setCallback(new FutureCallback<Bitmap>() {
                         @Override
-                        public void onCompleted(Exception e, Bitmap result) {
-                            imageView.setImageBitmap(result);
+                        public void onCompleted(Exception e, Bitmap bitmap) {
+                            if (bitmap == null){
+                                imageView.setImageResource(R.drawable.avatar_error);
+                                return;
+                            }
+                            final Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                            final BitmapShader shader = new BitmapShader (bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+                            final Paint paint = new Paint();
+                            paint.setShader(shader);
+                            final Canvas canvas = new Canvas(circleBitmap);
+                            canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
+                            // maybe bitmap.recycle() here?
+                            imageView.setImageBitmap(circleBitmap);
                         }
                     });
         } catch (IOException e) {
@@ -486,6 +500,35 @@ public class Tool {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:"+phone));
         context.startActivity(intent);
+    }
+    public static void  LAUNCH_WHATAP(Context context, String number){
+        String contact = "+00 9876543210"; // use country code with your phone number
+        String url = "https://api.whatsapp.com/send?phone=" +"+"+ number;
+        try {
+            PackageManager pm = context.getPackageManager();
+            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            context.startActivity(i);
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(context, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+    public static void  LAUNCH_WHATAPP(Context context, String number){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.whatsapp");
+        context.startActivity(Intent.createChooser(sendIntent, ""));
+        context.startActivity(sendIntent);
+
+        String url = "https://api.whatsapp.com/send?phone="+number;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        context.startActivity(i);
+
     }
     public static void  LAUNCH_WEB_SITE(Context context){
         Intent intent;

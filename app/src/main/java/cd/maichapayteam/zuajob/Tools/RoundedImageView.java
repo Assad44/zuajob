@@ -3,6 +3,7 @@ package cd.maichapayteam.zuajob.Tools;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import com.koushikdutta.ion.*;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;

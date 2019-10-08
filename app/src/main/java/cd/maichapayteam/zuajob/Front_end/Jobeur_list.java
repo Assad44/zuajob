@@ -192,7 +192,7 @@ public class Jobeur_list extends AppCompatActivity {
             }
         });
         
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 View view  = LayoutInflater.from(context).inflate(R.layout.view_jobeurs_details2,null);
@@ -232,7 +232,7 @@ public class Jobeur_list extends AppCompatActivity {
                 alert.show();
 
             }
-        });
+        });*/
     }
 
     @Override

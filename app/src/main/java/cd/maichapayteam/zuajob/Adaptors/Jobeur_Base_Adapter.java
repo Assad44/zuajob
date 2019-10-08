@@ -1,6 +1,7 @@
 package cd.maichapayteam.zuajob.Adaptors;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,11 +62,19 @@ public class Jobeur_Base_Adapter extends BaseAdapter {
         nom.setText(S.getNom());
         phone.setText(S.getPhone());
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
         try {
             Date d1 = new Date(sdf1.parse(S.getBirthday()).getTime());
-            int old = Integer.parseInt(sdf2.format(new Date())) - Integer.parseInt(sdf2.format(d1));
+
+            Log.e("AGEEEEEEEE", S.getBirthday());
+
+            int yt = Integer.parseInt(sdf2.format(new Date()));
+            int yb = Integer.parseInt(sdf2.format(d1));
+            int old = yt - yb;
+            Log.e("AGEEEEEEEE", yt +" - "+ yb);
+            Log.e("AGEEEEEEEE", String.valueOf(old));
+
             age.setText(String.valueOf(old).concat(" an(s)"));
         } catch (ParseException e) {
             e.printStackTrace();

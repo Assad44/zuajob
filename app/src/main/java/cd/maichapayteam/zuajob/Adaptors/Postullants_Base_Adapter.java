@@ -7,12 +7,14 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +87,27 @@ public class Postullants_Base_Adapter extends BaseAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+        nom_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, v);
+                popupMenu.getMenu().add("Appeller "+u.getPhoneUser()).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                popupMenu.getMenu().add("Ouvrir une conversation WhatsApp").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Tool.LAUNCH_WHATAP(context, u.getPhoneUser());
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override

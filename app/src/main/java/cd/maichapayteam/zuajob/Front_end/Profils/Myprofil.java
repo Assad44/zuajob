@@ -90,9 +90,11 @@ public class Myprofil extends AppCompatActivity {
                 u.getNom() + " "+u.getPrenom()
         );
 
-        try {
+        Tool.Load_Image2(context, picture, u.getUrlThumbnail());
+
+        /*try {
             GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
-            Ion.with(context)
+            *//*Ion.with(context)
                     //.error(R.drawable.avatar_error)
                     .load(u.getUrlThumbnail())
                     //.animateGif(AnimateGifMode.ANIMATE)
@@ -102,15 +104,15 @@ public class Myprofil extends AppCompatActivity {
                         public void onCompleted(Exception e, Bitmap result) {
                             picture.setImageBitmap(result);
                         }
-                    });
-            /*Ion.with(picture)
+                    });*//*
+            Ion.with(picture)
                     .placeholder(gifFromResource)
                     .error(R.drawable.avatar_error)
                     .animateGif(AnimateGifMode.ANIMATE)
-                    .load(u.getUrlThumbnail());*/
+                    .load(u.getUrlThumbnail());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Log.e("IMAGE_PROFIL", u.getUrlThumbnail());
         ///Toast.makeText(context, u.getUrlThumbnail(), Toast.LENGTH_SHORT).show();
@@ -334,7 +336,7 @@ public class Myprofil extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progressbar.setVisibility(View.VISIBLE);
+                //progressbar.setVisibility(View.VISIBLE);
                 try {
                     GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
                     picture.setImageDrawable(gifFromResource);
@@ -356,7 +358,7 @@ public class Myprofil extends AppCompatActivity {
                     Toast.makeText(context, "Echec de la mise à jour du profil", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "Le profil a été mis à jour", Toast.LENGTH_SHORT).show();
-                    //Profil_initialize();
+                    Profil_initialize();
                 }
 
             }
