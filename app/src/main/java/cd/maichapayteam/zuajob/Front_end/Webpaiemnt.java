@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -41,6 +42,7 @@ public class Webpaiemnt extends AppCompatActivity {
             return;
         }
         HTML = getIntent().getExtras().getString("HTML");
+        Log.e("EEEEEEEEE",HTML);
 
         Setting_Up();
     }
@@ -100,7 +102,7 @@ public class Webpaiemnt extends AppCompatActivity {
         mainWebView.setWebViewClient(new WebViewClient());
         mainWebView.setHorizontalScrollBarEnabled(false);
         mainWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        mainWebView.loadUrl(HTML);
+        mainWebView.loadDataWithBaseURL(null,HTML,"text/html","utf-8",null);
         mainWebView.setWebViewClient(
                 new SSLTolerentWebViewClient()
         );
