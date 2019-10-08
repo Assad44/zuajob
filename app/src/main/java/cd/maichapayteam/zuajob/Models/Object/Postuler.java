@@ -96,6 +96,7 @@ public class Postuler {
     }
 
     private String detailRDV = "";
+    private String html = "";
     private boolean havePostuled = false;
     private boolean isMy = false;
 
@@ -300,4 +301,11 @@ public class Postuler {
         return jsonObject;
     }
 
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
 }

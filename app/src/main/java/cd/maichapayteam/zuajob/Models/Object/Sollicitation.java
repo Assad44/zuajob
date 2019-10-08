@@ -35,6 +35,16 @@ public class Sollicitation {
     private int cote = 0;
     private String comment = "";
 
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
+    private String html = "";
+
     private int idCategorie = -1;
 
     public int getIdCategorie() {

@@ -297,12 +297,20 @@ public class ManageLocalData {
         return RemoteDataSync.confirmerRDVbyUser(idSollicitation, codePayement);
     }
 
+    public static Sollicitation confirmerRDVbyUser2(long idSollicitation) {
+        return RemoteDataSync.confirmerRDVbyUser2(idSollicitation);
+    }
+
     public static Sollicitation serviceRenduBySollicitance(long idSollicitation, int cote, String comment) {
         return RemoteDataSync.serviceRenduBySollicitance(idSollicitation, cote, comment);
     }
 
     public static Postuler creerRDVbyUser(long idPostulance, String date, String heure, String detail, float montant, String devise, String codePayement) {
         return RemoteDataSync.creerRDVbyUser(idPostulance, date, heure, detail, codePayement, montant, devise);
+    }
+
+    public static Postuler creerRDVbyUser2(long idPostulance, String date, String heure, String detail, float montant, String devise) {
+        return RemoteDataSync.creerRDVbyUser2(idPostulance, date, heure, detail, montant, devise);
     }
 
     public static Postuler refuserPostulance(long idPostulance) {

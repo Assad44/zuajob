@@ -1906,6 +1906,54 @@ public class RemoteDataSync {
 
         return sollicitation;
     }
+    //OK
+    public static Sollicitation confirmerRDVbyUser2 (long idSolliciter) {
+        String url = BASE_URL + "confirmerrdv/user/" + idSolliciter + "/" + GeneralClass.Currentuser.getAuthCode();
+
+        Sollicitation sollicitation = null;
+
+        //JSONObject jsonObject = new JSONObject();
+        //try { jsonObject.put("idSollicitation", idSolliciter); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.post(url)
+                    //.addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idSolliciter)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                JSONObject jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error")) {
+                        String html = jsonObject.getString("html");
+                        sollicitation = new Sollicitation();
+                        sollicitation.setHtml(html);
+                    }
+                }
+            } else {
+                sollicitation = new Sollicitation();
+                sollicitation.setError(true);
+                sollicitation.setErrorCode(31921);
+                sollicitation.setErrorMessage(response.getError().getMessage());
+            }
+        } catch (Exception ex) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(49288);
+            sollicitation.setErrorMessage(ex.getMessage());
+        }
+
+        if(sollicitation==null) {
+            sollicitation = new Sollicitation();
+            sollicitation.setError(true);
+            sollicitation.setErrorCode(1127);
+            sollicitation.setErrorMessage("Une erreur est survenue lors de la création de votre rendez-vous.");
+        }
+
+        return sollicitation;
+    }
 
 
 
@@ -2097,6 +2145,65 @@ public class RemoteDataSync {
                 postuler.setErrorCode(31921);
                 postuler.setErrorMessage(response.getError().getErrorBody());
                 Log.e("ServiceRendu", response.getError().getErrorBody());
+            }
+        } catch (Exception ex) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(49288);
+            postuler.setErrorMessage(ex.getMessage());
+        }
+        if(postuler==null) {
+            postuler = new Postuler();
+            postuler.setError(true);
+            postuler.setErrorCode(1127);
+            postuler.setErrorMessage("Une erreur est survenue lors de la création du rendez-vous.");
+        }
+        return postuler;
+    }
+    //OK
+    public static Postuler creerRDVbyUser2 (long idPostuler, String date, String heure, String detail, float montant, String devise) {
+        String url = BASE_URL + "creerrdv/user/" + GeneralClass.Currentuser.getAuthCode();
+
+        Postuler postuler = null;
+
+        JSONObject jsonObject = new JSONObject();
+        try { jsonObject.put("idPostulance", idPostuler); } catch (JSONException e) { }
+        try { jsonObject.put("date", date); } catch (JSONException e) { }
+        try { jsonObject.put("heure", heure); } catch (JSONException e) { }
+        try { jsonObject.put("detail", detail); } catch (JSONException e) { }
+        try { jsonObject.put("montant", montant); } catch (JSONException e) { }
+        try { jsonObject.put("devise", devise); } catch (JSONException e) { }
+
+        try{
+            ANRequest request = AndroidNetworking.post(url)
+                    .addJSONObjectBody(jsonObject)
+                    .setTag("creerRDVByPostuler" + idPostuler)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
+
+            ANResponse<JSONObject> response = request.executeForJSONObject();
+            if (response.isSuccess()) {
+                jsonObject = response.getResult();
+                if(jsonObject!=null) {
+                    if(!jsonObject.getBoolean("error")) {
+                        PostulerDAO postulerDAO = new PostulerDAO(GeneralClass.applicationContext);
+                        postuler = postulerDAO.find(idPostuler);
+                        if(postuler!=null) {
+                            postuler.setDateRDV(date);
+                            postuler.setHeureRDV(heure);
+                            postuler.setDetailRDV(detail);
+                            postuler.setMontantConclu(montant);
+                            postuler.setDeviseConclu(devise);
+                            postuler = postulerDAO.ajouter(postuler);
+                            postuler.setHtml(jsonObject.getString("html"));
+                        }
+                    }
+                }
+            } else {
+                postuler = new Postuler();
+                postuler.setError(true);
+                postuler.setErrorCode(31921);
+                postuler.setErrorMessage(response.getError().getMessage());
             }
         } catch (Exception ex) {
             postuler = new Postuler();
