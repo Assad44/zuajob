@@ -100,6 +100,16 @@ public class Postuler {
     private boolean havePostuled = false;
     private boolean isMy = false;
 
+    public boolean isWaitingPayement() {
+        return waitingPayement;
+    }
+
+    public void setWaitingPayement(boolean waitingPayement) {
+        this.waitingPayement = waitingPayement;
+    }
+
+    private boolean waitingPayement = false;
+
     public boolean isMy() {
         return isMy;
     }

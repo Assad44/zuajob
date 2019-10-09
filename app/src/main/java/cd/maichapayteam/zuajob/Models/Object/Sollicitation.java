@@ -35,6 +35,16 @@ public class Sollicitation {
     private int cote = 0;
     private String comment = "";
 
+    public boolean isWaitingPayement() {
+        return waitingPayement;
+    }
+
+    public void setWaitingPayement(boolean waitingPayement) {
+        this.waitingPayement = waitingPayement;
+    }
+
+    private boolean waitingPayement = false;
+
     public String getHtml() {
         return html;
     }

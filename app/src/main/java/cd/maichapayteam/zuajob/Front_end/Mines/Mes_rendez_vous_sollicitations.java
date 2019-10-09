@@ -181,28 +181,39 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
             @Override
             protected void onPostExecute(Sollicitation service) {
                 alert.cancel();
-                AlertDialog.Builder a = new AlertDialog.Builder(context)
-                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+
                 if (service.isError() == true ){
+                    AlertDialog.Builder a = new AlertDialog.Builder(context)
+                            .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
                     a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+
+                    a.show();
                 }else{
-                    a.setMessage("Opération réussi");
+                    //a.setMessage("Opération réussi");
                     Intent i = new Intent(context, Webpaiemnt.class);
                     i.putExtra("HTML", service.getHtml());
-                    context.startActivity(i);
+                    //context.startActivityForResult(i, 5323);
+                    startActivityForResult(i, 5323);
                 }
-                a.show();
 
                 //startActivity(new Intent(context, Publication_blank.class));
                 //finish();
             }
         }.execute();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==5323) {
+            RDV_SOLLICITATION_ATTENTE();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void refuser_sollicitaion(final long id){

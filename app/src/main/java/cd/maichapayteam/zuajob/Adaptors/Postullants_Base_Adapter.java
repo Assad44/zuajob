@@ -218,22 +218,22 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                     @Override
                     protected void onPostExecute(Postuler service) {
                         alert.cancel();
-                        AlertDialog.Builder a = new AlertDialog.Builder(context)
-                                .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
                         if (service.isError() == true ){
+                            AlertDialog.Builder a = new AlertDialog.Builder(context)
+                                    .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
+                            a.show();
                         }else{
-                            a.setMessage("Opération réussi");
+                            //a.setMessage("Opération réussi");
                             Intent i = new Intent(context, Webpaiemnt.class);
                             i.putExtra("HTML", service.getHtml());
                             context.startActivity(i);
                         }
-                        a.show();
                     }
                 }.execute();
 
