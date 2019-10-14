@@ -343,13 +343,13 @@ public class Myprofil extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 loading_gif.setVisibility(View.VISIBLE);
-                try {
-                    GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
-                    picture.setImageDrawable(gifFromResource);
-                } catch (IOException e) {
-                    picture.setImageResource(R.drawable.gif5);
-                    e.printStackTrace();
-                }
+                //try {
+                //    GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
+                //    picture.setImageDrawable(gifFromResource);
+                //} catch (IOException e) {
+                //    picture.setImageResource(R.drawable.gif5);
+                //    e.printStackTrace();
+                //}
             }
 
             @Override

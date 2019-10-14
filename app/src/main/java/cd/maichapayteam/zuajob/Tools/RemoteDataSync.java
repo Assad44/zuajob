@@ -158,6 +158,8 @@ public class RemoteDataSync {
         try { jsonObject.put("format", format); } catch (JSONException e) { }
         try { jsonObject.put("type", "profile"); } catch (JSONException e) { }
 
+        Log.e("UploadImage", "called");
+
         try{
             ANRequest request = AndroidNetworking.post(url)
                     .addJSONObjectBody(jsonObject)
@@ -165,7 +167,11 @@ public class RemoteDataSync {
                     .build();
 
             ANResponse<JSONObject> response = request.executeForJSONObject();
+
+            Log.e("UploadImage", "traitement finished");
+
             if (response.isSuccess()) {
+                Log.e("UploadImage", response.getResult().toString());
                 if(!response.getResult().getBoolean("error")) {
                     String urli = response.getResult().getString("url");
                     String thumb = response.getResult().getString("thumb");
@@ -1822,8 +1828,8 @@ public class RemoteDataSync {
 
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
+                Log.e("XXXXXXXXX", response.getResult().toString());
                 jsonObject = response.getResult();
-                Log.e("resultbody", response.getOkHttpResponse().body().string());
                 if(jsonObject!=null) {
                     if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("confirmed")) {
                         SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
@@ -1992,6 +1998,7 @@ public class RemoteDataSync {
 
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
+                Log.e("XXXXXXXXX", response.getResult().toString());
                 jsonObject = response.getResult();
                 if(jsonObject!=null) {
                     if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("created")) {
