@@ -168,7 +168,7 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
 
             @Override
             protected Sollicitation doInBackground(Void... voids) {
-                return ManageLocalData.confirmerRDVbyUser(id,"");
+                return ManageLocalData.confirmerRDVbyUser(id,"kld");
             }
 
             @Override

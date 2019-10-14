@@ -1823,6 +1823,7 @@ public class RemoteDataSync {
             ANResponse<JSONObject> response = request.executeForJSONObject();
             if (response.isSuccess()) {
                 jsonObject = response.getResult();
+                Log.e("resultbody", response.getOkHttpResponse().body().string());
                 if(jsonObject!=null) {
                     if(!jsonObject.getBoolean("error") && jsonObject.getBoolean("confirmed")) {
                         SollicitationDAO sollicitationDAO = new SollicitationDAO(GeneralClass.applicationContext);
@@ -1830,6 +1831,8 @@ public class RemoteDataSync {
                         if(sollicitation!=null) {
                             sollicitation.setAccepted(true);
                             sollicitation = sollicitationDAO.ajouter(sollicitation);
+                        } else {
+                            Log.e("XXXXXXXXX", "sollicitation est null");
                         }
                     }
                 }
@@ -1838,6 +1841,7 @@ public class RemoteDataSync {
                 sollicitation.setError(true);
                 sollicitation.setErrorCode(31921);
                 sollicitation.setErrorMessage(response.getError().getMessage());
+                Log.e("XXXXXXXXX", response.getError().getErrorBody());
             }
         } catch (Exception ex) {
             sollicitation = new Sollicitation();

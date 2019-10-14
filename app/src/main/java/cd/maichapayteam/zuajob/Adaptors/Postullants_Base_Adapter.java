@@ -211,7 +211,7 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                                 heure.getText().toString(),
                                 note.getText().toString().replace("'","''"),
                                 Integer.parseInt(montant.getText().toString()),
-                                devise.getSelectedItem().toString(),""
+                                devise.getSelectedItem().toString(),"jsjkd"
                         );
                     }
 
