@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import cd.maichapayteam.zuajob.Front_end.Mines.Mes_annonces;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_postulances;
+import cd.maichapayteam.zuajob.Front_end.Mines.Mes_services;
 import cd.maichapayteam.zuajob.Front_end.Webpaiemnt;
 import cd.maichapayteam.zuajob.Models.Object.Postuler;
 import cd.maichapayteam.zuajob.Models.Object.Service;
@@ -172,6 +174,13 @@ public class Postullants_Base_Adapter extends BaseAdapter {
             }
         });
 
+        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                .setView(convertView)
+                .setCancelable(false);
+        final AlertDialog alert = a.create();
+        alert.show();
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,23 +239,18 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                         }else{
                             a.setMessage("Opération réussi");
+                            context.startActivity(new Intent(context, Mes_annonces.class));
                             /*Intent i = new Intent(context, Webpaiemnt.class);
                             i.putExtra("HTML", service.getHtml());
                             context.startActivity(i);*/
                         }
                         a.show();
+
                     }
                 }.execute();
 
             }
         });
-
-
-        AlertDialog.Builder a = new AlertDialog.Builder(context)
-                .setView(convertView)
-                .setCancelable(false);
-        final AlertDialog alert = a.create();
-        alert.show();
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
