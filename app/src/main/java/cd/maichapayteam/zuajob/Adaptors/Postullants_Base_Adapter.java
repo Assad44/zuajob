@@ -218,14 +218,15 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                     @Override
                     protected void onPostExecute(Postuler service) {
                         alert.cancel();
+                        AlertDialog.Builder a = new AlertDialog.Builder(context)
+                                .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
                         if (service.isError() == true ){
-                            AlertDialog.Builder a = new AlertDialog.Builder(context)
-                                    .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
+
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
                         }else{
                             a.setMessage("Opération réussi");

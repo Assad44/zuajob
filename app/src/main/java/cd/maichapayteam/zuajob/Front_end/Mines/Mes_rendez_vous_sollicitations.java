@@ -182,14 +182,14 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
             protected void onPostExecute(Sollicitation service) {
                 alert.cancel();
 
+                AlertDialog.Builder a = new AlertDialog.Builder(context)
+                        .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
                 if (service.isError() == true ){
-                    AlertDialog.Builder a = new AlertDialog.Builder(context)
-                            .setNegativeButton("Fermer", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
                     a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
 
                 }else{
@@ -199,9 +199,9 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                     //context.startActivityForResult(i, 5323);
                     //startActivityForResult(i, 5323);
                 }
-                a.show();
                 //startActivity(new Intent(context, Publication_blank.class));
                 //finish();
+                a.show();
             }
         }.execute();
 
