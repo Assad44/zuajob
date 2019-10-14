@@ -104,6 +104,11 @@
                                     android:layout_height="130dp"
                                     android:src="@drawable/avatar" />
                                 <ImageView
+                                    android:id="@+id/loading_gif"
+                                    android:layout_width="130dp"
+                                    android:layout_height="130dp"
+                                    android:src="@drawable/gif5" />
+                                <ImageView
                                     android:id="@+id/Pickpicture"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"

@@ -168,7 +168,7 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
 
             @Override
             protected Sollicitation doInBackground(Void... voids) {
-                return ManageLocalData.confirmerRDVbyUser2(id);
+                return ManageLocalData.confirmerRDVbyUser(id,"");
             }
 
             @Override
@@ -192,15 +192,14 @@ public class Mes_rendez_vous_sollicitations extends AppCompatActivity {
                             });
                     a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
 
-                    a.show();
                 }else{
-                    //a.setMessage("Opération réussi");
-                    Intent i = new Intent(context, Webpaiemnt.class);
-                    i.putExtra("HTML", service.getHtml());
+                    a.setMessage("Opération réussi");
+                    //Intent i = new Intent(context, Webpaiemnt.class);
+                    //i.putExtra("HTML", service.getHtml());
                     //context.startActivityForResult(i, 5323);
-                    startActivityForResult(i, 5323);
+                    //startActivityForResult(i, 5323);
                 }
-
+                a.show();
                 //startActivity(new Intent(context, Publication_blank.class));
                 //finish();
             }

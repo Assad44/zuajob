@@ -121,7 +121,7 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         categorie.setText(S.getCategorie());
         Scategorie.setText(S.getSouscategorie());
 
-        Tool.Load_Image(context,avatar,S.getUrlImageUser());
+        Tool.Load_Image2(context,avatar,S.getUrlImageUser());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +188,7 @@ public class Sollicitations_Base_Adapter extends BaseAdapter {
         number.setText(S.getPhoneUser());
         S_descriptions.setText(S.getDescriptionService());
         S_prix.setText(S.getMontant()+ " "+ S.getDevise());
-        Tool.Load_Image(context,avatar,S.getUrlImageUser());
+        Tool.Load_Image2(context,avatar,S.getUrlImageUser());
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override

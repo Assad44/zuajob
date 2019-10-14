@@ -205,13 +205,13 @@ public class Postullants_Base_Adapter extends BaseAdapter {
 
                     @Override
                     protected Postuler doInBackground(Void... voids) {
-                        return ManageLocalData.creerRDVbyUser2(
+                        return ManageLocalData.creerRDVbyUser(
                                 u.getId(),
                                 date.getText().toString(),
                                 heure.getText().toString(),
                                 note.getText().toString().replace("'","''"),
                                 Integer.parseInt(montant.getText().toString()),
-                                devise.getSelectedItem().toString()
+                                devise.getSelectedItem().toString(),""
                         );
                     }
 
@@ -227,13 +227,13 @@ public class Postullants_Base_Adapter extends BaseAdapter {
                                         }
                                     });
                             a.setMessage(service.getErrorMessage()+ " "+service.getErrorCode());
-                            a.show();
                         }else{
-                            //a.setMessage("Opération réussi");
-                            Intent i = new Intent(context, Webpaiemnt.class);
+                            a.setMessage("Opération réussi");
+                            /*Intent i = new Intent(context, Webpaiemnt.class);
                             i.putExtra("HTML", service.getHtml());
-                            context.startActivity(i);
+                            context.startActivity(i);*/
                         }
+                        a.show();
                     }
                 }.execute();
 

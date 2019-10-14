@@ -53,7 +53,7 @@ public class Myprofil extends AppCompatActivity {
     TextView update_Adresses,details;
     ImageView picture;
     CardView evolution,details_user;
-    ImageView Pickpicture;
+    ImageView Pickpicture, loading_gif;
     TextView nom,number,Sexe,nbr_real;
     RatingBar rating;
     TextView type_compte,address,typeswitcher;
@@ -62,6 +62,7 @@ public class Myprofil extends AppCompatActivity {
     Toolbar toolbar;
 
     private void Init_Components(){
+        loading_gif = findViewById(R.id.loading_gif);
         update_Adresses = findViewById(R.id.update_Adresses);
         picture = findViewById(R.id.picture);
         rating = findViewById(R.id.rating);
@@ -80,16 +81,21 @@ public class Myprofil extends AppCompatActivity {
         typeswitcher = findViewById(R.id.typeswitcher);
 
         progressbar.setVisibility(View.GONE);
+        try {
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
+            loading_gif.setImageDrawable(gifFromResource);
+            loading_gif.setVisibility(View.GONE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void Profil_initialize(){
 
         User u = GeneralClass.Currentuser;
-
         nom.setText(
                 u.getNom() + " "+u.getPrenom()
         );
-
         Tool.Load_Image2(context, picture, u.getUrlThumbnail());
 
         /*try {
@@ -336,7 +342,7 @@ public class Myprofil extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //progressbar.setVisibility(View.VISIBLE);
+                loading_gif.setVisibility(View.VISIBLE);
                 try {
                     GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
                     picture.setImageDrawable(gifFromResource);
@@ -353,7 +359,7 @@ public class Myprofil extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Boolean o) {
-                progressbar.setVisibility(View.GONE);
+                loading_gif.setVisibility(View.GONE);
                 if (o!= true ){
                     Toast.makeText(context, "Echec de la mise à jour du profil", Toast.LENGTH_SHORT).show();
                 }else{

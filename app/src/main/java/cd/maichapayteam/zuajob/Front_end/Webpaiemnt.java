@@ -18,10 +18,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import cd.maichapayteam.zuajob.Front_end.Blanks.Publication_blank;
 import cd.maichapayteam.zuajob.Home;
 import cd.maichapayteam.zuajob.R;
-import cd.maichapayteam.zuajob.Tools.Tool;
 
 public class Webpaiemnt extends AppCompatActivity {
 

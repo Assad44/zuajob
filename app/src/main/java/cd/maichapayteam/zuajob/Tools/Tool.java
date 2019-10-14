@@ -95,7 +95,8 @@ public class Tool {
     // TODO LOAD IMAGES
     public static void Load_Image2(Context context, final ImageView imageView, String url){
         try {
-            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif4);
+            GifDrawable gifFromResource = new GifDrawable( context.getResources(), R.drawable.gif5);
+            imageView.setImageResource(R.drawable.gif5);
             Ion.with(context)
                     //.error(R.drawable.avatar_error)
                     .load(url)
